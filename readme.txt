@@ -2,7 +2,7 @@
 Contributors: okvee
 Tags: downloads, download, downloads manager, file hosting, GitHub
 Requires at least: 4.0
-Tested up to: 4.9.8
+Tested up to: 5.0.1
 Stable tag: 0.1
 Requires PHP: 5.5
 License: MIT
