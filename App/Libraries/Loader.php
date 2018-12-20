@@ -1,0 +1,255 @@
+<?php
+/**
+ * Loader class. This class will load anything for example: views, template, configuration file.
+ * 
+ * @package rd-downloads
+ */
+
+
+namespace RdDownloads\App\Libraries;
+
+if (!class_exists('\\RdDownloads\\App\\Libraries\\Loader')) {
+    class Loader
+    {
+
+
+        use \RdDownloads\App\AppTrait;
+
+
+        /**
+         * @var array The manual update classes that will be run. Detected by `haveManualUpdate()` method.
+         */
+        protected $manualUpdateClasses = [];
+
+
+        /**
+         * Automatic look into those controllers and register to the main App class to make it works.<br>
+         * The controllers that will be register must implement RdDownloads\App\Controllers\ControllerInterface to have registerHooks() method in it, otherwise it will be skipped.
+         */
+        public function autoRegisterControllers()
+        {
+            $this_plugin_dir = dirname(RDDOWNLOADS_FILE);
+            $file_list = $this->getClassFileList($this_plugin_dir . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR . 'Controllers');
+
+            if (is_array($file_list)) {
+                foreach ($file_list as $file) {
+                    $this_file_classname = '\\RdDownloads' . str_replace([$this_plugin_dir, '.php', '/'], ['', '', '\\'], $file);
+                    if (class_exists($this_file_classname)) {
+                        $TestClass = new \ReflectionClass($this_file_classname);
+                        if (!$TestClass->isAbstract() && !$TestClass->isTrait()) {
+                            $ControllerClass = new $this_file_classname();
+                            if (method_exists($ControllerClass, 'registerHooks')) {
+                                $ControllerClass->registerHooks();
+                            }
+                            unset($ControllerClass);
+                        }
+                        unset($TestClass);
+                    }
+                    unset($this_file_classname);
+                }// endforeach;
+                unset($file);
+            }
+
+            unset($file_list, $this_plugin_dir);
+        }// autoRegisterControllers
+
+
+        /**
+         * Get file list that may contain class in specific path.
+         * 
+         * @param string $path The full path without trailing slash.
+         * @return array Return array of file list.
+         */
+        protected function getClassFileList($path)
+        {
+            $Di = new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS);
+            $It = new \RecursiveIteratorIterator($Di);
+            unset($Di);
+
+            $file_list = [];
+            foreach ($It as $file) {
+                $file_list[] = $file;
+            }// endforeach;
+            unset($file, $It);
+            natsort($file_list);
+
+            return $file_list;
+        }// getClassFileList
+
+
+        /**
+         * @return array Return array list of manual update classes that is need to be run.
+         */
+        public function getManualUpdateClasses()
+        {
+            if (empty($this->manualUpdateClasses)) {
+                $this->haveManualUpdate();
+            }
+
+            return $this->manualUpdateClasses;
+        }// getManualUpdateClasses
+
+
+        /**
+         * Check that is this version of app have manual update code?
+         * 
+         * @return boolean Return true if there is manual update, false for otherwise.
+         */
+        public function haveManualUpdate()
+        {
+            $config_values = $this->getOptions();
+            if (is_array($config_values) && array_key_exists('rdsfw_manual_update_version', $config_values)) {
+                $manual_update_to = $config_values['rdsfw_manual_update_version'];
+            } else {
+                $manual_update_to = '';
+            }
+            unset($config_values);
+
+            $this_plugin_dir = dirname(RDDOWNLOADS_FILE);
+            $file_list = $this->getClassFileList($this_plugin_dir . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR . 'Update' . DIRECTORY_SEPARATOR . 'Manual');
+
+            if (is_array($file_list) && !empty($file_list)) {
+                foreach ($file_list as $file) {
+                    $this_file_classname = '\\RdDownloads' . str_replace([$this_plugin_dir, '.php', '/'], ['', '', '\\'], $file);
+                    if (class_exists($this_file_classname)) {
+                        $TestClass = new \ReflectionClass($this_file_classname);
+                        if (!$TestClass->isAbstract() && !$TestClass->isTrait()) {
+                            $UpdateClass = new $this_file_classname();
+                            if (method_exists($UpdateClass, 'run') && property_exists($UpdateClass, 'manual_update_version')) {
+                                if ($manual_update_to == '' || version_compare($manual_update_to, $UpdateClass->manual_update_version, '<')) {
+                                    $this->manualUpdateClasses[] = $this_file_classname;
+                                }
+                            }
+                            unset($UpdateClass);
+                        }
+                        unset($TestClass);
+                    }
+                    unset($this_file_classname);
+                }// endforeach;
+                unset($file);
+            }
+
+            unset($file_list, $manual_update_to, $this_plugin_dir);
+
+            if (empty($this->manualUpdateClasses)) {
+                return false;
+            } else {
+                return true;
+            }
+        }// haveManualUpdate
+
+
+        /**
+         * Load config file and return its values.
+         * 
+         * @param string $config_file_name
+         * @param boolean $require_once
+         * @return mixed return config file content if success. return false if failed.
+         */
+        public function loadConfig($config_file_name = 'config', $require_once = false)
+        {
+            $config_dir = dirname(__DIR__).'/config/';
+
+            if ($config_dir != null && file_exists($config_dir) && is_file($config_dir.$config_file_name.'.php')) {
+                if ($require_once === true) {
+                    $config_values = require_once $config_dir.$config_file_name.'.php';
+                } else {
+                    $config_values = require $config_dir.$config_file_name.'.php';
+                }
+            }
+
+            unset($config_dir);
+            if (isset($config_values)) {
+                return $config_values;
+            }
+            return false;
+        }// loadConfig
+
+
+        /**
+         * Load the template by looking at the theme first, if not found then load it from the plugin itself.
+         * 
+         * Example: If the <code>$view_name</code> is <code>mydir/mypage</code>.<br>
+         * It will look up in <code>wp-content/themes/%your theme%/rd-downloads/templates/mydir/mypage.php</code> first.<br>
+         * If not found then it will look up in <code>wp-content/plugins/rd-downloads/templates/mydir/mypage.php</code>.<br>
+         * If it is still not found then the error will be thrown.
+         * 
+         * @link https://codex.wordpress.org/Function_Reference/locate_template Reference.
+         * @link https://codex.wordpress.org/Function_Reference/load_template Reference.
+         * @global \WP_Query $wp_query
+         * @param string $view_name The template file name.
+         * @param array $data The data to send to template file. The array key will becomes variable in template file.
+         */
+        public function loadTemplate($view_name, array $data = [])
+        {
+            global $wp_query;
+
+            if ($template_path = locate_template('rd-downloads/templates/' . $view_name . '.php')) {
+                // if template found in the theme location.
+            } else {
+                // if template was not found in theme location.
+                $template_path = plugin_dir_path(RDDOWNLOADS_FILE) . 'templates/' . $view_name . '.php';
+                if (!is_file($template_path)) {
+                    // if not found the template file in plugin itself.
+                    // throw the error to notice the developers.
+                    /* translators: %s: Template path. */
+                    throw new \Exception(sprintf(__('The template file was not found. (%s)', 'rd-downloads'), $template_path));
+                    // remove the variable.
+                    unset($template_path);
+                }
+            }
+
+            if (isset($template_path)) {
+                if (!empty($data)) {
+                    $wp_query->query_vars = $data;
+                    $data = [];
+                }
+                load_template($template_path);
+            }
+
+            unset($template_path);
+        }// loadTemplate
+
+
+        /**
+         * Load views.
+         * 
+         * @param string $view_name view file name refer from app/Views folder.
+         * @param array $data for send data variable to view.
+         * @param boolean $require_once use include or include_once? if true, use include_once.
+         * @return boolean return true if success loading, or return false if failed to load.
+         */
+        public function loadView($view_name, array $data = [], $require_once = false)
+        {
+            $view_dir = dirname(__DIR__).'/Views/';
+            $templateFile = $view_dir . $view_name . '.php';
+            unset($view_dir);
+
+            if ($view_name != null && file_exists($templateFile) && is_file($templateFile)) {
+                if (is_array($data)) {
+                    extract($data, EXTR_PREFIX_SAME, 'dupvar_');
+                }
+
+                if ($require_once === true) {
+                    include_once $templateFile;
+                } else {
+                    include $templateFile;
+                }
+
+                unset($templateFile);
+                return true;
+            } elseif (!file_exists($templateFile)) {
+                trigger_error(
+                    /* translators: %s: Path to template file to show in error. */
+                    sprintf(__('The views file was not found (%s).', 'rd-downloads'), str_replace(['\\', '/'], '/', $templateFile)),
+                    E_USER_WARNING
+                );
+            }
+
+            unset($templateFile);
+            return false;
+        }// loadView
+
+
+    }
+}

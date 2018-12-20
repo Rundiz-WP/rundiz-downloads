@@ -1,0 +1,1 @@
+This folder is for place any third party source code such as cache library, helpers library.

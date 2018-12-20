@@ -1,0 +1,102 @@
+
+
+.rd-downloads-file-upload-button {
+    position: relative;
+}
+.rd-downloads-file-upload-button input[type="file"] {
+    cursor: pointer;
+    display: block;
+    filter: alpha(opacity=0);
+    font-size: 20px;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+}
+.rd-downloads-file-upload-button[disabled],
+.rd-downloads-file-upload-button.disabled,
+.rd-downloads-file-upload-button input[type="file"][disabled] {
+    cursor: wait;
+}
+.rd-downloads-file-upload-button .icon-uploading {
+    margin-left: 0.3rem;
+}
+
+
+.rd-downloads-form-type-local-file-browser {
+    background-color: rgba(220, 220, 220, 0.5);
+    box-shadow: inset 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
+    max-height: 300px;
+    min-height: 100px;
+    overflow: auto;
+    padding: 5px;
+}
+.rd-downloads-form-type-local-file-browser ul ul {
+    margin-left: 0.313rem;
+}
+.rd-downloads-form-type-local-file-browser ul a {
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px 0;
+}
+.rd-downloads-form-type-local-file-browser ul ul a {
+    padding-left: 0;
+    padding-right: 0;
+}
+.rd-downloads-form-type-local-file-browser ul {
+    margin: 0;
+}
+.rd-downloads-form-type-local-file-browser ul li::before {
+    clear: both;
+}
+.rd-downloads-form-type-local-file-browser ul li {
+    margin: 0;
+    padding-left: 0.313rem;
+    padding-right: 0.313rem;
+}
+.rd-downloads-form-type-local-file-browser ul li.item-file:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+.rd-downloads-form-type-local-file-browser ul li.item-file a {
+    color: #444;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+.rd-downloads-form-type-local-file-browser ul li.item-file a.delete-file-link {
+    color: #e92020;
+    float: right;
+}
+.rd-downloads-form-type-local-file-browser .icon-folder {
+    color: #a99500;
+}
+.rd-downloads-form-type-local-file-browser .icon-linked-downloads,
+.rd-downloads-form-type-local-file-browser .icon-preview {
+    font-size: 0.75rem;
+}
+.rd-downloads-form-type-local-file-browser.is-dragover {
+    outline: solid 5px rgba(0, 122, 252, 0.09);
+}
+
+
+.rd-downloads-icon-preview {
+    color: #444;
+}
+
+
+.rd-downloads-input-full {
+    width: 100%;
+}
+
+
+.rd-downloads-local-buttons {
+    margin-top: 5px;
+}
+
+
+.rd-downloads-title-div {
+	margin-top: 1rem;
+}

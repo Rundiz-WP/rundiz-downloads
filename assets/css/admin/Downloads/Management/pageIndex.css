@@ -1,0 +1,47 @@
+
+
+@media screen and (min-width: 783px) {
+    .rd-downloads-list-items-form .column-opt_force_download {
+            width: 30px;
+    }
+    .rd-downloads-list-items-form .column-download_file_name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+    .rd-downloads-list-items-form .column-download_size {
+        width: 80px;
+    }
+}
+@media screen and (min-width: 783px) and (max-width: 999px) {
+    .rd-downloads-list-items-form .column-user_id {
+        display: none;
+    }
+    .rd-downloads-list-items-form .column-download_type {
+        width: 30px;
+    }
+    .rd-downloads-list-items-form .column-download_type .download_type_text {
+        display: none;
+    }
+}
+@media screen and (min-width: 1000px) and (max-width: 1299px) {
+    .rd-downloads-list-items-form .column-download_type .download_type_icon {
+        display: none;
+    }
+}
+
+
+.rd-downloads-list-items-form .shortcode-text {
+    cursor: pointer;
+    font-size: 0.85em;
+    margin: 0;
+    width: 100%;
+}
+
+
+.rd-downloads-ul {
+    list-style: disc;
+    padding-left: 1rem;
+}

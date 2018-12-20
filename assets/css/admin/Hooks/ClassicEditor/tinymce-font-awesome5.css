@@ -1,0 +1,14 @@
+/**
+CSS that will be overwrite TinyMCE css to use Font-Awesome's font.
+TinyMCE was overrided the Font-Awesome so I have to override it back again.
+*/
+
+
+.mce-container .fontawesome-icon {
+	font-family: "Font Awesome 5 Free";
+}
+
+.mce-container .fontawesome-icon.fa,
+.mce-container .fontawesome-icon.fas {
+	font-weight: 900;
+}

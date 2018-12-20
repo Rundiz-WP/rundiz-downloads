@@ -1,0 +1,70 @@
+
+
+.mce-container .form-table {
+    width: 100%;
+}
+
+
+.mce-container .hidden {
+    display: none;
+}
+
+
+.mce-container .rd-downloads-ajax-search-paging-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5px;
+}
+.mce-container .rd-downloads-ajax-search-paging-buttons > * {
+    margin-right: 5px;
+}
+.mce-container .rd-downloads-ajax-search-paging-buttons .rd-downloads-current-paging-status {
+    align-self: center;
+}
+
+
+.mce-container .rd-downloads-input-full {
+    padding: 3px 2px;
+    width: 100%;
+}
+
+
+.mce-container .rd-downloads-inside-input-icon {
+    float: right;
+    margin-right: 0;
+    margin-top: -21px;
+    position: relative;
+}
+.mce-container .rd-downloads-inside-input-icon::after {
+    clear: both;
+    content: '';
+    display: table;
+}
+
+
+.mce-container .rd-downloads-table-responsive {
+    overflow: auto;
+}
+.mce-container .rd-downloads-search-result-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.mce-container .rd-downloads-search-result-table thead td,
+.mce-container .rd-downloads-search-result-table thead th {
+    font-weight: bold;
+    text-align: left;
+}
+.mce-container .rd-downloads-search-result-table td,
+.mce-container .rd-downloads-search-result-table th {
+    padding: 3px 2px;
+    text-align: left;
+}
+.mce-container .rd-downloads-search-result-table .download_size {
+    width: 60px;
+}
+.mce-container .rd-downloads-search-result-table .download_type {
+    width: 80px;
+}
+.mce-container .rd-downloads-search-result-table .rd-downloads-admin-comment {
+    font-style: italic;
+}

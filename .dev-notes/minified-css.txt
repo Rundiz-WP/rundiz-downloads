@@ -1,0 +1,5 @@
+Use SASS to minified the CSS.
+
+Use this command by replace source.css to your original CSS file and replace output.min.css to the name of your choice.
+`sass source.css:output.min.css --style=compressed --no-source-map`
+The output.min.css should be the minified version of source.css.

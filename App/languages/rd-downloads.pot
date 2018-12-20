@@ -1,0 +1,1001 @@
+# Copyright (C) 2018 Vee Winch
+# This file is distributed under the same license as the Rundiz Downloads plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Rundiz Downloads 0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rd-downloads\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2018-12-12T16:05:34+07:00\n"
+"PO-Revision-Date: 2018-12-12T16:05:34+07:00\n"
+"X-Generator: WP-CLI 2.0.1\n"
+"X-Domain: rd-downloads\n"
+
+#. Plugin Name of the plugin
+#: \App\Controllers\Admin\Downloads\Menu.php:63
+msgid "Rundiz Downloads"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://rundiz.com/?p=319"
+msgstr ""
+
+#. Description of the plugin
+msgid "Downloads manager for WordPress that support GitHub."
+msgstr ""
+
+#. Author of the plugin
+msgid "Vee Winch"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://rundiz.com"
+msgstr ""
+
+#: \App\AppTrait.php:134
+msgid "Settings configuration file was not set."
+msgstr ""
+
+#: \App\config\rd_downloads.php:36
+msgid "To use GitHub auto update"
+msgstr ""
+
+#: \App\config\rd_downloads.php:38
+msgid "Go to your %1$sGitHub%2$s repository."
+msgstr ""
+
+#: \App\config\rd_downloads.php:39
+msgid "Go to Settings &gt; Webhooks."
+msgstr ""
+
+#: \App\config\rd_downloads.php:41
+msgid "If you didn't created Webhooks yet, click on %1$s button. If you want to change the secret, click on %2$s button."
+msgstr ""
+
+#: \App\config\rd_downloads.php:42
+msgid "Add webhook"
+msgstr ""
+
+#: \App\config\rd_downloads.php:43
+msgid "Edit"
+msgstr ""
+
+#: \App\config\rd_downloads.php:45
+msgid "Enter %s for payload URL."
+msgstr ""
+
+#: \App\config\rd_downloads.php:46
+msgid "Content type is %s."
+msgstr ""
+
+#: \App\config\rd_downloads.php:47
+msgid "On Secret field, enter the secret generated from here."
+msgstr ""
+
+#: \App\config\rd_downloads.php:48
+msgid "On events to trigger this webhook, choose %s."
+msgstr ""
+
+#: \App\config\rd_downloads.php:48
+msgid "Just the push event"
+msgstr ""
+
+#: \App\config\rd_downloads.php:49
+msgid "Check on %s checkbox and save."
+msgstr ""
+
+#: \App\config\rd_downloads.php:49
+msgid "Active"
+msgstr ""
+
+#: \App\config\rd_downloads.php:53
+msgid "To get GitHub token"
+msgstr ""
+
+#: \App\config\rd_downloads.php:55
+msgid "Go to your %1$sGitHub%2$s website."
+msgstr ""
+
+#: \App\config\rd_downloads.php:56
+msgid "Click at your icon on the right of the top bar, the menu will be appear."
+msgstr ""
+
+#: \App\config\rd_downloads.php:57
+msgid "Go to %1$sSettings &gt; Developer settings &gt; Personal access tokens%2$s page."
+msgstr ""
+
+#: \App\config\rd_downloads.php:58
+#: \App\config\rd_downloads.php:61
+msgid "Click on %s button."
+msgstr ""
+
+#: \App\config\rd_downloads.php:58
+msgid "Generate new token"
+msgstr ""
+
+#: \App\config\rd_downloads.php:59
+msgid "Enter Token description."
+msgstr ""
+
+#: \App\config\rd_downloads.php:60
+msgid "Check for these scopes. %s"
+msgstr ""
+
+#: \App\config\rd_downloads.php:61
+msgid "Generate token"
+msgstr ""
+
+#: \App\config\rd_downloads.php:62
+msgid "Copy your personal token and paste above field then save changes before you won't be able to see it again."
+msgstr ""
+
+#: \App\config\rd_downloads.php:71
+msgid "General"
+msgstr ""
+
+#: \App\config\rd_downloads.php:77
+msgid "Check this to use force download instead of redirect to file. (This will work with local file only.)"
+msgstr ""
+
+#: \App\config\rd_downloads.php:79
+#: \App\config\rd_downloads.php:92
+#: \App\config\rd_downloads.php:133
+#: \App\config\rd_downloads.php:170
+#: \App\config\rd_downloads.php:196
+#: \App\Models\RdDownloadsListTable.php:68
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:71
+msgid "Yes"
+msgstr ""
+
+#. translators: %s: Force download option.
+#: \App\config\rd_downloads.php:83
+#: \App\Controllers\Admin\Downloads\Editing.php:48
+#: \App\Models\RdDownloadsListTable.php:192
+#: \App\Views\admin\Downloads\Editing\helptab\tab2_v.php:4
+#: \App\Views\admin\Downloads\Editing\helptab\tab2_v.php:8
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:69
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:78
+msgid "Force download"
+msgstr ""
+
+#: \App\config\rd_downloads.php:90
+msgid "Captcha is human validation that can help prevent bot, check this to use the captcha."
+msgstr ""
+
+#: \App\config\rd_downloads.php:96
+msgid "Use captcha"
+msgstr ""
+
+#: \App\config\rd_downloads.php:101
+msgid "User agent that contain text in one of this will be blocked. One per line, case insensitive."
+msgstr ""
+
+#: \App\config\rd_downloads.php:106
+msgid "Block user agents"
+msgstr ""
+
+#: \App\config\rd_downloads.php:113
+msgid "GitHub"
+msgstr ""
+
+#: \App\config\rd_downloads.php:118
+msgid "Re-generate"
+msgstr ""
+
+#: \App\config\rd_downloads.php:119
+msgid "Secret key for use in GitHub webhook auto update"
+msgstr ""
+
+#: \App\config\rd_downloads.php:124
+msgid "GitHub Secret"
+msgstr ""
+
+#: \App\config\rd_downloads.php:131
+msgid "Check this to use auto update when the repository on GitHub was updated."
+msgstr ""
+
+#: \App\config\rd_downloads.php:137
+msgid "Auto update"
+msgstr ""
+
+#: \App\config\rd_downloads.php:147
+msgid "Test token"
+msgstr ""
+
+#: \App\config\rd_downloads.php:148
+msgid "Token that can be used to access GitHub API such as auto correct repository URL."
+msgstr ""
+
+#: \App\config\rd_downloads.php:150
+msgid "GitHub token"
+msgstr ""
+
+#: \App\config\rd_downloads.php:162
+msgid "Logs/statistic"
+msgstr ""
+
+#: \App\config\rd_downloads.php:168
+msgid "Check this to automatically delete old logs."
+msgstr ""
+
+#. translators: %s is Auto delete logs option
+#: \App\config\rd_downloads.php:174
+#: \App\config\rd_downloads.php:180
+msgid "Auto delete logs"
+msgstr ""
+
+#. translators: %s is Auto delete logs option
+#: \App\config\rd_downloads.php:180
+msgid "Auto delete logs after specific days. This will be skipped if %s was not checked."
+msgstr ""
+
+#: \App\config\rd_downloads.php:187
+msgid "Days limit"
+msgstr ""
+
+#: \App\config\rd_downloads.php:194
+msgid "Check this to logs admin actions such as add, update, delete downloads."
+msgstr ""
+
+#: \App\config\rd_downloads.php:200
+msgid "Admin actions"
+msgstr ""
+
+#: \App\config\rd_downloads.php:207
+msgid "Design"
+msgstr ""
+
+#. translators: %s: Example shortcode.
+#: \App\config\rd_downloads.php:212
+msgid "The HTML element for replace the %s shortcode."
+msgstr ""
+
+#. translators: %s: Default html elements that will be convert shortcode to this.
+#: \App\config\rd_downloads.php:214
+msgid "Default value is %s."
+msgstr ""
+
+#: \App\config\rd_downloads.php:215
+msgid "Use these placeholders for the text replacement."
+msgstr ""
+
+#: \App\config\rd_downloads.php:217
+msgid "Use these placeholders for DB fields replacement."
+msgstr ""
+
+#: \App\config\rd_downloads.php:222
+msgid "Downloads element"
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Editing.php:38
+msgid "Basic guide"
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Editing.php:78
+#: \App\Controllers\Admin\Downloads\Menu.php:74
+msgid "Add new download"
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Editing.php:105
+#: \App\Controllers\Admin\Downloads\Menu.php:82
+msgid "Edit download"
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Editing.php:118
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:275
+msgid "The editing item was not found."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Editing.php:121
+msgid "You do not have permission to edit other's downloads data."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Editing.php:163
+#: \App\Controllers\Admin\Downloads\Logs.php:186
+#: \App\Controllers\Admin\Downloads\Management.php:180
+#: \App\Controllers\Admin\Settings.php:165
+msgid "Are you sure?"
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Editing.php:163
+msgid "If the selected file had linked with other downloads then it will show the error message."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Editing.php:163
+#: \App\Controllers\Admin\Downloads\Logs.php:186
+#: \App\Controllers\Admin\Downloads\Management.php:180
+msgid "This can not be un-done."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Editing.php:164
+#: \App\Controllers\Admin\Plugins\Upgrader.php:224
+msgid "Dismiss"
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Logs.php:47
+#: \App\Controllers\Admin\Downloads\Management.php:50
+msgid "Permissions"
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Logs.php:61
+#: \App\Views\admin\Downloads\Logs\pageIndex_v.php:11
+msgid "Download logs"
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Logs.php:61
+#: \App\Models\RdDownloadsListTable.php:324
+msgid "Logs"
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Logs.php:186
+msgid "All the logs will be cleared."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Management.php:62
+msgid "Admin help"
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Management.php:180
+msgid "The selected files will be deleted. GitHub and any remote files will be remain."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Menu.php:63
+#: \App\Views\admin\Downloads\Management\pageIndex_v.php:11
+msgid "Downloads"
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Menu.php:74
+#: \App\Views\admin\Downloads\Management\pageIndex_v.php:12
+msgid "Add New"
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:54
+msgid "Invalid form action, please try again."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:83
+msgid "All logs were cleared."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:198
+msgid "Success! All selected items have been deleted."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:203
+msgid "Warning! There are some problem about delete the items, here are the results."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:205
+msgid "Deleted item"
+msgid_plural "Deleted items"
+msgstr[0] ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:206
+msgid "Failed to delete item"
+msgid_plural "Failed to delete items"
+msgstr[0] ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:207
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:338
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:471
+msgid "Capability limited item"
+msgid_plural "Capability limited items"
+msgstr[0] ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:208
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:339
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:472
+msgid "Mismatch ID"
+msgid_plural "Mismatch IDs"
+msgstr[0] ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:228
+msgid "The selected items was not found."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:329
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:462
+msgid "Success! All selected items have been updated."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:334
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:467
+msgid "Warning! There are some problem about update the items, here are the results."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:336
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:469
+msgid "Updated item"
+msgid_plural "Updated items"
+msgstr[0] ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:337
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:470
+msgid "Failed to update item"
+msgid_plural "Failed to update items"
+msgstr[0] ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:359
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:492
+msgid "The selected items was not found or not matched download type."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrFileBrowser.php:39
+#: \App\Controllers\Admin\Downloads\Xhr\XhrFileBrowser.php:187
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:29
+msgid "Hacking attempt!"
+msgstr ""
+
+#. translators: %s: list of banned files
+#: \App\Controllers\Admin\Downloads\Xhr\XhrFileBrowser.php:203
+msgid "Unable to delete file that is in system file (%s)."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrFileBrowser.php:226
+msgid "Unable to delete index file that is preventing directory browsing."
+msgstr ""
+
+#. translators: %1$s: Open link tag, %2$s Close link tag.
+#: \App\Controllers\Admin\Downloads\Xhr\XhrFileBrowser.php:260
+msgid "Unable to delete the selected file. The file is already in use. Please %1$sedit%2$s this downloads instead.."
+msgstr ""
+
+#. translators: %s: The selected URL to show in error.
+#: \App\Controllers\Admin\Downloads\Xhr\XhrFileBrowser.php:283
+msgid "The selected file was not found (%s)."
+msgstr ""
+
+#. translators: %1$s: /rd-downloads path string, %2$s: The selected URL to show in error.
+#: \App\Controllers\Admin\Downloads\Xhr\XhrFileBrowser.php:289
+msgid "Unable to delete file that is not in %1$s folder (%2$s)."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrFileBrowser.php:437
+msgid "Unable to process your request, please reload the page and try again."
+msgstr ""
+
+#. translators: %s: Example GitHub repository URL.
+#: \App\Controllers\Admin\Downloads\Xhr\XhrGithub.php:31
+#: \App\Controllers\Admin\Downloads\Xhr\XhrGithub.php:41
+msgid "Invalid GitHub repository URL. The correct format should be %s."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:129
+msgid "Incorrect Download URL value."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:206
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:301
+msgid "Unknown error, please reload the webpage and try again."
+msgstr ""
+
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:224
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:318
+msgid "Your download was saved successfully."
+msgstr ""
+
+#: \App\Controllers\Admin\Hooks\ClassicEditor\DownloadButton.php:92
+msgid "Add a download"
+msgstr ""
+
+#: \App\Controllers\Admin\Hooks\ClassicEditor\DownloadButton.php:93
+#: \App\Models\RdDownloadsListTable.php:146
+#: \App\Models\RdDownloadsListTable.php:272
+#: \App\Views\admin\Downloads\Editing\helptab\tab1_v.php:16
+msgid "Any remote file"
+msgstr ""
+
+#: \App\Controllers\Admin\Hooks\ClassicEditor\DownloadButton.php:94
+#: \App\Models\RdDownloadsListTable.php:144
+#: \App\Models\RdDownloadsListTable.php:265
+#: \App\Views\admin\Downloads\Editing\helptab\tab1_v.php:7
+msgid "GitHub file"
+msgstr ""
+
+#: \App\Controllers\Admin\Hooks\ClassicEditor\DownloadButton.php:95
+#: \App\Models\RdDownloadsListTable.php:142
+#: \App\Models\RdDownloadsListTable.php:258
+#: \App\Views\admin\Downloads\Editing\helptab\tab1_v.php:2
+msgid "Local file"
+msgstr ""
+
+#: \App\Controllers\Admin\Hooks\ClassicEditor\DownloadButton.php:96
+#: \App\Models\RdDownloadsListTable.php:148
+msgid "Unknown"
+msgstr ""
+
+#. translators: %1$s: Current PHP version, %2$s: Required PHP version.
+#: \App\Controllers\Admin\Plugins\Activation.php:43
+msgid "You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or contact plugin author for this help.<br><br>Minimum requirement:<br>PHP %2$s"
+msgstr ""
+
+#. translators: %1$s: Current PHP version, %2$s: Required PHP version.
+#: \App\Controllers\Admin\Plugins\Activation.php:43
+msgid "Minimum requirement of PHP version does not meet."
+msgstr ""
+
+#. translators: %1$s: Current WordPress version, %2$s: Required WordPress version.
+#: \App\Controllers\Admin\Plugins\Activation.php:48
+msgid "Your WordPress version does not meet the requirement. (%1$s < %2$s)."
+msgstr ""
+
+#: \App\Controllers\Admin\Plugins\Activation.php:54
+msgid "Unable to network activate, please activate from each site that have to use it only."
+msgstr ""
+
+#: \App\Controllers\Admin\Plugins\Upgrader.php:32
+msgid "Please reload this page and try again."
+msgstr ""
+
+#: \App\Controllers\Admin\Plugins\Upgrader.php:57
+msgid "An error has been occur, cannot continue manual update. Please contact plugin author."
+msgstr ""
+
+#: \App\Controllers\Admin\Plugins\Upgrader.php:74
+msgid "Success, please click next to continue update."
+msgstr ""
+
+#: \App\Controllers\Admin\Plugins\Upgrader.php:77
+msgid "All manual update completed successfully. This page will be no longer available until there is next manual update."
+msgstr ""
+
+#: \App\Controllers\Admin\Plugins\Upgrader.php:96
+msgid "Unable to run update, there is no update classes to run."
+msgstr ""
+
+#. translators: %1$s: Open link tag, %2$s: Close link tag.
+#: \App\Controllers\Admin\Plugins\Upgrader.php:130
+msgid "The Rundiz Downloads is just upgraded and need to be manually update. Please continue to the %1$splugin update page%2$s."
+msgstr ""
+
+#: \App\Controllers\Admin\Plugins\Upgrader.php:171
+msgid "Rundiz Downloads update"
+msgstr ""
+
+#: \App\Controllers\Admin\Plugins\Upgrader.php:223
+msgid "Completed"
+msgstr ""
+
+#: \App\Controllers\Admin\Plugins\Upgrader.php:225
+#: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:45
+msgid "Next"
+msgstr ""
+
+#: \App\Controllers\Admin\Plugins.php:38
+msgid "After Actions"
+msgstr ""
+
+#. translators: %s: Current DB version.
+#: \App\Controllers\Admin\Plugins.php:80
+msgid "DB version %s"
+msgstr ""
+
+#: \App\Controllers\Admin\Settings\Xhr\XhrGithub.php:58
+msgid "Correct!"
+msgstr ""
+
+#: \App\Controllers\Admin\Settings\Xhr\XhrGithub.php:62
+msgid "Invalid GitHub token."
+msgstr ""
+
+#: \App\Controllers\Admin\Settings.php:43
+#: \App\Views\admin\settings_v.php:2
+msgid "Downloads Settings"
+msgstr ""
+
+#: \App\Controllers\Admin\Settings.php:43
+msgid "Settings"
+msgstr ""
+
+#. translators: %1$s: Open link tag, %2$s: Close link tag.
+#: \App\Controllers\Admin\Settings.php:65
+msgid "The manual update is required, please %1$supdate first%2$s."
+msgstr ""
+
+#: \App\Controllers\Admin\Settings.php:67
+msgid "The manual update is required, please tell administrator to update first."
+msgstr ""
+
+#: \App\Controllers\Admin\Settings.php:165
+msgid "The generated secret will not working anymore with any GitHub repositories that already has this setting. You have to update new secret on those repositories again"
+msgstr ""
+
+#: \App\Controllers\XhrBased.php:48
+msgid "Method not allowed."
+msgstr ""
+
+#: \App\Controllers\XhrBased.php:67
+msgid "Please reload the page and try again."
+msgstr ""
+
+#. translators: %s: Argument name.
+#: \App\Libraries\DateTime.php:30
+#: \App\Libraries\FileSystem.php:113
+#: \App\Libraries\Url.php:27
+#: \App\Libraries\Url.php:62
+msgid "The %s must be string."
+msgstr ""
+
+#: \App\Libraries\ElementPlaceholders.php:45
+msgid "Download"
+msgstr ""
+
+#: \App\Libraries\ElementPlaceholders.php:46
+#: \App\Models\RdDownloadsListTable.php:190
+#: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:22
+msgid "Size"
+msgstr ""
+
+#: \App\Libraries\ElementPlaceholders.php:47
+msgid "File size"
+msgstr ""
+
+#: \App\Libraries\ElementPlaceholders.php:48
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:98
+msgid "Last update"
+msgstr ""
+
+#: \App\Libraries\ElementPlaceholders.php:49
+msgid "Total download"
+msgstr ""
+
+#. translators: %s: Path to template file to show in error.
+#: \App\Libraries\Loader.php:199
+msgid "The views file was not found (%s)."
+msgstr ""
+
+#: \App\Libraries\RundizSettings.php:658
+msgid "Upload"
+msgstr ""
+
+#: \App\Libraries\RundizSettings.php:659
+msgid "Remove"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:42
+msgid "Unknow"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:85
+msgid "Admin add new item"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:87
+msgid "Admin update an item"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:89
+msgid "Admin delete an item"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:91
+msgid "Admin clear logs"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:93
+msgid "Auto purge old logs"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:95
+msgid "User download success"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:97
+msgid "User download failed"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:99
+msgid "User download banned"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:121
+msgid "Clear"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:133
+#: \App\Models\RdDownloadsListTable.php:186
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:19
+#: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:19
+msgid "Downloads name"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:134
+#: \App\Models\RdDownloadsListTable.php:187
+msgid "Author"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:135
+msgid "Status"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:136
+msgid "IP Address"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:137
+msgid "User agent"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:138
+#: \App\Models\RdDownloadsListTable.php:194
+msgid "Date"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:194
+#: \App\Models\RdDownloadsListTable.php:251
+msgid "All"
+msgstr ""
+
+#. translators: %s: Link to edit user.
+#: \App\Models\RdDownloadLogsListTable.php:203
+#: \App\Models\RdDownloadsListTable.php:281
+msgid "Filtered user: %s"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:206
+#: \App\Models\RdDownloadsListTable.php:284
+msgid "Reset filtered user"
+msgstr ""
+
+#. translators: %s: Link to edit download.
+#: \App\Models\RdDownloadLogsListTable.php:214
+msgid "Filtered download: %s"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:217
+msgid "Reset filtered download"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:240
+msgid "Filter download"
+msgstr ""
+
+#: \App\Models\RdDownloadLogsListTable.php:247
+#: \App\Models\RdDownloadsListTable.php:318
+msgid "Filter user"
+msgstr ""
+
+#: \App\Models\RdDownloadsListTable.php:60
+msgid "Shortcode copied to clipboard."
+msgstr ""
+
+#: \App\Models\RdDownloadsListTable.php:66
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:72
+msgid "No"
+msgstr ""
+
+#: \App\Models\RdDownloadsListTable.php:70
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:75
+msgid "Default"
+msgstr ""
+
+#. translators: %s: Date/time value.
+#: \App\Models\RdDownloadsListTable.php:98
+msgid "Created: %s"
+msgstr ""
+
+#. translators: %s: Date/time value.
+#: \App\Models\RdDownloadsListTable.php:103
+msgid "Updated: %s"
+msgstr ""
+
+#: \App\Models\RdDownloadsListTable.php:170
+msgid "Update GitHub"
+msgstr ""
+
+#: \App\Models\RdDownloadsListTable.php:172
+msgid "Update remote file"
+msgstr ""
+
+#: \App\Models\RdDownloadsListTable.php:173
+msgid "Delete"
+msgstr ""
+
+#: \App\Models\RdDownloadsListTable.php:188
+#: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:20
+msgid "Type"
+msgstr ""
+
+#: \App\Models\RdDownloadsListTable.php:189
+#: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:21
+msgid "File"
+msgstr ""
+
+#: \App\Models\RdDownloadsListTable.php:191
+msgid "Shortcode"
+msgstr ""
+
+#: \App\Models\RdDownloadsListTable.php:193
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:62
+msgid "Download count"
+msgstr ""
+
+#: \App\Models\RdDownloadsListTable.php:312
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:35
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:110
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:122
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:123
+msgid "Preview"
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\helptab\tab1_v.php:1
+msgid "To save the downloads data, the Download URL field is required."
+msgstr ""
+
+#. translators: %s: Full path to this plugin upload folder.
+#: \App\Views\admin\Downloads\Editing\helptab\tab1_v.php:5
+msgid "You can upload a file to the server using upload button below. You can also use FTP for large file size by uploading it to %s and then use file browser below to select the file."
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\helptab\tab1_v.php:9
+msgid "You can enter the download URL in the Download URL field directly by using one of these URL formats."
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\helptab\tab1_v.php:17
+msgid "You can enter the download URL in the Download URL field directly for any remotely hosted file."
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\helptab\tab2_v.php:1
+msgid "The Force download option will work with the local file only."
+msgstr ""
+
+#. translators: %s: Force download option.
+#: \App\Views\admin\Downloads\Editing\helptab\tab2_v.php:4
+msgid "If you want to use redirect, the %s option in plugin setting page must be unchecked."
+msgstr ""
+
+#. translators: %s: Force download option.
+#: \App\Views\admin\Downloads\Editing\helptab\tab2_v.php:8
+msgid "If you choose this option to default, it will use %s option from plugin setting page."
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:24
+msgid "Download URL"
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:38
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:89
+msgid "Please open the help tab to see help message."
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:43
+msgid "Upload new file"
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:46
+msgid "Reload"
+msgstr ""
+
+#. translators: %s: Max upload size.
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:50
+msgid "Maximum upload file size: %s."
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:55
+msgid "Notes"
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:58
+msgid "Notes about this download, display to administrator only. HTML will be escaped."
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:65
+msgid "The number of times this file has been downloaded."
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:80
+msgid "redirect to file"
+msgstr ""
+
+#. translators: %s: Force download option value for main plugin setting.
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:83
+msgid "The plugin setting is using %s."
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:88
+msgid "Choose yes and the file will use force download instead of redirect to it."
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:94
+msgid "Publish data"
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:96
+msgid "Created by"
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:97
+msgid "Created on"
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:105
+msgid "Save"
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:127
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:131
+msgid "This file is linked with other downloads data."
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:139
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:140
+msgid "Delete this file"
+msgstr ""
+
+#: \App\Views\admin\Downloads\Logs\helptab\tab1_v.php:2
+msgid "Why am I unable to clear the logs?"
+msgstr ""
+
+#. translators: %1$s: administrator, %2$s: delete_users
+#: \App\Views\admin\Downloads\Logs\helptab\tab1_v.php:6
+msgid "You have to be an %1$s or have %2$s capability to clear the logs."
+msgstr ""
+
+#: \App\Views\admin\Downloads\Logs\pageIndex_v.php:34
+#: \App\Views\admin\Downloads\Management\pageIndex_v.php:36
+#: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:3
+msgid "Search"
+msgstr ""
+
+#. translators: %s: upload_files capability.
+#: \App\Views\admin\Downloads\Management\helptab\tab1_v.php:3
+msgid "To manage downloads, user require %s capability to enter this page."
+msgstr ""
+
+#. translators: %s: edit_others_posts capability.
+#: \App\Views\admin\Downloads\Management\helptab\tab1_v.php:7
+msgid "Users cannot edit other's download if they don't have %s capability."
+msgstr ""
+
+#. translators: %1$s: Open link tag, %2$s: Close link tag.
+#: \App\Views\admin\Downloads\Management\helptab\tab1_v.php:11
+msgid "For more information about these capabilityes, please continue reading on %1$sWordPress%2$s website."
+msgstr ""
+
+#. translators: %s filter_user_id Query string name.
+#: \App\Views\admin\Downloads\Management\helptab\tab2_v.php:4
+msgid "The administrators who are able to read this help message can manage users download items by add the %s query string as name and the user id as value to the URL."
+msgstr ""
+
+#. translators: %s Link to filter by user.
+#: \App\Views\admin\Downloads\Management\helptab\tab2_v.php:9
+msgid "For example: %s"
+msgstr ""
+
+#: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:14
+msgid "Found total"
+msgstr ""
+
+#. translators: %1$s: Current page, %2$s: Total pages.
+#: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:35
+msgid "Page %1$s of %2$s"
+msgstr ""
+
+#: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:42
+msgid "Previous"
+msgstr ""
+
+#: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:60
+msgid "Insert"
+msgstr ""
+
+#: \App\Views\admin\Plugins\Upgrader_v.php:2
+msgid "Manual update"
+msgstr ""
+
+#. translators: %d: Number of total manual update actions.
+#: \App\Views\admin\Plugins\Upgrader_v.php:18
+msgid "There are total %d actions for this manual update, please continue step by step."
+msgstr ""
+
+#. translators: %1$s: Number with span wrapped of already action, %2$d: Number of total manual update actions.
+#: \App\Views\admin\Plugins\Upgrader_v.php:22
+msgid "You are running %1$s of %2$d."
+msgstr ""
+
+#: \App\Views\admin\Plugins\Upgrader_v.php:24
+msgid "Start"
+msgstr ""
