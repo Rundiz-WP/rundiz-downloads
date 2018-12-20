@@ -1,6 +1,6 @@
 === Rundiz Downloads ===
 Contributors: okvee
-Tags: downloads, download, downloads manager, file hosting, GitHub
+Tags: downloads, download, download manager, file hosting, GitHub
 Requires at least: 4.0
 Tested up to: 5.0.1
 Stable tag: 0.1
@@ -8,18 +8,19 @@ Requires PHP: 5.5
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
-Downloads manager for WordPress that support GitHub auto update.
+Download manager for WordPress that support GitHub auto update.
 
 == Description ==
-The downloads manager for WordPress that support GitHub auto update, any remote file update.
+The download manager for WordPress that support GitHub auto update, any remote file update.
 
 = Features =
 
- * Manage downloads files locally or hosted on GitHub or any remote files.
+ * Manage download files locally or hosted on GitHub or any remote files.
  * Auto update download URL once GitHub repository was updated.
- * Manual update remote file data such as file size changed.
- * Downloads logs/statistic.
+ * Manual update multiple remote file data such as file size that was changed.
+ * Download logs/statistic.
  * Block bots from downloading by captcha, user agent.
+ * Captcha with the audio.
  * Redirect to file or force download (local file only).
  * Support shortcode.
  * Customisable download element for shortcode.

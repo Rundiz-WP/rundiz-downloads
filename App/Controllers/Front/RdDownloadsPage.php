@@ -48,7 +48,6 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\RdDownloadsPage')) {
          * 
          * This method contain `exit()` function, after call to this method the process will stopped.
          * 
-         * @todo [rd-downloads] change from fopen() to readfile() ( http://php.net/manual/en/function.readfile.php ). PHP said it has no problem with memory limit.
          * @param object $downloadRow The download object get from `$wpdb->query()` method.
          * @param string $downloadFullPath The file full path.
          */

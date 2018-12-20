@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Rundiz Downloads
  * Plugin URI: https://rundiz.com/?p=319
- * Description: Downloads manager for WordPress that support GitHub auto update.
+ * Description: Download manager for WordPress that support GitHub auto update.
  * Version: 0.1
  * Author: Vee Winch
  * Author URI: https://rundiz.com
@@ -12,8 +12,6 @@
  * Domain Path: /App/languages/
  * 
  * @package rd-downloads
- * @todo [rd-settings-fw] In real project that copy from this plugin, please remove all readme.txt files that describe what folder is for.
- * @todo [rd-settings-fw] In real project that copy from this plugin, please verify that all of these css, js you are still needed in `\RdDownloads\App\Controllers\Admin\Settings->registerScripts()` and `\RdDownloads\App\Libraries\StylesAndScripts->registerStylesAndScripts()` methods;
  */
 
 
