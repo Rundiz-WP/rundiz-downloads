@@ -105,20 +105,26 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          */
         public function getLatestRepositoryData($url)
         {
+            $owner_name = $this->getNameWithOwnerFromUrl($url);
+
             if (
                 !isset($this->pluginOptions['rdd_github_token']) || 
                 (isset($this->pluginOptions['rdd_github_token']) && empty(trim($this->pluginOptions['rdd_github_token'])))
             ) {
                 // if GitHub token was not set, return original because it cannot check anything.
-                return ['url' => $url];
+                $output['url'] = $url;
+                if (is_array($owner_name) && isset($owner_name[0]) && isset($owner_name[1])) {
+                    $output['nameWithOwner'] = $owner_name[0] . '/' . $owner_name[1];
+                }
+                unset($owner_name);
+                return $output;
             }
 
-            $owner_name = $this->getNameWithOwnerFromUrl($url);
-
-            if (is_array($owner_name) && count($owner_name) == 2) {
+            if (is_array($owner_name) && isset($owner_name[0]) && isset($owner_name[1])) {
                 $owner = $owner_name[0];
                 $name = $owner_name[1];
             } else {
+                // cannot detect name/owner from URL. it is not possible to get latest repository data, return false.
                 return false;
             }
             unset($owner_name);

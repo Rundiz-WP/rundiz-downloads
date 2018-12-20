@@ -407,9 +407,11 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloads')) {
                 }
                 unset($fileParts, $FileSystem);
             }
+
             if (!isset($data['download_update'])) {
                 $data['download_update'] = current_time('mysql');
             }
+
             if (!isset($data['download_update_gmt'])) {
                 $data['download_update_gmt'] = current_time('mysql', true);
             }

@@ -54,43 +54,41 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\RdDownloadsPage')) {
          */
         private function doForceDownload($downloadRow, $downloadFullPath)
         {
-            $Finfo = new \finfo();
             // force download code even memory was limited.
-            // @link https://stackoverflow.com/a/35344234/128761 Force download very large file size souce code from here.
+            // @link http://php.net/manual/en/function.readfile.php Use readfile() for send download file content. This function itself can read very large file.
+            // @link https://stackoverflow.com/questions/7263923/how-to-force-file-download-with-php/ Force download examples.
             // @link https://stackoverflow.com/a/9182133/128761 Prevent ob_flush() error ( ob_flush(): failed to flush buffer. No buffer to flush ).
             // @link https://stackoverflow.com/a/32092523/128761 Correct the file's mime type.
-            // Maximum size of chunks (in bytes).
-            $maxRead = 1 * 1024 * 1024; // 1MB
-            // Open a file in read mode.
-            $handle = fopen($downloadFullPath, 'r');
-            if ($handle === false) {
-                wp_die(__('The file could not be opened.', 'rd-downloads'));
-            }
+
+            $Finfo = new \finfo();
+
             // These headers will force download on browser,
             // and set the custom file name for the download, respectively.
             header('Content-Type: ' . $Finfo->file($downloadFullPath, FILEINFO_MIME_TYPE));
             header('Content-Disposition: attachment; filename="' . $downloadRow->download_file_name . '"');
             header('Content-Length: ' . filesize($downloadFullPath));
-            // Run this until we have read the whole file.
-            // feof (eof means "end of file") returns `true` when the handler
-            // has reached the end of file.
-            while (!feof($handle)) {
-                // Read and output the next chunk.
-                echo fread($handle, $maxRead);
-                // Flush the output buffer to free memory.
-                if (ob_get_level() > 0) {
-                    ob_flush();
-                    flush();
-                }
 
-                if (connection_status() != 0 || connection_aborted() == 1) {
-                    // if user disconnected
-                    fclose($handle);
-                    exit();
+            // No cache headers
+            header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+            header('Cache-Control: post-check=0, pre-check=0', false);
+            header('Pragma: no-cache');
+
+            unset($Finfo);
+
+            if (ob_get_level() > 0) {
+                ob_end_flush();
+            }
+
+            $readfile = @readfile($downloadFullPath);
+
+            if ($readfile === false) {
+                $error = error_get_last();
+                if (isset($error['message']) && is_scalar($error['message'])) {
+                    error_log($error['message']);
                 }
-            }// endwhile;
-            fclose($handle);
-            unset($Finfo, $handle, $maxRead);
+                unset($error);
+            }
+            unset($readfile);
 
             // done.
             exit();
@@ -131,7 +129,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\RdDownloadsPage')) {
             if (isset($stepCaptcha) && $stepCaptcha === true) {
                 // if captcha passed (or setting not to use it).
                 // check for banned user agent.
-                $stepCheckBannedUA = $this->subCheckBannedUA();
+                $stepCheckBannedUA = $this->subCheckBannedUA($download_id);
             }
             unset($stepCaptcha);
 
@@ -167,9 +165,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\RdDownloadsPage')) {
          * Sub page check banned User Agent.
          * 
          * @global array $rd_downloads_options
+         * @param integer $download_id The download_id field.
          * @return boolean Return true on success (not banned), return false for banned or otherwise.
          */
-        protected function subCheckBannedUA()
+        protected function subCheckBannedUA($download_id)
         {
             global $rd_downloads_options;
 
@@ -180,6 +179,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\RdDownloadsPage')) {
                 if (is_array($bannedUserAgents)) {
                     foreach ($bannedUserAgents as $bannedUserAgent) {
                         if (stripos($currentUserAgent, $bannedUserAgent) !== false) {
+                            // if user agent has been banned.
+                            // write download log.
+                            $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
+                            $data = [];
+                            $data['download_id'] = $download_id;
+                            $RdDownloadLogs->writeLog('user_dl_banned', $data);
+                            unset($data, $RdDownloadLogs);
+
                             status_header(403);
                             $output['banned'] = true;
                             $output['currentUserAgent'] = $currentUserAgent;
@@ -209,15 +216,28 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\RdDownloadsPage')) {
         protected function subGetDownloadData($download_id)
         {
             $RdDownloads = new \RdDownloads\App\Models\RdDownloads();
+            $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
             $downloadRow = $RdDownloads->get(['download_id' => $download_id]);
 
             if (empty($downloadRow) || is_null($downloadRow)) {
                 // if not found.
+                // write download log.
+                $data = [];
+                $data['download_id'] = $download_id;
+                $RdDownloadLogs->writeLog('user_dl_error', $data);
+                unset($data, $RdDownloadLogs);
+
                 status_header(404);
                 $this->Loader->loadTemplate('RdDownloadsPage/subGetDownloadData_v');
                 return false;
             } else {
                 // if found download item.
+                // write download log.
+                $data = [];
+                $data['download_id'] = $download_id;
+                $RdDownloadLogs->writeLog('user_dl_success', $data);
+                unset($data, $RdDownloadLogs);
+
                 // increase download count for now.
                 $RdDownloads->increaseDownloadCount($download_id);
                 unset($RdDownloads);

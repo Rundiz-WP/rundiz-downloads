@@ -1,2 +1,1 @@
-* Add user download to download logs.
 * Create download static widget in admin dashboard.
