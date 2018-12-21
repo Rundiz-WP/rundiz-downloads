@@ -11,13 +11,18 @@ License URI: https://opensource.org/licenses/MIT
 Download manager for WordPress that support GitHub auto update.
 
 == Description ==
-The download manager for WordPress that support GitHub auto update, any remote file update.
+Rundiz Downloads is a files, documents management that support GitHub auto update. Provide the download link, track download files.
+
+The GitHub auto update means the URL and file size will be update automatically on GitHub commit or new tag/release.
+You can change your setting to accept how often of auto update. Every releases and commits, every releases, or none.
 
 = Features =
 
- * Manage download files locally or hosted on GitHub or any remote files.
+ * Manage files locally or hosted on GitHub or any remote files.
  * Auto update download URL once GitHub repository was updated.
+ * Setting auto GitHub update to none, every releases, every releases and commits.
  * Manual update multiple remote file data such as file size that was changed.
+ * Insert download button on classic editor or TinyMCE.
  * Download logs/statistic.
  * Block bots from downloading by captcha, user agent.
  * Captcha with the audio.
