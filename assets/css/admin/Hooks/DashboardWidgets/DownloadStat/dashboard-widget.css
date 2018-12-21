@@ -1,0 +1,34 @@
+/**
+ * Admin dashboard widget style
+ */
+
+
+.rd-downloads_dashboard-widget .hidden {
+    display: none;
+}
+
+
+.rd-downloads_dashboard-widget_-top-results {
+    background-color: rgba(0, 0, 0, 0.026);
+    border-top: 1px solid #eee;
+    margin: 0 -12px;
+    padding: 12px;
+    position: relative;
+}
+.rd-downloads_dashboard-widget_-top-results li {
+    border-bottom: 1px solid #eee;
+}
+
+
+.rd-downloads_dashboard-widget_top-results-filter {
+    padding-top: 12px;
+    text-align: left;
+}
+
+
+.rd-downloads_dashboard-widget_-top-results-text {
+    border-bottom: 1px solid #eee;
+}
+.rd-downloads_dashboard-widget_-top-results-text .icon-loading {
+    font-size: 1.13em;
+}

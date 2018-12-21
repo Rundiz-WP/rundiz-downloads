@@ -72,6 +72,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\PluginDbStructure')) {
               dl_id bigint(20) NOT NULL AUTO_INCREMENT,
               download_id bigint(20) DEFAULT NULL COMMENT 'Refer to rd_downloads.download_id',
               user_id bigint(20) DEFAULT NULL COMMENT 'Refer to users.ID',
+              dl_cookie varchar(255) DEFAULT NULL COMMENT 'Downloads cookie for non-member.',
               dl_status varchar(20) DEFAULT NULL COMMENT 'Download status such as ''success'', ''error'', ''banned''.',
               dl_ip varchar(50) DEFAULT NULL COMMENT 'Downloader IP address.',
               dl_user_agent varchar(255) DEFAULT NULL COMMENT 'Downloader user agent.',

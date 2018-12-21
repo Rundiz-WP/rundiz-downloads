@@ -13,8 +13,6 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\RdDownloadsPage')) {
      * Process the download.
      * 
      * This class was called from `App\Controllers\Front\Hooks\Query\DownloadPage` class -> `goToRdDownloadsPage()` method.
-     * 
-     * @todo [rd-downloads] add to download_logs for user download success, user download error, user banned.
      */
     class RdDownloadsPage
     {
