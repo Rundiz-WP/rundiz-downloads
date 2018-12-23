@@ -27,13 +27,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\DashboardWidge
             wp_enqueue_style('rd-downloads-dashboard-widget', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/css/admin/Hooks/DashboardWidgets/DownloadStat/dashboard-widget.css', ['rd-downloads-font-awesome5'], RDDOWNLOADS_VERSION);
 
             wp_enqueue_script('rd-downloads-chartjs', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/vendor/Chart.bundle.min.js', [], '2.7.3', true);
-            wp_enqueue_script('rd-downloads-dashboard-widget', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/admin/Hooks/DashboardWidgets/DownloadStat/dashboard-widget.js', ['jquery', 'rd-downloads-chartjs'], RDDOWNLOADS_VERSION, true);
+            wp_enqueue_script('rd-downloads-dashboard-widget', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/admin/Hooks/DashboardWidgets/DownloadStat/dashboard-widget.js', ['jquery', 'rd-downloads-chartjs', 'wp-util'], RDDOWNLOADS_VERSION, true);
             wp_localize_script(
                 'rd-downloads-dashboard-widget',
                 'RdDownloads',
                 [
                     'nonce' => wp_create_nonce('rd-downloads_dashboard-widget_nonce'),
                     'txtGettingData' => __('Getting data, please wait.', 'rd-downloads'),
+                    'txtNoTopDownload' => __('There are no data.', 'rd-downloads'),
                     'txtTotalDownload' => __('Total downloads', 'rd-downloads'),
                     'txtTotalErrorDownload' => __('Total errors', 'rd-downloads'),
                 ]

@@ -123,8 +123,8 @@ class RdDownloadsDashboardWidget {
                     datasets: [{
                         label: RdDownloads.txtTotalDownload,
                         data: response.part_total_success,
-                        backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                        borderColor: 'rgba(0, 0, 0, 0.3)',
+                        backgroundColor: 'rgba(0, 255, 0, 0.3)',
+                        borderColor: 'rgba(0, 255, 0, 0.3)',
                         fill: false,
                         lineTension: 0
                     },
@@ -173,9 +173,9 @@ class RdDownloadsDashboardWidget {
     displayTextGettingDataTopDownloads() {
         let $ = jQuery.noConflict();
 
-        $('.rd-downloads_dashboard-widget_-top-results-list').addClass('hide hidden');
+        $('.rd-downloads_dashboard-widget_top-results-list').addClass('hide hidden');
 
-        let topDownloadResultsText = $('.rd-downloads_dashboard-widget_-top-results-text');
+        let topDownloadResultsText = $('#rd-downloads_dashboard-widget_top-results-text');
         topDownloadResultsText.removeClass('hide hidden');
         topDownloadResultsText.html('<i class="fas fa-spinner fa-pulse fontawesome-icon icon-loading"></i> ' + RdDownloads.txtGettingData);
     }// displayTextGettingDataTopDownloads
@@ -184,7 +184,6 @@ class RdDownloadsDashboardWidget {
     /**
      * Display top downloads.
      * 
-     * @todo [rd-downloads] create query for top downloads.
      * @returns {unresolved}
      */
     displayTopDownloads() {
@@ -193,7 +192,19 @@ class RdDownloadsDashboardWidget {
 
         $.when(this.ajaxGetTopDownloads())
         .then(function(response) {
-            console.log(response);
+            let listTemplate = wp.template('rd-downloads-list-top-item');
+
+            if (typeof(response) !== 'undefined' && typeof(response.total) !== 'undefined' && response.total <= 0) {
+                $('#rd-downloads_dashboard-widget_top-results-text').html(RdDownloads.txtNoTopDownload);
+            } else if (typeof(response) !== 'undefined' && typeof(response.results) !== 'undefined') {
+                $('#rd-downloads_dashboard-widget_top-results-text').html('');
+                $('#rd-downloads_dashboard-widget_top-results-text').addClass('hide hidden');
+                $('#rd-downloads_dashboard-widget_top-results-list').html('');
+                $('#rd-downloads_dashboard-widget_top-results-list').removeClass('hide hidden');
+                $.each(response.results, function(index, item) {
+                    $('#rd-downloads_dashboard-widget_top-results-list').append(listTemplate(item));
+                });
+            }
 
             deferred.resolve();
         });

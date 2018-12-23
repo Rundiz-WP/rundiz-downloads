@@ -20,8 +20,19 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Shortcodes\\RdDownloads')) {
          */
         public function convertShortcode($atts)
         {
-            $ShortcodeRdDownloads = new \RdDownloads\App\Libraries\ShortcodeRdDownloads();
-            return $ShortcodeRdDownloads->renderHtml($atts);
+            $cacheKey = 'rd-downloads.shortcode.rddownloads.blog-id-' . get_current_blog_id() . '_atts-' . md5(wp_json_encode($atts));
+            $SimpleCache = new \RdDownloads\App\Libraries\Cache();
+            $rendered = $SimpleCache->getInstance()->get($cacheKey);
+
+            if ($rendered === false) {
+                $ShortcodeRdDownloads = new \RdDownloads\App\Libraries\ShortcodeRdDownloads();
+                $rendered = $ShortcodeRdDownloads->renderHtml($atts);
+                $SimpleCache->getInstance()->save($cacheKey, $rendered, (6 * 60 * 60));
+                unset($ShortcodeRdDownloads);
+            }
+
+            unset($cacheKey, $SimpleCache);
+            return $rendered;
         }// convertShortcode
 
 

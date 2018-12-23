@@ -2,7 +2,7 @@
 Contributors: okvee
 Tags: downloads, download, download manager, file hosting, GitHub
 Requires at least: 4.0
-Tested up to: 5.0.1
+Tested up to: 5.0.2
 Stable tag: 0.1
 Requires PHP: 5.5
 License: MIT
@@ -24,9 +24,10 @@ You can change your setting to accept how often of auto update. Every releases a
  * Manual update multiple remote file data such as file size that was changed.
  * Insert download button on classic editor or TinyMCE.
  * Download logs/statistic.
+ * Admin dashboard statistic widget.
  * Block bots from downloading by captcha, user agent.
  * Captcha with the audio.
- * Redirect to file or force download (local file only).
+ * Redirect to file or force download. (The force download will be working with local file only.)
  * Support shortcode.
  * Customisable download element for shortcode.
  * Automatically delete logs older than specific number of days.

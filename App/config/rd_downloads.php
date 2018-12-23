@@ -202,6 +202,12 @@ return [
                     'title' => __('Block user agents', 'rd-downloads'),
                     'type' => 'textarea',
                 ],
+                [
+                    'content' => '<button id="rd-downloads-settings-clear-cache" class="button" type="button">' . __('Clear cache', 'rd-downloads') . '</button><br>' . 
+                        __('If something seems not to update, please try to clear the cache first. This will be clear all plugin\'s cache.', 'rd-downloads'),
+                    'title' => __('Cache', 'rd-downloads'),
+                    'type' => 'html',
+                ],
             ],// fields
         ],// end general tab.
         [
