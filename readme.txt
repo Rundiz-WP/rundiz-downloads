@@ -48,11 +48,19 @@ WordPress 4.0 or higher
 Yes, it is.
 
 == Screenshots ==
-1. http://i.imgur.com/RODCLaT.png description of screenshot.
-2. http://i.imgur.com/fxYPGo1.png description of screenshot.
+1. Front-end download button and description example.
+2. Manage downloads page.
+3. Add or edit download page.
+4. Download logs page.
+5. Plugin settings tab 1 (General).
+6. Plugin settings tab 2 (GitHub settings).
+7. Plugin settings tab 3 (Log/statistic).
+8. Plugin settings tab 4 (Design). This will be convert from shortcode into the element you design.
+9. Add a download button for TinyMCE (classic editor).
+10. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
 = 0.1 =
-xxxx-xx-xx
+2018-12-24
 
 * The beginning.
