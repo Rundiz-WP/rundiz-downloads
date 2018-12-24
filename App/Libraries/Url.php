@@ -58,6 +58,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Url')) {
          * 
          * @global array $rd_downloads_options
          * @param integer $download_id The `download_id` from DB.
+         * @return string Return generated download page URL.
          */
         public function getDownloadPageUrl($download_id = '')
         {
@@ -69,9 +70,9 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Url')) {
                 $querystring['download_id'] = $download_id;
             }
 
-            $url = add_query_arg($querystring, $url);
+            $url = add_query_arg($querystring, home_url());
 
-            return $url;
+            return esc_url($url);
         }// getDownloadPageUrl
 
 
