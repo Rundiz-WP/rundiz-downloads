@@ -1,3 +1,2 @@
 * Make GitHub has an option to limit tag version in editing form.
-* Make GitHub has an option to do not accept auto update in editing form.
 * Make GitHub auto update the file version.

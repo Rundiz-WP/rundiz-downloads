@@ -9,8 +9,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2018-12-24T09:02:14+07:00\n"
-"PO-Revision-Date: 2018-12-24T09:02:14+07:00\n"
+"POT-Creation-Date: 2018-12-24T17:44:00+07:00\n"
+"PO-Revision-Date: 2018-12-24T17:44:00+07:00\n"
 "X-Generator: WP-CLI 2.0.1\n"
 "X-Domain: rd-downloads\n"
 
@@ -83,276 +83,276 @@ msgstr ""
 msgid "More advance example:"
 msgstr ""
 
-#: \App\config\rd_downloads.php:115
+#: \App\config\rd_downloads.php:116
 msgid "To use GitHub auto update"
 msgstr ""
 
-#: \App\config\rd_downloads.php:117
+#: \App\config\rd_downloads.php:118
 msgid "Go to your %1$sGitHub%2$s repository."
 msgstr ""
 
-#: \App\config\rd_downloads.php:118
+#: \App\config\rd_downloads.php:119
 msgid "Go to Settings &gt; Webhooks."
 msgstr ""
 
-#: \App\config\rd_downloads.php:120
+#: \App\config\rd_downloads.php:121
 msgid "If you didn't created Webhooks yet, click on %1$s button. If you want to change the secret, click on %2$s button."
 msgstr ""
 
-#: \App\config\rd_downloads.php:121
+#: \App\config\rd_downloads.php:122
 msgid "Add webhook"
 msgstr ""
 
-#: \App\config\rd_downloads.php:122
+#: \App\config\rd_downloads.php:123
 msgid "Edit"
 msgstr ""
 
-#: \App\config\rd_downloads.php:124
+#: \App\config\rd_downloads.php:125
 msgid "Enter %s for payload URL."
 msgstr ""
 
-#: \App\config\rd_downloads.php:125
+#: \App\config\rd_downloads.php:126
 msgid "Content type is %s."
 msgstr ""
 
-#: \App\config\rd_downloads.php:126
+#: \App\config\rd_downloads.php:127
 msgid "On Secret field, enter the secret generated from here."
 msgstr ""
 
-#: \App\config\rd_downloads.php:127
+#: \App\config\rd_downloads.php:128
 msgid "On events to trigger this webhook, choose %s."
 msgstr ""
 
-#: \App\config\rd_downloads.php:127
+#: \App\config\rd_downloads.php:128
 msgid "Just the push event"
 msgstr ""
 
-#: \App\config\rd_downloads.php:128
+#: \App\config\rd_downloads.php:129
 msgid "Check on %s checkbox and save."
 msgstr ""
 
-#: \App\config\rd_downloads.php:128
+#: \App\config\rd_downloads.php:129
 msgid "Active"
 msgstr ""
 
-#: \App\config\rd_downloads.php:132
+#: \App\config\rd_downloads.php:133
 msgid "To get GitHub token"
 msgstr ""
 
-#: \App\config\rd_downloads.php:134
+#: \App\config\rd_downloads.php:135
 msgid "Go to your %1$sGitHub%2$s website."
 msgstr ""
 
-#: \App\config\rd_downloads.php:135
+#: \App\config\rd_downloads.php:136
 msgid "Click at your icon on the right of the top bar, the menu will be appear."
 msgstr ""
 
-#: \App\config\rd_downloads.php:136
+#: \App\config\rd_downloads.php:137
 msgid "Go to %1$sSettings &gt; Developer settings &gt; Personal access tokens%2$s page."
 msgstr ""
 
-#: \App\config\rd_downloads.php:137
-#: \App\config\rd_downloads.php:140
+#: \App\config\rd_downloads.php:138
+#: \App\config\rd_downloads.php:141
 msgid "Click on %s button."
 msgstr ""
 
-#: \App\config\rd_downloads.php:137
+#: \App\config\rd_downloads.php:138
 msgid "Generate new token"
 msgstr ""
 
-#: \App\config\rd_downloads.php:138
+#: \App\config\rd_downloads.php:139
 msgid "Enter Token description."
 msgstr ""
 
-#: \App\config\rd_downloads.php:139
+#: \App\config\rd_downloads.php:140
 msgid "Check for these scopes. %s"
 msgstr ""
 
-#: \App\config\rd_downloads.php:140
+#: \App\config\rd_downloads.php:141
 msgid "Generate token"
 msgstr ""
 
-#: \App\config\rd_downloads.php:141
+#: \App\config\rd_downloads.php:142
 msgid "Copy your personal token and paste above field then save changes before you won't be able to see it again."
 msgstr ""
 
-#: \App\config\rd_downloads.php:150
+#: \App\config\rd_downloads.php:151
 msgid "General"
 msgstr ""
 
-#: \App\config\rd_downloads.php:156
+#: \App\config\rd_downloads.php:157
 msgid "Check this to use force download instead of redirect to file. (This will work with local file only.)"
 msgstr ""
 
-#: \App\config\rd_downloads.php:156
-#: \App\config\rd_downloads.php:169
-#: \App\config\rd_downloads.php:186
+#: \App\config\rd_downloads.php:157
+#: \App\config\rd_downloads.php:170
+#: \App\config\rd_downloads.php:187
 msgid "Default is no."
 msgstr ""
 
-#: \App\config\rd_downloads.php:158
-#: \App\config\rd_downloads.php:171
-#: \App\config\rd_downloads.php:188
-#: \App\config\rd_downloads.php:271
-#: \App\config\rd_downloads.php:297
+#: \App\config\rd_downloads.php:159
+#: \App\config\rd_downloads.php:172
+#: \App\config\rd_downloads.php:189
+#: \App\config\rd_downloads.php:272
+#: \App\config\rd_downloads.php:298
 #: \App\Models\RdDownloadsListTable.php:91
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:71
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:101
 msgid "Yes"
 msgstr ""
 
 #. translators: %s: Force download option.
-#: \App\config\rd_downloads.php:162
+#: \App\config\rd_downloads.php:163
 #: \App\Controllers\Admin\Downloads\Editing.php:59
 #: \App\Models\RdDownloadsListTable.php:224
 #: \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:4
 #: \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:8
 #: \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:12
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:69
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:78
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:99
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:108
 msgid "Force download"
 msgstr ""
 
-#: \App\config\rd_downloads.php:169
+#: \App\config\rd_downloads.php:170
 msgid "Captcha is human validation that can help prevent bot, check this to use the captcha."
 msgstr ""
 
-#: \App\config\rd_downloads.php:175
-#: \App\config\rd_downloads.php:185
+#: \App\config\rd_downloads.php:176
+#: \App\config\rd_downloads.php:186
 msgid "Use captcha"
 msgstr ""
 
-#: \App\config\rd_downloads.php:184
+#: \App\config\rd_downloads.php:185
 msgid "If %s was checked, this checkbox is for allow play captcha audio. If your server does not support or not working then uncheck this box."
 msgstr ""
 
-#: \App\config\rd_downloads.php:192
+#: \App\config\rd_downloads.php:193
 msgid "Use captcha audio"
 msgstr ""
 
-#: \App\config\rd_downloads.php:197
+#: \App\config\rd_downloads.php:198
 msgid "User agent that contain text in one of this will be blocked. One per line, case insensitive."
 msgstr ""
 
-#: \App\config\rd_downloads.php:202
+#: \App\config\rd_downloads.php:203
 msgid "Block user agents"
 msgstr ""
 
-#: \App\config\rd_downloads.php:206
+#: \App\config\rd_downloads.php:207
 msgid "Clear cache"
 msgstr ""
 
-#: \App\config\rd_downloads.php:207
+#: \App\config\rd_downloads.php:208
 msgid "If something seems not up-to-date, please try to clear the cache first. This will be clear all plugin's cache."
 msgstr ""
 
-#: \App\config\rd_downloads.php:208
+#: \App\config\rd_downloads.php:209
 msgid "Cache"
 msgstr ""
 
-#: \App\config\rd_downloads.php:215
+#: \App\config\rd_downloads.php:216
 msgid "GitHub"
 msgstr ""
 
-#: \App\config\rd_downloads.php:219
+#: \App\config\rd_downloads.php:220
 msgid "Re-generate"
 msgstr ""
 
-#: \App\config\rd_downloads.php:220
+#: \App\config\rd_downloads.php:221
 msgid "Secret key for use in GitHub webhook auto update"
 msgstr ""
 
-#: \App\config\rd_downloads.php:225
+#: \App\config\rd_downloads.php:226
 msgid "GitHub Secret"
 msgstr ""
 
-#: \App\config\rd_downloads.php:230
+#: \App\config\rd_downloads.php:231
 msgid "Choose how auto update work. Auto update on every releases and commits can make your server slow, if you choose every releases then it will work less."
 msgstr ""
 
-#: \App\config\rd_downloads.php:233
+#: \App\config\rd_downloads.php:234
 msgid "Do not auto update"
 msgstr ""
 
-#: \App\config\rd_downloads.php:234
+#: \App\config\rd_downloads.php:235
 msgid "Every releases"
 msgstr ""
 
-#: \App\config\rd_downloads.php:234
+#: \App\config\rd_downloads.php:235
 #: \App\Models\RdDownloadsListTable.php:93
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:75
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:105
 msgid "Default"
 msgstr ""
 
-#: \App\config\rd_downloads.php:235
+#: \App\config\rd_downloads.php:236
 msgid "Every releases and commits"
 msgstr ""
 
-#: \App\config\rd_downloads.php:237
+#: \App\config\rd_downloads.php:238
 msgid "Auto update"
 msgstr ""
 
-#: \App\config\rd_downloads.php:247
+#: \App\config\rd_downloads.php:248
 msgid "Test token"
 msgstr ""
 
-#: \App\config\rd_downloads.php:248
+#: \App\config\rd_downloads.php:249
 msgid "Token that can be used to access GitHub API such as auto correct repository URL."
 msgstr ""
 
-#: \App\config\rd_downloads.php:249
+#: \App\config\rd_downloads.php:250
 msgid "This is required to use with GitHub auto update."
 msgstr ""
 
-#: \App\config\rd_downloads.php:251
+#: \App\config\rd_downloads.php:252
 msgid "GitHub token"
 msgstr ""
 
-#: \App\config\rd_downloads.php:263
+#: \App\config\rd_downloads.php:264
 msgid "Logs/statistic"
 msgstr ""
 
-#: \App\config\rd_downloads.php:269
+#: \App\config\rd_downloads.php:270
 msgid "Check this to automatically delete old logs."
 msgstr ""
 
-#: \App\config\rd_downloads.php:269
-#: \App\config\rd_downloads.php:295
+#: \App\config\rd_downloads.php:270
+#: \App\config\rd_downloads.php:296
 msgid "Default is yes."
 msgstr ""
 
 #. translators: %s is Auto delete logs option
-#: \App\config\rd_downloads.php:275
-#: \App\config\rd_downloads.php:281
+#: \App\config\rd_downloads.php:276
+#: \App\config\rd_downloads.php:282
 msgid "Auto delete logs"
 msgstr ""
 
 #. translators: %s is Auto delete logs option
-#: \App\config\rd_downloads.php:281
+#: \App\config\rd_downloads.php:282
 msgid "Auto delete logs after specific days. This will be skipped if %s was not checked."
 msgstr ""
 
 #. translators: %s is Auto delete logs option
-#: \App\config\rd_downloads.php:281
+#: \App\config\rd_downloads.php:282
 msgid "Default is 90."
 msgstr ""
 
-#: \App\config\rd_downloads.php:288
+#: \App\config\rd_downloads.php:289
 msgid "Days limit"
 msgstr ""
 
-#: \App\config\rd_downloads.php:295
+#: \App\config\rd_downloads.php:296
 msgid "Check this to logs admin actions such as add, update, delete downloads."
 msgstr ""
 
-#: \App\config\rd_downloads.php:301
+#: \App\config\rd_downloads.php:302
 msgid "Admin actions"
 msgstr ""
 
-#: \App\config\rd_downloads.php:308
+#: \App\config\rd_downloads.php:309
 msgid "Design"
 msgstr ""
 
-#: \App\config\rd_downloads.php:315
+#: \App\config\rd_downloads.php:316
 msgid "Downloads element"
 msgstr ""
 
@@ -371,7 +371,7 @@ msgid "Edit download"
 msgstr ""
 
 #: \App\Controllers\Admin\Downloads\Editing.php:127
-#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:274
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:276
 msgid "The editing item was not found."
 msgstr ""
 
@@ -382,7 +382,7 @@ msgstr ""
 #: \App\Controllers\Admin\Downloads\Editing.php:171
 #: \App\Controllers\Admin\Downloads\Logs.php:197
 #: \App\Controllers\Admin\Downloads\Management.php:188
-#: \App\Controllers\Admin\Settings.php:165
+#: \App\Controllers\Admin\Settings.php:170
 msgid "Are you sure?"
 msgstr ""
 
@@ -417,7 +417,7 @@ msgid "Download logs"
 msgstr ""
 
 #: \App\Controllers\Admin\Downloads\Logs.php:72
-#: \App\Models\RdDownloadsListTable.php:356
+#: \App\Models\RdDownloadsListTable.php:364
 msgid "Logs"
 msgstr ""
 
@@ -554,17 +554,17 @@ msgstr ""
 msgid "Invalid GitHub repository URL. The correct format should be %s."
 msgstr ""
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:129
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:131
 msgid "Incorrect Download URL value."
 msgstr ""
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:206
-#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:300
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:208
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:302
 msgid "Unknown error, please reload the webpage and try again."
 msgstr ""
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:224
-#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:316
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:226
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:318
 msgid "Your download was saved successfully."
 msgstr ""
 
@@ -679,12 +679,8 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: \App\Controllers\Admin\Plugins.php:38
-msgid "After Actions"
-msgstr ""
-
 #. translators: %s: Current DB version.
-#: \App\Controllers\Admin\Plugins.php:80
+#: \App\Controllers\Admin\Plugins.php:79
 msgid "DB version %s"
 msgstr ""
 
@@ -714,7 +710,7 @@ msgstr ""
 msgid "The manual update is required, please tell administrator to update first."
 msgstr ""
 
-#: \App\Controllers\Admin\Settings.php:165
+#: \App\Controllers\Admin\Settings.php:170
 msgid "The generated secret will not working anymore with any GitHub repositories that already has this setting. You have to update new secret on those repositories again"
 msgstr ""
 
@@ -750,15 +746,15 @@ msgstr ""
 #: \App\Libraries\FileSystem.php:113
 #: \App\Libraries\Github.php:401
 #: \App\Libraries\Url.php:27
-#: \App\Libraries\Url.php:88
+#: \App\Libraries\Url.php:89
 msgid "The %s must be string."
 msgstr ""
 
-#: \App\Libraries\ElementPlaceholders.php:56
+#: \App\Libraries\ElementPlaceholders.php:57
 msgid "Download"
 msgstr ""
 
-#: \App\Libraries\ElementPlaceholders.php:57
+#: \App\Libraries\ElementPlaceholders.php:58
 #: \App\Models\RdDownloadLogsListTable.php:149
 #: \App\Models\RdDownloadsListTable.php:218
 #: \App\Views\admin\Downloads\Editing\pageEdit_v.php:19
@@ -766,35 +762,40 @@ msgstr ""
 msgid "Downloads name"
 msgstr ""
 
-#: \App\Libraries\ElementPlaceholders.php:58
+#: \App\Libraries\ElementPlaceholders.php:59
 msgid "GitHub repository name"
 msgstr ""
 
-#: \App\Libraries\ElementPlaceholders.php:59
+#: \App\Libraries\ElementPlaceholders.php:60
 #: \App\Models\RdDownloadsListTable.php:222
 #: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:22
 msgid "Size"
 msgstr ""
 
-#: \App\Libraries\ElementPlaceholders.php:60
+#: \App\Libraries\ElementPlaceholders.php:61
 msgid "File name"
 msgstr ""
 
-#: \App\Libraries\ElementPlaceholders.php:61
+#: \App\Libraries\ElementPlaceholders.php:62
 msgid "File size"
 msgstr ""
 
-#: \App\Libraries\ElementPlaceholders.php:62
+#: \App\Libraries\ElementPlaceholders.php:63
 msgid "Create on"
 msgstr ""
 
-#: \App\Libraries\ElementPlaceholders.php:63
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:98
+#: \App\Libraries\ElementPlaceholders.php:64
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:128
 msgid "Last update"
 msgstr ""
 
-#: \App\Libraries\ElementPlaceholders.php:64
+#: \App\Libraries\ElementPlaceholders.php:65
 msgid "Total download"
+msgstr ""
+
+#: \App\Libraries\ElementPlaceholders.php:66
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:55
+msgid "Version"
 msgstr ""
 
 #. translators: %s: Template path.
@@ -836,16 +837,21 @@ msgstr ""
 
 #. translators: %s: true (boolean)
 #: \App\Libraries\ShortcodeRdDownloads.php:53
-msgid "Set to %s to display create date. Default is not set."
+msgid "Set to %s to display download file version. Default is not set."
 msgstr ""
 
 #. translators: %s: true (boolean)
 #: \App\Libraries\ShortcodeRdDownloads.php:59
+msgid "Set to %s to display create date. Default is not set."
+msgstr ""
+
+#. translators: %s: true (boolean)
+#: \App\Libraries\ShortcodeRdDownloads.php:65
 msgid "Set to %s to display last update. Default is not set."
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: Close link, %3$s: Default value.
-#: \App\Libraries\ShortcodeRdDownloads.php:64
+#: \App\Libraries\ShortcodeRdDownloads.php:70
 msgid "Use %1$sPHP date/time format%2$s. Default is %3$s."
 msgstr ""
 
@@ -945,7 +951,7 @@ msgid "Filter download"
 msgstr ""
 
 #: \App\Models\RdDownloadLogsListTable.php:263
-#: \App\Models\RdDownloadsListTable.php:349
+#: \App\Models\RdDownloadsListTable.php:357
 msgid "Filter user"
 msgstr ""
 
@@ -954,7 +960,7 @@ msgid "Shortcode copied to clipboard."
 msgstr ""
 
 #: \App\Models\RdDownloadsListTable.php:89
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:72
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:102
 msgid "No"
 msgstr ""
 
@@ -995,16 +1001,20 @@ msgid "Shortcode"
 msgstr ""
 
 #: \App\Models\RdDownloadsListTable.php:225
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:62
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:92
 msgid "Download count"
 msgstr ""
 
 #: \App\Models\RdDownloadsListTable.php:343
 #: \App\Views\admin\Downloads\Editing\pageEdit_v.php:35
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:110
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:122
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:123
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:140
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:152
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:153
 msgid "Preview"
+msgstr ""
+
+#: \App\Models\RdDownloadsListTable.php:350
+msgid "GitHub repository"
 msgstr ""
 
 #: \App\Views\admin\Downloads\Editing\helpTab\tab1_v.php:1
@@ -1043,13 +1053,13 @@ msgid "If you choose this option to default, it will use %s option from plugin s
 msgstr ""
 
 #: \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:14
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:80
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:110
 msgid "redirect to file"
 msgstr ""
 
 #. translators: %s: Force download option value for main plugin setting.
 #: \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:17
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:83
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:113
 msgid "The plugin setting is using %s."
 msgstr ""
 
@@ -1058,7 +1068,7 @@ msgid "Download URL"
 msgstr ""
 
 #: \App\Views\admin\Downloads\Editing\pageEdit_v.php:38
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:89
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:119
 msgid "Please open the help tab to see help message."
 msgstr ""
 
@@ -1075,45 +1085,58 @@ msgstr ""
 msgid "Maximum upload file size: %s."
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:55
+#. translators: %1$s: version_compare(), %2$s: example version number. 1.0.0
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:62
+msgid "The version number of this download that can be use with %1$s function. Example: %2$s."
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:71
+msgid "Version range"
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:78
+msgid "The version range to get update."
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:85
 msgid "Notes"
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:58
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:88
 msgid "Notes about this download, display to administrator only. HTML will be escaped."
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:65
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:95
 msgid "The number of times this file has been downloaded."
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:88
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:118
 msgid "Choose yes and the file will use force download instead of redirect to it."
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:94
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:124
 msgid "Publish data"
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:96
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:126
 msgid "Created by"
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:97
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:127
 msgid "Created on"
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:105
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:135
 msgid "Save"
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:127
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:131
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:157
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:161
 msgid "This file is linked with other downloads data."
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:139
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:140
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:169
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:170
 msgid "Delete this file"
 msgstr ""
 

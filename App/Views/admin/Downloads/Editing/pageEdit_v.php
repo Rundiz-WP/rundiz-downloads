@@ -55,7 +55,30 @@
                     <th><label for="opt_download_version"><?php _e('Version', 'rd-downloads'); ?></label></th>
                     <td>
                         <input id="opt_download_version" class="regular-text" type="text" name="opt_download_version" value="<?php if (isset($opt_download_version)) {echo esc_attr($opt_download_version);} ?>" maxlength="50">
-                        <p class="description"><?php printf(__('File version number that can be use with %1$s function. Example: %2$s.', 'rd-downloads'), '<a href="http://php.net/manual/en/function.version-compare.php" target="versioncompare"><code>version_compare()</code></a>', '1.0.0'); ?></p>
+                        <p class="description">
+                            <?php 
+                            printf(
+                                /* translators: %1$s: version_compare(), %2$s: example version number. 1.0.0 */
+                                __('The version number of this download that can be use with %1$s function. Example: %2$s.', 'rd-downloads'), 
+                                '<a href="http://php.net/manual/en/function.version-compare.php" target="versioncompare"><code>version_compare()</code></a>', 
+                                '1.0.0'
+                            ); 
+                            ?>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="opt_download_version_range"><?php _e('Version range', 'rd-downloads'); ?></label></th>
+                    <td>
+                        <input id="opt_download_version_range" class="regular-text" type="text" name="opt_download_version_range" value="<?php if (isset($opt_download_version_range)) {echo esc_attr($opt_download_version_range);} ?>" maxlength="50">
+                        <p class="description">
+                            <?php 
+                            // @todo [rd-downloads] make version range. See reference on Composer document ( https://getcomposer.org/doc/articles/versions.md )
+                            printf(
+                                __('The version range to get update.', 'rd-downloads')
+                            ); 
+                            ?>
+                        </p>
                     </td>
                 </tr>
                 <tr>
