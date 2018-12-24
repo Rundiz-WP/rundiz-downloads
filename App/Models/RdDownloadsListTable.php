@@ -149,7 +149,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
                 $output .= '<a class="row-title" href="' . esc_url(admin_url('admin.php?page=rd-downloads_edit&amp;download_id=' . $item->download_id)) . '" title="' . esc_attr($item->download_name) . '">';
             }
 
-            $output .= esc_html(mb_strimwidth($item->download_name, 0, 27, '...'));
+            $output .= esc_html(mb_strimwidth($item->download_name, 0, 47, '...'));
 
             if ($this->checkPermissionEdit($item)) {
                 $output .= '</a>';
@@ -342,6 +342,14 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
                 esc_url($item->download_url),
                 __('Preview', 'rd-downloads')
             );
+
+            if ($item->download_type == '1' && !empty($item->download_github_name)) {
+                $actions['githubRepository'] = sprintf(
+                    '<a href="%s" target="github_repository">%s</a>',
+                    esc_url('https://github.com/' . $item->download_github_name),
+                    __('GitHub repository', 'rd-downloads')
+                );
+            }
 
             $actions['filter_user'] = sprintf(
                 '<a href="%s">%s</a>',
