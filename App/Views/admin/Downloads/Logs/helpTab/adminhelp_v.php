@@ -9,7 +9,7 @@
 <p>
     <?php 
     /* translators: %s filter_user_id Query string name. */
-    printf(__('You can also filter the log for each download item by adding the %s query string as name and the user id as value to the URL.', 'rd-downloads'), '<code>filter_download_id</code>'); 
+    printf(__('You can also filter the log for each download item by adding the %s query string as name and the download id as value to the URL.', 'rd-downloads'), '<code>filter_download_id</code>'); 
     ?><br>
     <?php  _e('Example:', 'rd-downloads'); ?>
     <a href="<?php echo admin_url('admin.php?page=' . filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING) . '&filter_download_id=1'); ?>"><?php echo admin_url('admin.php?page=' . filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING) . '&filter_download_id=1'); ?></a>

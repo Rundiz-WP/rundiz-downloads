@@ -18,5 +18,5 @@ printf(__('Users cannot edit other\'s download if they don\'t have %s capability
 ?></p>
 <p><?php 
 /* translators: %1$s: Open link tag, %2$s: Close link tag. */
-printf(__('For more information about these capabilityes, please continue reading on %1$sWordPress%2$s website.', 'rd-downloads'), '<a href="https://codex.wordpress.org/Roles_and_Capabilities" target="WPDoc">', '</a>'); 
+printf(__('For more information about these capabilities, please continue reading on %1$sWordPress%2$s website.', 'rd-downloads'), '<a href="https://codex.wordpress.org/Roles_and_Capabilities" target="WPDoc">', '</a>'); 
 ?></p>
