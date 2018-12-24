@@ -33,9 +33,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins')) {
             
             if ($plugin == $plugin_file) {
                 $link = [];
-                $link['settings'] = '<a href="'.  esc_url(get_admin_url(null, 'options-general.php?page=rd-downloads-settings')).'">'.__('Settings').'</a>';
+                $link['settings'] = '<a href="'.  esc_url(get_admin_url(null, 'admin.php?page=rd-downloads_settings')).'">'.__('Settings').'</a>';
                 $actions = array_merge($link, $actions);
-                $actions['after_actions'] = '<a href="#" onclick="return false;">'.__('After Actions', 'rd-downloads').'</a>';
                 unset($link);
             }
             
@@ -81,8 +80,6 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins')) {
                 }
                 unset($configValues);
 
-                $after_link[] = '<a href="#" onclick="return false;">Donate</a>';
-                $after_link[] = '<a href="#" onclick="return false;">Document</a>';
                 $links = array_merge($links, $after_link);
                 unset($after_link);
             }
