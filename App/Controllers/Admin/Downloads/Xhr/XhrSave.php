@@ -117,9 +117,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                 }
 
                 $opt_force_download = filter_input(INPUT_POST, 'opt_force_download', FILTER_SANITIZE_NUMBER_INT);
+                $opt_download_version = filter_input(INPUT_POST, 'opt_download_version', FILTER_SANITIZE_STRING);
                 $data['download_options'] = maybe_serialize(
                     [
                         'opt_force_download' => $opt_force_download,
+                        'opt_download_version' => $opt_download_version,
                     ]
                 );
                 unset($opt_force_download);
@@ -302,7 +304,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
             }
             unset($additionalData);
 
-            // ready to insert the data.
+            // ready to update the data.
             if (isset($validated) && $validated === true) {
                 if (defined('WP_DEBUG') && WP_DEBUG === true) {
                     $output['debugDataToSave'] = $data;
@@ -320,6 +322,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                         'download_id' => $download_id,
                     ]);
                     unset($Dll);
+
+                    // clear all cache on save.
+                    $Cache = new \RdDownloads\App\Libraries\Cache();
+                    $output['cacheCleared'] = $Cache->getInstance()->clear();
+                    unset($Cache);
                 } else {
                     global $wpdb;
                     $responseStatus = 500;

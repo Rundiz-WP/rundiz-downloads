@@ -124,6 +124,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
                     $output['form_result_class'] = 'notice-success';
                     $output['form_result_msg'] =  __('Settings saved.');
                 }
+
+                // clear all cache on save.
+                $Cache = new \RdDownloads\App\Libraries\Cache();
+                $output['cacheCleared'] = $Cache->getInstance()->clear();
+                unset($Cache);
             }// endif $_POST
 
             $output['settings_page'] = $RundizSettings->getSettingsPage($options_values);

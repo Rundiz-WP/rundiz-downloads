@@ -101,6 +101,7 @@ $designHelp .= esc_html($designDefaultValue);
 $designHelp .= esc_html('
 {if display_download_count} ({{txt_total_download}}: {{download_count}}){endif}
 <br>{{txt_download_name}}: {{download_name}}
+{if display_download_version}<br>{{txt_version}}: {{opt_download_version}}{endif}
 {if download_github_name}<br>{{txt_github_name}}: {{download_github_name}}{endif}
 {if display_file_name}<br>{{txt_file_name}}: {{download_file_name}}{endif}
 {if display_size}<br>{{txt_file_size}}: {{download_size}}{endif}

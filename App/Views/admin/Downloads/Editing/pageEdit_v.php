@@ -52,6 +52,13 @@
                     </td>
                 </tr>
                 <tr>
+                    <th><label for="opt_download_version"><?php _e('Version', 'rd-downloads'); ?></label></th>
+                    <td>
+                        <input id="opt_download_version" class="regular-text" type="text" name="opt_download_version" value="<?php if (isset($opt_download_version)) {echo esc_attr($opt_download_version);} ?>" maxlength="50">
+                        <p class="description"><?php printf(__('File version number that can be use with %1$s function. Example: %2$s.', 'rd-downloads'), '<a href="http://php.net/manual/en/function.version-compare.php" target="versioncompare"><code>version_compare()</code></a>', '1.0.0'); ?></p>
+                    </td>
+                </tr>
+                <tr>
                     <th><label for="download_admin_comment"><?php _e('Notes', 'rd-downloads'); ?></label></th>
                     <td>
                         <textarea id="download_admin_comment" class="widefat" name="download_admin_comment" maxlength="1000" rows="3"><?php if (isset($download_admin_comment)) {echo esc_html($download_admin_comment);} ?></textarea>

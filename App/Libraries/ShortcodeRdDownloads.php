@@ -46,6 +46,12 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\ShortcodeRdDownloads')) {
                     /* translators: %s: true (boolean) */
                     'helpmsg' => sprintf(__('Set to %s to display download count. Default is not set.', 'rd-downloads'), '<code>true</code>'),
                 ],// for toggle display download count or not. its value is boolean.
+                'display_download_version' => [
+                    'default' => '',
+                    'isbool' => true,
+                    /* translators: %s: true (boolean) */
+                    'helpmsg' => sprintf(__('Set to %s to display download file version. Default is not set.', 'rd-downloads'), '<code>true</code>'),
+                ],
                 'display_create_date' => [
                     'default' => '',
                     'isbool' => true,
@@ -167,17 +173,24 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\ShortcodeRdDownloads')) {
                 $templateString = $ElementPlaceholders->defaultDownloadHtml();
             }
 
+            // extract options for placeholder.
+            $download_options = maybe_unserialize($DlRow->download_options);
+
             // set template data -----------------------------------------------------------------------
             $templateData = $ElementPlaceholders->textPlaceholders();
             foreach ($ElementPlaceholders->dbPlaceholders() as $db_placeholder) {
                 if (isset($DlRow->{$db_placeholder})) {
                     $templateData[$db_placeholder] = $DlRow->{$db_placeholder};
+                } elseif (isset($download_options[$db_placeholder])) {
+                    $templateData[$db_placeholder] = $download_options[$db_placeholder];
                 } else {
                     $templateData[$db_placeholder] = '';
                 }
             }// endforeachl
             unset($db_placeholder);
             $templateData = array_merge($templateData, $combinedAttributes);
+
+            unset($download_options);
 
             // make sure that these data will not exposed or remove if it is just empty.
             $Url = new Url();

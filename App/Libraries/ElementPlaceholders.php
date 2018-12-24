@@ -26,6 +26,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\ElementPlaceholders')) {
                 'download_size',
                 'download_file_name',
                 'download_count',
+                'opt_download_version',
                 'download_create',
                 'download_create_gmt',
                 'download_update',
@@ -62,6 +63,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\ElementPlaceholders')) {
                 'txt_create_on' => __('Create on', 'rd-downloads'),
                 'txt_last_update' => __('Last update', 'rd-downloads'),
                 'txt_total_download' => __('Total download', 'rd-downloads'),
+                'txt_version' => __('Version', 'rd-downloads'),
             ];
         }// textPlaceholders
 
