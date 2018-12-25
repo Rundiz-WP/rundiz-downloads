@@ -45,16 +45,37 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
             $FileSystem = new \RdDownloads\App\Libraries\FileSystem();
             if ($domainNoSub !== null && $domainNoSub !== false) {
                 // if can get domain without sub domain from the specific URL.
+                $opt_force_download = filter_input(INPUT_POST, 'opt_force_download', FILTER_SANITIZE_NUMBER_INT);
+                $opt_download_version = filter_input(INPUT_POST, 'opt_download_version', FILTER_SANITIZE_STRING);
+                $opt_download_version_range = filter_input(INPUT_POST, 'opt_download_version_range', FILTER_SANITIZE_STRING);
+                $data['download_options'] = maybe_serialize(
+                    [
+                        'opt_force_download' => $opt_force_download,
+                        'opt_download_version' => $opt_download_version,
+                        'opt_download_version_range' => $opt_download_version_range,
+                    ]
+                );
+                unset($opt_force_download);
+
                 switch ($domainNoSub) {
                     case 'github.com':
                         // for github domain.
                         $data['download_type'] = 1;
 
+                        $Semver = new \RdDownloads\App\Libraries\Semver();
+                        $version_range = $opt_download_version_range;
+                        if ((is_null($version_range) || $version_range === '')) {
+                            $version_range = $Semver->getDefaultVersionConstraint($opt_download_version);
+                        }
+                        unset($Semver);
+
                         $Github = new \RdDownloads\App\Libraries\Github();
-                        $result = $Github->getLatestRepositoryData($data['download_url']);
+                        $result = $Github->getLatestRepositoryData($data['download_url'], $version_range);
                         unset($Github);
                         if (isset($result['size']) && $result['size'] > -1) {
                             $data['download_size'] = $result['size'];
+                        } else {
+                            $data['download_size'] = 0;
                         }
                         if (isset($result['nameWithOwner']) && !empty($result['nameWithOwner'])) {
                             // if can get GitHub name with owner.
@@ -99,10 +120,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                         $remoteData = $Url->getRemoteFileInfo($data['download_url']);
                         if (isset($remoteData['size']) && is_numeric($remoteData['size']) && $remoteData['size'] > 0) {
                             $data['download_size'] = $remoteData['size'];
+                        } else {
+                            $data['download_size'] = 0;
                         }
                         unset($remoteData);
                         break;
-                }
+                }// endswitch;
+
+                unset($opt_download_version, $opt_download_version_range);
 
                 // set common data for each download type.
                 $fileParts = $FileSystem->getFilePart($data['download_url']);

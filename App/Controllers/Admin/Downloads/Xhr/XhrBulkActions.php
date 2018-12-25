@@ -247,7 +247,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
             // get the data from DB.
             global $wpdb;
             // use WHERE IN to search for *any* of the values. https://mariadb.com/kb/en/library/in/
-            $sql = 'SELECT `download_id`, `user_id`, `download_name`, `download_type`, `download_github_name`, `download_url`
+            $sql = 'SELECT `download_id`, `user_id`, `download_name`, `download_type`, `download_github_name`, `download_url`, `download_options`
                 FROM `' . $wpdb->prefix . 'rd_downloads`
                 WHERE `download_id` IN (' . implode(', ', array_fill(0, count($download_ids), '%d')) . ')';// https://stackoverflow.com/a/10634225/128761
             $sql .= ' AND `download_type` = 1';
@@ -290,7 +290,28 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                         $capability_limited_download_names[] = $row->download_name;
                     } else {
                         // this condition is able to update the data.
-                        $githubResult = $Github->getLatestRepositoryData($row->download_url);
+                        $download_options = maybe_unserialize($row->download_options);
+                        $version_range = '';
+                        if (
+                            is_array($download_options) && 
+                            array_key_exists('opt_download_version_range', $download_options) &&
+                            array_key_exists('opt_download_version', $download_options)
+                        ) {
+                            if (
+                                empty($download_options['opt_download_version_range']) &&
+                                !empty($download_options['opt_download_version'])
+                            ) {
+                                $Semver = new \RdDownloads\App\Libraries\Semver();
+                                $version_range = $Semver->getDefaultVersionConstraint($download_options['opt_download_version']);
+                                unset($Semver);
+                            } else {
+                                $version_range = $download_options['opt_download_version_range'];
+                            }
+                        }
+
+                        $githubResult = $Github->getLatestRepositoryData($row->download_url, $version_range);
+                        unset($version_range);
+
                         if ($githubResult !== false) {
                             // prepare update data.
                             $data = [];
@@ -302,6 +323,12 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                                 $data['download_file_name'] = $fileParts['nameext'];
                             }
                             unset($fileParts);
+                            if (isset($githubResult['version'])) {
+                                if (isset($download_options) && is_array($download_options)) {
+                                    $download_options['opt_download_version'] = $githubResult['version'];
+                                    $data['download_options'] = maybe_serialize($download_options);
+                                }
+                            }
                             $data['download_update'] = current_time('mysql');
                             $data['download_update_gmt'] = current_time('mysql', true);
 
@@ -318,7 +345,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                             $failed_update_download_ids[] = $row->download_id;
                             $failed_update_download_names[] = $row->download_name;
                         }
-                        unset($githubResult);
+                        unset($download_options, $githubResult);
                     }
                 }// endforeach;
                 unset($current_user_id, $Github, $FileSystem, $row);

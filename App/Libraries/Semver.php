@@ -42,7 +42,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Semver')) {
         /**
          * Get default version constraint from specific version number.
          * 
-         * @param string $version The specific version number.
+         * @param string $version The specific version number. Example: 1.2.3
          * @return string Return version number with default constraint, for example: ">=1.2.3". Return empty string if the version number is nothing.
          */
         public function getDefaultVersionConstraint($version)
@@ -50,6 +50,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Semver')) {
             if ((!is_null($version) && $version !== '')) {
                 return '>=' . $version;
             }
+
             return '';
         }// getDefaultVersionConstraint
 
