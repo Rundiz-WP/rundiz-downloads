@@ -97,7 +97,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          * @link https://developer.github.com/v4/explorer/ For demonstrate API request
          * @link https://getcomposer.org/doc/articles/versions.md Version range reference.
          * @param string $url The URL to anywhere in the repository.
-         * @param string $version_range The version range. See https://getcomposer.org/doc/articles/versions.md for more description.
+         * @param string|array $version_range The version range. See https://getcomposer.org/doc/articles/versions.md for more description. Set this to empty array to get all releases into array.
          * @return array|false Return array if contain latest update by conditions described above, return false for failure.
          *                                  The return array format is: 
          *                                  <pre>array(
@@ -107,6 +107,19 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          *                                      'size' => 'The archive file size (may not contain this key).',
          *                                      'version' => 'The tag version number (may not contain this key).',
          *                                      'nameWithOwner' => 'The name with owner for this repository. The value exactly is "owner/name" (may not contain this key).',
+         *                                  );</pre>
+         *                                  If the $version_range is empty array then the return array format is:
+         *                                  <pre>array(
+         *                                      0 => array(
+         *                                          'id' => '...',
+         *                                          'date' => '...',
+         *                                          '...' => '...',
+         *                                      ),
+         *                                      1 => array(
+         *                                          'id' => '...',
+         *                                          'date' => '...',
+         *                                          '...' => '...',
+         *                                      ),
          *                                  );</pre>
          */
         public function getLatestRepositoryData($url, $version_range = '')
@@ -300,9 +313,9 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
                 Logger::staticDebugLog($tagsReferences, 'github-api-request-formatted-array-' . current_time('Ymd-Hi'));
 
-                if (!empty($tagsReferences)) {
+                if (!empty($tagsReferences) && is_array($tagsReferences)) {
                     // if not empty $tagsReferences
-                    if (empty($version_range) || !is_scalar($version_range)) {
+                    if ((!is_array($version_range) || is_scalar($version_range)) && empty($version_range)) {
                         reset($tagsReferences);
                         $firstRefsKey = key($tagsReferences);
                         $releases = $tagsReferences[$firstRefsKey];
@@ -310,21 +323,23 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                             $releases['debug_firsttag'] = true;
                         }
                         unset($firstRefsKey);
-                    } else {
-                        if (is_array($tagsReferences)) {
-                            foreach ($tagsReferences as $key => $item) {
-                                if (isset($item['version']) && \RdDownloads\Composer\Semver\Semver::satisfies($item['version'], $version_range)) {
-                                    $releases = $tagsReferences[$key];
-                                    if (defined('WP_DEBUG') && WP_DEBUG === true) {
-                                        $releases['debug_matchsemver'] = true;
-                                    }
-                                    break;
+                    } elseif (is_scalar($version_range) && !empty($version_range)) {
+                        foreach ($tagsReferences as $key => $item) {
+                            if (isset($item['version']) && \RdDownloads\Composer\Semver\Semver::satisfies($item['version'], $version_range)) {
+                                $releases = $tagsReferences[$key];
+                                if (defined('WP_DEBUG') && WP_DEBUG === true) {
+                                    $releases['debug_matchsemver'] = true;
                                 }
-                            }// endforeach;
-                            unset($item, $key);
-                        }
-                        
-                    }
+                                break;
+                            }
+                        }// endforeach;
+                        unset($item, $key);
+                    } elseif (is_array($version_range) && empty($version_range)) {
+                        foreach ($tagsReferences as $key => $item) {
+                            $releases[] = $tagsReferences[$key];
+                        }// endforeach;
+                        unset($item, $key);
+                    }// endif;
 
                     if (isset($result->data->repository->nameWithOwner)) {
                         $releases['nameWithOwner'] = $result->data->repository->nameWithOwner;

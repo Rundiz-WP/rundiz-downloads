@@ -33,6 +33,13 @@
 }
 
 
+.rd-downloads-list-items-form .rd-downloads-version {
+    color: #555;
+    cursor: default;
+    font-size: 0.85em;
+}
+
+
 .rd-downloads-list-items-form .shortcode-text {
     cursor: pointer;
     font-size: 0.85em;

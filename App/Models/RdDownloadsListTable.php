@@ -157,6 +157,19 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
 
             $output .= '</strong>';
 
+            if (isset($item->download_options)) {
+                $download_options = maybe_unserialize($item->download_options);
+                if (
+                    is_array($download_options) && 
+                    array_key_exists('opt_download_version', $download_options) &&
+                    !empty($download_options['opt_download_version'])
+                ) {
+                    /* translators: %s: version number. */
+                    $output .= ' <i class="rd-downloads-version" title="' . sprintf(esc_attr__('Version %s', 'rd-downloads'), $download_options['opt_download_version']) . '">(' . esc_html($download_options['opt_download_version']) . ')</i>';
+                }
+                unset($download_options);
+            }
+
             return $output;
         }// column_download_type
 
@@ -338,14 +351,14 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
             }
 
             $actions['previewFile'] = sprintf(
-                '<a href="%s">%s</a>',
+                '<a href="%s" target="rddownloads_preview">%s</a>',
                 esc_url($item->download_url),
                 __('Preview', 'rd-downloads')
             );
 
             if ($item->download_type == '1' && !empty($item->download_github_name)) {
                 $actions['githubRepository'] = sprintf(
-                    '<a href="%s" target="github_repository">%s</a>',
+                    '<a href="%s" target="rddownloads_github_repository">%s</a>',
                     esc_url('https://github.com/' . $item->download_github_name),
                     __('GitHub repository', 'rd-downloads')
                 );

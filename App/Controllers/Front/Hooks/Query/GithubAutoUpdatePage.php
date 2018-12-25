@@ -120,6 +120,67 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
 
 
         /**
+         * Get latest version data matched on version range.
+         * 
+         * This method was called from `githubUpdateData()` method.
+         * 
+         * @param array $latestData The latest data from `\RdDownloads\App\Libraries\GitHub::getLatestRepositoryData()` method.
+         * @param string $version_range The version range.
+         * @param array $download_options Download options in DB.
+         * @return array Return the associate array where table field is key.
+         */
+        private function githubGetLatestVersionRange(array $latestData, $version_range, array $download_options)
+        {
+            $output = [];
+
+            // loop each releases data from latest data fetched from GitHub.
+            // and get the latest or matched version range.
+            foreach ($latestData as $item) {
+                if (empty($version_range)) {
+                    // if version range was not set.
+                    // get the latest.
+                    if (isset($item['nameWithOwner'])) {
+                        $output['download_github_name'] = $item['nameWithOwner'];
+                    }
+                    if (isset($item['url'])) {
+                        $output['download_url'] = $item['url'];
+                    }
+                    if (isset($item['size'])) {
+                        $output['download_size'] = $item['size'];
+                    }
+                    if (isset($item['version'])) {
+                        $download_options['opt_download_version'] = $item['version'];
+                    }
+                    $output['download_options'] = maybe_serialize($download_options);
+                    break;
+                } else {
+                    // if version range was set
+                    if (isset($item['version']) && \RdDownloads\Composer\Semver\Semver::satisfies($item['version'], $version_range)) {
+                        // if matched version range.
+                        if (isset($item['nameWithOwner'])) {
+                            $output['download_github_name'] = $item['nameWithOwner'];
+                        }
+                        if (isset($item['url'])) {
+                            $output['download_url'] = $item['url'];
+                        }
+                        if (isset($item['size'])) {
+                            $output['download_size'] = $item['size'];
+                        }
+                        if (isset($item['version'])) {
+                            $download_options['opt_download_version'] = $item['version'];
+                        }
+                        $output['download_options'] = maybe_serialize($download_options);
+                        break;
+                    }
+                }// endif;
+            }// endforeach; $latestData
+            unset($item);
+
+            return $output;
+        }// githubGetLatestVersionRange
+
+
+        /**
          * Get latest repository data and check if there is something change then update.
          * 
          * @todo [rd-downloads] make auto update on multiple rows in db in case that the same repository is in many download rows.
@@ -129,68 +190,116 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
          */
         private function githubUpdateData(\RdDownloads\App\Libraries\Github $Github, $payloadObject)
         {
+            \RdDownloads\App\Libraries\Logger::staticDebugLog($payloadObject, 'github-payload-' . current_time('Ymd-Hi'));
+
             if (isset($payloadObject->repository->url) && isset($payloadObject->repository->full_name)) {
                 // if payload object contain url, owner name with repository name (owner/reponame).
-                // get latest data.
-                $latestData = $Github->getLatestRepositoryData($payloadObject->repository->url);
+                // get the data in db to check.
+                $RdDownloads = new \RdDownloads\App\Models\RdDownloads();
+                $options = [];
+                $options['download_github_name'] = $payloadObject->repository->full_name;
+                $results = $RdDownloads->listItems($options);
+                unset($options);
 
-                if ($latestData !== false && is_array($latestData) && isset($latestData['url'])) {
-                    // if fetched latest data success.
-                    // get the data in db to check.
-                    $RdDownloads = new \RdDownloads\App\Models\RdDownloads();
-                    $options = [];
-                    $options['download_github_name'] = $payloadObject->repository->full_name;
-                    $downloadRow = $RdDownloads->get($options);
-                    unset($options);
+                if (isset($results['results']) && is_array($results['results']) && !empty($results['results'])) {
+                    // if found data in db.
+                    // get latest data from GitHub.
+                    $latestData = $Github->getLatestRepositoryData($payloadObject->repository->url, []);
 
-                    if (is_object($downloadRow) && $downloadRow->download_url != $latestData['url']) {
-                        // if found data in db and url is not same.
-                        // the url in db is not same to latest maybe it is newer.
-                        // update to db.
-                        $data['download_url'] = $latestData['url'];
-                        if (isset($latestData['size'])) {
-                            $data['download_size'] = $latestData['size'];
-                        }
-                        unset($latestData);
+                    if (is_array($latestData) && isset($latestData[0]) && is_array($latestData[0])) {
+                        // if fetched latest data form GitHub success.
+                        $updatedDb = 0;
+                        $updatedErrors = false;
+                        foreach ($results['results'] as $downloadRow) {
+                            $download_options = maybe_unserialize($downloadRow->download_options);
+                            $version_range = '';
+                            if (
+                                is_array($download_options) && 
+                                array_key_exists('opt_download_version_range', $download_options) &&
+                                array_key_exists('opt_download_version', $download_options)
+                            ) {
+                                // if there are options for version & version range.
+                                if (
+                                    empty($download_options['opt_download_version_range']) &&
+                                    !empty($download_options['opt_download_version'])
+                                ) {
+                                    $Semver = new \RdDownloads\App\Libraries\Semver();
+                                    $version_range = $Semver->getDefaultVersionConstraint($download_options['opt_download_version']);
+                                    unset($Semver);
+                                } else {
+                                    $version_range = $download_options['opt_download_version_range'];
+                                }
+                            }// endif; $download_options
 
-                        $where['download_id'] = $downloadRow->download_id;
+                            $data = [];
+                            $where = [];
+                            $where['download_id'] = $downloadRow->download_id;
 
-                        $updateResult = $RdDownloads->update($data, $where);
-                        unset($data, $RdDownloads, $where);
+                            $data = $this->githubGetLatestVersionRange($latestData, $version_range, $download_options);
+                            unset($download_options);
 
-                        if ($updateResult === false) {
-                            // if failed to update.
-                            unset($downloadRow);
+                            if (is_array($data) && !empty($data) && is_array($where) && !empty($where)) {
+                                $updateResult = $RdDownloads->update($data, $where);
+                                unset($data, $where);
 
-                            status_header(500);
+                                if ($updateResult !== false) {
+                                    // if update success.
+                                    $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
+                                    $RdDownloadLogs->writeLog('github_autoupdate', [
+                                        'download_id' => $downloadRow->download_id,
+                                    ]);
+                                    unset($downloadRow, $RdDownloadLogs);
 
+                                    $updatedDb++;
+                                } else {
+                                    $updatedErrors = true;
+                                }
+                                unset($updateResult);
+                            }// endif;
+
+                        }// endforeach; $results['results'] 
+                        unset($data, $downloadRow, $where);
+
+                        unset($latestData, $RdDownloads);
+
+                        if ($updatedErrors === true) {
                             global $wpdb;
-                            error_log($wpdb->last_error);
-                            exit();
-                        } else {
-                            // if update success.
-                            $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
-                            $RdDownloadLogs->writeLog('github_autoupdate', [
-                                'download_id' => $downloadRow->download_id,
-                            ]);
-                            unset($downloadRow, $RdDownloadLogs);
-
+                            status_header(500);
+                            wp_send_json([
+                                'error' => $wpdb->last_error,
+                            ], 500);
+                        } elseif ($updatedDb >= 0) {
                             status_header(200);
                             wp_send_json([
                                 'updated' => true,
-                                'updateResult' => $updateResult,
+                                'updatedTotal' => $updatedDb,
                             ], 200);
                         }
-                    }// endif; found in db and url is not same.
+                    } else {
+                        // if failed to fetched latest data from GitHub.
+                        // no need to do anything here.
+                        unset($RdDownloads, $results);
 
-                    // come to this means not found data in db or url is same.
-                    // no need to do anything here. end the process.
-                    unset($downloadRow, $latestData, $RdDownloads);
+                        status_header(200);
+                        wp_send_json([
+                            'updated' => false,
+                            'failedGetLatestData' => true,
+                            'latestData' => (defined('WP_DEBUG') && WP_DEBUG === true ? $latestData : ''),
+                        ], 200);
+                    }// endif; $latestData
+                } else {
+                    // if not found any data in db.
+                    // no need to do anything here.
+                    unset($RdDownloads, $results);
+
                     status_header(200);
-                    exit();
-                }// endif; fetched latest data success.
+                    wp_send_json([
+                        'updated' => false,
+                        'notFoundInDb' => true,
+                    ], 200);
+                }// endif; $results['results']
 
-                unset($latestData);
+                unset($RdDownloads, $results);
             }// endif; payload contain required objects.
 
             // come to this means, the payload does not contain required objects.
