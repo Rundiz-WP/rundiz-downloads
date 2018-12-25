@@ -23,6 +23,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
             $output = [];
             $responseStatus = 200;
             $remote_file = trim(filter_input(INPUT_GET, 'remote_file', FILTER_SANITIZE_URL));
+            $current_version = trim(filter_input(INPUT_GET, 'current_version', FILTER_SANITIZE_STRING));
+            $version_range = trim(filter_input(INPUT_GET, 'version_range', FILTER_SANITIZE_STRING));
+
+            $Semver = new \RdDownloads\App\Libraries\Semver();
+            if ((is_null($version_range) || $version_range === '')) {
+                $version_range = $Semver->getDefaultVersionConstraint($current_version);
+            }
+            unset($Semver);
 
             if (stripos($remote_file, 'github.com/') === false) {
                 $responseStatus = 400;
@@ -31,16 +39,19 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
                 $output['form_result_msg'] = sprintf(__('Invalid GitHub repository URL. The correct format should be %s.', 'rd-downloads'), 'https://github.com/owner/name');
             } else {
                 $Github = new \RdDownloads\App\Libraries\Github();
-                $result = $Github->getLatestRepositoryData($remote_file);
+                $result = $Github->getLatestRepositoryData($remote_file, $version_range);
                 unset($Github);
                 if (is_array($result)) {
                     $output = $output + $result;
                 } elseif ($result === false) {
-                    $responseStatus = 400;
-                    $output['form_result_class'] = 'notice-error';
-                    $output['form_result_msg'] = sprintf(__('Invalid GitHub repository URL. The correct format should be %s.', 'rd-downloads'), 'https://github.com/owner/name');
+                    // if cannot get repository data.
+                    // return as-is in case the user input some url on GitHub.
+                    $responseStatus = 202;
+                    $output['url'] = $remote_file;
                 }
             }
+
+            unset($current_version, $remote_file, $version_range);
 
             wp_send_json($output, $responseStatus);
         }// getGithubFileData

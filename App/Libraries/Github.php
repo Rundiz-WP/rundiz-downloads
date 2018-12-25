@@ -45,6 +45,9 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
             $this->getOptions();
             global $rd_downloads_options;
             $this->pluginOptions = $rd_downloads_options;
+
+            // initialize Semver class to be able to use Composer/Semver classes.
+            new Semver();
         }// __construct
 
 
@@ -92,7 +95,9 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          *     It will return default branch with latest zip URL.</pre>
          * 
          * @link https://developer.github.com/v4/explorer/ For demonstrate API request
+         * @link https://getcomposer.org/doc/articles/versions.md Version range reference.
          * @param string $url The URL to anywhere in the repository.
+         * @param string $version_range The version range. See https://getcomposer.org/doc/articles/versions.md for more description.
          * @return array|false Return array if contain latest update by conditions described above, return false for failure.
          *                                  The return array format is: 
          *                                  <pre>array(
@@ -100,10 +105,11 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          *                                      'date' => 'The archive file pushed date (may not contain this key).',
          *                                      'url' => 'The archive file URL.',
          *                                      'size' => 'The archive file size (may not contain this key).',
+         *                                      'version' => 'The tag version number (may not contain this key).',
          *                                      'nameWithOwner' => 'The name with owner for this repository. The value exactly is "owner/name" (may not contain this key).',
          *                                  );</pre>
          */
-        public function getLatestRepositoryData($url)
+        public function getLatestRepositoryData($url, $version_range = '')
         {
             $owner_name = $this->getNameWithOwnerFromUrl($url);
 
@@ -134,57 +140,71 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
             ];
             $postData = [
                 'query' => 'query {
-                    repository(owner: "' . $owner . '", name: "' . $name . '") {
-                      id
-                      url
-                      nameWithOwner
-                      releases(last: 1) {
-                        totalCount
-                        edges {
-                          node {
-                            name
-                            tag {
-                              name
-                              target {
-                                ... on Commit {
-                                  id
-                                  pushedDate
-                                  zipballUrl
-                                }
-                              }
-                            }
-                            releaseAssets(last:100) {
-                              totalCount
-                              edges {
-                                node {
-                                  id
-                                  updatedAt
-                                  downloadUrl
-                                  size
-                                }
-                              }
-                            }
-                            url
-                          }
-                        }
-                      }
-                      defaultBranchRef {
-                        name
-                        target {
-                          ... on Commit {
-                            id
-                            pushedDate
-                            zipballUrl
-                          }
-                        }
-                      }
-                    }
-                  }'
+  repository(owner: "' . $owner . '", name: "' . $name . '") {
+    id
+    url
+    nameWithOwner
+    refs(refPrefix: "refs/tags/", last: 100, orderBy: {field: ALPHABETICAL, direction: DESC}) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+    releases(last: 100) {
+      totalCount
+      edges {
+        node {
+          name
+          tag {
+            id
+            name
+            target {
+              ... on Commit {
+                pushedDate
+                zipballUrl
+              }
+            }
+          }
+          releaseAssets(last: 100) {
+            totalCount
+            edges {
+              node {
+                id
+                updatedAt
+                downloadUrl
+                size
+                downloadCount
+                release {
+                  tagName
+                }
+              }
+            }
+          }
+          url
+        }
+      }
+    }
+    defaultBranchRef {
+      name
+      target {
+        ... on Commit {
+          id
+          pushedDate
+          zipballUrl
+        }
+      }
+    }
+  }
+              }'
             ];
             $postData = wp_json_encode($postData);
 
             $result = $this->apiRequest($headers, $postData);
             unset($headers, $postData);
+
+            Logger::staticDebugLog($result, 'github-api-request-' . current_time('Ymd-Hi'));
 
             $defaultBranch = [];
             if (isset($result->data->repository->defaultBranchRef->target)) {
@@ -206,50 +226,113 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
             }// endif; contain default branch
 
             $releases = [];
-            if (isset($result->data->repository->releases->edges[0]->node)) {
-                // if contain "release".
-                $releaseNode = $result->data->repository->releases->edges[0]->node;
+            if (
+                isset($result->data->repository->refs->edges) && 
+                is_array($result->data->repository->refs->edges) && 
+                isset($result->data->repository->releases->edges) && 
+                is_array($result->data->repository->releases->edges)
+            ) {
+                // if contain refs and releases.
+                // setup tags references for easy checking later.
+                $tagsReferences = [];
+                foreach ($result->data->repository->refs->edges as $item) {
+                    if (isset($item->node->id) && isset($item->node->name)) {
+                        $tagsReferences[$item->node->id] = [
+                            'id' => $item->node->id,
+                            'version' => preg_replace('#(v)?(.+)#iu', '$2', $item->node->name, 1),// remove prefix "v" for example: v1.0.1 will be 1.0.1
+                        ];
+                    }
+                }// endforeach;
+                unset($item);
 
-                if (
-                    isset($releaseNode->releaseAssets->edges) && 
-                    is_array($releaseNode->releaseAssets->edges) &&
-                    !empty($releaseNode->releaseAssets->edges)
-                ) {
-                    // if contain release AND custom archive file(s).
-                    $totalCustomArchiveSize = 0;
-                    foreach ($releaseNode->releaseAssets->edges as $item) {
-                        if (isset($item->node->size)) {
-                            $totalCustomArchiveSize = ($totalCustomArchiveSize + $item->node->size);
-                        }
-                    }// endforeach;
+                if (!empty($tagsReferences)) {
+                    // if not empty $tagsReferences
+                    // loop each release (including tag).
+                    foreach ($result->data->repository->releases->edges as $item) {
+                        if (
+                            isset($item->node->releaseAssets->edges) &&
+                            is_array($item->node->releaseAssets->edges) &&
+                            !empty($item->node->releaseAssets->edges)
+                        ) {
+                            // if contain releases AND custom archive file(s).
+                            $fileSizes = [];
+                            $maxFileSize = 0;
+                            foreach ($item->node->releaseAssets->edges as $itemReleaseAsset) {
+                                if (isset($itemReleaseAsset->node->size)) {
+                                    $fileSizes[] = $itemReleaseAsset->node->size;
+                                }
+                            }// endforeach;
+                            unset($itemReleaseAsset);
+
+                            
+                            if (!empty($fileSizes)) {
+                                $maxFileSize = max($fileSizes);
+                            }
+                            if ($maxFileSize == 0) {
+                                $maxFileSize = -1;
+                            }
+                            unset($fileSizes);
+
+                            if (isset($item->node->tag->id) && isset($tagsReferences[$item->node->tag->id])) {
+                                if (isset($item->node->url)) {
+                                    $tagsReferences[$item->node->tag->id]['url'] = $item->node->url;
+                                } else {
+                                    $tagsReferences[$item->node->tag->id]['url'] = $url;
+                                }
+                                $tagsReferences[$item->node->tag->id]['size'] = $maxFileSize;
+                            }
+                            unset($maxFileSize);
+                        } else {
+                            // if does not contain custom archive file.
+                            if (
+                                isset($item->node->tag->id) && 
+                                isset($tagsReferences[$item->node->tag->id]) &&
+                                isset($item->node->tag->target->pushedDate) &&
+                                isset($item->node->tag->target->zipballUrl)
+                            ) {
+                                $tagsReferences[$item->node->tag->id]['date'] = $item->node->tag->target->pushedDate;
+                                $tagsReferences[$item->node->tag->id]['url'] = $item->node->tag->target->zipballUrl;
+                            }
+                        }// endif; release contain custom archive file.
+                    }// endforeach; end loop each release and tag
                     unset($item);
-                    if ($totalCustomArchiveSize == 0) {
-                        $totalCustomArchiveSize = -1;
-                    }
-                    if (isset($releaseNode->url)) {
-                        $releases['url'] = $releaseNode->url;
-                    } else {
-                        $releases['url'] = $url;
-                    }
-                    $releases['size'] = $totalCustomArchiveSize;
-                    unset($totalCustomArchiveSize);
-                } else {
-                    // if does not contain custom archive file.
-                    if (
-                        isset($releaseNode->tag->target->pushedDate) &&
-                        isset($releaseNode->tag->target->zipballUrl)
-                    ) {
-                        $releases['id'] = $releaseNode->tag->target->id;
-                        $releases['date'] = $releaseNode->tag->target->pushedDate;
-                        $releases['url'] = $releaseNode->tag->target->zipballUrl;
-                    }
-                }
-                unset($releaseNode);
+                }// endif; not empty $tagsReferences
 
-                if (isset($result->data->repository->nameWithOwner)) {
-                    $releases['nameWithOwner'] = $result->data->repository->nameWithOwner;
-                }
-            }// endif; contain "release"
+                Logger::staticDebugLog($tagsReferences, 'github-api-request-formatted-array-' . current_time('Ymd-Hi'));
+
+                if (!empty($tagsReferences)) {
+                    // if not empty $tagsReferences
+                    if (empty($version_range) || !is_scalar($version_range)) {
+                        reset($tagsReferences);
+                        $firstRefsKey = key($tagsReferences);
+                        $releases = $tagsReferences[$firstRefsKey];
+                        if (defined('WP_DEBUG') && WP_DEBUG === true) {
+                            $releases['debug_firsttag'] = true;
+                        }
+                        unset($firstRefsKey);
+                    } else {
+                        if (is_array($tagsReferences)) {
+                            foreach ($tagsReferences as $key => $item) {
+                                if (isset($item['version']) && \RdDownloads\Composer\Semver\Semver::satisfies($item['version'], $version_range)) {
+                                    $releases = $tagsReferences[$key];
+                                    if (defined('WP_DEBUG') && WP_DEBUG === true) {
+                                        $releases['debug_matchsemver'] = true;
+                                    }
+                                    break;
+                                }
+                            }// endforeach;
+                            unset($item, $key);
+                        }
+                        
+                    }
+
+                    if (isset($result->data->repository->nameWithOwner)) {
+                        $releases['nameWithOwner'] = $result->data->repository->nameWithOwner;
+                    }
+                }// endif; not empty $tagsReferences
+
+                unset($tagsReferences);
+            }// endif; contain refs and releases.
             unset($result);
 
             if (isset($releases) && !empty($releases)) {

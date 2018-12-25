@@ -51,33 +51,40 @@
                         ?></p>
                     </td>
                 </tr>
-                <tr>
+                <tr class="rd-downloads-opt_download_version">
                     <th><label for="opt_download_version"><?php _e('Version', 'rd-downloads'); ?></label></th>
                     <td>
                         <input id="opt_download_version" class="regular-text" type="text" name="opt_download_version" value="<?php if (isset($opt_download_version)) {echo esc_attr($opt_download_version);} ?>" maxlength="50">
                         <p class="description">
                             <?php 
                             printf(
-                                /* translators: %1$s: version_compare(), %2$s: example version number. 1.0.0 */
-                                __('The version number of this download that can be use with %1$s function. Example: %2$s.', 'rd-downloads'), 
-                                '<a href="http://php.net/manual/en/function.version-compare.php" target="versioncompare"><code>version_compare()</code></a>', 
-                                '1.0.0'
+                                /* translators: %s: example version number. 1.0.0 */
+                                __('The version number of this download. Example: %s', 'rd-downloads'), 
+                                '1.2.3'
                             ); 
                             ?>
                         </p>
                     </td>
                 </tr>
-                <tr>
+                <tr class="rd-downloads-opt_download_version_range<?php if (isset($download_type) && $download_type != '1') {echo ' hidden';} ?>">
                     <th><label for="opt_download_version_range"><?php _e('Version range', 'rd-downloads'); ?></label></th>
                     <td>
                         <input id="opt_download_version_range" class="regular-text" type="text" name="opt_download_version_range" value="<?php if (isset($opt_download_version_range)) {echo esc_attr($opt_download_version_range);} ?>" maxlength="50">
                         <p class="description">
                             <?php 
-                            // @todo [rd-downloads] make version range. See reference on Composer document ( https://getcomposer.org/doc/articles/versions.md )
+                            _e('The version range to get update.', 'rd-downloads');
+                            echo ' ';
                             printf(
-                                __('The version range to get update.', 'rd-downloads')
+                                /* translators: %1$s: Open link, %2$s: Close link. */
+                                __('We use the same versions and constraints as %1$scomposer%2$s.', 'rd-downloads'),
+                                '<a href="https://getcomposer.org/doc/articles/versions.md" target="composer_versionsconstraints">',
+                                '</a>'
                             ); 
-                            ?>
+                            echo ' ';
+                            /* translators: %s: Example version constraints. >=your current version */
+                            printf(__('Default is %s', 'rd-downloads'), '<code>&gt;=your current version</code>');
+                            ?><br>
+                            <?php _e('This is for GitHub download only.', 'rd-downloads'); ?>
                         </p>
                     </td>
                 </tr>

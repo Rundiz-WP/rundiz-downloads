@@ -17,6 +17,8 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Logger')) {
         /**
          * Write log to file.
          * 
+         * This will be working only `WP_DEBUG` constant is set to `true`.
+         * 
          * @param mixed $content The content to write to log file.
          *                                      Leave empty will write all server variables and super global data such as $_GET, $_POST to the file. 
          *                                      Non scalar content will be convert to string automatically.
@@ -92,6 +94,8 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Logger')) {
 
         /**
          * Write log to file.
+         * 
+         * This will be working only `WP_DEBUG` constant is set to `true`.
          * 
          * @see RdDownloads\App\Libraries\Logger::debugLog()
          * @param mixed $content The content to write to log file.

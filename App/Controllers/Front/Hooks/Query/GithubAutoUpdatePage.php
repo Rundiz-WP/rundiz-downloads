@@ -122,6 +122,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
         /**
          * Get latest repository data and check if there is something change then update.
          * 
+         * @todo [rd-downloads] make auto update on multiple rows in db in case that the same repository is in many download rows.
          * @global \wpdb $wpdb
          * @param \RdDownloads\App\Libraries\Github $Github The GitHub object from main method.
          * @param object $payloadObject The payload object from "php://input"

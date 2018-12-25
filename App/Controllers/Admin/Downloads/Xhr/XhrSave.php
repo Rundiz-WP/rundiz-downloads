@@ -118,13 +118,15 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
 
                 $opt_force_download = filter_input(INPUT_POST, 'opt_force_download', FILTER_SANITIZE_NUMBER_INT);
                 $opt_download_version = filter_input(INPUT_POST, 'opt_download_version', FILTER_SANITIZE_STRING);
+                $opt_download_version_range = filter_input(INPUT_POST, 'opt_download_version_range', FILTER_SANITIZE_STRING);
                 $data['download_options'] = maybe_serialize(
                     [
                         'opt_force_download' => $opt_force_download,
                         'opt_download_version' => $opt_download_version,
+                        'opt_download_version_range' => $opt_download_version_range,
                     ]
                 );
-                unset($opt_force_download);
+                unset($opt_download_version, $opt_download_version_range, $opt_force_download);
             } else {
                 // if cannot get domain without sub domain from the specific URL.
                 unset($currentDomain, $domainNoSub, $FileSystem, $Url);
