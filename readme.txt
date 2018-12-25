@@ -3,7 +3,7 @@ Contributors: okvee
 Tags: downloads, download, download manager, file hosting, GitHub
 Requires at least: 4.0
 Tested up to: 5.0.2
-Stable tag: 0.1
+Stable tag: 0.2
 Requires PHP: 5.5
 License: MIT
 License URI: https://opensource.org/licenses/MIT
@@ -20,8 +20,9 @@ You can change your setting to accept how often of auto update. Every releases a
 
  * Manage files locally or hosted on GitHub or any remote files.
  * Auto update download URL once GitHub repository was updated.
- * Setting auto GitHub update to none, every releases, every releases and commits.
+ * Setting GitHub auto update to none, every releases, every releases and commits.
  * Manual update multiple remote file data such as file size that was changed.
+ * Use version range to compare tags before update.
  * Insert download button on classic editor or TinyMCE.
  * Download logs/statistic.
  * Admin dashboard statistic widget.
@@ -60,6 +61,20 @@ Yes, it is.
 10. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
+= 0.2 =
+2018-12-26
+
+* Fix get URL for download to be always at home url.
+* Management page, make download name show more characters.
+* Management page, add link to GitHub repository main page.
+* Automatically clear all cache on saved settings or download data.
+* Add download file version field.
+* Add download file version range field for GitHub tags comparison.
+* Use version range compare in editing page.
+* Use version range compare in ajax save (add and edit download).
+* Use version range compare in bulk actions.
+* Use version range compare in GitHub auto update.
+
 = 0.1 =
 2018-12-24
 
