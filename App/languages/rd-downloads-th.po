@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rundiz Downloads 0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rd-downloads\n"
-"POT-Creation-Date: 2018-12-24T17:44:00+07:00\n"
-"PO-Revision-Date: 2018-12-24 17:46+0700\n"
+"POT-Creation-Date: 2018-12-25T21:56:02+07:00\n"
+"PO-Revision-Date: 2018-12-25 22:05+0700\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: th_TH\n"
@@ -31,7 +31,7 @@ msgstr ""
 
 #. Description of the plugin
 msgid "Download manager for WordPress that support GitHub auto update."
-msgstr ""
+msgstr "ระบบจัดการดาวน์โหลดสำหรับเวิร์ดเพราสที่รองรับการอัปเดทอัตโนมัติจาก GitHub."
 
 #. Author of the plugin
 msgid "Vee Winch"
@@ -198,16 +198,16 @@ msgstr "ค่าเดิมคือไม่."
 
 #: \App\config\rd_downloads.php:159 \App\config\rd_downloads.php:172 \App\config\rd_downloads.php:189
 #: \App\config\rd_downloads.php:272 \App\config\rd_downloads.php:298 \App\Models\RdDownloadsListTable.php:91
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:101
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:108
 msgid "Yes"
 msgstr "ใช่"
 
 #. translators: %s: Force download option.
 #: \App\config\rd_downloads.php:163 \App\Controllers\Admin\Downloads\Editing.php:59
-#: \App\Models\RdDownloadsListTable.php:224 \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:4
+#: \App\Models\RdDownloadsListTable.php:237 \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:4
 #: \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:8
 #: \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:12
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:99 \App\Views\admin\Downloads\Editing\pageEdit_v.php:108
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:106 \App\Views\admin\Downloads\Editing\pageEdit_v.php:115
 msgid "Force download"
 msgstr "บังคับดาวน์โหลด"
 
@@ -284,7 +284,7 @@ msgid "Every releases"
 msgstr "ทุกๆ release"
 
 #: \App\config\rd_downloads.php:235 \App\Models\RdDownloadsListTable.php:93
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:105
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:112
 msgid "Default"
 msgstr "ค่าเดิม"
 
@@ -357,7 +357,7 @@ msgstr "ออกแบบ"
 
 #: \App\config\rd_downloads.php:316
 msgid "Downloads element"
-msgstr ""
+msgstr "HTML ที่จะแสดงผล"
 
 #: \App\Controllers\Admin\Downloads\Editing.php:47
 msgid "Basic guide"
@@ -371,7 +371,7 @@ msgstr "เพิ่มดาวน์โหลดใหม่"
 msgid "Edit download"
 msgstr "แก้ไขดาวน์โหลด"
 
-#: \App\Controllers\Admin\Downloads\Editing.php:127 \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:276
+#: \App\Controllers\Admin\Downloads\Editing.php:127 \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:303
 msgid "The editing item was not found."
 msgstr "ไม่พบรายการที่กำลังจะแก้ไข."
 
@@ -409,7 +409,7 @@ msgstr "ช่วยเหลือผู้ดูแล"
 msgid "Download logs"
 msgstr "บันทึกดาวน์โหลด"
 
-#: \App\Controllers\Admin\Downloads\Logs.php:72 \App\Models\RdDownloadsListTable.php:364
+#: \App\Controllers\Admin\Downloads\Logs.php:72 \App\Models\RdDownloadsListTable.php:377
 msgid "Logs"
 msgstr "บันทึก"
 
@@ -460,15 +460,15 @@ msgid_plural "Failed to delete items"
 msgstr[0] "ล้มเหลวในการลบรายการ"
 
 #: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:207
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:338
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:471
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:365
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:498
 msgid "Capability limited item"
 msgid_plural "Capability limited items"
 msgstr[0] "รายการที่ติดขัดสิทธิ"
 
 #: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:208
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:339
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:472
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:366
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:499
 msgid "Mismatch ID"
 msgid_plural "Mismatch IDs"
 msgstr[0] "ID ไม่ตรง"
@@ -477,30 +477,30 @@ msgstr[0] "ID ไม่ตรง"
 msgid "The selected items was not found."
 msgstr "ไม่พบรายการที่เลือก."
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:329
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:462
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:356
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:489
 msgid "Success! All selected items have been updated."
 msgstr "สำเร็จ! อัปเดทรายการที่เลือกทั้งหมดแล้ว."
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:334
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:467
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:361
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:494
 msgid "Warning! There are some problem about update the items, here are the results."
 msgstr "คำเตือน! มีปัญหาบางอย่างเกี่ยวกับการอัปเดทรายการ, นี่คือผลลัพธ์."
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:336
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:469
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:363
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:496
 msgid "Updated item"
 msgid_plural "Updated items"
 msgstr[0] "รายการที่อัปเดทแล้ว"
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:337
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:470
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:364
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:497
 msgid "Failed to update item"
 msgid_plural "Failed to update items"
 msgstr[0] "รายการที่ล้มเหลวในการอัปเดท"
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:359
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:492
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:386
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:519
 msgid "The selected items was not found or not matched download type."
 msgstr "ไม่พบรายการที่เลือกหรือประเภทดาวน์โหลดไม่ตรงกัน."
 
@@ -540,19 +540,19 @@ msgid "Unable to process your request, please reload the page and try again."
 msgstr "ไม่สามารถดำเนินการประมวลผลได้, โปรดโหลดหน้านี้ใหม่แล้วลองอีกครั้ง."
 
 #. translators: %s: Example GitHub repository URL.
-#: \App\Controllers\Admin\Downloads\Xhr\XhrGithub.php:31 \App\Controllers\Admin\Downloads\Xhr\XhrGithub.php:41
+#: \App\Controllers\Admin\Downloads\Xhr\XhrGithub.php:39
 msgid "Invalid GitHub repository URL. The correct format should be %s."
 msgstr "URL GitHub ไม่ถูกต้อง. รูปแบบที่ถูกต้องควรเป็น %s."
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:131
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:158
 msgid "Incorrect Download URL value."
 msgstr "URL ดาวน์โหลดไม่ถูกต้อง."
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:208 \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:302
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:235 \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:329
 msgid "Unknown error, please reload the webpage and try again."
 msgstr "ไม่ทราบข้อผิดพลาด, โปรดโหลดหน้านี้ใหม่แล้วลองอีกครั้ง."
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:226 \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:318
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:253 \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:345
 msgid "Your download was saved successfully."
 msgstr "บันทึกดาวน์โหลดสำเร็จแล้ว."
 
@@ -560,22 +560,22 @@ msgstr "บันทึกดาวน์โหลดสำเร็จแล้
 msgid "Add a download"
 msgstr "เพิ่มดาวน์โหลด"
 
-#: \App\Controllers\Admin\Hooks\ClassicEditor\DownloadButton.php:93 \App\Models\RdDownloadsListTable.php:178
-#: \App\Models\RdDownloadsListTable.php:301 \App\Views\admin\Downloads\Editing\helpTab\tab1_v.php:17
+#: \App\Controllers\Admin\Hooks\ClassicEditor\DownloadButton.php:93 \App\Models\RdDownloadsListTable.php:191
+#: \App\Models\RdDownloadsListTable.php:314 \App\Views\admin\Downloads\Editing\helpTab\tab1_v.php:17
 msgid "Any remote file"
 msgstr "ไฟล์จากปลายทางใดๆ"
 
-#: \App\Controllers\Admin\Hooks\ClassicEditor\DownloadButton.php:94 \App\Models\RdDownloadsListTable.php:176
-#: \App\Models\RdDownloadsListTable.php:294 \App\Views\admin\Downloads\Editing\helpTab\tab1_v.php:8
+#: \App\Controllers\Admin\Hooks\ClassicEditor\DownloadButton.php:94 \App\Models\RdDownloadsListTable.php:189
+#: \App\Models\RdDownloadsListTable.php:307 \App\Views\admin\Downloads\Editing\helpTab\tab1_v.php:8
 msgid "GitHub file"
 msgstr "ไฟล์บน GitHub"
 
-#: \App\Controllers\Admin\Hooks\ClassicEditor\DownloadButton.php:95 \App\Models\RdDownloadsListTable.php:174
-#: \App\Models\RdDownloadsListTable.php:287 \App\Views\admin\Downloads\Editing\helpTab\tab1_v.php:2
+#: \App\Controllers\Admin\Hooks\ClassicEditor\DownloadButton.php:95 \App\Models\RdDownloadsListTable.php:187
+#: \App\Models\RdDownloadsListTable.php:300 \App\Views\admin\Downloads\Editing\helpTab\tab1_v.php:2
 msgid "Local file"
 msgstr "ไฟล์บนเซิร์ฟเวอร์"
 
-#: \App\Controllers\Admin\Hooks\ClassicEditor\DownloadButton.php:96 \App\Models\RdDownloadsListTable.php:180
+#: \App\Controllers\Admin\Hooks\ClassicEditor\DownloadButton.php:96 \App\Models\RdDownloadsListTable.php:193
 msgid "Unknown"
 msgstr "ไม่ทราบ"
 
@@ -632,28 +632,28 @@ msgstr "โปรดโหลดหน้านี้ใหม่แล้วล
 
 #: \App\Controllers\Admin\Plugins\Upgrader.php:57
 msgid "An error has been occur, cannot continue manual update. Please contact plugin author."
-msgstr ""
+msgstr "มีข้อผิดพลาดเกิดขึ้น, ไม่สามารถดำเนินการอัปเดทด้วยตนเองได้. โปรดติดต่อผู้เขียนปลั๊กอิน."
 
 #: \App\Controllers\Admin\Plugins\Upgrader.php:74
 msgid "Success, please click next to continue update."
-msgstr ""
+msgstr "สำเร็จ, โปรดคลิกที่ปุ่ม ถัดไป เพื่อดำเนินการอัปเดทต่อ."
 
 #: \App\Controllers\Admin\Plugins\Upgrader.php:77
 msgid ""
 "All manual update completed successfully. This page will be no longer available until there is next manual "
 "update."
-msgstr ""
+msgstr "อัปเดททั้งหมดสำเร็จแล้ว. หน้านี้จะไม่สามารถเข้าถึงได้อีกจนกว่าจะมีการต้องอัปเดทด้วยตนเองในครั้งต่อไป."
 
 #: \App\Controllers\Admin\Plugins\Upgrader.php:96
 msgid "Unable to run update, there is no update classes to run."
-msgstr ""
+msgstr "ไม่สามารถทำการอัปเดทได้, ไม่มีคลาสที่จะทำงาน."
 
 #. translators: %1$s: Open link tag, %2$s: Close link tag.
 #: \App\Controllers\Admin\Plugins\Upgrader.php:130
 msgid ""
 "The Rundiz Downloads is just upgraded and need to be manually update. Please continue to the %1$splugin "
 "update page%2$s."
-msgstr ""
+msgstr "Rundiz Downloads เพิ่งถูกปรับรุ่นและต้องการการอัปเดทด้วยตนเอง. โปรดดำเนินการต่อไปยัง%1$sหน้าอัปเดทปลั๊กอิน%2$s."
 
 #: \App\Controllers\Admin\Plugins\Upgrader.php:171
 msgid "Rundiz Downloads update"
@@ -692,11 +692,11 @@ msgstr "ตั้งค่า"
 #. translators: %1$s: Open link tag, %2$s: Close link tag.
 #: \App\Controllers\Admin\Settings.php:65
 msgid "The manual update is required, please %1$supdate first%2$s."
-msgstr ""
+msgstr "จำเป็นต้องดำเนินการอัปเดทด้วยตนเอง, โปรด %1$sทำการอัปเดทก่อน%2$s."
 
 #: \App\Controllers\Admin\Settings.php:67
 msgid "The manual update is required, please tell administrator to update first."
-msgstr ""
+msgstr "จำเป็นต้องดำเนินการอัปเดทด้วยตนเอง, โปรดติดต่อผู้ดูแลเพื่อดำเนินการอัปเดทก่อน."
 
 #: \App\Controllers\Admin\Settings.php:170
 msgid ""
@@ -725,14 +725,14 @@ msgstr[0] "คุณกรอกผิด %s ครั้ง."
 
 #: \App\Controllers\XhrBased.php:48
 msgid "Method not allowed."
-msgstr ""
+msgstr "ไม่อนุญาตให้ใช้เมธอดนี้."
 
 #: \App\Controllers\XhrBased.php:67
 msgid "Please reload the page and try again."
 msgstr "โปรดโหลดหน้านี้ใหม่แล้วลองอีกครั้ง."
 
 #. translators: %s: Argument name.
-#: \App\Libraries\DateTime.php:30 \App\Libraries\FileSystem.php:113 \App\Libraries\Github.php:401
+#: \App\Libraries\DateTime.php:30 \App\Libraries\FileSystem.php:113 \App\Libraries\Github.php:499
 #: \App\Libraries\Url.php:27 \App\Libraries\Url.php:89
 msgid "The %s must be string."
 msgstr "%s ต้องเป็นสตริง."
@@ -742,7 +742,7 @@ msgid "Download"
 msgstr "ดาวน์โหลด"
 
 #: \App\Libraries\ElementPlaceholders.php:58 \App\Models\RdDownloadLogsListTable.php:149
-#: \App\Models\RdDownloadsListTable.php:218 \App\Views\admin\Downloads\Editing\pageEdit_v.php:19
+#: \App\Models\RdDownloadsListTable.php:231 \App\Views\admin\Downloads\Editing\pageEdit_v.php:19
 #: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:19
 msgid "Downloads name"
 msgstr "ชื่อดาวน์โหลด"
@@ -751,7 +751,7 @@ msgstr "ชื่อดาวน์โหลด"
 msgid "GitHub repository name"
 msgstr "ชื่อ repository ของ GitHub"
 
-#: \App\Libraries\ElementPlaceholders.php:60 \App\Models\RdDownloadsListTable.php:222
+#: \App\Libraries\ElementPlaceholders.php:60 \App\Models\RdDownloadsListTable.php:235
 #: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:22
 msgid "Size"
 msgstr "ขนาด"
@@ -768,7 +768,7 @@ msgstr "ขนาดไฟล์"
 msgid "Create on"
 msgstr "สร้างเมื่อ"
 
-#: \App\Libraries\ElementPlaceholders.php:64 \App\Views\admin\Downloads\Editing\pageEdit_v.php:128
+#: \App\Libraries\ElementPlaceholders.php:64 \App\Views\admin\Downloads\Editing\pageEdit_v.php:135
 msgid "Last update"
 msgstr "อัปเดทล่าสุด"
 
@@ -881,7 +881,7 @@ msgstr "ผู้ใช้ถูกแบน"
 msgid "Clear"
 msgstr "ล้างค่า"
 
-#: \App\Models\RdDownloadLogsListTable.php:150 \App\Models\RdDownloadsListTable.php:219
+#: \App\Models\RdDownloadLogsListTable.php:150 \App\Models\RdDownloadsListTable.php:232
 msgid "Author"
 msgstr "ผู้เขียน"
 
@@ -897,20 +897,20 @@ msgstr "หมายเลขไอพี"
 msgid "User agent"
 msgstr ""
 
-#: \App\Models\RdDownloadLogsListTable.php:154 \App\Models\RdDownloadsListTable.php:226
+#: \App\Models\RdDownloadLogsListTable.php:154 \App\Models\RdDownloadsListTable.php:239
 msgid "Date"
 msgstr "วันที่"
 
-#: \App\Models\RdDownloadLogsListTable.php:210 \App\Models\RdDownloadsListTable.php:280
+#: \App\Models\RdDownloadLogsListTable.php:210 \App\Models\RdDownloadsListTable.php:293
 msgid "All"
 msgstr "ทั้งหมด"
 
 #. translators: %s: Link to edit user.
-#: \App\Models\RdDownloadLogsListTable.php:219 \App\Models\RdDownloadsListTable.php:310
+#: \App\Models\RdDownloadLogsListTable.php:219 \App\Models\RdDownloadsListTable.php:323
 msgid "Filtered user: %s"
 msgstr "กรองผู้ใช้: %s"
 
-#: \App\Models\RdDownloadLogsListTable.php:222 \App\Models\RdDownloadsListTable.php:313
+#: \App\Models\RdDownloadLogsListTable.php:222 \App\Models\RdDownloadsListTable.php:326
 msgid "Reset filtered user"
 msgstr "ล้างค่ากรองผู้ใช้"
 
@@ -927,7 +927,7 @@ msgstr "ล้างค่ากรองดาวน์โหลด"
 msgid "Filter download"
 msgstr "กรองดาวน์โหลด"
 
-#: \App\Models\RdDownloadLogsListTable.php:263 \App\Models\RdDownloadsListTable.php:357
+#: \App\Models\RdDownloadLogsListTable.php:263 \App\Models\RdDownloadsListTable.php:370
 msgid "Filter user"
 msgstr "กรองผู้ใช้"
 
@@ -935,7 +935,7 @@ msgstr "กรองผู้ใช้"
 msgid "Shortcode copied to clipboard."
 msgstr "คัดลอกช็อตโค้ดไปยังคลิปบอร์ดแล้ว."
 
-#: \App\Models\RdDownloadsListTable.php:89 \App\Views\admin\Downloads\Editing\pageEdit_v.php:102
+#: \App\Models\RdDownloadsListTable.php:89 \App\Views\admin\Downloads\Editing\pageEdit_v.php:109
 msgid "No"
 msgstr "ไม่"
 
@@ -949,43 +949,48 @@ msgstr "สร้างเมื่อ: %s"
 msgid "Updated: %s"
 msgstr "อัปเดท: %s"
 
-#: \App\Models\RdDownloadsListTable.php:202
+#. translators: %s: version number.
+#: \App\Models\RdDownloadsListTable.php:168
+msgid "Version %s"
+msgstr "รุ่น %s"
+
+#: \App\Models\RdDownloadsListTable.php:215
 msgid "Update GitHub"
 msgstr "อัปเดท GitHub"
 
-#: \App\Models\RdDownloadsListTable.php:204
+#: \App\Models\RdDownloadsListTable.php:217
 msgid "Update remote file"
 msgstr "อัปเดทไฟล์จากปลายทาง"
 
-#: \App\Models\RdDownloadsListTable.php:205
+#: \App\Models\RdDownloadsListTable.php:218
 msgid "Delete"
 msgstr "ลบ"
 
-#: \App\Models\RdDownloadsListTable.php:220
+#: \App\Models\RdDownloadsListTable.php:233
 #: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:20
 msgid "Type"
 msgstr "ประเภท"
 
-#: \App\Models\RdDownloadsListTable.php:221
+#: \App\Models\RdDownloadsListTable.php:234
 #: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:21
 msgid "File"
 msgstr "ไฟล์"
 
-#: \App\Models\RdDownloadsListTable.php:223
+#: \App\Models\RdDownloadsListTable.php:236
 msgid "Shortcode"
 msgstr "ช็อตโค้ด"
 
-#: \App\Models\RdDownloadsListTable.php:225 \App\Views\admin\Downloads\Editing\pageEdit_v.php:92
+#: \App\Models\RdDownloadsListTable.php:238 \App\Views\admin\Downloads\Editing\pageEdit_v.php:99
 msgid "Download count"
 msgstr "นับดาวน์โหลด"
 
-#: \App\Models\RdDownloadsListTable.php:343 \App\Views\admin\Downloads\Editing\pageEdit_v.php:35
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:140 \App\Views\admin\Downloads\Editing\pageEdit_v.php:152
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:153
+#: \App\Models\RdDownloadsListTable.php:356 \App\Views\admin\Downloads\Editing\pageEdit_v.php:35
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:147 \App\Views\admin\Downloads\Editing\pageEdit_v.php:159
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:160
 msgid "Preview"
 msgstr "ดูก่อน"
 
-#: \App\Models\RdDownloadsListTable.php:350
+#: \App\Models\RdDownloadsListTable.php:363
 msgid "GitHub repository"
 msgstr "ชื่อ repository ของ GitHub"
 
@@ -1033,13 +1038,13 @@ msgid "If you choose this option to default, it will use %s option from plugin s
 msgstr "ถ้าคุณเลือกค่านี้เป็นค่าเดิม, มันจะใช้ตัวเลือก %s จากหน้าตั้งค่าปลั๊กอิน."
 
 #: \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:14
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:110
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:117
 msgid "redirect to file"
 msgstr "เปลี่ยนเส้นทางไปยังไฟล์"
 
 #. translators: %s: Force download option value for main plugin setting.
 #: \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:17
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:113
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:120
 msgid "The plugin setting is using %s."
 msgstr "ตั้งค่าปลั๊กอินใช้ %s."
 
@@ -1047,7 +1052,7 @@ msgstr "ตั้งค่าปลั๊กอินใช้ %s."
 msgid "Download URL"
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:38 \App\Views\admin\Downloads\Editing\pageEdit_v.php:119
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:38 \App\Views\admin\Downloads\Editing\pageEdit_v.php:126
 msgid "Please open the help tab to see help message."
 msgstr "โปรดเปิดแท็บช่วยเหลือเพื่อดูข้อความช่วยเหลือ."
 
@@ -1064,56 +1069,70 @@ msgstr "โหลดใหม่"
 msgid "Maximum upload file size: %s."
 msgstr "ขนาดไฟล์สูงสุด: %s."
 
-#. translators: %1$s: version_compare(), %2$s: example version number. 1.0.0
+#. translators: %s: example version number. 1.0.0
 #: \App\Views\admin\Downloads\Editing\pageEdit_v.php:62
-msgid "The version number of this download that can be use with %1$s function. Example: %2$s."
-msgstr "หมายเลขรุ่นของไฟล์ดาวน์โหลดนี้ ซึ่งจะต้องใช้กับฟังก์ชั่น %1$s ได้. ตัวอย่าง: %2$s."
+msgid "The version number of this download. Example: %s"
+msgstr "หมายเลขรุ่นของไฟล์ดาวน์โหลดนี้. ตัวอย่าง: %s"
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:71
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:70
 msgid "Version range"
 msgstr "ระยะของรุ่น"
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:78
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:75
 msgid "The version range to get update."
 msgstr "ขอบเขตระยะของรุ่นที่จะรับการอัปเดต."
 
+#. translators: %1$s: Open link, %2$s: Close link.
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:79
+msgid "We use the same versions and constraints as %1$scomposer%2$s."
+msgstr "เราใช้การเทียบเลขรุ่นและขีดจำกัด แบบเดียวกับใน %1$scomposer%2$s."
+
+#. translators: %s: Example version constraints. >=your current version
 #: \App\Views\admin\Downloads\Editing\pageEdit_v.php:85
+msgid "Default is %s"
+msgstr "ค่าเดิมคือ %s"
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:87
+msgid "This is for GitHub download only."
+msgstr "นี่สำหรับไฟล์ดาวน์โหลดบน GitHub เท่านั้น."
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:92
 msgid "Notes"
 msgstr "บันทึก"
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:88
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:95
 msgid "Notes about this download, display to administrator only. HTML will be escaped."
 msgstr "บันทึกเกี่ยวกับดาวน์โหลดนี้, แสดงสำหรับผู้ดูแลเท่านั้น. HTML จะถูกแปลง."
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:95
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:102
 msgid "The number of times this file has been downloaded."
 msgstr "จำนวนครั้งที่ไฟล์นี้ถูกดาวน์โหลด."
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:118
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:125
 msgid "Choose yes and the file will use force download instead of redirect to it."
 msgstr "เลือก ใช่ แล้วไฟล์จะถูกบังคับดาวน์โหลดแทนเปลี่ยนเส้นทาง."
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:124
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:131
 msgid "Publish data"
 msgstr "เผยแพร่ข้อมูล"
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:126
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:133
 msgid "Created by"
 msgstr "สร้างโดย"
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:127
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:134
 msgid "Created on"
 msgstr "สร้างเมื่อ"
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:135
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:142
 msgid "Save"
 msgstr "บันทึก"
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:157 \App\Views\admin\Downloads\Editing\pageEdit_v.php:161
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:164 \App\Views\admin\Downloads\Editing\pageEdit_v.php:168
 msgid "This file is linked with other downloads data."
 msgstr "ไฟล์นี้ถูกใช้โดยข้อมูลดาวน์โหลดอื่นๆ."
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:169 \App\Views\admin\Downloads\Editing\pageEdit_v.php:170
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:176 \App\Views\admin\Downloads\Editing\pageEdit_v.php:177
 msgid "Delete this file"
 msgstr "ลบไฟล์นี้"
 
@@ -1249,12 +1268,12 @@ msgstr "ตลอดเวลา"
 
 #: \App\Views\admin\Plugins\Upgrader_v.php:2
 msgid "Manual update"
-msgstr ""
+msgstr "อัปเดทด้วยตนเอง"
 
 #. translators: %d: Number of total manual update actions.
 #: \App\Views\admin\Plugins\Upgrader_v.php:18
 msgid "There are total %d actions for this manual update, please continue step by step."
-msgstr ""
+msgstr "มีการทำงานทั้งหมด %d รายการสำหรับการอัปเดทด้วยตนเองนี้, โปรดดำเนินการไปทีละขั้นตอน."
 
 #. translators: %1$s: Number with span wrapped of already action, %2$d: Number of total manual update actions.
 #: \App\Views\admin\Plugins\Upgrader_v.php:22

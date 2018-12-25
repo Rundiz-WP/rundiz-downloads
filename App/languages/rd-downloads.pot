@@ -9,8 +9,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2018-12-24T17:44:00+07:00\n"
-"PO-Revision-Date: 2018-12-24T17:44:00+07:00\n"
+"POT-Creation-Date: 2018-12-25T21:56:02+07:00\n"
+"PO-Revision-Date: 2018-12-25T21:56:02+07:00\n"
 "X-Generator: WP-CLI 2.0.1\n"
 "X-Domain: rd-downloads\n"
 
@@ -196,19 +196,19 @@ msgstr ""
 #: \App\config\rd_downloads.php:272
 #: \App\config\rd_downloads.php:298
 #: \App\Models\RdDownloadsListTable.php:91
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:101
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:108
 msgid "Yes"
 msgstr ""
 
 #. translators: %s: Force download option.
 #: \App\config\rd_downloads.php:163
 #: \App\Controllers\Admin\Downloads\Editing.php:59
-#: \App\Models\RdDownloadsListTable.php:224
+#: \App\Models\RdDownloadsListTable.php:237
 #: \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:4
 #: \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:8
 #: \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:12
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:99
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:108
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:106
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:115
 msgid "Force download"
 msgstr ""
 
@@ -279,7 +279,7 @@ msgstr ""
 
 #: \App\config\rd_downloads.php:235
 #: \App\Models\RdDownloadsListTable.php:93
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:105
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:112
 msgid "Default"
 msgstr ""
 
@@ -371,7 +371,7 @@ msgid "Edit download"
 msgstr ""
 
 #: \App\Controllers\Admin\Downloads\Editing.php:127
-#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:276
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:303
 msgid "The editing item was not found."
 msgstr ""
 
@@ -417,7 +417,7 @@ msgid "Download logs"
 msgstr ""
 
 #: \App\Controllers\Admin\Downloads\Logs.php:72
-#: \App\Models\RdDownloadsListTable.php:364
+#: \App\Models\RdDownloadsListTable.php:377
 msgid "Logs"
 msgstr ""
 
@@ -470,15 +470,15 @@ msgid_plural "Failed to delete items"
 msgstr[0] ""
 
 #: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:207
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:338
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:471
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:365
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:498
 msgid "Capability limited item"
 msgid_plural "Capability limited items"
 msgstr[0] ""
 
 #: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:208
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:339
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:472
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:366
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:499
 msgid "Mismatch ID"
 msgid_plural "Mismatch IDs"
 msgstr[0] ""
@@ -487,30 +487,30 @@ msgstr[0] ""
 msgid "The selected items was not found."
 msgstr ""
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:329
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:462
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:356
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:489
 msgid "Success! All selected items have been updated."
 msgstr ""
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:334
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:467
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:361
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:494
 msgid "Warning! There are some problem about update the items, here are the results."
 msgstr ""
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:336
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:469
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:363
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:496
 msgid "Updated item"
 msgid_plural "Updated items"
 msgstr[0] ""
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:337
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:470
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:364
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:497
 msgid "Failed to update item"
 msgid_plural "Failed to update items"
 msgstr[0] ""
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:359
-#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:492
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:386
+#: \App\Controllers\Admin\Downloads\Xhr\XhrBulkActions.php:519
 msgid "The selected items was not found or not matched download type."
 msgstr ""
 
@@ -549,22 +549,21 @@ msgid "Unable to process your request, please reload the page and try again."
 msgstr ""
 
 #. translators: %s: Example GitHub repository URL.
-#: \App\Controllers\Admin\Downloads\Xhr\XhrGithub.php:31
-#: \App\Controllers\Admin\Downloads\Xhr\XhrGithub.php:41
+#: \App\Controllers\Admin\Downloads\Xhr\XhrGithub.php:39
 msgid "Invalid GitHub repository URL. The correct format should be %s."
 msgstr ""
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:131
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:158
 msgid "Incorrect Download URL value."
 msgstr ""
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:208
-#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:302
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:235
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:329
 msgid "Unknown error, please reload the webpage and try again."
 msgstr ""
 
-#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:226
-#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:318
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:253
+#: \App\Controllers\Admin\Downloads\Xhr\XhrSave.php:345
 msgid "Your download was saved successfully."
 msgstr ""
 
@@ -573,28 +572,28 @@ msgid "Add a download"
 msgstr ""
 
 #: \App\Controllers\Admin\Hooks\ClassicEditor\DownloadButton.php:93
-#: \App\Models\RdDownloadsListTable.php:178
-#: \App\Models\RdDownloadsListTable.php:301
+#: \App\Models\RdDownloadsListTable.php:191
+#: \App\Models\RdDownloadsListTable.php:314
 #: \App\Views\admin\Downloads\Editing\helpTab\tab1_v.php:17
 msgid "Any remote file"
 msgstr ""
 
 #: \App\Controllers\Admin\Hooks\ClassicEditor\DownloadButton.php:94
-#: \App\Models\RdDownloadsListTable.php:176
-#: \App\Models\RdDownloadsListTable.php:294
+#: \App\Models\RdDownloadsListTable.php:189
+#: \App\Models\RdDownloadsListTable.php:307
 #: \App\Views\admin\Downloads\Editing\helpTab\tab1_v.php:8
 msgid "GitHub file"
 msgstr ""
 
 #: \App\Controllers\Admin\Hooks\ClassicEditor\DownloadButton.php:95
-#: \App\Models\RdDownloadsListTable.php:174
-#: \App\Models\RdDownloadsListTable.php:287
+#: \App\Models\RdDownloadsListTable.php:187
+#: \App\Models\RdDownloadsListTable.php:300
 #: \App\Views\admin\Downloads\Editing\helpTab\tab1_v.php:2
 msgid "Local file"
 msgstr ""
 
 #: \App\Controllers\Admin\Hooks\ClassicEditor\DownloadButton.php:96
-#: \App\Models\RdDownloadsListTable.php:180
+#: \App\Models\RdDownloadsListTable.php:193
 msgid "Unknown"
 msgstr ""
 
@@ -744,7 +743,7 @@ msgstr ""
 #. translators: %s: Argument name.
 #: \App\Libraries\DateTime.php:30
 #: \App\Libraries\FileSystem.php:113
-#: \App\Libraries\Github.php:401
+#: \App\Libraries\Github.php:499
 #: \App\Libraries\Url.php:27
 #: \App\Libraries\Url.php:89
 msgid "The %s must be string."
@@ -756,7 +755,7 @@ msgstr ""
 
 #: \App\Libraries\ElementPlaceholders.php:58
 #: \App\Models\RdDownloadLogsListTable.php:149
-#: \App\Models\RdDownloadsListTable.php:218
+#: \App\Models\RdDownloadsListTable.php:231
 #: \App\Views\admin\Downloads\Editing\pageEdit_v.php:19
 #: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:19
 msgid "Downloads name"
@@ -767,7 +766,7 @@ msgid "GitHub repository name"
 msgstr ""
 
 #: \App\Libraries\ElementPlaceholders.php:60
-#: \App\Models\RdDownloadsListTable.php:222
+#: \App\Models\RdDownloadsListTable.php:235
 #: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:22
 msgid "Size"
 msgstr ""
@@ -785,7 +784,7 @@ msgid "Create on"
 msgstr ""
 
 #: \App\Libraries\ElementPlaceholders.php:64
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:128
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:135
 msgid "Last update"
 msgstr ""
 
@@ -900,7 +899,7 @@ msgid "Clear"
 msgstr ""
 
 #: \App\Models\RdDownloadLogsListTable.php:150
-#: \App\Models\RdDownloadsListTable.php:219
+#: \App\Models\RdDownloadsListTable.php:232
 msgid "Author"
 msgstr ""
 
@@ -917,23 +916,23 @@ msgid "User agent"
 msgstr ""
 
 #: \App\Models\RdDownloadLogsListTable.php:154
-#: \App\Models\RdDownloadsListTable.php:226
+#: \App\Models\RdDownloadsListTable.php:239
 msgid "Date"
 msgstr ""
 
 #: \App\Models\RdDownloadLogsListTable.php:210
-#: \App\Models\RdDownloadsListTable.php:280
+#: \App\Models\RdDownloadsListTable.php:293
 msgid "All"
 msgstr ""
 
 #. translators: %s: Link to edit user.
 #: \App\Models\RdDownloadLogsListTable.php:219
-#: \App\Models\RdDownloadsListTable.php:310
+#: \App\Models\RdDownloadsListTable.php:323
 msgid "Filtered user: %s"
 msgstr ""
 
 #: \App\Models\RdDownloadLogsListTable.php:222
-#: \App\Models\RdDownloadsListTable.php:313
+#: \App\Models\RdDownloadsListTable.php:326
 msgid "Reset filtered user"
 msgstr ""
 
@@ -951,7 +950,7 @@ msgid "Filter download"
 msgstr ""
 
 #: \App\Models\RdDownloadLogsListTable.php:263
-#: \App\Models\RdDownloadsListTable.php:357
+#: \App\Models\RdDownloadsListTable.php:370
 msgid "Filter user"
 msgstr ""
 
@@ -960,7 +959,7 @@ msgid "Shortcode copied to clipboard."
 msgstr ""
 
 #: \App\Models\RdDownloadsListTable.php:89
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:102
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:109
 msgid "No"
 msgstr ""
 
@@ -974,46 +973,51 @@ msgstr ""
 msgid "Updated: %s"
 msgstr ""
 
-#: \App\Models\RdDownloadsListTable.php:202
+#. translators: %s: version number.
+#: \App\Models\RdDownloadsListTable.php:168
+msgid "Version %s"
+msgstr ""
+
+#: \App\Models\RdDownloadsListTable.php:215
 msgid "Update GitHub"
 msgstr ""
 
-#: \App\Models\RdDownloadsListTable.php:204
+#: \App\Models\RdDownloadsListTable.php:217
 msgid "Update remote file"
 msgstr ""
 
-#: \App\Models\RdDownloadsListTable.php:205
+#: \App\Models\RdDownloadsListTable.php:218
 msgid "Delete"
 msgstr ""
 
-#: \App\Models\RdDownloadsListTable.php:220
+#: \App\Models\RdDownloadsListTable.php:233
 #: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:20
 msgid "Type"
 msgstr ""
 
-#: \App\Models\RdDownloadsListTable.php:221
+#: \App\Models\RdDownloadsListTable.php:234
 #: \App\Views\admin\Hooks\ClassicEditor\downloadTinyMCEBrowser_v.php:21
 msgid "File"
 msgstr ""
 
-#: \App\Models\RdDownloadsListTable.php:223
+#: \App\Models\RdDownloadsListTable.php:236
 msgid "Shortcode"
 msgstr ""
 
-#: \App\Models\RdDownloadsListTable.php:225
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:92
+#: \App\Models\RdDownloadsListTable.php:238
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:99
 msgid "Download count"
 msgstr ""
 
-#: \App\Models\RdDownloadsListTable.php:343
+#: \App\Models\RdDownloadsListTable.php:356
 #: \App\Views\admin\Downloads\Editing\pageEdit_v.php:35
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:140
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:152
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:153
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:147
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:159
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:160
 msgid "Preview"
 msgstr ""
 
-#: \App\Models\RdDownloadsListTable.php:350
+#: \App\Models\RdDownloadsListTable.php:363
 msgid "GitHub repository"
 msgstr ""
 
@@ -1053,13 +1057,13 @@ msgid "If you choose this option to default, it will use %s option from plugin s
 msgstr ""
 
 #: \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:14
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:110
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:117
 msgid "redirect to file"
 msgstr ""
 
 #. translators: %s: Force download option value for main plugin setting.
 #: \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:17
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:113
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:120
 msgid "The plugin setting is using %s."
 msgstr ""
 
@@ -1068,7 +1072,7 @@ msgid "Download URL"
 msgstr ""
 
 #: \App\Views\admin\Downloads\Editing\pageEdit_v.php:38
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:119
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:126
 msgid "Please open the help tab to see help message."
 msgstr ""
 
@@ -1085,58 +1089,72 @@ msgstr ""
 msgid "Maximum upload file size: %s."
 msgstr ""
 
-#. translators: %1$s: version_compare(), %2$s: example version number. 1.0.0
+#. translators: %s: example version number. 1.0.0
 #: \App\Views\admin\Downloads\Editing\pageEdit_v.php:62
-msgid "The version number of this download that can be use with %1$s function. Example: %2$s."
+msgid "The version number of this download. Example: %s"
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:71
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:70
 msgid "Version range"
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:78
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:75
 msgid "The version range to get update."
 msgstr ""
 
+#. translators: %1$s: Open link, %2$s: Close link.
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:79
+msgid "We use the same versions and constraints as %1$scomposer%2$s."
+msgstr ""
+
+#. translators: %s: Example version constraints. >=your current version
 #: \App\Views\admin\Downloads\Editing\pageEdit_v.php:85
+msgid "Default is %s"
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:87
+msgid "This is for GitHub download only."
+msgstr ""
+
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:92
 msgid "Notes"
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:88
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:95
 msgid "Notes about this download, display to administrator only. HTML will be escaped."
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:95
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:102
 msgid "The number of times this file has been downloaded."
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:118
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:125
 msgid "Choose yes and the file will use force download instead of redirect to it."
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:124
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:131
 msgid "Publish data"
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:126
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:133
 msgid "Created by"
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:127
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:134
 msgid "Created on"
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:135
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:142
 msgid "Save"
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:157
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:161
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:164
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:168
 msgid "This file is linked with other downloads data."
 msgstr ""
 
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:169
-#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:170
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:176
+#: \App\Views\admin\Downloads\Editing\pageEdit_v.php:177
 msgid "Delete this file"
 msgstr ""
 
