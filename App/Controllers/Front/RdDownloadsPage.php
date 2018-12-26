@@ -155,6 +155,18 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\RdDownloadsPage')) {
                 $title['title'] = $customTitle;
                 return $title;
             });
+
+            // in case this site has Yoase SEO plugin.
+            // this plugin make `document_title_parts` filter dead.
+            // @link https://github.com/Yoast/wordpress-seo/issues/3579 See issue.
+            add_filter('wpseo_title', function($title) use ($customTitle) {
+                $sep = '|';
+                if (!is_admin()) {
+                    $name = get_bloginfo('name');
+                    return "{$customTitle} {$sep} {$name}";
+                }
+                return $title;
+            });
         }// setTitle
 
 
