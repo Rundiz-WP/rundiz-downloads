@@ -420,7 +420,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\RdDownloadsPage')) {
                         $output['form_result_msg'] = __('The security code entered was incorrect.', 'rd-downloads') . ' ' .
                             sprintf(
                                 /* translators: %d: Number of time incorrect. */
-                                _n('You had entered incorrect for %s time.', 'You had enter incorrect for %s times.', $_SESSION['rddownloads_enter_wrong_captcha'], 'rd-downloads'), 
+                                _n('You had entered incorrectly for %s time.', 'You had enter incorrectly for %s times.', $_SESSION['rddownloads_enter_wrong_captcha'], 'rd-downloads'), 
                                 $_SESSION['rddownloads_enter_wrong_captcha']
                             );
                     } else {

@@ -8,6 +8,7 @@
 // html element placeholder for convert from shortcode. -----------------------------------------------------
 $ElementPlaceholders = new \RdDownloads\App\Libraries\ElementPlaceholders();
 
+// text placeholders for design help.
 $placeholders = $ElementPlaceholders->textPlaceholders();
 $arrayKeys = array_keys($placeholders);
 $lastArrayKey = array_pop($arrayKeys);
@@ -21,6 +22,7 @@ foreach ($placeholders as $placeholder => $translated) {
 }
 unset($lastArrayKey, $placeholder, $placeholders, $translated);
 
+// db placeholders for design help.
 $placeholders = $ElementPlaceholders->dbPlaceholders();
 $arrayKeys = array_keys($placeholders);
 $lastArrayKey = array_pop($arrayKeys);
@@ -35,6 +37,7 @@ foreach ($placeholders as $placeholder) {
 unset($lastArrayKey, $placeholder, $placeholders);
 // end html element placeholder for convert from shortcode. -------------------------------------------------
 
+// available shortcode attributes for design help.
 $ShortcodeRdDownloads = new \RdDownloads\App\Libraries\ShortcodeRdDownloads();
 $attributes = $ShortcodeRdDownloads->availableAttributes();
 $arrayKeys = array_keys($attributes);
@@ -113,6 +116,11 @@ $designHelp .= '</pre>' . PHP_EOL;
 unset($availableShortcodeAttributes, $dbPlaceholders, $ElementPlaceholders, $txtPlaceholders);
 // end design help ------------------------------------------------------------------------------------------
 
+// captcha help ----------------------------------------------------------------------------------------------
+$captchaHelp = __('Captcha is human validation that can help prevent bot, check this to use the captcha.', 'rd-downloads') . ' ' .
+    __('Default is no.', 'rd-downloads');
+// end captcha help -----------------------------------------------------------------------------------------
+
 $githubSecretHelp = '<p><strong>' . __('To use GitHub auto update', 'rd-downloads') . '</strong></p>
     <ul class="rd-settings-ul">
         <li>' . sprintf(__('Go to your %1$sGitHub%2$s repository.', 'rd-downloads'), '<a href="https://github.com/" target="github">', '</a>') . '</li>
@@ -164,10 +172,22 @@ return [
                     'type' => 'checkbox',
                 ],
                 [
+                    'content' => '<button id="rd-downloads-settings-clear-cache" class="button" type="button">' . __('Clear cache', 'rd-downloads') . '</button><br>' . 
+                        __('If something seems not up-to-date, please try to clear the cache first. This will be clear all plugin\'s cache.', 'rd-downloads'),
+                    'title' => __('Cache', 'rd-downloads'),
+                    'type' => 'html',
+                ],
+            ],// fields
+        ],// end general tab.
+        [
+            'icon' => 'fas fa-diagnoses',
+            'title' => __('Anti robots', 'rd-downloads'),
+            'fields' => [
+                [
                     'options' => [
                         [
                             'default' => '',
-                            'description' => __('Captcha is human validation that can help prevent bot, check this to use the captcha.', 'rd-downloads') . ' ' . __('Default is no.', 'rd-downloads'),
+                            'description' => $captchaHelp,
                             'id' => 'rdd_use_captcha',
                             'title' => __('Yes', 'rd-downloads'),
                             'value' => '1',
@@ -203,14 +223,8 @@ return [
                     'title' => __('Block user agents', 'rd-downloads'),
                     'type' => 'textarea',
                 ],
-                [
-                    'content' => '<button id="rd-downloads-settings-clear-cache" class="button" type="button">' . __('Clear cache', 'rd-downloads') . '</button><br>' . 
-                        __('If something seems not up-to-date, please try to clear the cache first. This will be clear all plugin\'s cache.', 'rd-downloads'),
-                    'title' => __('Cache', 'rd-downloads'),
-                    'type' => 'html',
-                ],
             ],// fields
-        ],// end general tab.
+        ],// end anti bot tab.
         [
             'icon' => 'fab fa-github',
             'title' => __('GitHub', 'rd-downloads'),

@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rundiz Downloads 0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rd-downloads\n"
-"POT-Creation-Date: 2018-12-25T21:56:02+07:00\n"
-"PO-Revision-Date: 2018-12-25 22:05+0700\n"
+"POT-Creation-Date: 2018-12-27T10:24:22+07:00\n"
+"PO-Revision-Date: 2018-12-27 10:26+0700\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: th_TH\n"
@@ -46,164 +46,168 @@ msgid "Settings configuration file was not set."
 msgstr ""
 
 #. translators: %s: Example shortcode.
-#: \App\config\rd_downloads.php:60
+#: \App\config\rd_downloads.php:63
 msgid "The HTML element for replace the %s shortcode."
 msgstr "HTML ที่จะแทนที่ช็อตโค้ด %s."
 
 #. translators: %s: Default html elements that will be convert shortcode to this.
-#: \App\config\rd_downloads.php:62
+#: \App\config\rd_downloads.php:65
 msgid "Default value is %s."
 msgstr "ค่าเดิมคือ %s."
 
-#: \App\config\rd_downloads.php:64
+#: \App\config\rd_downloads.php:67
 msgid "Available shortcode attributes."
 msgstr "แอตทริบิวท์ช็อตโค้ดที่มี."
 
-#: \App\config\rd_downloads.php:66
+#: \App\config\rd_downloads.php:69
 msgid ""
 "Set one or more of these attributes into shortcode to match condition in the template and display its value. "
 "The %s attribute is required."
 msgstr "กำหนดแอตทริบิวท์ลงในช็อตโค้ดเพื่อให้ตรงเงื่อนไขในเท็มเพลทแล้วแสดงผลของมันออกมา. ค่าแอตทริบิวท์ %s ต้องกรอก."
 
-#: \App\config\rd_downloads.php:70
+#: \App\config\rd_downloads.php:73
 msgid "Placeholders for the text replacement."
 msgstr "ค่าแทนที่ข้อความ."
 
-#: \App\config\rd_downloads.php:74
+#: \App\config\rd_downloads.php:77
 msgid "Placeholders for DB fields replacement."
 msgstr "ค่าแทนที่ข้อมูลในฐานข้อมูล."
 
-#: \App\config\rd_downloads.php:78
+#: \App\config\rd_downloads.php:81
 msgid "Conditional template tag."
 msgstr "แท็กเท็มเพลทแบบเงื่อนไข."
 
-#: \App\config\rd_downloads.php:80
+#: \App\config\rd_downloads.php:83
 msgid "You can use conditional template tag to check that shortcode attribute was set. Example:"
 msgstr "คุณสามารถใช้เงื่อนไขในเท็มเพลทเพื่อตรวจว่าแอตทริบิวท์ของช็อตโค้ดนั้นถูกกำหนดมา. ตัวอย่าง:"
 
-#: \App\config\rd_downloads.php:88
+#: \App\config\rd_downloads.php:91
 msgid "You can also use conditional template tag to check that DB value was set. Example:"
 msgstr "คุณสามารถใช้เงื่อนไขในเท็มเพลทเพื่อตรวจว่าข้อมูลจากฐานข้อมูลนั้นถูกกำหนดมา. ตัวอย่าง:"
 
-#: \App\config\rd_downloads.php:96
+#: \App\config\rd_downloads.php:99
 msgid "More advance example:"
 msgstr "ตัวอย่างเพิ่มเติม:"
 
-#: \App\config\rd_downloads.php:116
+#: \App\config\rd_downloads.php:120
+msgid "Captcha is human validation that can help prevent bot, check this to use the captcha."
+msgstr "แคปต์ชาคือเครื่องมือตรวจสอบความเป็นมนุษย์ซึ่งสามารถป้องกันบอตได้, ติ๊กที่นี่เพื่อใช้แคปต์ชา."
+
+#: \App\config\rd_downloads.php:121 \App\config\rd_downloads.php:165 \App\config\rd_downloads.php:207
+msgid "Default is no."
+msgstr "ค่าเดิมคือไม่."
+
+#: \App\config\rd_downloads.php:124
 msgid "To use GitHub auto update"
 msgstr "การใช้อัปเดทอัตโนมัติจาก GitHub"
 
-#: \App\config\rd_downloads.php:118
+#: \App\config\rd_downloads.php:126
 msgid "Go to your %1$sGitHub%2$s repository."
 msgstr "ไปยังกรุ %1$sGitHub%2$s ของคุณ."
 
-#: \App\config\rd_downloads.php:119
+#: \App\config\rd_downloads.php:127
 msgid "Go to Settings &gt; Webhooks."
 msgstr "ไปยัง Settings &gt; Webhooks."
 
-#: \App\config\rd_downloads.php:121
+#: \App\config\rd_downloads.php:129
 msgid ""
 "If you didn't created Webhooks yet, click on %1$s button. If you want to change the secret, click on %2$s "
 "button."
 msgstr "ถ้าหากยังไม่ได้สร้าง Webhooks, ให้คลิกที่ปุ่ม %1$s. ถ้าหากคุณต้องการเปลี่ยน secret ให้คลิกที่ปุ่ม %2$s."
 
-#: \App\config\rd_downloads.php:122
+#: \App\config\rd_downloads.php:130
 msgid "Add webhook"
 msgstr "เพิ่ม webhook"
 
-#: \App\config\rd_downloads.php:123
+#: \App\config\rd_downloads.php:131
 msgid "Edit"
 msgstr "แก้ไข"
 
-#: \App\config\rd_downloads.php:125
+#: \App\config\rd_downloads.php:133
 msgid "Enter %s for payload URL."
 msgstr "กรอก %s สำหรับ payload URL."
 
-#: \App\config\rd_downloads.php:126
+#: \App\config\rd_downloads.php:134
 msgid "Content type is %s."
 msgstr "Content type คือ %s."
 
-#: \App\config\rd_downloads.php:127
+#: \App\config\rd_downloads.php:135
 msgid "On Secret field, enter the secret generated from here."
 msgstr "ที่ช่อง Secret, ให้กรอกอักขระที่ถูกสร้างจากที่นี่."
 
-#: \App\config\rd_downloads.php:128
+#: \App\config\rd_downloads.php:136
 msgid "On events to trigger this webhook, choose %s."
 msgstr "ที่ตัวเลือก events to trigger this webhook, ให้เลือก %s."
 
-#: \App\config\rd_downloads.php:128
+#: \App\config\rd_downloads.php:136
 msgid "Just the push event"
 msgstr ""
 
-#: \App\config\rd_downloads.php:129
+#: \App\config\rd_downloads.php:137
 msgid "Check on %s checkbox and save."
 msgstr "ติ๊กบนกล่อง %s แล้วบันทึก."
 
-#: \App\config\rd_downloads.php:129
+#: \App\config\rd_downloads.php:137
 msgid "Active"
 msgstr ""
 
-#: \App\config\rd_downloads.php:133
+#: \App\config\rd_downloads.php:141
 msgid "To get GitHub token"
 msgstr "การรับค่าโทเคนของ GitHub"
 
-#: \App\config\rd_downloads.php:135
+#: \App\config\rd_downloads.php:143
 msgid "Go to your %1$sGitHub%2$s website."
 msgstr "ไปยังเว็บไซต์ %1$sGitHub%2$s."
 
-#: \App\config\rd_downloads.php:136
+#: \App\config\rd_downloads.php:144
 msgid "Click at your icon on the right of the top bar, the menu will be appear."
 msgstr "คลิกบนไอคอนมุมบนขวาของบาร์ด้านบน, เมนูจะปรากฏขึ้น."
 
-#: \App\config\rd_downloads.php:137
+#: \App\config\rd_downloads.php:145
 msgid "Go to %1$sSettings &gt; Developer settings &gt; Personal access tokens%2$s page."
 msgstr "ไปยังหน้า %1$sSettings &gt; Developer settings &gt; Personal access tokens%2$s."
 
-#: \App\config\rd_downloads.php:138 \App\config\rd_downloads.php:141
+#: \App\config\rd_downloads.php:146 \App\config\rd_downloads.php:149
 msgid "Click on %s button."
 msgstr "คลิกบนปุ่ม %s."
 
-#: \App\config\rd_downloads.php:138
+#: \App\config\rd_downloads.php:146
 msgid "Generate new token"
 msgstr "สร้างโทเคนใหม่"
 
-#: \App\config\rd_downloads.php:139
+#: \App\config\rd_downloads.php:147
 msgid "Enter Token description."
 msgstr "กรอกรายละเอียดโทเคน."
 
-#: \App\config\rd_downloads.php:140
+#: \App\config\rd_downloads.php:148
 msgid "Check for these scopes. %s"
 msgstr "ติ๊กค่า scopes. %s"
 
-#: \App\config\rd_downloads.php:141
+#: \App\config\rd_downloads.php:149
 msgid "Generate token"
 msgstr "สร้างโทเคน"
 
-#: \App\config\rd_downloads.php:142
+#: \App\config\rd_downloads.php:150
 msgid ""
 "Copy your personal token and paste above field then save changes before you won't be able to see it again."
 msgstr "คัดลอกค่าโทเคนแล้ววางลงบนช่องด้านบนจากนั้นกดบันทึกก่อนที่คุณจะไม่ได้เห็นมันอีก."
 
-#: \App\config\rd_downloads.php:151
+#: \App\config\rd_downloads.php:159
 msgid "General"
 msgstr "ทั่วไป"
 
-#: \App\config\rd_downloads.php:157
+#: \App\config\rd_downloads.php:165
 msgid "Check this to use force download instead of redirect to file. (This will work with local file only.)"
 msgstr "ติ๊กที่นี่เพื่อใช้บังคับดาวน์โหลดแทนที่จะเปลี่ยนเส้นทางไปยังไฟล์. (ใช้ได้เฉพาะไฟล์บนเซิร์ฟเวอร์นี้เท่านั้น.)"
 
-#: \App\config\rd_downloads.php:157 \App\config\rd_downloads.php:170 \App\config\rd_downloads.php:187
-msgid "Default is no."
-msgstr "ค่าเดิมคือไม่."
-
-#: \App\config\rd_downloads.php:159 \App\config\rd_downloads.php:172 \App\config\rd_downloads.php:189
-#: \App\config\rd_downloads.php:272 \App\config\rd_downloads.php:298 \App\Models\RdDownloadsListTable.php:91
+#: \App\config\rd_downloads.php:167 \App\config\rd_downloads.php:192 \App\config\rd_downloads.php:209
+#: \App\config\rd_downloads.php:286 \App\config\rd_downloads.php:312 \App\Models\RdDownloadsListTable.php:91
 #: \App\Views\admin\Downloads\Editing\pageEdit_v.php:108
 msgid "Yes"
 msgstr "ใช่"
 
 #. translators: %s: Force download option.
-#: \App\config\rd_downloads.php:163 \App\Controllers\Admin\Downloads\Editing.php:59
+#: \App\config\rd_downloads.php:171 \App\Controllers\Admin\Downloads\Editing.php:59
 #: \App\Models\RdDownloadsListTable.php:237 \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:4
 #: \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:8
 #: \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:12
@@ -211,63 +215,63 @@ msgstr "ใช่"
 msgid "Force download"
 msgstr "บังคับดาวน์โหลด"
 
-#: \App\config\rd_downloads.php:170
-msgid "Captcha is human validation that can help prevent bot, check this to use the captcha."
-msgstr "แคปชาคือเครื่องมือตรวจสอบความเป็นมนุษย์ซึ่งสามารถป้องกันบอตได้, ติ๊กที่นี่เพื่อใช้แคปชา."
-
-#: \App\config\rd_downloads.php:176 \App\config\rd_downloads.php:186
-msgid "Use captcha"
-msgstr "ใช้แคปชา"
-
-#: \App\config\rd_downloads.php:185
-msgid ""
-"If %s was checked, this checkbox is for allow play captcha audio. If your server does not support or not "
-"working then uncheck this box."
-msgstr "ถ้า %s ถูกติ๊ก, กล่องเช็คนี้จะสำหรับอนุญาตให้เล่นเสียงแคปชาได้. ถ้าหากเซิร์ฟเวอร์ของคุณไม่รองรับหรือมันไม่ทำงาน ให้เลิกติ๊กกล่องนี้."
-
-#: \App\config\rd_downloads.php:193
-msgid "Use captcha audio"
-msgstr "ใช้แคปชาเสียง"
-
-#: \App\config\rd_downloads.php:198
-msgid "User agent that contain text in one of this will be blocked. One per line, case insensitive."
-msgstr "User agent ที่มีข้อความหนึ่งในรายการเหล่านี้จะถูกบล็อค. หนึ่งข้อความต่อบรรทัด, ตัวอักษรเล็กใหญ่ไม่สำคัญ."
-
-#: \App\config\rd_downloads.php:203
-msgid "Block user agents"
-msgstr "บล็อค user agents"
-
-#: \App\config\rd_downloads.php:207
+#: \App\config\rd_downloads.php:175
 msgid "Clear cache"
 msgstr "ล้างแคช"
 
-#: \App\config\rd_downloads.php:208
+#: \App\config\rd_downloads.php:176
 msgid ""
 "If something seems not up-to-date, please try to clear the cache first. This will be clear all plugin's "
 "cache."
 msgstr "ถ้าบางอย่างดูไม่เปลี่ยนแปลง, โปรดลองล้างแคชดูก่อน. นี่จะเป็นการล้างแคชทั้งหมดเฉพาะปลั๊กอินนี้เท่านั้น."
 
-#: \App\config\rd_downloads.php:209
+#: \App\config\rd_downloads.php:177
 msgid "Cache"
 msgstr "แคช"
 
-#: \App\config\rd_downloads.php:216
+#: \App\config\rd_downloads.php:184
+msgid "Anti robots"
+msgstr "ป้องกันบอต"
+
+#: \App\config\rd_downloads.php:196 \App\config\rd_downloads.php:206
+msgid "Use captcha"
+msgstr "ใช้แคปต์ชา"
+
+#: \App\config\rd_downloads.php:205
+msgid ""
+"If %s was checked, this checkbox is for allow play captcha audio. If your server does not support or not "
+"working then uncheck this box."
+msgstr "ถ้า %s ถูกติ๊ก, กล่องเช็คนี้จะสำหรับอนุญาตให้เล่นเสียงแคปต์ชาได้. ถ้าหากเซิร์ฟเวอร์ของคุณไม่รองรับหรือมันไม่ทำงาน ให้เลิกติ๊กกล่องนี้."
+
+#: \App\config\rd_downloads.php:213
+msgid "Use captcha audio"
+msgstr "ใช้แคปต์ชาเสียง"
+
+#: \App\config\rd_downloads.php:218
+msgid "User agent that contain text in one of this will be blocked. One per line, case insensitive."
+msgstr "User agent ที่มีข้อความหนึ่งในรายการเหล่านี้จะถูกบล็อค. หนึ่งข้อความต่อบรรทัด, ตัวอักษรเล็กใหญ่ไม่สำคัญ."
+
+#: \App\config\rd_downloads.php:223
+msgid "Block user agents"
+msgstr "บล็อค user agents"
+
+#: \App\config\rd_downloads.php:230
 msgid "GitHub"
 msgstr ""
 
-#: \App\config\rd_downloads.php:220
+#: \App\config\rd_downloads.php:234
 msgid "Re-generate"
 msgstr "สร้างใหม่"
 
-#: \App\config\rd_downloads.php:221
+#: \App\config\rd_downloads.php:235
 msgid "Secret key for use in GitHub webhook auto update"
 msgstr "กุญแจลับสำหรับใช้กับการอัปเดทอัตโนมัติจาก GitHub"
 
-#: \App\config\rd_downloads.php:226
+#: \App\config\rd_downloads.php:240
 msgid "GitHub Secret"
 msgstr "รหัสลับ GitHub"
 
-#: \App\config\rd_downloads.php:231
+#: \App\config\rd_downloads.php:245
 msgid ""
 "Choose how auto update work. Auto update on every releases and commits can make your server slow, if you "
 "choose every releases then it will work less."
@@ -275,87 +279,87 @@ msgstr ""
 "เลือกว่าอัปเดทอัตโนมัติจะทำงานอย่างไร. อัปเดทอัตโนมัติทุกๆ release และ commit จะทำให้เซิร์ฟเวอร์ทำงานช้าลงได้, "
 "ถ้าคุณเลือกเฉพาะทุกๆ release มันจะทำงานน้อยกว่า."
 
-#: \App\config\rd_downloads.php:234
+#: \App\config\rd_downloads.php:248
 msgid "Do not auto update"
 msgstr "ไม่อัปเดทอัตโนมัติ"
 
-#: \App\config\rd_downloads.php:235
+#: \App\config\rd_downloads.php:249
 msgid "Every releases"
 msgstr "ทุกๆ release"
 
-#: \App\config\rd_downloads.php:235 \App\Models\RdDownloadsListTable.php:93
+#: \App\config\rd_downloads.php:249 \App\Models\RdDownloadsListTable.php:93
 #: \App\Views\admin\Downloads\Editing\pageEdit_v.php:112
 msgid "Default"
 msgstr "ค่าเดิม"
 
-#: \App\config\rd_downloads.php:236
+#: \App\config\rd_downloads.php:250
 msgid "Every releases and commits"
 msgstr "ทุกๆ release และ commit"
 
-#: \App\config\rd_downloads.php:238
+#: \App\config\rd_downloads.php:252
 msgid "Auto update"
 msgstr "อัปเดทอัตโนมัติ"
 
-#: \App\config\rd_downloads.php:248
+#: \App\config\rd_downloads.php:262
 msgid "Test token"
 msgstr "ทดสอบโทเคน"
 
-#: \App\config\rd_downloads.php:249
+#: \App\config\rd_downloads.php:263
 msgid "Token that can be used to access GitHub API such as auto correct repository URL."
 msgstr "โทเคนที่จะใช้เข้าถึง API ของ GitHub อย่างเช่นปรับ URL อัตโนมัติ."
 
-#: \App\config\rd_downloads.php:250
+#: \App\config\rd_downloads.php:264
 msgid "This is required to use with GitHub auto update."
 msgstr "สิ่งนี้ต้องการสำหรับอัปเดทอัตโนมัติจาก GitHub."
 
-#: \App\config\rd_downloads.php:252
+#: \App\config\rd_downloads.php:266
 msgid "GitHub token"
 msgstr "โทเคน GitHub"
 
-#: \App\config\rd_downloads.php:264
+#: \App\config\rd_downloads.php:278
 msgid "Logs/statistic"
 msgstr "บันทึก/สถิติ"
 
-#: \App\config\rd_downloads.php:270
+#: \App\config\rd_downloads.php:284
 msgid "Check this to automatically delete old logs."
 msgstr "ติ๊กที่นี่เพื่อลบบันทึกเก่าอัตโนมัติ."
 
-#: \App\config\rd_downloads.php:270 \App\config\rd_downloads.php:296
+#: \App\config\rd_downloads.php:284 \App\config\rd_downloads.php:310
 msgid "Default is yes."
 msgstr "ค่าเดิมคือใช่."
 
 #. translators: %s is Auto delete logs option
-#: \App\config\rd_downloads.php:276 \App\config\rd_downloads.php:282
+#: \App\config\rd_downloads.php:290 \App\config\rd_downloads.php:296
 msgid "Auto delete logs"
 msgstr "ลบบันทึกอัตโนมัติ"
 
 #. translators: %s is Auto delete logs option
-#: \App\config\rd_downloads.php:282
+#: \App\config\rd_downloads.php:296
 msgid "Auto delete logs after specific days. This will be skipped if %s was not checked."
 msgstr "ลบล็อกอัตโนมัติหลังจากวันที่ระบุ. สิ่งนี้จะไม่ทำงานถ้า %s ไม่ถูกติ๊ก."
 
 #. translators: %s is Auto delete logs option
-#: \App\config\rd_downloads.php:282
+#: \App\config\rd_downloads.php:296
 msgid "Default is 90."
 msgstr "ค่าเดิมคือ 90."
 
-#: \App\config\rd_downloads.php:289
+#: \App\config\rd_downloads.php:303
 msgid "Days limit"
 msgstr "วันที่จำกัด"
 
-#: \App\config\rd_downloads.php:296
+#: \App\config\rd_downloads.php:310
 msgid "Check this to logs admin actions such as add, update, delete downloads."
 msgstr "ติ๊กที่นี่เพื่อบันทึกการกระทำของผู้ดูแล เช่น เพิ่ม, ลบ, ปรับปรุง, ดาวน์โหลด."
 
-#: \App\config\rd_downloads.php:302
+#: \App\config\rd_downloads.php:316
 msgid "Admin actions"
 msgstr "การกระทำผู้ดูแล"
 
-#: \App\config\rd_downloads.php:309
+#: \App\config\rd_downloads.php:323
 msgid "Design"
 msgstr "ออกแบบ"
 
-#: \App\config\rd_downloads.php:316
+#: \App\config\rd_downloads.php:330
 msgid "Downloads element"
 msgstr "HTML ที่จะแสดงผล"
 
@@ -704,23 +708,23 @@ msgid ""
 "You have to update new secret on those repositories again"
 msgstr "รหัสลับที่ถูกสร้างก่อนหน้าจะไม่สามารถทำงานได้กับกรุของ GitHub ที่ใช้การตั้งค่านี้อีกต่อไป. คุณต้องอัปเดทรหัสลับบนกรุเหล่านั้นอีกครั้ง"
 
-#: \App\Controllers\Front\RdDownloadsPage.php:374
+#: \App\Controllers\Front\RdDownloadsPage.php:384
 msgid "Too many attempts for wrong captcha code."
-msgstr "แคปชาผิดพลาดหลายครั้งเกินไป."
+msgstr "แคปต์ชาผิดพลาดหลายครั้งเกินไป."
 
 #. translators: %s: Date/time that un-banned captcha page.
-#: \App\Controllers\Front\RdDownloadsPage.php:377
+#: \App\Controllers\Front\RdDownloadsPage.php:387
 msgid "Please wait until %s and try again."
 msgstr "โปรดรอจนถึง %s แล้วลองอีกครั้ง."
 
-#: \App\Controllers\Front\RdDownloadsPage.php:409
+#: \App\Controllers\Front\RdDownloadsPage.php:420
 msgid "The security code entered was incorrect."
 msgstr "รหัสความปลอดภัยที่กรอกไม่ถูกต้อง."
 
 #. translators: %d: Number of time incorrect.
-#: \App\Controllers\Front\RdDownloadsPage.php:412
-msgid "You had entered incorrect for %s time."
-msgid_plural "You had enter incorrect for %s times."
+#: \App\Controllers\Front\RdDownloadsPage.php:423
+msgid "You had entered incorrectly for %s time."
+msgid_plural "You had enter incorrectly for %s times."
 msgstr[0] "คุณกรอกผิด %s ครั้ง."
 
 #: \App\Controllers\XhrBased.php:48
@@ -1302,11 +1306,11 @@ msgstr "User agent ของคุณ: %s."
 msgid "Match banned user agent: %s."
 msgstr "ตรงกับ user agent ที่ถูกแบน: %s."
 
-#: \templates\RdDownloadsPage\subGetDownloadData_v.php:18
+#: \templates\RdDownloadsPage\subGetDownloadData_v.php:19
 msgid "Not found"
 msgstr "ไม่พบ"
 
-#: \templates\RdDownloadsPage\subGetDownloadData_v.php:19
+#: \templates\RdDownloadsPage\subGetDownloadData_v.php:20
 msgid "The download you have requested could not be found, please verify your link again."
 msgstr "ไม่พบไฟล์ดาวน์โหลดที่คุณเรียก, โปรดตรวจสอบลิ้งค์อีกครั้ง."
 
@@ -1320,7 +1324,7 @@ msgstr "โปรดกรอกตัวอักษรที่คุณเห
 
 #: \templates\RdDownloadsPage\subUseCaptcha_v.php:30
 msgid "Captcha image"
-msgstr "ภาพแคปชา"
+msgstr "ภาพแคปต์ชา"
 
 #: \templates\RdDownloadsPage\subUseCaptcha_v.php:46
 msgid "Play audio"

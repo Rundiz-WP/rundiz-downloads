@@ -2,15 +2,15 @@
 # This file is distributed under the same license as the Rundiz Downloads plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rundiz Downloads 0.1\n"
+"Project-Id-Version: Rundiz Downloads 0.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rd-downloads\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2018-12-25T21:56:02+07:00\n"
-"PO-Revision-Date: 2018-12-25T21:56:02+07:00\n"
+"POT-Creation-Date: 2018-12-27T10:24:22+07:00\n"
+"PO-Revision-Date: 2018-12-27T10:24:22+07:00\n"
 "X-Generator: WP-CLI 2.0.1\n"
 "X-Domain: rd-downloads\n"
 
@@ -42,166 +42,170 @@ msgid "Settings configuration file was not set."
 msgstr ""
 
 #. translators: %s: Example shortcode.
-#: \App\config\rd_downloads.php:60
+#: \App\config\rd_downloads.php:63
 msgid "The HTML element for replace the %s shortcode."
 msgstr ""
 
 #. translators: %s: Default html elements that will be convert shortcode to this.
-#: \App\config\rd_downloads.php:62
+#: \App\config\rd_downloads.php:65
 msgid "Default value is %s."
 msgstr ""
 
-#: \App\config\rd_downloads.php:64
+#: \App\config\rd_downloads.php:67
 msgid "Available shortcode attributes."
 msgstr ""
 
-#: \App\config\rd_downloads.php:66
+#: \App\config\rd_downloads.php:69
 msgid "Set one or more of these attributes into shortcode to match condition in the template and display its value. The %s attribute is required."
 msgstr ""
 
-#: \App\config\rd_downloads.php:70
+#: \App\config\rd_downloads.php:73
 msgid "Placeholders for the text replacement."
 msgstr ""
 
-#: \App\config\rd_downloads.php:74
+#: \App\config\rd_downloads.php:77
 msgid "Placeholders for DB fields replacement."
 msgstr ""
 
-#: \App\config\rd_downloads.php:78
+#: \App\config\rd_downloads.php:81
 msgid "Conditional template tag."
 msgstr ""
 
-#: \App\config\rd_downloads.php:80
+#: \App\config\rd_downloads.php:83
 msgid "You can use conditional template tag to check that shortcode attribute was set. Example:"
 msgstr ""
 
-#: \App\config\rd_downloads.php:88
+#: \App\config\rd_downloads.php:91
 msgid "You can also use conditional template tag to check that DB value was set. Example:"
 msgstr ""
 
-#: \App\config\rd_downloads.php:96
+#: \App\config\rd_downloads.php:99
 msgid "More advance example:"
 msgstr ""
 
-#: \App\config\rd_downloads.php:116
-msgid "To use GitHub auto update"
-msgstr ""
-
-#: \App\config\rd_downloads.php:118
-msgid "Go to your %1$sGitHub%2$s repository."
-msgstr ""
-
-#: \App\config\rd_downloads.php:119
-msgid "Go to Settings &gt; Webhooks."
+#: \App\config\rd_downloads.php:120
+msgid "Captcha is human validation that can help prevent bot, check this to use the captcha."
 msgstr ""
 
 #: \App\config\rd_downloads.php:121
-msgid "If you didn't created Webhooks yet, click on %1$s button. If you want to change the secret, click on %2$s button."
-msgstr ""
-
-#: \App\config\rd_downloads.php:122
-msgid "Add webhook"
-msgstr ""
-
-#: \App\config\rd_downloads.php:123
-msgid "Edit"
-msgstr ""
-
-#: \App\config\rd_downloads.php:125
-msgid "Enter %s for payload URL."
-msgstr ""
-
-#: \App\config\rd_downloads.php:126
-msgid "Content type is %s."
-msgstr ""
-
-#: \App\config\rd_downloads.php:127
-msgid "On Secret field, enter the secret generated from here."
-msgstr ""
-
-#: \App\config\rd_downloads.php:128
-msgid "On events to trigger this webhook, choose %s."
-msgstr ""
-
-#: \App\config\rd_downloads.php:128
-msgid "Just the push event"
-msgstr ""
-
-#: \App\config\rd_downloads.php:129
-msgid "Check on %s checkbox and save."
-msgstr ""
-
-#: \App\config\rd_downloads.php:129
-msgid "Active"
-msgstr ""
-
-#: \App\config\rd_downloads.php:133
-msgid "To get GitHub token"
-msgstr ""
-
-#: \App\config\rd_downloads.php:135
-msgid "Go to your %1$sGitHub%2$s website."
-msgstr ""
-
-#: \App\config\rd_downloads.php:136
-msgid "Click at your icon on the right of the top bar, the menu will be appear."
-msgstr ""
-
-#: \App\config\rd_downloads.php:137
-msgid "Go to %1$sSettings &gt; Developer settings &gt; Personal access tokens%2$s page."
-msgstr ""
-
-#: \App\config\rd_downloads.php:138
-#: \App\config\rd_downloads.php:141
-msgid "Click on %s button."
-msgstr ""
-
-#: \App\config\rd_downloads.php:138
-msgid "Generate new token"
-msgstr ""
-
-#: \App\config\rd_downloads.php:139
-msgid "Enter Token description."
-msgstr ""
-
-#: \App\config\rd_downloads.php:140
-msgid "Check for these scopes. %s"
-msgstr ""
-
-#: \App\config\rd_downloads.php:141
-msgid "Generate token"
-msgstr ""
-
-#: \App\config\rd_downloads.php:142
-msgid "Copy your personal token and paste above field then save changes before you won't be able to see it again."
-msgstr ""
-
-#: \App\config\rd_downloads.php:151
-msgid "General"
-msgstr ""
-
-#: \App\config\rd_downloads.php:157
-msgid "Check this to use force download instead of redirect to file. (This will work with local file only.)"
-msgstr ""
-
-#: \App\config\rd_downloads.php:157
-#: \App\config\rd_downloads.php:170
-#: \App\config\rd_downloads.php:187
+#: \App\config\rd_downloads.php:165
+#: \App\config\rd_downloads.php:207
 msgid "Default is no."
 msgstr ""
 
+#: \App\config\rd_downloads.php:124
+msgid "To use GitHub auto update"
+msgstr ""
+
+#: \App\config\rd_downloads.php:126
+msgid "Go to your %1$sGitHub%2$s repository."
+msgstr ""
+
+#: \App\config\rd_downloads.php:127
+msgid "Go to Settings &gt; Webhooks."
+msgstr ""
+
+#: \App\config\rd_downloads.php:129
+msgid "If you didn't created Webhooks yet, click on %1$s button. If you want to change the secret, click on %2$s button."
+msgstr ""
+
+#: \App\config\rd_downloads.php:130
+msgid "Add webhook"
+msgstr ""
+
+#: \App\config\rd_downloads.php:131
+msgid "Edit"
+msgstr ""
+
+#: \App\config\rd_downloads.php:133
+msgid "Enter %s for payload URL."
+msgstr ""
+
+#: \App\config\rd_downloads.php:134
+msgid "Content type is %s."
+msgstr ""
+
+#: \App\config\rd_downloads.php:135
+msgid "On Secret field, enter the secret generated from here."
+msgstr ""
+
+#: \App\config\rd_downloads.php:136
+msgid "On events to trigger this webhook, choose %s."
+msgstr ""
+
+#: \App\config\rd_downloads.php:136
+msgid "Just the push event"
+msgstr ""
+
+#: \App\config\rd_downloads.php:137
+msgid "Check on %s checkbox and save."
+msgstr ""
+
+#: \App\config\rd_downloads.php:137
+msgid "Active"
+msgstr ""
+
+#: \App\config\rd_downloads.php:141
+msgid "To get GitHub token"
+msgstr ""
+
+#: \App\config\rd_downloads.php:143
+msgid "Go to your %1$sGitHub%2$s website."
+msgstr ""
+
+#: \App\config\rd_downloads.php:144
+msgid "Click at your icon on the right of the top bar, the menu will be appear."
+msgstr ""
+
+#: \App\config\rd_downloads.php:145
+msgid "Go to %1$sSettings &gt; Developer settings &gt; Personal access tokens%2$s page."
+msgstr ""
+
+#: \App\config\rd_downloads.php:146
+#: \App\config\rd_downloads.php:149
+msgid "Click on %s button."
+msgstr ""
+
+#: \App\config\rd_downloads.php:146
+msgid "Generate new token"
+msgstr ""
+
+#: \App\config\rd_downloads.php:147
+msgid "Enter Token description."
+msgstr ""
+
+#: \App\config\rd_downloads.php:148
+msgid "Check for these scopes. %s"
+msgstr ""
+
+#: \App\config\rd_downloads.php:149
+msgid "Generate token"
+msgstr ""
+
+#: \App\config\rd_downloads.php:150
+msgid "Copy your personal token and paste above field then save changes before you won't be able to see it again."
+msgstr ""
+
 #: \App\config\rd_downloads.php:159
-#: \App\config\rd_downloads.php:172
-#: \App\config\rd_downloads.php:189
-#: \App\config\rd_downloads.php:272
-#: \App\config\rd_downloads.php:298
+msgid "General"
+msgstr ""
+
+#: \App\config\rd_downloads.php:165
+msgid "Check this to use force download instead of redirect to file. (This will work with local file only.)"
+msgstr ""
+
+#: \App\config\rd_downloads.php:167
+#: \App\config\rd_downloads.php:192
+#: \App\config\rd_downloads.php:209
+#: \App\config\rd_downloads.php:286
+#: \App\config\rd_downloads.php:312
 #: \App\Models\RdDownloadsListTable.php:91
 #: \App\Views\admin\Downloads\Editing\pageEdit_v.php:108
 msgid "Yes"
 msgstr ""
 
 #. translators: %s: Force download option.
-#: \App\config\rd_downloads.php:163
+#: \App\config\rd_downloads.php:171
 #: \App\Controllers\Admin\Downloads\Editing.php:59
 #: \App\Models\RdDownloadsListTable.php:237
 #: \App\Views\admin\Downloads\Editing\helpTab\tab2_v.php:4
@@ -212,147 +216,147 @@ msgstr ""
 msgid "Force download"
 msgstr ""
 
-#: \App\config\rd_downloads.php:170
-msgid "Captcha is human validation that can help prevent bot, check this to use the captcha."
-msgstr ""
-
-#: \App\config\rd_downloads.php:176
-#: \App\config\rd_downloads.php:186
-msgid "Use captcha"
-msgstr ""
-
-#: \App\config\rd_downloads.php:185
-msgid "If %s was checked, this checkbox is for allow play captcha audio. If your server does not support or not working then uncheck this box."
-msgstr ""
-
-#: \App\config\rd_downloads.php:193
-msgid "Use captcha audio"
-msgstr ""
-
-#: \App\config\rd_downloads.php:198
-msgid "User agent that contain text in one of this will be blocked. One per line, case insensitive."
-msgstr ""
-
-#: \App\config\rd_downloads.php:203
-msgid "Block user agents"
-msgstr ""
-
-#: \App\config\rd_downloads.php:207
+#: \App\config\rd_downloads.php:175
 msgid "Clear cache"
 msgstr ""
 
-#: \App\config\rd_downloads.php:208
+#: \App\config\rd_downloads.php:176
 msgid "If something seems not up-to-date, please try to clear the cache first. This will be clear all plugin's cache."
 msgstr ""
 
-#: \App\config\rd_downloads.php:209
+#: \App\config\rd_downloads.php:177
 msgid "Cache"
 msgstr ""
 
-#: \App\config\rd_downloads.php:216
+#: \App\config\rd_downloads.php:184
+msgid "Anti robots"
+msgstr ""
+
+#: \App\config\rd_downloads.php:196
+#: \App\config\rd_downloads.php:206
+msgid "Use captcha"
+msgstr ""
+
+#: \App\config\rd_downloads.php:205
+msgid "If %s was checked, this checkbox is for allow play captcha audio. If your server does not support or not working then uncheck this box."
+msgstr ""
+
+#: \App\config\rd_downloads.php:213
+msgid "Use captcha audio"
+msgstr ""
+
+#: \App\config\rd_downloads.php:218
+msgid "User agent that contain text in one of this will be blocked. One per line, case insensitive."
+msgstr ""
+
+#: \App\config\rd_downloads.php:223
+msgid "Block user agents"
+msgstr ""
+
+#: \App\config\rd_downloads.php:230
 msgid "GitHub"
 msgstr ""
 
-#: \App\config\rd_downloads.php:220
+#: \App\config\rd_downloads.php:234
 msgid "Re-generate"
 msgstr ""
 
-#: \App\config\rd_downloads.php:221
+#: \App\config\rd_downloads.php:235
 msgid "Secret key for use in GitHub webhook auto update"
 msgstr ""
 
-#: \App\config\rd_downloads.php:226
+#: \App\config\rd_downloads.php:240
 msgid "GitHub Secret"
 msgstr ""
 
-#: \App\config\rd_downloads.php:231
+#: \App\config\rd_downloads.php:245
 msgid "Choose how auto update work. Auto update on every releases and commits can make your server slow, if you choose every releases then it will work less."
 msgstr ""
 
-#: \App\config\rd_downloads.php:234
+#: \App\config\rd_downloads.php:248
 msgid "Do not auto update"
 msgstr ""
 
-#: \App\config\rd_downloads.php:235
+#: \App\config\rd_downloads.php:249
 msgid "Every releases"
 msgstr ""
 
-#: \App\config\rd_downloads.php:235
+#: \App\config\rd_downloads.php:249
 #: \App\Models\RdDownloadsListTable.php:93
 #: \App\Views\admin\Downloads\Editing\pageEdit_v.php:112
 msgid "Default"
 msgstr ""
 
-#: \App\config\rd_downloads.php:236
+#: \App\config\rd_downloads.php:250
 msgid "Every releases and commits"
 msgstr ""
 
-#: \App\config\rd_downloads.php:238
+#: \App\config\rd_downloads.php:252
 msgid "Auto update"
 msgstr ""
 
-#: \App\config\rd_downloads.php:248
+#: \App\config\rd_downloads.php:262
 msgid "Test token"
 msgstr ""
 
-#: \App\config\rd_downloads.php:249
+#: \App\config\rd_downloads.php:263
 msgid "Token that can be used to access GitHub API such as auto correct repository URL."
 msgstr ""
 
-#: \App\config\rd_downloads.php:250
+#: \App\config\rd_downloads.php:264
 msgid "This is required to use with GitHub auto update."
 msgstr ""
 
-#: \App\config\rd_downloads.php:252
+#: \App\config\rd_downloads.php:266
 msgid "GitHub token"
 msgstr ""
 
-#: \App\config\rd_downloads.php:264
+#: \App\config\rd_downloads.php:278
 msgid "Logs/statistic"
 msgstr ""
 
-#: \App\config\rd_downloads.php:270
+#: \App\config\rd_downloads.php:284
 msgid "Check this to automatically delete old logs."
 msgstr ""
 
-#: \App\config\rd_downloads.php:270
-#: \App\config\rd_downloads.php:296
+#: \App\config\rd_downloads.php:284
+#: \App\config\rd_downloads.php:310
 msgid "Default is yes."
 msgstr ""
 
 #. translators: %s is Auto delete logs option
-#: \App\config\rd_downloads.php:276
-#: \App\config\rd_downloads.php:282
+#: \App\config\rd_downloads.php:290
+#: \App\config\rd_downloads.php:296
 msgid "Auto delete logs"
 msgstr ""
 
 #. translators: %s is Auto delete logs option
-#: \App\config\rd_downloads.php:282
+#: \App\config\rd_downloads.php:296
 msgid "Auto delete logs after specific days. This will be skipped if %s was not checked."
 msgstr ""
 
 #. translators: %s is Auto delete logs option
-#: \App\config\rd_downloads.php:282
+#: \App\config\rd_downloads.php:296
 msgid "Default is 90."
 msgstr ""
 
-#: \App\config\rd_downloads.php:289
+#: \App\config\rd_downloads.php:303
 msgid "Days limit"
 msgstr ""
 
-#: \App\config\rd_downloads.php:296
+#: \App\config\rd_downloads.php:310
 msgid "Check this to logs admin actions such as add, update, delete downloads."
 msgstr ""
 
-#: \App\config\rd_downloads.php:302
+#: \App\config\rd_downloads.php:316
 msgid "Admin actions"
 msgstr ""
 
-#: \App\config\rd_downloads.php:309
+#: \App\config\rd_downloads.php:323
 msgid "Design"
 msgstr ""
 
-#: \App\config\rd_downloads.php:316
+#: \App\config\rd_downloads.php:330
 msgid "Downloads element"
 msgstr ""
 
@@ -713,23 +717,23 @@ msgstr ""
 msgid "The generated secret will not working anymore with any GitHub repositories that already has this setting. You have to update new secret on those repositories again"
 msgstr ""
 
-#: \App\Controllers\Front\RdDownloadsPage.php:374
+#: \App\Controllers\Front\RdDownloadsPage.php:384
 msgid "Too many attempts for wrong captcha code."
 msgstr ""
 
 #. translators: %s: Date/time that un-banned captcha page.
-#: \App\Controllers\Front\RdDownloadsPage.php:377
+#: \App\Controllers\Front\RdDownloadsPage.php:387
 msgid "Please wait until %s and try again."
 msgstr ""
 
-#: \App\Controllers\Front\RdDownloadsPage.php:409
+#: \App\Controllers\Front\RdDownloadsPage.php:420
 msgid "The security code entered was incorrect."
 msgstr ""
 
 #. translators: %d: Number of time incorrect.
-#: \App\Controllers\Front\RdDownloadsPage.php:412
-msgid "You had entered incorrect for %s time."
-msgid_plural "You had enter incorrect for %s times."
+#: \App\Controllers\Front\RdDownloadsPage.php:423
+msgid "You had entered incorrectly for %s time."
+msgid_plural "You had enter incorrectly for %s times."
 msgstr[0] ""
 
 #: \App\Controllers\XhrBased.php:48
@@ -1315,11 +1319,11 @@ msgstr ""
 msgid "Match banned user agent: %s."
 msgstr ""
 
-#: \templates\RdDownloadsPage\subGetDownloadData_v.php:18
+#: \templates\RdDownloadsPage\subGetDownloadData_v.php:19
 msgid "Not found"
 msgstr ""
 
-#: \templates\RdDownloadsPage\subGetDownloadData_v.php:19
+#: \templates\RdDownloadsPage\subGetDownloadData_v.php:20
 msgid "The download you have requested could not be found, please verify your link again."
 msgstr ""
 
