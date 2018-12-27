@@ -117,7 +117,18 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\RdDownloadsPage')) {
 
             if (isset($rd_downloads_options['rdd_use_captcha']) && $rd_downloads_options['rdd_use_captcha'] == '1') {
                 // if setting was set to use captcha.
-                $stepCaptcha = $this->subUseCaptcha();
+                // has a filter hook to allow custom captcha.
+                $useCustomCaptcha = apply_filters('rddownloads_use_custom_captcha', false);
+
+                if ($useCustomCaptcha === true) {
+                    // if there is filter hook to use custom captcha.
+                    // has a filter hook to display captcha page (return false) and validate the captcha value (return true on success, false on failure).
+                    $stepCaptcha = apply_filters('rddownloads_use_custom_captcha_result', false);
+                } else {
+                    $stepCaptcha = $this->subUseCaptcha();
+                }
+
+                unset($useCustomCaptcha);
             } else {
                 // if setting was not set to use captcha.
                 $stepCaptcha = true;
@@ -329,9 +340,6 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\RdDownloadsPage')) {
          */
         protected function subUseCaptcha()
         {
-            // use `do_action()` to allow other plugins, themes to use their own captcha.
-            do_action('rddownloads_action_before_captcha');
-
             // check for validated captcha and do not enter again on every request for xx minutes.
             if (
                 isset($_SESSION['rddownloads_correct_captcha_time']) &&
