@@ -237,7 +237,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\RdDownloadsPage')) {
                 unset($data, $RdDownloadLogs);
 
                 status_header(404);
-                $this->Loader->loadTemplate('RdDownloadsPage/subGetDownloadData_v');
+                $this->Loader->loadTemplate('RdDownloadsPage/subGetDownloadData_v', ['download_not_found' => true]);
                 return false;
             } else {
                 // if found download item.
@@ -345,8 +345,6 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\RdDownloadsPage')) {
 
             global $rd_downloads_options;
 
-            require_once plugin_dir_path(RDDOWNLOADS_FILE) . 'vendor/securimage/securimage.php';
-
             if (!isset($_SESSION['rddownloads_enter_wrong_captcha'])) {
                 $_SESSION['rddownloads_enter_wrong_captcha'] = 0;
             }
@@ -410,6 +408,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\RdDownloadsPage')) {
 
                 if (isset($output['disableCaptchaForm']) && $output['disableCaptchaForm'] === false) {
                     // if not banned too many attampts for wrong captcha.
+                    require_once plugin_dir_path(RDDOWNLOADS_FILE) . 'vendor/securimage/securimage.php';
                     $Img = new \Securimage();
                     $Img->namespace = 'rddownloads_download_page';
                     $checkResult = $Img->check($input_captcha);
