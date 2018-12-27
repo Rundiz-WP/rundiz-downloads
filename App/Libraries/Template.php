@@ -105,7 +105,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Template')) {
                     }
                     if (preg_match('/\{[\s]*if[\s]*(.+?)[\s]*\}/iu', trim($m[1])) && preg_match('/\{[\s]*endif[\s]*\}/iu', trim($m[4]))) {
                         // if it is contain `{if xxx}xxx{endif}` condition.
-                        if (isset($m[2]) && isset($replaces[trim($m[2])]) && !empty(trim($m[2]))) {
+                        if (isset($m[2]) && isset($replaces[trim($m[2])]) && !empty($replaces[trim($m[2])])) {
                             // if condition inside this `if` passed.
                             return $this->replaceVariable($m[3], $replaces);
                         } else {
