@@ -48,6 +48,12 @@ WordPress 4.0 or higher
 = Does it support multisite? =
 Yes, it is.
 
+= Will the uploaded files be deleted on uninstall? =
+Yes, the uploaded files and folders in WordPress upload folder will be deleted on plugin uninstall.
+
+= Will the plugin's tables be dropped on uninstall? =
+Yes, the plugin's tables will be dropped on uninstall.
+
 == Screenshots ==
 1. Front-end download button and description example.
 2. Manage downloads page.
