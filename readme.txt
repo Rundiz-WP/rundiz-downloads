@@ -3,7 +3,7 @@ Contributors: okvee
 Tags: downloads, download, download manager, file hosting, GitHub
 Requires at least: 4.0
 Tested up to: 5.0.2
-Stable tag: 0.2
+Stable tag: 0.3
 Requires PHP: 5.5
 License: MIT
 License URI: https://opensource.org/licenses/MIT
@@ -67,6 +67,15 @@ Yes, the plugin's tables will be dropped on uninstall.
 10. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
+= 0.3 =
+2018-12-27
+
+* Fix "Page not found" title where the website has Yoast SEO plugin.
+* Add conditional to template to display not found text.
+* Remove un-necessary files from "securimage" vendor.
+* Update text translations.
+* Use filters to allow other plugins, themes to use their own captcha. (Removed action hook.)
+
 = 0.2 =
 2018-12-26
 
