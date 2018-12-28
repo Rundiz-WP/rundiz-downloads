@@ -145,7 +145,7 @@ $githubTokenHelp = '<p><strong>' . __('To get GitHub token', 'rd-downloads') . '
         <li>' . sprintf(__('Go to %1$sSettings &gt; Developer settings &gt; Personal access tokens%2$s page.', 'rd-downloads'), '<a href="https://github.com/settings/tokens" target="githubTOken">', '</a>') . '</li>
         <li>' . sprintf(__('Click on %s button.', 'rd-downloads'), '<strong>' . __('Generate new token', 'rd-downloads') . '</strong>') . '</li>
         <li>' . __('Enter Token description.', 'rd-downloads') . '</li>
-        <li>' . sprintf(__('Check for these scopes. %s', 'rd-downloads'), 'repo, read:org, read:public_key, read:repo_hook, read:user, user:email, read:gpg_key') . '</li>
+        <li>' . sprintf(__('Check for these scopes. %s', 'rd-downloads'), '<strong>repo</strong>, <strong>repo:status</strong>, <strong>repo_deployment</strong>, <strong>public_repo</strong>, <strong>repo:invite</strong>') . '</li>
         <li>' . sprintf(__('Click on %s button.', 'rd-downloads'), '<strong>' . __('Generate token', 'rd-downloads') . '</strong>') . '</li>
         <li>' . __('Copy your personal token and paste above field then save changes before you won\'t be able to see it again.', 'rd-downloads') . '</li>
     </ul>
