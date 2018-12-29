@@ -97,7 +97,10 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          * @link https://developer.github.com/v4/explorer/ For demonstrate API request
          * @link https://getcomposer.org/doc/articles/versions.md Version range reference.
          * @param string $url The URL to anywhere in the repository.
-         * @param string|array $version_range The version range. See https://getcomposer.org/doc/articles/versions.md for more description. Set this to empty array to get all releases into array.
+         * @param string|array $version_range The version range. See https://getcomposer.org/doc/articles/versions.md for more description.<br>
+         *                                                          Set this to version range as documented in Composer to get only matched version range. <br>
+         *                                                          Set this to empty string to get latest release.<br>
+         *                                                          Set this to empty array to get all releases into array.<br>
          * @return array|false Return array if contain latest update by conditions described above, return false for failure.
          *                                  The return array format is: 
          *                                  <pre>array(
@@ -157,14 +160,6 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
     id
     url
     nameWithOwner
-    refs(refPrefix: "refs/tags/", last: 100, orderBy: {field: ALPHABETICAL, direction: DESC}) {
-      edges {
-        node {
-          id
-          name
-        }
-      }
-    }
     releases(last: 100) {
       totalCount
       edges {
@@ -191,6 +186,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                 downloadCount
                 release {
                   tagName
+                  publishedAt
                 }
               }
             }
@@ -240,28 +236,26 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
             $releases = [];
             if (
-                isset($result->data->repository->refs->edges) && 
-                is_array($result->data->repository->refs->edges) && 
-                isset($result->data->repository->releases->edges) && 
+                isset($result->data->repository->releases->edges) &&
                 is_array($result->data->repository->releases->edges)
             ) {
-                // if contain refs and releases.
-                // setup tags references for easy checking later.
-                $tagsReferences = [];
-                foreach ($result->data->repository->refs->edges as $item) {
-                    if (isset($item->node->id) && isset($item->node->name)) {
-                        $tagsReferences[$item->node->id] = [
-                            'id' => $item->node->id,
-                            'version' => preg_replace('#(v)?(.+)#iu', '$2', $item->node->name, 1),// remove prefix "v" for example: v1.0.1 will be 1.0.1
-                        ];
-                    }
-                }// endforeach;
-                unset($item);
+                // if contain releases.
+                // setup versions array for re-order its value with Composer/Semver
+                $tmpVersions = [];
+                $tmpReleases = [];
+                foreach ($result->data->repository->releases->edges as $item) {
+                    if (isset($item->node->tag->name)) {
+                        $tmpVersions[] = $item->node->tag->name;
 
-                if (!empty($tagsReferences)) {
-                    // if not empty $tagsReferences
-                    // loop each release (including tag).
-                    foreach ($result->data->repository->releases->edges as $item) {
+                        $tmpReleases[$item->node->tag->name] = [];
+                        $tmpReleases[$item->node->tag->name]['version'] = preg_replace('#(v)?(.+)#iu', '$2', $item->node->tag->name, 1);// remove prefix "v" for example: v1.0.1 will be 1.0.1
+                        if (isset($item->node->tag->id)) {
+                            $tmpReleases[$item->node->tag->name]['id'] = $item->node->tag->id;
+                        }
+                        if (isset($item->node->tag->target->pushedDate)) {
+                            $tmpReleases[$item->node->tag->name]['date'] = $item->node->tag->target->pushedDate;
+                        }
+
                         if (
                             isset($item->node->releaseAssets->edges) &&
                             is_array($item->node->releaseAssets->edges) &&
@@ -277,7 +271,6 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                             }// endforeach;
                             unset($itemReleaseAsset);
 
-                            
                             if (!empty($fileSizes)) {
                                 $maxFileSize = max($fileSizes);
                             }
@@ -286,57 +279,67 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                             }
                             unset($fileSizes);
 
-                            if (isset($item->node->tag->id) && isset($tagsReferences[$item->node->tag->id])) {
-                                if (isset($item->node->url)) {
-                                    $tagsReferences[$item->node->tag->id]['url'] = $item->node->url;
-                                } else {
-                                    $tagsReferences[$item->node->tag->id]['url'] = $url;
-                                }
-                                $tagsReferences[$item->node->tag->id]['size'] = $maxFileSize;
+                            if (isset($item->node->url)) {
+                                $tmpReleases[$item->node->tag->name]['url'] = $item->node->url;
+                            } else {
+                                $tmpReleases[$item->node->tag->name]['url'] = $url;
                             }
+                            $tmpReleases[$item->node->tag->name]['size'] = $maxFileSize;
                             unset($maxFileSize);
                         } else {
                             // if does not contain custom archive file.
-                            if (
-                                isset($item->node->tag->id) && 
-                                isset($tagsReferences[$item->node->tag->id]) &&
-                                isset($item->node->tag->target->pushedDate) &&
-                                isset($item->node->tag->target->zipballUrl)
-                            ) {
-                                $tagsReferences[$item->node->tag->id]['date'] = $item->node->tag->target->pushedDate;
-                                $tagsReferences[$item->node->tag->id]['url'] = $item->node->tag->target->zipballUrl;
-                            }
-                        }// endif; release contain custom archive file.
-                    }// endforeach; end loop each release and tag
-                    unset($item);
-                }// endif; not empty $tagsReferences
+                            $tmpReleases[$item->node->tag->name]['url'] = $item->node->tag->target->zipballUrl;
+                        }
+                    }
+                }// endforeach; releases->edges
+                unset($item);
 
-                Logger::staticDebugLog($tagsReferences, 'github-api-request-formatted-array-' . current_time('Ymd-Hi'));
+                // re-order the versions
+                $tmpVersions = \RdDownloads\Composer\Semver\Semver::rsort($tmpVersions);
+                $tmpReleasesReorder = [];
+                if (is_array($tmpVersions)) {
+                    foreach ($tmpVersions as $tmpVersion) {
+                        if (isset($tmpReleases[$tmpVersion])) {
+                            $tmpReleasesReorder[$tmpVersion] = $tmpReleases[$tmpVersion];
+                        }
+                    }// endforeach; $tmpVersions
+                    unset($tmpVersion);
+                }
 
-                if (!empty($tagsReferences) && is_array($tagsReferences)) {
-                    // if not empty $tagsReferences
-                    if ((!is_array($version_range) || is_scalar($version_range)) && empty($version_range)) {
-                        reset($tagsReferences);
-                        $firstRefsKey = key($tagsReferences);
-                        $releases = $tagsReferences[$firstRefsKey];
+                if (empty($tmpReleasesReorder)) {
+                    $tmpReleasesReorder = $tmpReleases;
+                }
+                unset($tmpReleases, $tmpVersions);
+
+                Logger::staticDebugLog($tmpReleasesReorder, 'github-api-request-formatted-and-reordered-array-' . current_time('Ymd-Hi'));
+
+                if (!empty($tmpReleasesReorder) && is_array($tmpReleasesReorder)) {
+                    // if not empty $tmpReleasesReorder
+                    if ($version_range === '' || is_null($version_range)) {
+                        // if version range is empty string, get latest.
+                        reset($tmpReleasesReorder);
+                        $firstRefsKey = key($tmpReleasesReorder);
+                        $releases = $tmpReleasesReorder[$firstRefsKey];
                         if (defined('WP_DEBUG') && WP_DEBUG === true) {
-                            $releases['debug_firsttag'] = true;
+                            $releases['debug_version_range_latest'] = true;
                         }
                         unset($firstRefsKey);
                     } elseif (is_scalar($version_range) && !empty($version_range)) {
-                        foreach ($tagsReferences as $key => $item) {
-                            if (isset($item['version']) && \RdDownloads\Composer\Semver\Semver::satisfies($item['version'], $version_range)) {
-                                $releases = $tagsReferences[$key];
+                        // if version range is not empty, check using Composer Semver.
+                        foreach ($tmpReleasesReorder as $key => $item) {
+                            if (is_scalar($key) && \RdDownloads\Composer\Semver\Semver::satisfies($key, $version_range)) {
+                                $releases = $tmpReleasesReorder[$key];
                                 if (defined('WP_DEBUG') && WP_DEBUG === true) {
-                                    $releases['debug_matchsemver'] = true;
+                                    $releases['debug_version_range_matchsemver'] = true;
                                 }
                                 break;
                             }
                         }// endforeach;
                         unset($item, $key);
                     } elseif (is_array($version_range) && empty($version_range)) {
-                        foreach ($tagsReferences as $key => $item) {
-                            $releases[] = $tagsReferences[$key];
+                        // if version range is empty array, get it all.
+                        foreach ($tmpReleasesReorder as $key => $item) {
+                            $releases[] = $tmpReleasesReorder[$key];
                         }// endforeach;
                         unset($item, $key);
                     }// endif;
@@ -344,10 +347,10 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                     if (isset($result->data->repository->nameWithOwner)) {
                         $releases['nameWithOwner'] = $result->data->repository->nameWithOwner;
                     }
-                }// endif; not empty $tagsReferences
+                }// endif; not empty $tmpReleasesReorder
 
-                unset($tagsReferences);
-            }// endif; contain refs and releases.
+                unset($tmpReleasesReorder);
+            }// endif; contain releases (releases->edges)
             unset($result);
 
             if (isset($releases) && !empty($releases)) {
