@@ -248,7 +248,11 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                         $tmpVersions[] = $item->node->tag->name;
 
                         $tmpReleases[$item->node->tag->name] = [];
-                        $tmpReleases[$item->node->tag->name]['version'] = preg_replace('#(v)?(.+)#iu', '$2', $item->node->tag->name, 1);// remove prefix "v" for example: v1.0.1 will be 1.0.1
+
+                        $Semver = new Semver();
+                        $tmpReleases[$item->node->tag->name]['version'] = $Semver->removePrefix($item->node->tag->name);// remove prefix "v" for example: v1.0.1 will be 1.0.1
+                        unset($Semver);
+
                         if (isset($item->node->tag->id)) {
                             $tmpReleases[$item->node->tag->name]['id'] = $item->node->tag->id;
                         }
@@ -571,6 +575,8 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
         /**
          * Is this a tag event?
          * 
+         * You have to call `webhook()` method before calling this.
+         * 
          * @param string $action The action to check. Value can be "created", "deleted" without double quote and lower case.
          * @return boolean Return true if action to check is true, false for otherwise.
          */
@@ -610,7 +616,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
 
         /**
-         * Check for configuration on GitHub webhook pinging.
+         * Check for configuration on GitHub webhook pinging (content-type is application/json, event is push).
          * 
          * You have to call `webhook()` method before calling this.
          * 

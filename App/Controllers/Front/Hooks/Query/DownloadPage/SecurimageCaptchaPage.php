@@ -6,9 +6,9 @@
  */
 
 
-namespace RdDownloads\App\Controllers\Front;
+namespace RdDownloads\App\Controllers\Front\Hooks\Query\DownloadPage;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\SecurimageCaptchaPage')) {
+if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\DownloadPage\\SecurimageCaptchaPage')) {
     /**
      * Process the download.
      * 

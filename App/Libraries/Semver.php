@@ -47,12 +47,38 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Semver')) {
          */
         public function getDefaultVersionConstraint($version)
         {
-            if ((!is_null($version) && $version !== '')) {
+            if ((!is_null($version) && $version !== '') && is_scalar($version)) {
                 return '>=' . $version;
             }
 
             return '';
         }// getDefaultVersionConstraint
+
+
+        /**
+         * Remove prefix from version.
+         * 
+         * Many GitHub repositories contain "v" prefix, for example: v1.2.3. This will remove "v" and left just 1.2.3.
+         * 
+         * @param string $version The version string.
+         * @param string $prefix The prefix text.
+         * @return string Return removed prefix.
+         * @throws \InvalidArgumentException
+         */
+        public function removePrefix($version, $prefix = 'v')
+        {
+            if (!is_string($version)) {
+                /* translators: %s: Argument name. */
+                throw new \InvalidArgumentException(sprintf(__('The %s must be string.', 'rd-downloads'), '$version'));
+            }
+
+            if (!is_string($prefix)) {
+                /* translators: %s: Argument name. */
+                throw new \InvalidArgumentException(sprintf(__('The %s must be string.', 'rd-downloads'), '$prefix'));
+            }
+
+            return preg_replace('#(' . $prefix . ')?(.+)#iu', '$2', $version, 1);
+        }// removePrefix
 
 
     }

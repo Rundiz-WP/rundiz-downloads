@@ -27,11 +27,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                         // show captcha image here.
                     case 'securimage_captcha_audio':
                         // send captcha audio here.
-                        $CaptchaPage = new \RdDownloads\App\Controllers\Front\SecurimageCaptchaPage();
+                        $CaptchaPage = new DownloadPage\SecurimageCaptchaPage();
                         $CaptchaPage->pageIndex($subpage);
                         unset($CaptchaPage);
                     default:
-                        $RdDownloadsPage = new \RdDownloads\App\Controllers\Front\RdDownloadsPage();
+                        $RdDownloadsPage = new DownloadPage\RdDownloadsPage();
                         $RdDownloadsPage->pageIndex(intval(get_query_var('download_id')));
                         unset($RdDownloadsPage);
                 }// endswitch;
