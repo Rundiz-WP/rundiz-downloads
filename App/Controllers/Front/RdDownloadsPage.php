@@ -167,7 +167,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\RdDownloadsPage')) {
                 return $title;
             });
 
-            // in case this site has Yoase SEO plugin.
+            // in case this site has Yoast SEO plugin.
             // this plugin make `document_title_parts` filter dead.
             // @link https://github.com/Yoast/wordpress-seo/issues/3579 See issue.
             add_filter('wpseo_title', function($title) use ($customTitle) {
