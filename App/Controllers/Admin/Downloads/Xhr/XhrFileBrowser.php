@@ -320,9 +320,17 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
             $responseStatus = 200;
             $remote_file = trim(filter_input(INPUT_GET, 'remote_file', FILTER_SANITIZE_URL));
 
-            $Url = new \RdDownloads\App\Libraries\Url();
-            $output = $output + $Url->getRemoteFileInfo($remote_file);
-            unset($Url);
+            if (filter_var($remote_file, FILTER_VALIDATE_URL) !== false) {
+                $Url = new \RdDownloads\App\Libraries\Url();
+                $output = $output + $Url->getRemoteFileInfo($remote_file);
+                unset($Url);
+            } else {
+                if (defined('WP_DEBUG') && WP_DEBUG === true) {
+                    $output['debug_remoteurl'] = 'invalid';
+                }
+                $output['form_result_class'] = 'notice-error';
+                $output['form_result_msg'] = __('Invalid URL.', 'rd-downloads');
+            }
 
             wp_send_json($output, $responseStatus);
         }// getRemoteFileData
