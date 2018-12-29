@@ -26,7 +26,8 @@
                         <input id="download_type" type="hidden" name="download_type" value="<?php if (isset($download_type)) {echo esc_attr($download_type);} ?>">
                         <input id="download_url" class="rd-downloads-input-full" type="url" name="download_url" value="<?php if (isset($download_url)) {echo esc_attr($download_url);} ?>" maxlength="300" required="">
                         <input id="download_related_path" type="hidden" name="download_related_path" value="<?php if (isset($download_related_path)) {echo esc_attr($download_related_path);} ?>">
-                        <div id="download_size" class="download_size"><?php 
+                        <input id="download_size" type="hidden" name="download_size" value="<?php if (isset($download_size)) {echo esc_attr($download_size);} ?>">
+                        <div id="download-size-and-preview" class="download-size-and-preview"><?php 
                         if (isset($download_size)) {
                             echo size_format($download_size);
                         }

@@ -211,8 +211,9 @@ class RdDownloadsEditing {
 
                     // display download file size and its link preview.
                     if (typeof(response.download_size) !== 'undefined' && typeof(response.download_url) !== 'undefined') {
+                        $('#rd-downloads-edit-form #download_size').val(response.download_size);
                         var Template = wp.template('selected-download-file-size');
-                        $('#rd-downloads-edit-form .download_size').html(Template({
+                        $('#rd-downloads-edit-form .download-size-and-preview').html(Template({
                             'size': rdDownloadsHumanFileSize(response.download_size, true),
                             'url': response.download_url
                         }));
@@ -318,6 +319,7 @@ class RdDownloadsEditing {
                 $('#rd-downloads-edit-form #download_type').val(1);
                 $('#rd-downloads-edit-form #download_type').trigger('change');
                 $('#rd-downloads-edit-form #download_related_path').val('');
+                $('#rd-downloads-edit-form #download_size').val('');
                 typingTimer = setTimeout(function() {
                     thisClass._getRemoteFileDataGitHub(inputValue);
                 }, doneTypingInterval);
@@ -326,6 +328,7 @@ class RdDownloadsEditing {
                 $('#rd-downloads-edit-form #download_type').val(2);
                 $('#rd-downloads-edit-form #download_type').trigger('change');
                 $('#rd-downloads-edit-form #download_related_path').val('');
+                $('#rd-downloads-edit-form #download_size').val('');
                 typingTimer = setTimeout(function() {
                     thisClass._getRemoteFileDataAnyRemote(inputValue);
                 }, doneTypingInterval);
@@ -349,7 +352,7 @@ class RdDownloadsEditing {
         // clear result placeholder.
         $('.rd-downloads-form-result-placeholder').html('');
         // add loading icon.
-        $('#rd-downloads-edit-form .download_size').html('<i class="fas fa-spinner fa-pulse icon-loading"></i>');
+        $('#rd-downloads-edit-form .download-size-and-preview').html('<i class="fas fa-spinner fa-pulse icon-loading"></i>');
         // disable buttons.
         rdDownloadsEnableDisableButtons(false);
 
@@ -372,19 +375,20 @@ class RdDownloadsEditing {
             console.log('Success get remote size');
 
             if (typeof(response.size) !== 'undefined' && response.size >= 0) {
+                $('#rd-downloads-edit-form #download_size').val(response.size);
                 var Template = wp.template('selected-download-file-size');
-                $('#rd-downloads-edit-form .download_size').html(Template({
+                $('#rd-downloads-edit-form .download-size-and-preview').html(Template({
                     'size': rdDownloadsHumanFileSize(response.size, true),
                     'url': url
                 }));
             } else {
-                $('#rd-downloads-edit-form .download_size').html('');
+                $('#rd-downloads-edit-form .download-size-and-preview').html('');
             }
 
             response = undefined;
         })
         .fail(function(jqXHR, textStatus, data) {
-            $('#rd-downloads-edit-form .download_size').html('');
+            $('#rd-downloads-edit-form .download-size-and-preview').html('');
         })
         .always(function(data, textStatus, jqXHR) {
             if (typeof(data) !== 'undefined' && typeof(data.responseJSON) !== 'undefined') {
@@ -423,7 +427,7 @@ class RdDownloadsEditing {
         // clear result placeholder.
         $('.rd-downloads-form-result-placeholder').html('');
         // add loading icon.
-        $('#rd-downloads-edit-form .download_size').html('<i class="fas fa-spinner fa-pulse icon-loading"></i>');
+        $('#rd-downloads-edit-form .download-size-and-preview').html('<i class="fas fa-spinner fa-pulse icon-loading"></i>');
         // disable buttons.
         rdDownloadsEnableDisableButtons(false);
 
@@ -446,13 +450,14 @@ class RdDownloadsEditing {
             console.log('Success get github data');
 
             if (typeof(response.url) !== 'undefined' && typeof(response.size) !== 'undefined' && response.size >= 0) {
+                $('#rd-downloads-edit-form #download_size').val(response.size);
                 var Template = wp.template('selected-download-file-size');
-                $('#rd-downloads-edit-form #download_size').html(Template({
+                $('#rd-downloads-edit-form .download-size-and-preview').html(Template({
                     'size': rdDownloadsHumanFileSize(response.size, true),
                     'url': (typeof(response.url) !== 'undefined' ? response.url : url)
                 }));
             } else {
-                $('#rd-downloads-edit-form #download_size').html('');
+                $('#rd-downloads-edit-form .download-size-and-preview').html('');
             }
 
             if (typeof(response.url) !== 'undefined') {
@@ -465,7 +470,7 @@ class RdDownloadsEditing {
             response = undefined;
         })
         .fail(function(jqXHR, textStatus, data) {
-            $('#rd-downloads-edit-form #download_size').html('');
+            $('#rd-downloads-edit-form .download-size-and-preview').html('');
         })
         .always(function(data, textStatus, jqXHR) {
             if (typeof(data) !== 'undefined' && typeof(data.responseJSON) !== 'undefined') {
@@ -618,7 +623,9 @@ function rdDownloadsAjaxDeleteFile(target, previousId) {
 
             if (typeof(response.deleteUrl) !== 'undefined' && response.deleteUrl === $('#rd-downloads-edit-form #download_url').val()) {
                 $('#rd-downloads-edit-form #download_url').val('');
-                $('#rd-downloads-edit-form .download_size').html('');
+                $('#rd-downloads-edit-form #download_related_path').val('');
+                $('#rd-downloads-edit-form #download_size').val('');
+                $('#rd-downloads-edit-form .download-size-and-preview').html('');
             }
 
             response = undefined;
@@ -828,8 +835,9 @@ function rdDownloadsSelectLocalFile(thisObj) {
     $('#rd-downloads-edit-form #download_url').val(selectedURLDecode);
     $('#rd-downloads-edit-form #download_url').trigger('change');// require to prevent onchange inside get remote data.
     $('#rd-downloads-edit-form #download_related_path').val(thisObj.dataset.relatedpath);
+    $('#rd-downloads-edit-form #download_size').val(thisObj.dataset.size);
     // display download file size.
-    $('#rd-downloads-edit-form .download_size').html(Template({
+    $('#rd-downloads-edit-form .download-size-and-preview').html(Template({
         'size': thisObj.dataset.size,
         'url': decodeURIComponent(thisObj.dataset.url)
     }));

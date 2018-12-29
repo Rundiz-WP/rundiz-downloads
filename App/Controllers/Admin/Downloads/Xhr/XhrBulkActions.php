@@ -38,16 +38,23 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                 $download_ids = $download_ids['download_id'];
             }
 
-            switch ($bulkAction) {
-                case 'githubUpdate':
-                    return $this->githubUpdate($download_ids);
-                case 'remoteUpdate':
-                    return $this->remoteUpdate($download_ids);
-                case 'delete':
-                    return $this->deleteDownloads($download_ids);
-                case 'clearlogs':
-                    return $this->clearLogs();
-            }// endswitch;
+            if (!is_array($download_ids) || (is_array($download_ids) && empty($download_ids))) {
+                status_header(400);
+                exit();
+            }
+
+            if (is_array($download_ids)) {
+                switch ($bulkAction) {
+                    case 'githubUpdate':
+                        return $this->githubUpdate($download_ids);
+                    case 'remoteUpdate':
+                        return $this->remoteUpdate($download_ids);
+                    case 'delete':
+                        return $this->deleteDownloads($download_ids);
+                    case 'clearlogs':
+                        return $this->clearLogs();
+                }// endswitch;
+            }// endif;
             unset($bulkAction);
 
             $output['form_result_class'] = 'notice-error';
@@ -58,6 +65,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
 
         /**
          * Clear the logs.
+         * 
+         * This method will response json and end process.
          */
         public function clearLogs()
         {
@@ -89,6 +98,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
 
         /**
          * Perform delete downloads data.
+         * 
+         * This method will response json and end process.
          * 
          * @global \wpdb $wpdb
          * @param array $download_ids The `download_id` values in one array. Example: `array(1, 2, 4, 5, 6);`
@@ -236,6 +247,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
         /**
          * Perform get GitHub repository data and then update the file size, URL.
          * 
+         * This method will response json and end process.
+         * 
          * @global \wpdb $wpdb
          * @param array $download_ids The `download_id` values in one array. Example: `array(1, 2, 4, 5, 6);`
          */
@@ -280,6 +293,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
 
                 $Github = new \RdDownloads\App\Libraries\Github();
                 $FileSystem = new \RdDownloads\App\Libraries\FileSystem();
+
+                if (defined('WP_DEBUG') && WP_DEBUG === true) {
+                    $output['debug_sql_lasterror'] = [];
+                }
 
                 foreach ($results as $row) {
                     $found_download_ids[] = $row->download_id;
@@ -329,16 +346,23 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                                     $data['download_options'] = maybe_serialize($download_options);
                                 }
                             }
-                            $data['download_update'] = current_time('mysql');
-                            $data['download_update_gmt'] = current_time('mysql', true);
 
-                            $updateResult = $wpdb->update($wpdb->prefix . 'rd_downloads', $data, ['download_id' => $row->download_id]);
+                            $RdDownloads = new \RdDownloads\App\Models\RdDownloads();
+                            $updateResult = $RdDownloads->update($data, ['download_id' => $row->download_id]);
                             if ($updateResult !== false) {
                                 $updated_download_ids[] = $row->download_id;
                                 $updated_download_names[] = $row->download_name;
+                                $Dll = new \RdDownloads\App\Models\RdDownloadLogs();
+                                $Dll->writeLog('admin_update', [
+                                    'download_id' => $row->download_id,
+                                ]);
+                                unset($Dll);
                             } else {
                                 $failed_update_download_ids[] = $row->download_id;
                                 $failed_update_download_names[] = $row->download_name;
+                                if (defined('WP_DEBUG') && WP_DEBUG === true) {
+                                    $output['debug_sql_lasterror'][] = $wpdb->last_error;
+                                }
                             }
                             unset($data);
                         } else {
@@ -404,6 +428,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
 
         /**
          * Perform get remote file data and then update the file size.
+         * 
+         * This method will response json and end process.
          * 
          * @global \wpdb $wpdb
          * @param array $download_ids The `download_id` values in one array. Example: `array(1, 2, 4, 5, 6);`

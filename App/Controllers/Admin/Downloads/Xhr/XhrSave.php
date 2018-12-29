@@ -32,6 +32,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
             $data['download_name'] = filter_input(INPUT_POST, 'download_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $data['download_admin_comment'] = filter_input(INPUT_POST, 'download_admin_comment', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $data['download_related_path'] = filter_input(INPUT_POST, 'download_related_path', FILTER_UNSAFE_RAW);
+            $data['download_size'] = filter_input(INPUT_POST, 'download_size', FILTER_SANITIZE_NUMBER_INT);
             $data['download_count'] = filter_input(INPUT_POST, 'download_count', FILTER_SANITIZE_NUMBER_INT);
             if (empty($data['download_count'])) {
                 $data['download_count'] = 0;
@@ -70,25 +71,20 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                         unset($Semver);
 
                         $Github = new \RdDownloads\App\Libraries\Github();
-                        $result = $Github->getLatestRepositoryData($data['download_url'], $version_range);
+                        $nameWithOwner = $Github->getNameWithOwnerFromUrl($data['download_url']);
                         unset($Github);
-                        if (isset($result['size']) && $result['size'] > -1) {
-                            $data['download_size'] = $result['size'];
-                        } else {
-                            $data['download_size'] = 0;
-                        }
-                        if (isset($result['nameWithOwner']) && !empty($result['nameWithOwner'])) {
+                        if (is_array($nameWithOwner) && isset($nameWithOwner[0]) && isset($nameWithOwner[1])) {
                             // if can get GitHub name with owner.
-                            $data['download_github_name'] = $result['nameWithOwner'];
+                            $data['download_github_name'] = $nameWithOwner[0] . '/' . $nameWithOwner[1];
                             if (empty($data['download_name'])) {
-                                $data['download_name'] = $result['nameWithOwner'];
+                                $data['download_name'] = $nameWithOwner[0] . '/' . $nameWithOwner[1];
                             }
                         } else {
                             // if cannot get GitHub name with owner. mark this to null and set download type to other remote URL (type 2).
                             $data['download_github_name'] = null;
                             $data['download_type'] = 2;
                         }
-                        unset($result);
+                        unset($nameWithOwner);
 
                         $data['download_related_path'] = null;
                         break;
@@ -116,14 +112,6 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                             $data['download_type'] = 2;
                             $data['download_related_path'] = null;
                         }
-
-                        $remoteData = $Url->getRemoteFileInfo($data['download_url']);
-                        if (isset($remoteData['size']) && is_numeric($remoteData['size']) && $remoteData['size'] > 0) {
-                            $data['download_size'] = $remoteData['size'];
-                        } else {
-                            $data['download_size'] = 0;
-                        }
-                        unset($remoteData);
                         break;
                 }// endswitch;
 
