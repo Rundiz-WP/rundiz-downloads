@@ -3,7 +3,7 @@ Contributors: okvee
 Tags: downloads, download, download manager, file hosting, GitHub
 Requires at least: 4.0
 Tested up to: 5.0.2
-Stable tag: 0.3
+Stable tag: 0.4
 Requires PHP: 5.5
 License: MIT
 License URI: https://opensource.org/licenses/MIT
@@ -38,6 +38,8 @@ You can change your setting to accept how often of auto update. Every releases a
 PHP 5.5 or higher
 WordPress 4.0 or higher
 
+Browse the source code, bug report, pull request on [GitHub repository](https://github.com/Rundiz-WP/rundiz-downloads). 
+
 == Installation ==
 1. Upload "rd-downloads" folder to the "/wp-content/plugins/" directory.
 2. Activate the plugin through the "Plugins" menu in WordPress.
@@ -67,6 +69,16 @@ Yes, the plugin's tables will be dropped on uninstall.
 10. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
+= 0.4 =
+2018-12-29
+
+* Fix `if` template condition.
+* Change required token's scopes in config.
+* Re-order tag names that have got from GitHub.
+* Improve saving process.
+* Fix check URL before get remote data.
+* Fix version range and change some files structure.
+
 = 0.3 =
 2018-12-27
 
