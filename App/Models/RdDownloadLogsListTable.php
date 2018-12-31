@@ -147,7 +147,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
         {
             $columns = [
                 'download_name' => __('Downloads name', 'rd-downloads'),
-                'user_id' => __('Author', 'rd-downloads'),
+                'user_id' => __('User', 'rd-downloads'),
                 'dl_status' => __('Status', 'rd-downloads'),
                 'dl_ip' => __('IP Address', 'rd-downloads'),
                 'dl_user_agent' => __('User agent', 'rd-downloads'),
