@@ -1,7 +1,7 @@
 <?php
 /**
  * XHR download stat for dashboard widget.
- * 
+ *
  * @package rd-downloads
  */
 
@@ -16,7 +16,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
 
         /**
          * Get all downloads daily statistic.
-         * 
+         *
          * @link https://stackoverflow.com/a/2041619/128761 Query last 30 days example.
          * @global \wpdb $wpdb
          */
@@ -48,11 +48,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
 
             if ($results === false) {
                 // get total success and error downloads ---------------------------------------------------------
-                $sql = 'SELECT ' . $tableRdDownloadLogs . '.*, 
+                $sql = 'SELECT ' . $tableRdDownloadLogs . '.*,
                     COUNT(IF (`dl_status` = \'user_dl_success\', 1, NULL)) AS `dl_total_success`,
                     COUNT(IF (`dl_status` = \'user_dl_error\', 1, NULL)) AS `dl_total_error`
                     FROM ' . $tableRdDownloadLogs . '
-                    WHERE 
+                    WHERE
                         (
                             `dl_status` = %s
                             OR `dl_status` = %s
@@ -79,7 +79,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
                 }
                 unset($data, $prepared, $sql);
 
-                $SimpleCache->getInstance()->save($cacheKey, $results, (6 * 60 * 60));// 6 hour = 21600 seconds
+                $cacheLifetime = apply_filters('rddownloads_cachelifetime_dashboardwidget_alldownloadsdailystat', (6 * 60 * 60));// hours * minutes * seconds = total seconds.
+                $SimpleCache->getInstance()->save($cacheKey, $results, $cacheLifetime);
+                unset($cacheLifetime);
             } else {
                 if (defined('WP_DEBUG') && WP_DEBUG === true) {
                     $output['cached_results'] = true;
@@ -137,7 +139,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
 
         /**
          * Get top downloads.
-         * 
+         *
          * @link https://stackoverflow.com/a/2041619/128761 Query last xx days example.
          * @global \wpdb $wpdb
          */
@@ -197,7 +199,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
                 }
                 unset($sql);
 
-                $SimpleCache->getInstance()->save($cacheKey, $results, '', (6 * 60 * 60));// 6 hour = 21600 seconds
+                $cacheLifetime = apply_filters('rddownloads_cachelifetime_dashboardwidget_topdownloads', (6 * 60 * 60));// hours * minutes * seconds = total seconds.
+                $SimpleCache->getInstance()->save($cacheKey, $results, $cacheLifetime);
+                unset($cacheLifetime);
             } else {
                 if (defined('WP_DEBUG') && WP_DEBUG === true) {
                     $output['cached_results'] = true;

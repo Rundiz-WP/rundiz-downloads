@@ -1,7 +1,7 @@
 <?php
 /**
  * [rddownloads] shortcode.
- * 
+ *
  * @package rd-downloads
  */
 
@@ -15,7 +15,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Shortcodes\\RdDownloads')) {
 
         /**
          * Convert shortcode.
-         * 
+         *
          * @param array $atts
          */
         public function convertShortcode($atts)
@@ -27,8 +27,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Shortcodes\\RdDownloads')) {
             if ($rendered === false) {
                 $ShortcodeRdDownloads = new \RdDownloads\App\Libraries\ShortcodeRdDownloads();
                 $rendered = $ShortcodeRdDownloads->renderHtml($atts);
-                $SimpleCache->getInstance()->save($cacheKey, $rendered, (6 * 60 * 60));
-                unset($ShortcodeRdDownloads);
+                $cacheLifetime = apply_filters('rddownloads_cachelifetime_shortcode', (12 * 60 * 60));// hours * minutes * seconds = total seconds.
+                $SimpleCache->getInstance()->save($cacheKey, $rendered, $cacheLifetime);
+                unset($cacheLifetime, $ShortcodeRdDownloads);
             }
 
             unset($cacheKey, $SimpleCache);
