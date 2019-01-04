@@ -1,7 +1,7 @@
 <?php
 /**
  * GitHub class
- * 
+ *
  * @package rd-downloads
  */
 
@@ -23,9 +23,15 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
 
         /**
+         * @var string The GitHub API v3 URL.
+         */
+        protected $apiV3Url = 'https://api.github.com';
+
+
+        /**
          * @var string The GitHub API v4 URL.
          */
-        protected $apiUrl = 'https://api.github.com/graphql';
+        protected $apiV4Url = 'https://api.github.com/graphql';
 
 
         /**
@@ -52,39 +58,146 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
 
         /**
-         * Make an API request.
-         * 
+         * Make an API v3 request.
+         *
+         * @link https://developer.github.com/v3/ GitHub API v3 document.
+         * @param string $uri The v3 API URI. Always begin with slash.
+         * @param array $headers The headers array.
+         * @param string $userPassword Username:Password for basic auth.
+         * @param string $method Request method (GET, POST, PATCH, DELETE, ...).
+         * @param string $postData The GitHub API v3 query data.
+         * @return array Return array with "header" and "body" in array keys. The "body" key return JSON decoded of result from GitHub.
+         */
+        public function apiV3Request($uri = '', $headers = [], $userPassword = '', $method = 'GET', $postData = '')
+        {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $this->apiV3Url . $uri);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_AUTOREFERER, true);
+            curl_setopt($ch, CURLOPT_MAXREDIRS, 2);
+            curl_setopt($ch, CURLOPT_USERAGENT, $this->setUserAgent());
+            curl_setopt($ch, CURLOPT_HEADER, true);
+            if ($userPassword != '') {
+                curl_setopt($ch, CURLOPT_USERPWD, $userPassword);
+            }
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            if (strtolower($method) !== 'get') {
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+            }
+            if ($postData != '') {
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+            }
+            $response = curl_exec($ch);
+            $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+            curl_close($ch);
+            unset($ch);
+
+            $Url = new Url();
+            $output = [];
+            $output['header'] = $Url->curlResponseHeaderAs(substr($response, 0, $headerSize));
+            $output['body'] = json_decode(substr($response, $headerSize));
+
+            unset($headerSize, $response);
+            return $output;
+        }// apiV3Request
+
+
+        /**
+         * Make API v3 request multiple pages at once.
+         *
+         * This function work the same way as `apiV3Request()` method but request multiple pages to get all values at once.
+         *
+         * @see apiV3Request() See `apiV3Request()` method for more details.
+         * @param string $uri The v3 API URI. Always begin with slash.
+         * @param array $headers The headers array.
+         * @param string $userPassword Username:Password for basic auth.
+         * @param string $method Request method (GET, POST, PATCH, DELETE, ...).
+         * @param string $postData The GitHub API v3 query data.
+         * @return array Return array with "header" and "body" in array keys. The "body" key return JSON decoded of result from GitHub.
+         */
+        public function apiV3RequestMultiPages($uri = '', $headers = [], $userPassword = '', $method = 'GET', $postData = '')
+        {
+            $output = [];
+            $i = 1;
+            $end = false;
+            $perPage = 100;
+
+            do {
+                $paginateUri = $uri . '?page=' . $i . '&per_page=' . $perPage;
+                $response = $this->apiV3Request($paginateUri, $headers, $userPassword, $method, $postData);
+                unset($paginateUri);
+
+                if (!isset($output['header']) && isset($response['header'])) {
+                    $output['header'] = $response['header'];
+                }
+
+                if (!isset($output['body'])) {
+                    $output['body'] = [];
+                }
+
+                if (isset($response['body']) && is_array($response['body']) && !empty($response['body'])) {
+                    $output['body'] = array_merge($output['body'], $response['body']);
+                } else {
+                    $end = true;
+                }
+
+                $i++;
+                unset($response);
+
+                if ($i > 100) {
+                    $end = true;
+                }
+            }// end do;
+            while($end == false);
+
+            unset($end, $i, $perPage);
+
+            return $output;
+        }// apiV3RequestMultiPages
+
+
+        /**
+         * Make an API v4 request.
+         *
          * @link https://developer.github.com/v4/guides/ GitHub API v4 document.
          * @param array $headers See https://developer.github.com/v4/guides/ for more info.
          * @param array|string $postData Set data to array or JSON encoded of data array. See https://developer.github.com/v4/guides/using-the-explorer/ for more info or https://developer.github.com/v4/explorer/ for demonstrate API request.
-         * @return object Return JSON decoded of result from GitHub.
+         * @return array Return array with "header" and "body" in array keys. The "body" key return JSON decoded of result from GitHub.
          */
-        public function apiRequest(array $headers, $postData)
+        public function apiV4Request(array $headers, $postData)
         {
             if (!is_string($postData)) {
                 $postData = json_encode($postData);
             }
 
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $this->apiUrl);
+            curl_setopt($ch, CURLOPT_URL, $this->apiV4Url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_AUTOREFERER, true);
+            curl_setopt($ch, CURLOPT_MAXREDIRS, 2);
             curl_setopt($ch, CURLOPT_USERAGENT, $this->setUserAgent());
-            curl_setopt($ch, CURLOPT_HEADER, false);
+            curl_setopt($ch, CURLOPT_HEADER, true);
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
             curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
-            $output = curl_exec($ch);
+            $response = curl_exec($ch);
+            $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
             curl_close($ch);
             unset($ch);
-            $output = json_decode(trim($output));
 
+            $Url = new Url();
+            $output = [];
+            $output['header'] = $Url->curlResponseHeaderAs(substr($response, 0, $headerSize));
+            $output['body'] = json_decode(substr($response, $headerSize));
+
+            unset($headerSize, $response, $Url);
             return $output;
-        }// apiRequest
+        }// apiV4Request
 
 
         /**
          * Get latest downloads URL and data from selected repository URL.
-         * 
+         *
          * To determine latest update of downloads URL.
          * <pre>- If the selected repository contain "release".
          *     - If contain custom archive file.
@@ -93,7 +206,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          *         Return auto asset archive file URL.
          * - If the selected repository does not contain "release".
          *     It will return default branch with latest zip URL.</pre>
-         * 
+         *
          * @link https://developer.github.com/v4/explorer/ For demonstrate API request
          * @link https://getcomposer.org/doc/articles/versions.md Version range reference.
          * @param string $url The URL to anywhere in the repository.
@@ -102,7 +215,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          *                                                          Set this to empty string to get latest release.<br>
          *                                                          Set this to empty array to get all releases into array.<br>
          * @return array|false Return array if contain latest update by conditions described above, return false for failure.
-         *                                  The return array format is: 
+         *                                  The return array format is:
          *                                  <pre>array(
          *                                      'id' => 'The GitHub archive ID (may not contain this key).',
          *                                      'date' => 'The archive file pushed date (may not contain this key).',
@@ -130,7 +243,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
             $owner_name = $this->getNameWithOwnerFromUrl($url);
 
             if (
-                !isset($this->pluginOptions['rdd_github_token']) || 
+                !isset($this->pluginOptions['rdd_github_token']) ||
                 (isset($this->pluginOptions['rdd_github_token']) && empty(trim($this->pluginOptions['rdd_github_token'])))
             ) {
                 // if GitHub token was not set, return original because it cannot check anything.
@@ -210,10 +323,14 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
             ];
             $postData = wp_json_encode($postData);
 
-            $result = $this->apiRequest($headers, $postData);
+            $result = $this->apiV4Request($headers, $postData);
             unset($headers, $postData);
 
             Logger::staticDebugLog($result, 'github-api-request-' . current_time('Ymd-Hi'));
+
+            if (is_array($result) && isset($result['body'])) {
+                $result = $result['body'];
+            }
 
             $defaultBranch = [];
             if (isset($result->data->repository->defaultBranchRef->target)) {
@@ -369,7 +486,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
         /**
          * Get the GitHub repository name with owner from URL.
-         * 
+         *
          * @param string $url The GitHub repository URL, for example: https://github.com/myuser/myrepo/archive/master.zip .
          * @return array|false From the URL above it will return owner as first array, name of repository as second array.
          *                                  Example: array('myuser', 'myrepo'). Return false if failed to get name with owner.
@@ -397,27 +514,16 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
 
         /**
-         * Get GitHub API URL.
-         * 
-         * @return string Return the API URL.
-         */
-        public function getApiUrl()
-        {
-            return $this->apiUrl;
-        }// getApiUrl
-
-
-        /**
          * Check that if global setting is set to auto update or not.
-         * 
+         *
          * @return boolean Return true if yes, return false for otherwise.
          */
         public function isSettingToAutoUpdate()
         {
             if (
-                !isset($this->pluginOptions['rdd_github_secret']) || 
+                !isset($this->pluginOptions['rdd_github_secret']) ||
                 (
-                    isset($this->pluginOptions['rdd_github_secret']) && 
+                    isset($this->pluginOptions['rdd_github_secret']) &&
                     empty($this->pluginOptions['rdd_github_secret'])
                 )
             ) {
@@ -442,7 +548,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
         /**
          * Setup User agent for the CURL request.
-         * 
+         *
          * @return string Return user agent string.
          */
         protected function setUserAgent()
@@ -464,11 +570,11 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
         /**
          * Validate GitHub webhook.
-         * 
+         *
          * Check PHP input with secret key that come with headers must be matched.
-         * 
+         *
          * You have to call `webhook()` method before calling this.
-         * 
+         *
          * @return boolean Return true on success, return false on failure.
          */
         public function validateGitHubWebhook()
@@ -494,7 +600,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
         /**
          * Set webhook data.
-         * 
+         *
          * @param array $headers The header array. This is basically get it from `getallheaders()` PHP function.
          * @param string $phpinput The input from `php://input` that get via `file_get_contents()` PHP function.
          * @throws \InvalidArgumentException Throw invalid argument error on wrong type.
@@ -513,9 +619,9 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
         /**
          * Get event from header.
-         * 
+         *
          * You have to call `webhook()` method before calling this.
-         * 
+         *
          * @return string Return lower case of event from header such as ping, push, or empty string.
          */
         public function webhookGetHeaderEvent()
@@ -531,9 +637,9 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
         /**
          * Is this a commit event?
-         * 
+         *
          * You have to call `webhook()` method before calling this.
-         * 
+         *
          * @return boolean Return true if yes, return false if not.
          */
         public function webhookIsCommit()
@@ -574,9 +680,9 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
         /**
          * Is this a tag event?
-         * 
+         *
          * You have to call `webhook()` method before calling this.
-         * 
+         *
          * @param string $action The action to check. Value can be "created", "deleted" without double quote and lower case.
          * @return boolean Return true if action to check is true, false for otherwise.
          */
@@ -617,9 +723,9 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
         /**
          * Check for configuration on GitHub webhook pinging (content-type is application/json, event is push).
-         * 
+         *
          * You have to call `webhook()` method before calling this.
-         * 
+         *
          * @return true|false|null Return true on success, false on failure, null if it is not pinging.
          * @throws \InvalidArgumentException Throw the error on mismatched type.
          */

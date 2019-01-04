@@ -48,7 +48,7 @@ Browse the source code, bug report, pull request on [GitHub repository](https://
 
 == Frequently Asked Questions ==
 = Does it support multisite? =
-Yes, it is.
+Yes, it is. However the network activation for multisite will not working, you can only activate the plugin per site that have to use it.
 
 = Will the uploaded files be deleted on uninstall? =
 Yes, the uploaded files and folders in WordPress upload folder will be deleted on plugin uninstall.

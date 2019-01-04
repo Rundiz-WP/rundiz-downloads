@@ -1,7 +1,7 @@
 <?php
 /**
  * Settings > Xhr GitHub.
- * 
+ *
  * @package rd-downloads
  */
 
@@ -50,11 +50,27 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings\\Xhr\\XhrGit
             $postData = wp_json_encode($postData);
 
             $Github = new \RdDownloads\App\Libraries\Github();
-            $result = $Github->apiRequest($headers, $postData);
+            $result = $Github->apiV4Request($headers, $postData);
+            if (is_array($result)) {
+                if (isset($result['header'])) {
+                    $resultHeader = $result['header'];
+                }
+                if (isset($result['body'])) {
+                    $result = $result['body'];
+                }
+            }
             unset($Github, $headers, $postData);
 
-            if (is_object($result) && isset($result->data->viewer->login)) {
-                $output['form_result_class'] = 'notice-error';
+            if (
+                is_object($result) &&
+                isset($result->data->viewer->login) &&
+                isset($resultHeader['Status-int']) &&
+                (
+                    $resultHeader['Status-int'] >= 200 &&
+                    $resultHeader['Status-int'] < 300
+                )
+            ) {
+                $output['form_result_class'] = 'notice-success';
                 $output['form_result_msg'] = __('Correct!', 'rd-downloads');
             } else {
                 $responseStatus = 403;
@@ -64,8 +80,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings\\Xhr\\XhrGit
 
             if (defined('WP_DEBUG') && WP_DEBUG === true) {
                 $output['debugResult'] = $result;
+                if (isset($resultHeader)) {
+                    $output['debugResultHeader'] = $resultHeader;
+                }
             }
-            unset($result);
+            unset($result, $resultHeader);
 
             wp_send_json($output, $responseStatus);
         }// testGithubToken
