@@ -115,7 +115,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
             // set page title.
             $this->setTitle(__('Rundiz Downloads', 'rd-downloads'));
 
-            if (isset($rd_downloads_options['rdd_use_captcha']) && $rd_downloads_options['rdd_use_captcha'] == '1') {
+            if (isset($rd_downloads_options['rdd_use_captcha']) && !empty($rd_downloads_options['rdd_use_captcha'])) {
                 // if setting was set to use captcha.
                 // has a filter hook to allow custom captcha.
                 $useCustomCaptcha = apply_filters('rddownloads_use_custom_captcha', false);
@@ -335,7 +335,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
             ], home_url());
 
             // about captcha audio.
-            if (isset($rd_downloads_options['rdd_use_captcha_audio']) && $rd_downloads_options['rdd_use_captcha_audio'] == '1') {
+            if (isset($rd_downloads_options['rdd_use_captcha']) && $rd_downloads_options['rdd_use_captcha'] == 'captcha+audio') {
                 // if setting was set to enable captcha audio.
                 $output['captchaAudio'] = add_query_arg([
                     'pagename' => filter_input(INPUT_GET, 'pagename', FILTER_SANITIZE_STRING),

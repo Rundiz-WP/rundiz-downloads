@@ -1,7 +1,7 @@
 <?php
 /**
  * Rundiz Downloads management settings.
- * 
+ *
  * @package rd-downloads
  */
 
@@ -117,8 +117,7 @@ unset($availableShortcodeAttributes, $dbPlaceholders, $ElementPlaceholders, $txt
 // end design help ------------------------------------------------------------------------------------------
 
 // captcha help ----------------------------------------------------------------------------------------------
-$captchaHelp = __('Captcha is human validation that can help prevent bot, check this to use the captcha.', 'rd-downloads') . ' ' .
-    __('Default is no.', 'rd-downloads');
+$captchaHelp = __('Captcha is human validation that can help prevent bot, please select how you use captcha.', 'rd-downloads');
 // end captcha help -----------------------------------------------------------------------------------------
 
 $githubSecretHelp = '<p><strong>' . __('To use GitHub auto update', 'rd-downloads') . '</strong></p>
@@ -126,8 +125,8 @@ $githubSecretHelp = '<p><strong>' . __('To use GitHub auto update', 'rd-download
         <li>' . sprintf(__('Go to your %1$sGitHub%2$s repository.', 'rd-downloads'), '<a href="https://github.com/" target="github">', '</a>') . '</li>
         <li>' . __('Go to Settings &gt; Webhooks.', 'rd-downloads') . '</li>
         <li>' . sprintf(
-            __('If you didn\'t created Webhooks yet, click on %1$s button. If you want to change the secret, click on %2$s button.', 'rd-downloads'), 
-            '<strong>' . __('Add webhook', 'rd-downloads') . '</strong>', 
+            __('If you didn\'t created Webhooks yet, click on %1$s button. If you want to change the secret, click on %2$s button.', 'rd-downloads'),
+            '<strong>' . __('Add webhook', 'rd-downloads') . '</strong>',
             '<strong>' . __('Edit', 'rd-downloads') . '</strong>'
         ) . '</li>
         <li>' . sprintf(__('Enter %s for payload URL.', 'rd-downloads'), '<code>' . add_query_arg(['pagename' => 'rddownloads_github_autoupdate'], home_url()) . '</code>') . '</li>
@@ -172,7 +171,7 @@ return [
                     'type' => 'checkbox',
                 ],
                 [
-                    'content' => '<button id="rd-downloads-settings-clear-cache" class="button" type="button">' . __('Clear cache', 'rd-downloads') . '</button><br>' . 
+                    'content' => '<button id="rd-downloads-settings-clear-cache" class="button" type="button">' . __('Clear cache', 'rd-downloads') . '</button><br>' .
                         __('If something seems not up-to-date, please try to clear the cache first. This will be clear all plugin\'s cache.', 'rd-downloads'),
                     'title' => __('Cache', 'rd-downloads'),
                     'type' => 'html',
@@ -184,34 +183,16 @@ return [
             'title' => __('Anti robots', 'rd-downloads'),
             'fields' => [
                 [
+                    'default' => '',
+                    'description' => $captchaHelp,
+                    'id' => 'rdd_use_captcha',
                     'options' => [
-                        [
-                            'default' => '',
-                            'description' => $captchaHelp,
-                            'id' => 'rdd_use_captcha',
-                            'title' => __('Yes', 'rd-downloads'),
-                            'value' => '1',
-                        ],
+                        '' => __('Do not use', 'rd-downloads') . ' (' . __('Default', 'rd-downloads') . ')',
+                        'captcha' => __('Use captcha text only', 'rd-downloads'),
+                        'captcha+audio' => __('Use captcha text with audio', 'rd-downloads'),
                     ],
                     'title' => __('Use captcha', 'rd-downloads'),
-                    'type' => 'checkbox',
-                ],
-                [
-                    'options' => [
-                        [
-                            'default' => '',
-                            /* translators: %s: "Use captcha" form name text. */
-                            'description' => sprintf(
-                                __('If %s was checked, this checkbox is for allow play captcha audio. If your server does not support or not working then uncheck this box.', 'rd-downloads'),
-                                '<strong>' . __('Use captcha', 'rd-downloads') . '</strong>'
-                            ) . ' ' . __('Default is no.', 'rd-downloads'),
-                            'id' => 'rdd_use_captcha_audio',
-                            'title' => __('Yes', 'rd-downloads'),
-                            'value' => '1',
-                        ],
-                    ],
-                    'title' => __('Use captcha audio', 'rd-downloads'),
-                    'type' => 'checkbox',
+                    'type' => 'select',
                 ],
                 [
                     'default' => "bot\nyahoo! slurp",
@@ -259,7 +240,7 @@ return [
                 ],
                 [
                     'default' => '',
-                    'description' => '<button id="rd-downloads-settings-test-token" class="button" type="button">' . __('Test token', 'rd-downloads') . '</button><br>' . 
+                    'description' => '<button id="rd-downloads-settings-test-token" class="button" type="button">' . __('Test token', 'rd-downloads') . '</button><br>' .
                         __('Token that can be used to access GitHub API such as auto correct repository URL.', 'rd-downloads') . ' ' .
                         __('This is required to use with GitHub auto update.', 'rd-downloads'),
                     'id' => 'rdd_github_token',
