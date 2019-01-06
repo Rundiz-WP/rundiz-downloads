@@ -70,9 +70,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
 
         /**
          * Add new download page.
-         * 
+         *
          * This method was called from Menu class.
-         * 
+         *
          * @global array $rd_downloads_options
          */
         public function pageAdd()
@@ -96,9 +96,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
 
         /**
          * Page edit downloads.
-         * 
+         *
          * This method was called from Menu class.
-         * 
+         *
          * @global array $rd_downloads_options
          */
         public function pageEdit()
@@ -151,8 +151,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
             $Loader->loadView('admin/Downloads/Editing/pageEdit_v', $output);
             unset($Loader);
         }// pageEdit
-        
-        
+
+
         /**
          * Enqueue scripts here.
          */
@@ -167,7 +167,6 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
                 [
                     'nonce' => wp_create_nonce('rd-downloads_ajax-file-browser-nonce'),
                     'savenonce' => wp_create_nonce('rd-downloads-ajax-saving-nonce'),
-                    'isGithubTokenSet' => (isset($rd_downloads_options['rdd_github_token']) && !empty(trim($rd_downloads_options['rdd_github_token'])) ? true : false),
                     'txtAreYouSureDeleteFileUndone' => __('Are you sure?', 'rd-downloads') . "\n" . __('If the selected file had linked with other downloads then it will show the error message.', 'rd-downloads') . "\n" . __('This can not be un-done.', 'rd-downloads'),
                     'txtDismiss' => __('Dismiss', 'rd-downloads'),
                 ]
