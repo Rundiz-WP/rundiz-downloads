@@ -1,7 +1,7 @@
 <?php
 /**
  * Uninstall or delete the plugin.
- * 
+ *
  * @package rd-downloads
  */
 
@@ -18,7 +18,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
 
         /**
          * Get `main_option_name` property from trait which is non-static from any static method.
-         * 
+         *
          * @return string
          */
         private static function getMainOptionName()
@@ -45,7 +45,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
 
         /**
          * Uninstall or delete the plugin.
-         * 
+         *
          * @global \wpdb $wpdb
          */
         public static function uninstall()
@@ -73,23 +73,44 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
                 static::uninstallDeleteOption();
                 static::uninstallDropTables();
             }
+
+            static::uninstallDeleteScreenOptions();
         }// uninstall
 
 
         /**
          * Delete option on the switched to site.
+         *
+         * Also clear scheduled hooks.
          */
         private static function uninstallDeleteOption()
         {
             delete_option(static::getMainOptionName());
+
+            wp_clear_scheduled_hook('rddownloads_cron_purgelogs');
         }// uninstallDeleteOption
 
 
         /**
+         * Delete screen options values.
+         * 
+         * @global \wpdb $wpdb
+         */
+        private static function uninstallDeleteScreenOptions()
+        {
+            global $wpdb;
+
+            $sql = 'DELETE FROM `' . $wpdb->usermeta . '` WHERE `meta_key` LIKE \'rddownloads_%\'';
+            $wpdb->query($sql);
+            unset($sql);
+        }// uninstallDeleteScreenOptions
+
+
+        /**
          * Drop tables on deleted site.
-         * 
+         *
          *  This method was called from hook, it must be public and do not call this directly.
-         * 
+         *
          * @link https://developer.wordpress.org/reference/hooks/deleted_blog/ Reference.
          * @param integer $blog_id
          * @param boolean $drop
@@ -108,9 +129,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
 
         /**
          * Drop tables that was created with this plugin.
-         * 
+         *
          * Only tables that was created in `RdDownloads\App\Models\PluginDbStructure->get()` method will be drop here.
-         * 
+         *
          * @global \wpdb $wpdb
          * @param boolean $mainsite Set to true to drop table of this plugin that created for main site. Otherwise it will be drop table with `prefix_sitenumber_` for switched to sub site only (in case multisite enabled).
          */
