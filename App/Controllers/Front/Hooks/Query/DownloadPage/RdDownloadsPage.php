@@ -1,7 +1,7 @@
 <?php
 /**
  * Front-end download process page.
- * 
+ *
  * @package rd-downloads
  */
 
@@ -11,7 +11,7 @@ namespace RdDownloads\App\Controllers\Front\Hooks\Query\DownloadPage;
 if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\DownloadPage\\RdDownloadsPage')) {
     /**
      * Process the download.
-     * 
+     *
      * This class was called from `App\Controllers\Front\Hooks\Query\DownloadPage` class -> `goToRdDownloadsPage()` method.
      */
     class RdDownloadsPage extends \RdDownloads\App\Controllers\Front\ControllerBased
@@ -22,7 +22,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
 
 
         /**
-         * @var \RdDownloads\App\Libraries\Loader The loader class. 
+         * @var \RdDownloads\App\Libraries\Loader The loader class.
          */
         protected $Loader;
 
@@ -43,9 +43,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
 
         /**
          * Do force download.
-         * 
+         *
          * This method contain `exit()` function, after call to this method the process will be stopped.
-         * 
+         *
          * @param object $downloadRow The download object get from `$wpdb->query()` method.
          * @param string $downloadFullPath The file full path.
          */
@@ -94,9 +94,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
 
         /**
          * User clicked on download button and go to here.
-         * 
+         *
          * These are process steps.
-         * 
+         *
          * Check that the setting was set to use captcha or not.<br>
          * Check that the user agent was blocked or not.<br>
          * Check that `download_id` exists or not.<br>
@@ -104,7 +104,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
          * Increase download count.<br>
          *  - If remote or GitHub then redirect to start download.<br>
          *  - If local then check that setting to force download (global and individual) or not. Start download after force download check.
-         * 
+         *
          * @global array $rd_downloads_options
          * @param integer The `download_id` to match in DB.
          */
@@ -123,9 +123,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                 if ($useCustomCaptcha === true) {
                     // if there is filter hook to use custom captcha.
                     // has a filter hook to display captcha page (return false) and validate the captcha value (return true on success, false on failure).
-                    $stepCaptcha = apply_filters('rddownloads_use_custom_captcha_result', false);
+                    $stepCaptcha = apply_filters('rddownloads_use_custom_captcha_result', false, $download_id);
                 } else {
-                    $stepCaptcha = $this->subUseCaptcha();
+                    $stepCaptcha = $this->subUseCaptcha($download_id);
                 }
 
                 unset($useCustomCaptcha);
@@ -152,7 +152,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
 
         /**
          * Sub page check banned User Agent.
-         * 
+         *
          * @global array $rd_downloads_options
          * @param integer $download_id The download_id field.
          * @return boolean Return true on success (not banned), return false for banned or otherwise.
@@ -197,7 +197,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
 
         /**
          * Sub page check for download item exists and start download.
-         * 
+         *
          * @global array $rd_downloads_options
          * @param integer $download_id The `download_id` that matched in DB.
          * @return boolean Return false for failure. If success then it will process the download here and exit.
@@ -301,13 +301,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
 
         /**
          * Sub page use captcha.
-         * 
+         *
          * Show captcha and check it before go to next step.
-         * 
+         *
          * @global array $rd_downloads_options
+         * @param integer $download_id The download_id field.
          * @return boolean Return true on success validated captcha.
          */
-        protected function subUseCaptcha()
+        protected function subUseCaptcha($download_id)
         {
             // check for validated captcha and do not enter again on every request for xx minutes.
             if (
@@ -333,6 +334,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                 'download_id' => false,
             ], home_url());
 
+            // about captcha audio.
             if (isset($rd_downloads_options['rdd_use_captcha_audio']) && $rd_downloads_options['rdd_use_captcha_audio'] == '1') {
                 // if setting was set to enable captcha audio.
                 $output['captchaAudio'] = add_query_arg([
@@ -351,7 +353,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
 
             // check for too many attempts wrong captcha.
             if (
-                isset($_SESSION['rddownloads_enter_wrong_captcha_waituntil']) && 
+                isset($_SESSION['rddownloads_enter_wrong_captcha_waituntil']) &&
                 current_time('timestamp') <= $_SESSION['rddownloads_enter_wrong_captcha_waituntil']
             ) {
                 // if in banned time.
@@ -397,9 +399,13 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                         $output['form_result_msg'] = __('The security code entered was incorrect.', 'rd-downloads') . ' ' .
                             sprintf(
                                 /* translators: %d: Number of time incorrect. */
-                                _n('You had entered incorrectly for %s time.', 'You had enter incorrectly for %s times.', $_SESSION['rddownloads_enter_wrong_captcha'], 'rd-downloads'), 
+                                _n('You had entered incorrectly for %s time.', 'You had enter incorrectly for %s times.', $_SESSION['rddownloads_enter_wrong_captcha'], 'rd-downloads'),
                                 $_SESSION['rddownloads_enter_wrong_captcha']
                             );
+
+                        $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
+                        $RdDownloadLogs->writeLog('user_dl_wr_captcha', ['download_id' => $download_id]);
+                        unset($RdDownloadLogs);
                     } else {
                         // if check captcha passed.
                         unset($_SESSION['rddownloads_enter_wrong_captcha'], $_SESSION['rddownloads_enter_wrong_captcha_waituntil']);

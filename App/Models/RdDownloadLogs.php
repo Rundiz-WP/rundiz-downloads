@@ -1,7 +1,7 @@
 <?php
 /**
  * Download logs.
- * 
+ *
  * @package rd-downloads
  */
 
@@ -29,12 +29,13 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
             'user_dl_success', // user (guests and members) download success
             'user_dl_error', // user got an error while downloading
             'user_dl_banned', // user gets banned while downloading
+            'user_dl_wr_captcha', // user enter wrong captcha code
         ];
 
 
         /**
          * Clear all logs and add the log that this admin was cleared the logs.
-         * 
+         *
          * @global \wpdb $wpdb
          */
         public function clearLogs()
@@ -64,9 +65,9 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
 
         /**
          * Get one row of data from rd_download_logs and related tables.
-         * 
+         *
          * This method use `get_row()` of `\wpdb` class.
-         * 
+         *
          * @global \wpdb $wpdb
          * @param array $options The conditions to get data. The array key must be map to table fields.<br>
          *                                      Additional array keys:<br>
@@ -122,8 +123,8 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
 
             // custom conditions.
             if (
-                isset($options['*conditions']) && 
-                isset($options['*conditions']['statement']) && 
+                isset($options['*conditions']) &&
+                isset($options['*conditions']['statement']) &&
                 isset($options['*conditions']['args']) &&
                 is_string($options['*conditions']['statement']) &&
                 is_array($options['*conditions']['args'])
@@ -185,7 +186,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
 
         /**
          * Get searchable fields.
-         * 
+         *
          * @global \wpdb $wpdb
          * @param boolean $returnStatement Set to false to return as array fields, set to true to generate SQL statement string.
          * @return array|string Return array values of searchable fields or return SQL statement string with parenthesis.
@@ -230,7 +231,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
 
         /**
          * Get select fields.
-         * 
+         *
          * @global \wpdb $wpdb
          * @param boolean $returnStatement Set to false to return as array fields, set to true to generate SQL statement string.
          * @return array|string Return array values of select fields or return SQL statement string.
@@ -261,9 +262,9 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
 
         /**
          * List items from rd_download_logs and related tables.
-         * 
+         *
          * This method use `get_results()` of `\wpdb` class.
-         * 
+         *
          * @global \wpdb $wpdb
          * @param array $options The conditions to get data. The array key must be map to table fields.<br>
          *                                      Additional array keys:<br>
@@ -319,8 +320,8 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
 
             // custom conditions.
             if (
-                isset($options['*conditions']) && 
-                isset($options['*conditions']['statement']) && 
+                isset($options['*conditions']) &&
+                isset($options['*conditions']['statement']) &&
                 isset($options['*conditions']['args']) &&
                 is_string($options['*conditions']['statement']) &&
                 is_array($options['*conditions']['args'])
@@ -369,7 +370,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
 
             $total_items = $wpdb->get_var(
                 $wpdb->prepare(
-                    str_replace(['%*%'], ['COUNT(' . $wpdb->prefix . 'rd_download_logs' . '.download_id)'], $sql), 
+                    str_replace(['%*%'], ['COUNT(' . $wpdb->prefix . 'rd_download_logs' . '.download_id)'], $sql),
                     $prepareValues
                 )
             );
@@ -426,7 +427,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
 
         /**
          * Filter out "*" to keep only fields option from many options (including custom options) based on `get()` and `listItems()` methods.
-         * 
+         *
          * @param array $options The options.
          * @return array Return filtered out any options that contain * mark.
          */
@@ -447,7 +448,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
 
         /**
          * Write log to DB.
-         * 
+         *
          * @global array $rd_downloads_options
          * @global \wpdb $wpdb
          * @param string $status The log status, please refer from `dlStatuses` property.

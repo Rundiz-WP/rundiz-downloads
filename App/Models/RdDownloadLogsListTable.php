@@ -1,7 +1,7 @@
 <?php
 /**
  * Rundiz Download Logs list table.
- * 
+ *
  * @package rd-downloads
  */
 
@@ -13,7 +13,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
      * List data into table.
      * Warning! Do not modify method name because they are extended from WP_List_Table class of WordPress. Changing the method name may cause program error.
      * Warning! this parent class is marked as private. Please read at wordpress source.
-     * 
+     *
      * @link http://wpengineer.com/2426/wp_list_table-a-step-by-step-guide/ tutorial about how to list table data.
      * @link http://www.sitepoint.com/using-wp_list_table-to-create-wordpress-admin-tables/ another tutorial
      * @link https://codex.wordpress.org/Class_Reference/WP_List_Table wordpress list table class source.
@@ -74,7 +74,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
 
         /**
          * Column dl_status.
-         * 
+         *
          * @param object $item
          * @return string
          */
@@ -110,6 +110,9 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
                 case 'user_dl_banned':
                     $output .= __('User download banned', 'rd-downloads');
                     break;
+                case 'user_dl_wr_captcha':
+                    $output .= __('User enter wrong captcha code', 'rd-downloads');
+                    break;
                 default:
                     $output .= $item->dl_status;
                     break;
@@ -121,7 +124,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
 
         /**
          * Get bulk actions
-         * 
+         *
          * @return array return array key and name. example: [key1 => describe how this work]
          */
         protected function get_bulk_actions()
@@ -178,7 +181,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @global \wpdb $wpdb
          */
         protected function get_views()
@@ -269,7 +272,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
 
         /**
          * prepare data and items
-         * 
+         *
          * @global \wpdb $wpdb
          * @param array $options available options: user_id, download_id, search, sort (column name), order (ascending descending)
          */
@@ -318,7 +321,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
 
             // create pagination
             $this->set_pagination_args([
-                'total_items' => $total_items, 
+                'total_items' => $total_items,
                 'per_page'    => $per_page
             ]);
 

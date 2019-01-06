@@ -8,7 +8,7 @@ class RdDownloadsDashboardWidget {
 
     /**
      * Ajax get all downloads daily stat.
-     * 
+     *
      * @returns {unresolved}
      */
     ajaxGetAllDownloadsDailyStat() {
@@ -53,7 +53,7 @@ class RdDownloadsDashboardWidget {
 
     /**
      * Ajax get top downloads.
-     * 
+     *
      * @returns {unresolved}
      */
     ajaxGetTopDownloads() {
@@ -103,9 +103,9 @@ class RdDownloadsDashboardWidget {
 
     /**
      * Display all downloads daily stat.
-     * 
+     *
      * This method required chart.js to functional.
-     * 
+     *
      * @returns {undefined}
      */
     displayAllDownloadsDailyStat() {
@@ -133,6 +133,14 @@ class RdDownloadsDashboardWidget {
                         data: response.part_total_error,
                         backgroundColor: 'rgba(255, 0, 0, 0.3)',
                         borderColor: 'rgba(255, 0, 0, 0.3)',
+                        fill: false,
+                        lineTension: 0
+                    },
+                    {
+                        label: RdDownloads.txtTotalWrongCaptcha,
+                        data: response.part_total_wrongcaptcha,
+                        backgroundColor: 'rgba(255, 150, 0, 0.3)',
+                        borderColor: 'rgba(255, 150, 0, 0.3)',
                         fill: false,
                         lineTension: 0
                     }]
@@ -167,7 +175,7 @@ class RdDownloadsDashboardWidget {
 
     /**
      * Hide the list and display text getting data.
-     * 
+     *
      * @returns {undefined}
      */
     displayTextGettingDataTopDownloads() {
@@ -183,7 +191,7 @@ class RdDownloadsDashboardWidget {
 
     /**
      * Display top downloads.
-     * 
+     *
      * @returns {unresolved}
      */
     displayTopDownloads() {
@@ -215,7 +223,7 @@ class RdDownloadsDashboardWidget {
 
     /**
      * Listen on filter select box has changed and ajax get new data.
-     * 
+     *
      * @returns {undefined}
      */
     listenFilterChanged() {

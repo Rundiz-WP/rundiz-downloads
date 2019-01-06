@@ -50,11 +50,13 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
                 // get total success and error downloads ---------------------------------------------------------
                 $sql = 'SELECT ' . $tableRdDownloadLogs . '.*,
                     COUNT(IF (`dl_status` = \'user_dl_success\', 1, NULL)) AS `dl_total_success`,
-                    COUNT(IF (`dl_status` = \'user_dl_error\', 1, NULL)) AS `dl_total_error`
+                    COUNT(IF (`dl_status` = \'user_dl_error\', 1, NULL)) AS `dl_total_error`,
+                    COUNT(IF (`dl_status` = \'user_dl_wr_captcha\', 1, NULL)) AS `dl_total_wrong_captcha`
                     FROM ' . $tableRdDownloadLogs . '
                     WHERE
                         (
                             `dl_status` = %s
+                            OR `dl_status` = %s
                             OR `dl_status` = %s
                         )
                         AND (
@@ -66,6 +68,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
                 $data = [];
                 $data[] = 'user_dl_success';
                 $data[] = 'user_dl_error';
+                $data[] = 'user_dl_wr_captcha';
                 $data[] = min($output['part_date_gmt']);
                 $data[] = max($output['part_date_gmt']);
                 $prepared = $wpdb->prepare($sql, $data);
@@ -92,6 +95,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
             foreach ($output['part_date_gmt'] as $key => $date) {
                 $output['part_total_success'][$key] = 0;
                 $output['part_total_error'][$key] = 0;
+                $output['part_total_wrongcaptcha'][$key] = 0;
             }// endforeach;
             unset($data, $key);
 
@@ -106,6 +110,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
                         }
                         if (isset($row->dl_total_error) && isset($output['part_total_error'][$dateKey])) {
                             $output['part_total_error'][$dateKey] = (isset($row->dl_total_error) ? $row->dl_total_error : 0);
+                        }
+                        if (isset($row->dl_total_wrong_captcha) && isset($output['part_total_wrongcaptcha'][$dateKey])) {
+                            $output['part_total_wrongcaptcha'][$dateKey] = (isset($row->dl_total_wrong_captcha) ? $row->dl_total_wrong_captcha : 0);
                         }
                     }
 

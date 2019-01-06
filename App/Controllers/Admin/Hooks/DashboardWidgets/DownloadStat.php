@@ -1,7 +1,7 @@
 <?php
 /**
  * Download statistic dashboard widget.
- * 
+ *
  * @package rd-downloads
  */
 
@@ -19,8 +19,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\DashboardWidge
         public function addWidget()
         {
             wp_add_dashboard_widget(
-                'rddownloads_dashboard_widget_downloadstat', 
-                __('Download Statistics', 'rd-downloads'), 
+                'rddownloads_dashboard_widget_downloadstat',
+                __('Download Statistics', 'rd-downloads'),
                 [$this, 'displayDownloadStat']
             );
 
@@ -37,6 +37,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\DashboardWidge
                     'txtNoTopDownload' => __('There are no data.', 'rd-downloads'),
                     'txtTotalDownload' => __('Total downloads', 'rd-downloads'),
                     'txtTotalErrorDownload' => __('Total errors', 'rd-downloads'),
+                    'txtTotalWrongCaptcha' => __('Total wrong captcha', 'rd-downloads'),
                 ]
             );
         }// addWidget

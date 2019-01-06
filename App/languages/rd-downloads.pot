@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-01-01T02:23:46+07:00\n"
+"POT-Creation-Date: 2019-01-06T13:47:01+07:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.1.0\n"
 "X-Domain: rd-downloads\n"
@@ -626,6 +626,10 @@ msgstr ""
 msgid "Total errors"
 msgstr ""
 
+#: App/Controllers/Admin/Hooks/DashboardWidgets/DownloadStat.php:40
+msgid "Total wrong captcha"
+msgstr ""
+
 #: App/Controllers/Admin/Hooks/EditorHelptab/rdDownloadsShortcode.php:36
 msgid "Rundiz Downloads shortcodes"
 msgstr ""
@@ -692,11 +696,11 @@ msgstr ""
 msgid "DB version %s"
 msgstr ""
 
-#: App/Controllers/Admin/Settings/Xhr/XhrGithub.php:58
+#: App/Controllers/Admin/Settings/Xhr/XhrGithub.php:74
 msgid "Correct!"
 msgstr ""
 
-#: App/Controllers/Admin/Settings/Xhr/XhrGithub.php:62
+#: App/Controllers/Admin/Settings/Xhr/XhrGithub.php:78
 msgid "Invalid GitHub token."
 msgstr ""
 
@@ -722,21 +726,21 @@ msgstr ""
 msgid "The generated secret will not working anymore with any GitHub repositories that already has this setting. You have to update new secret on those repositories again"
 msgstr ""
 
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:361
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:363
 msgid "Too many attempts for wrong captcha code."
 msgstr ""
 
 #. translators: %s: Date/time that un-banned captcha page.
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:364
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:366
 msgid "Please wait until %s and try again."
 msgstr ""
 
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:397
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:399
 msgid "The security code entered was incorrect."
 msgstr ""
 
 #. translators: %d: Number of time incorrect.
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:400
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:402
 msgid "You had entered incorrectly for %s time."
 msgid_plural "You had enter incorrectly for %s times."
 msgstr[0] ""
@@ -752,11 +756,11 @@ msgstr ""
 #. translators: %s: Argument name.
 #: App/Libraries/DateTime.php:30
 #: App/Libraries/FileSystem.php:113
-#: App/Libraries/Github.php:506
+#: App/Libraries/Github.php:612
 #: App/Libraries/Semver.php:72
 #: App/Libraries/Semver.php:77
-#: App/Libraries/Url.php:27
-#: App/Libraries/Url.php:89
+#: App/Libraries/Url.php:88
+#: App/Libraries/Url.php:150
 msgid "The %s must be string."
 msgstr ""
 
@@ -765,7 +769,7 @@ msgid "Download"
 msgstr ""
 
 #: App/Libraries/ElementPlaceholders.php:58
-#: App/Models/RdDownloadLogsListTable.php:149
+#: App/Models/RdDownloadLogsListTable.php:152
 #: App/Models/RdDownloadsListTable.php:231
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:19
 #: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:19
@@ -905,61 +909,65 @@ msgstr ""
 msgid "User download banned"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:137
+#: App/Models/RdDownloadLogsListTable.php:114
+msgid "User enter wrong captcha code"
+msgstr ""
+
+#: App/Models/RdDownloadLogsListTable.php:140
 msgid "Clear"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:150
+#: App/Models/RdDownloadLogsListTable.php:153
 msgid "User"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:151
+#: App/Models/RdDownloadLogsListTable.php:154
 msgid "Status"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:152
+#: App/Models/RdDownloadLogsListTable.php:155
 msgid "IP Address"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:153
+#: App/Models/RdDownloadLogsListTable.php:156
 msgid "User agent"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:154
+#: App/Models/RdDownloadLogsListTable.php:157
 #: App/Models/RdDownloadsListTable.php:239
 msgid "Date"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:210
+#: App/Models/RdDownloadLogsListTable.php:213
 #: App/Models/RdDownloadsListTable.php:293
 msgid "All"
 msgstr ""
 
 #. translators: %s: Link to edit user.
-#: App/Models/RdDownloadLogsListTable.php:219
+#: App/Models/RdDownloadLogsListTable.php:222
 #: App/Models/RdDownloadsListTable.php:323
 msgid "Filtered user: %s"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:222
+#: App/Models/RdDownloadLogsListTable.php:225
 #: App/Models/RdDownloadsListTable.php:326
 msgid "Reset filtered user"
 msgstr ""
 
 #. translators: %s: Link to edit download.
-#: App/Models/RdDownloadLogsListTable.php:230
+#: App/Models/RdDownloadLogsListTable.php:233
 msgid "Filtered download: %s"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:233
+#: App/Models/RdDownloadLogsListTable.php:236
 msgid "Reset filtered download"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:256
+#: App/Models/RdDownloadLogsListTable.php:259
 msgid "Filter download"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:263
+#: App/Models/RdDownloadLogsListTable.php:266
 #: App/Models/RdDownloadsListTable.php:370
 msgid "Filter user"
 msgstr ""

@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rundiz Downloads 0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rd-downloads\n"
-"POT-Creation-Date: 2019-01-01T02:23:46+07:00\n"
-"PO-Revision-Date: 2019-01-01 02:27+0700\n"
+"POT-Creation-Date: 2019-01-06T13:47:01+07:00\n"
+"PO-Revision-Date: 2019-01-06 13:49+0700\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: th_TH\n"
@@ -20,7 +20,8 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #. Plugin Name of the plugin
-#: App/Controllers/Admin/Downloads/Menu.php:63 App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:116
+#: App/Controllers/Admin/Downloads/Menu.php:63
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:116
 #: App/Controllers/Front/Hooks/Query/GithubAutoUpdatePage/GithubAutoUpdatePage.php:53
 #: App/Views/admin/Hooks/DashboardWidgets/DownloadStat/displayDownloadStat_v.php:15
 msgid "Rundiz Downloads"
@@ -44,7 +45,7 @@ msgstr ""
 
 #: App/AppTrait.php:134
 msgid "Settings configuration file was not set."
-msgstr ""
+msgstr "ไม่ได้กำหนดไฟล์ตั้งค่า."
 
 #. translators: %s: Example shortcode.
 #: App/config/rd_downloads.php:63
@@ -62,7 +63,8 @@ msgstr "แอตทริบิวท์ช็อตโค้ดที่มี
 
 #: App/config/rd_downloads.php:69
 msgid ""
-"Set one or more of these attributes into shortcode to match condition in the template and display its value. The %s attribute is required."
+"Set one or more of these attributes into shortcode to match condition in the template and display its value. "
+"The %s attribute is required."
 msgstr "กำหนดแอตทริบิวท์ลงในช็อตโค้ดเพื่อให้ตรงเงื่อนไขในเท็มเพลทแล้วแสดงผลของมันออกมา. ค่าแอตทริบิวท์ %s ต้องกรอก."
 
 #: App/config/rd_downloads.php:73
@@ -110,7 +112,9 @@ msgid "Go to Settings &gt; Webhooks."
 msgstr "ไปยัง Settings &gt; Webhooks."
 
 #: App/config/rd_downloads.php:129
-msgid "If you didn't created Webhooks yet, click on %1$s button. If you want to change the secret, click on %2$s button."
+msgid ""
+"If you didn't created Webhooks yet, click on %1$s button. If you want to change the secret, click on %2$s "
+"button."
 msgstr "ถ้าหากยังไม่ได้สร้าง Webhooks, ให้คลิกที่ปุ่ม %1$s. ถ้าหากคุณต้องการเปลี่ยน secret ให้คลิกที่ปุ่ม %2$s."
 
 #: App/config/rd_downloads.php:130
@@ -186,7 +190,8 @@ msgid "Generate token"
 msgstr "สร้างโทเคน"
 
 #: App/config/rd_downloads.php:150
-msgid "Copy your personal token and paste above field then save changes before you won't be able to see it again."
+msgid ""
+"Copy your personal token and paste above field then save changes before you won't be able to see it again."
 msgstr "คัดลอกค่าโทเคนแล้ววางลงบนช่องด้านบนจากนั้นกดบันทึกก่อนที่คุณจะไม่ได้เห็นมันอีก."
 
 #: App/config/rd_downloads.php:159
@@ -197,14 +202,16 @@ msgstr "ทั่วไป"
 msgid "Check this to use force download instead of redirect to file. (This will work with local file only.)"
 msgstr "ติ๊กที่นี่เพื่อใช้บังคับดาวน์โหลดแทนที่จะเปลี่ยนเส้นทางไปยังไฟล์. (ใช้ได้เฉพาะไฟล์บนเซิร์ฟเวอร์นี้เท่านั้น.)"
 
-#: App/config/rd_downloads.php:167 App/config/rd_downloads.php:192 App/config/rd_downloads.php:209 App/config/rd_downloads.php:286
-#: App/config/rd_downloads.php:312 App/Models/RdDownloadsListTable.php:91 App/Views/admin/Downloads/Editing/pageEdit_v.php:109
+#: App/config/rd_downloads.php:167 App/config/rd_downloads.php:192 App/config/rd_downloads.php:209
+#: App/config/rd_downloads.php:286 App/config/rd_downloads.php:312 App/Models/RdDownloadsListTable.php:91
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:109
 msgid "Yes"
 msgstr "ใช่"
 
 #. translators: %s: Force download option.
-#: App/config/rd_downloads.php:171 App/Controllers/Admin/Downloads/Editing.php:59 App/Models/RdDownloadsListTable.php:237
-#: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:4 App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:8
+#: App/config/rd_downloads.php:171 App/Controllers/Admin/Downloads/Editing.php:59
+#: App/Models/RdDownloadsListTable.php:237 App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:4
+#: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:8
 #: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:12 App/Views/admin/Downloads/Editing/pageEdit_v.php:107
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:116
 msgid "Force download"
@@ -215,7 +222,9 @@ msgid "Clear cache"
 msgstr "ล้างแคช"
 
 #: App/config/rd_downloads.php:176
-msgid "If something seems not up-to-date, please try to clear the cache first. This will be clear all plugin's cache."
+msgid ""
+"If something seems not up-to-date, please try to clear the cache first. This will be clear all plugin's "
+"cache."
 msgstr "ถ้าบางอย่างดูไม่เปลี่ยนแปลง, โปรดลองล้างแคชดูก่อน. นี่จะเป็นการล้างแคชทั้งหมดเฉพาะปลั๊กอินนี้เท่านั้น."
 
 #: App/config/rd_downloads.php:177
@@ -231,7 +240,9 @@ msgid "Use captcha"
 msgstr "ใช้แคปต์ชา"
 
 #: App/config/rd_downloads.php:205
-msgid "If %s was checked, this checkbox is for allow play captcha audio. If your server does not support or not working then uncheck this box."
+msgid ""
+"If %s was checked, this checkbox is for allow play captcha audio. If your server does not support or not "
+"working then uncheck this box."
 msgstr "ถ้า %s ถูกติ๊ก, กล่องเช็คนี้จะสำหรับอนุญาตให้เล่นเสียงแคปต์ชาได้. ถ้าหากเซิร์ฟเวอร์ของคุณไม่รองรับหรือมันไม่ทำงาน ให้เลิกติ๊กกล่องนี้."
 
 #: App/config/rd_downloads.php:213
@@ -264,9 +275,11 @@ msgstr "รหัสลับ GitHub"
 
 #: App/config/rd_downloads.php:245
 msgid ""
-"Choose how auto update work. Auto update on every releases and commits can make your server slow, if you choose every releases then it will "
-"work less."
-msgstr "เลือกว่าอัปเดทอัตโนมัติจะทำงานอย่างไร. อัปเดทอัตโนมัติทุกๆ release และ commit จะทำให้เซิร์ฟเวอร์ทำงานช้าลงได้, ถ้าคุณเลือกเฉพาะทุกๆ release มันจะทำงานน้อยกว่า."
+"Choose how auto update work. Auto update on every releases and commits can make your server slow, if you "
+"choose every releases then it will work less."
+msgstr ""
+"เลือกว่าอัปเดทอัตโนมัติจะทำงานอย่างไร. อัปเดทอัตโนมัติทุกๆ release และ commit จะทำให้เซิร์ฟเวอร์ทำงานช้าลงได้, "
+"ถ้าคุณเลือกเฉพาะทุกๆ release มันจะทำงานน้อยกว่า."
 
 #: App/config/rd_downloads.php:248
 msgid "Do not auto update"
@@ -276,7 +289,8 @@ msgstr "ไม่อัปเดทอัตโนมัติ"
 msgid "Every releases"
 msgstr "ทุกๆ release"
 
-#: App/config/rd_downloads.php:249 App/Models/RdDownloadsListTable.php:93 App/Views/admin/Downloads/Editing/pageEdit_v.php:113
+#: App/config/rd_downloads.php:249 App/Models/RdDownloadsListTable.php:93
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:113
 msgid "Default"
 msgstr "ค่าเดิม"
 
@@ -451,13 +465,15 @@ msgid "Failed to delete item"
 msgid_plural "Failed to delete items"
 msgstr[0] "ล้มเหลวในการลบรายการ"
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:218 App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:389
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:218
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:389
 #: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:524
 msgid "Capability limited item"
 msgid_plural "Capability limited items"
 msgstr[0] "รายการที่ติดขัดสิทธิ"
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:219 App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:390
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:219
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:390
 #: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:525
 msgid "Mismatch ID"
 msgid_plural "Mismatch IDs"
@@ -467,29 +483,35 @@ msgstr[0] "ID ไม่ตรง"
 msgid "The selected items was not found."
 msgstr "ไม่พบรายการที่เลือก."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:380 App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:515
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:380
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:515
 msgid "Success! All selected items have been updated."
 msgstr "สำเร็จ! อัปเดทรายการที่เลือกทั้งหมดแล้ว."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:385 App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:520
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:385
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:520
 msgid "Warning! There are some problem about update the items, here are the results."
 msgstr "คำเตือน! มีปัญหาบางอย่างเกี่ยวกับการอัปเดทรายการ, นี่คือผลลัพธ์."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:387 App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:522
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:387
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:522
 msgid "Updated item"
 msgid_plural "Updated items"
 msgstr[0] "รายการที่อัปเดทแล้ว"
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:388 App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:523
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:388
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:523
 msgid "Failed to update item"
 msgid_plural "Failed to update items"
 msgstr[0] "รายการที่ล้มเหลวในการอัปเดท"
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:410 App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:545
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:410
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:545
 msgid "The selected items was not found or not matched download type."
 msgstr "ไม่พบรายการที่เลือกหรือประเภทดาวน์โหลดไม่ตรงกัน."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:39 App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:191
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:39
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:191
 #: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:29
 msgid "Hacking attempt!"
 msgstr ""
@@ -505,7 +527,8 @@ msgstr "ไม่สามารถลบไฟล์ index ซึ่งป้�
 
 #. translators: %1$s: Open link tag, %2$s Close link tag.
 #: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:271
-msgid "Unable to delete the selected file. The file is already in use. Please %1$sedit%2$s this downloads instead.."
+msgid ""
+"Unable to delete the selected file. The file is already in use. Please %1$sedit%2$s this downloads instead.."
 msgstr "ไม่สามารถลบไฟล์ที่เลือก. ไฟล์กำลังถูกใช้งานอยู่. โปรด%1$sแก้ไข%2$sดาวน์โหลดนี้แทน."
 
 #. translators: %s: The selected URL to show in error.
@@ -586,16 +609,22 @@ msgstr "ดาวน์โหลดทั้งหมด"
 msgid "Total errors"
 msgstr "ผิดพลาดทั้งหมด"
 
+#: App/Controllers/Admin/Hooks/DashboardWidgets/DownloadStat.php:40
+msgid "Total wrong captcha"
+msgstr "แคปต์ชาผิดทั้งหมด"
+
 #: App/Controllers/Admin/Hooks/EditorHelptab/rdDownloadsShortcode.php:36
 msgid "Rundiz Downloads shortcodes"
-msgstr ""
+msgstr "ช็อตโค้ดต่างๆ"
 
 #. translators: %1$s: Current PHP version, %2$s: Required PHP version.
 #: App/Controllers/Admin/Plugins/Activation.php:43
 msgid ""
-"You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or contact plugin author for this help."
-"<br><br>Minimum requirement:<br>PHP %2$s"
-msgstr "คุณกำลังใช้ PHP %1$s ซึ่งไม่ตรงความต้องการขั้นต่ำ. โปรดตัดสินใจอัปเกรดรุ่น PHP หรือติดต่อผู้เขียนปลั๊กอินเพื่อขอความช่วยเหลือ.<br><br>ความต้องการขั้นต่ำ:<br>PHP %2$s"
+"You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or "
+"contact plugin author for this help.<br><br>Minimum requirement:<br>PHP %2$s"
+msgstr ""
+"คุณกำลังใช้ PHP %1$s ซึ่งไม่ตรงความต้องการขั้นต่ำ. โปรดตัดสินใจอัปเกรดรุ่น PHP หรือติดต่อผู้เขียนปลั๊กอินเพื่อขอความช่วยเหลือ."
+"<br><br>ความต้องการขั้นต่ำ:<br>PHP %2$s"
 
 #. translators: %1$s: Current PHP version, %2$s: Required PHP version.
 #: App/Controllers/Admin/Plugins/Activation.php:43
@@ -624,7 +653,9 @@ msgid "Success, please click next to continue update."
 msgstr "สำเร็จ, โปรดคลิกที่ปุ่ม ถัดไป เพื่อดำเนินการอัปเดทต่อ."
 
 #: App/Controllers/Admin/Plugins/Upgrader.php:77
-msgid "All manual update completed successfully. This page will be no longer available until there is next manual update."
+msgid ""
+"All manual update completed successfully. This page will be no longer available until there is next manual "
+"update."
 msgstr "อัปเดททั้งหมดสำเร็จแล้ว. หน้านี้จะไม่สามารถเข้าถึงได้อีกจนกว่าจะมีการต้องอัปเดทด้วยตนเองในครั้งต่อไป."
 
 #: App/Controllers/Admin/Plugins/Upgrader.php:96
@@ -633,7 +664,9 @@ msgstr "ไม่สามารถทำการอัปเดทได้, �
 
 #. translators: %1$s: Open link tag, %2$s: Close link tag.
 #: App/Controllers/Admin/Plugins/Upgrader.php:130
-msgid "The Rundiz Downloads is just upgraded and need to be manually update. Please continue to the %1$splugin update page%2$s."
+msgid ""
+"The Rundiz Downloads is just upgraded and need to be manually update. Please continue to the %1$splugin "
+"update page%2$s."
 msgstr "Rundiz Downloads เพิ่งถูกปรับรุ่นและต้องการการอัปเดทด้วยตนเอง. โปรดดำเนินการต่อไปยัง%1$sหน้าอัปเดทปลั๊กอิน%2$s."
 
 #: App/Controllers/Admin/Plugins/Upgrader.php:171
@@ -644,7 +677,8 @@ msgstr ""
 msgid "Completed"
 msgstr "เรียบร้อยแล้ว"
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:225 App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:45
+#: App/Controllers/Admin/Plugins/Upgrader.php:225
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:45
 msgid "Next"
 msgstr "ถัดไป"
 
@@ -653,11 +687,11 @@ msgstr "ถัดไป"
 msgid "DB version %s"
 msgstr "รุ่นฐานข้อมูล %s"
 
-#: App/Controllers/Admin/Settings/Xhr/XhrGithub.php:58
+#: App/Controllers/Admin/Settings/Xhr/XhrGithub.php:74
 msgid "Correct!"
 msgstr "ถูกต้อง!"
 
-#: App/Controllers/Admin/Settings/Xhr/XhrGithub.php:62
+#: App/Controllers/Admin/Settings/Xhr/XhrGithub.php:78
 msgid "Invalid GitHub token."
 msgstr "โทเคนของ GitHub ไม่ถูกต้อง."
 
@@ -680,25 +714,25 @@ msgstr "จำเป็นต้องดำเนินการอัปเด
 
 #: App/Controllers/Admin/Settings.php:170
 msgid ""
-"The generated secret will not working anymore with any GitHub repositories that already has this setting. You have to update new secret on "
-"those repositories again"
+"The generated secret will not working anymore with any GitHub repositories that already has this setting. "
+"You have to update new secret on those repositories again"
 msgstr "รหัสลับที่ถูกสร้างก่อนหน้าจะไม่สามารถทำงานได้กับกรุของ GitHub ที่ใช้การตั้งค่านี้อีกต่อไป. คุณต้องอัปเดทรหัสลับบนกรุเหล่านั้นอีกครั้ง"
 
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:361
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:363
 msgid "Too many attempts for wrong captcha code."
 msgstr "แคปต์ชาผิดพลาดหลายครั้งเกินไป."
 
 #. translators: %s: Date/time that un-banned captcha page.
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:364
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:366
 msgid "Please wait until %s and try again."
 msgstr "โปรดรอจนถึง %s แล้วลองอีกครั้ง."
 
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:397
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:399
 msgid "The security code entered was incorrect."
 msgstr "รหัสความปลอดภัยที่กรอกไม่ถูกต้อง."
 
 #. translators: %d: Number of time incorrect.
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:400
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:402
 msgid "You had entered incorrectly for %s time."
 msgid_plural "You had enter incorrectly for %s times."
 msgstr[0] "คุณกรอกผิด %s ครั้ง."
@@ -712,8 +746,8 @@ msgid "Please reload the page and try again."
 msgstr "โปรดโหลดหน้านี้ใหม่แล้วลองอีกครั้ง."
 
 #. translators: %s: Argument name.
-#: App/Libraries/DateTime.php:30 App/Libraries/FileSystem.php:113 App/Libraries/Github.php:506 App/Libraries/Semver.php:72
-#: App/Libraries/Semver.php:77 App/Libraries/Url.php:27 App/Libraries/Url.php:89
+#: App/Libraries/DateTime.php:30 App/Libraries/FileSystem.php:113 App/Libraries/Github.php:612
+#: App/Libraries/Semver.php:72 App/Libraries/Semver.php:77 App/Libraries/Url.php:88 App/Libraries/Url.php:150
 msgid "The %s must be string."
 msgstr "%s ต้องเป็นสตริง."
 
@@ -721,8 +755,9 @@ msgstr "%s ต้องเป็นสตริง."
 msgid "Download"
 msgstr "ดาวน์โหลด"
 
-#: App/Libraries/ElementPlaceholders.php:58 App/Models/RdDownloadLogsListTable.php:149 App/Models/RdDownloadsListTable.php:231
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:19 App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:19
+#: App/Libraries/ElementPlaceholders.php:58 App/Models/RdDownloadLogsListTable.php:152
+#: App/Models/RdDownloadsListTable.php:231 App/Views/admin/Downloads/Editing/pageEdit_v.php:19
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:19
 msgid "Downloads name"
 msgstr "ชื่อดาวน์โหลด"
 
@@ -856,57 +891,61 @@ msgstr "ผู้ใช้ล้มเหลวในการดาวน์โ
 msgid "User download banned"
 msgstr "ผู้ใช้ถูกแบน"
 
-#: App/Models/RdDownloadLogsListTable.php:137
+#: App/Models/RdDownloadLogsListTable.php:114
+msgid "User enter wrong captcha code"
+msgstr "ผู้ใช้กรอกแคปต์ชาผิด"
+
+#: App/Models/RdDownloadLogsListTable.php:140
 msgid "Clear"
 msgstr "ล้างค่า"
 
-#: App/Models/RdDownloadLogsListTable.php:150
+#: App/Models/RdDownloadLogsListTable.php:153
 msgid "User"
 msgstr "ผู้ใช้"
 
-#: App/Models/RdDownloadLogsListTable.php:151
+#: App/Models/RdDownloadLogsListTable.php:154
 msgid "Status"
 msgstr "สถานะ"
 
-#: App/Models/RdDownloadLogsListTable.php:152
+#: App/Models/RdDownloadLogsListTable.php:155
 msgid "IP Address"
 msgstr "หมายเลขไอพี"
 
-#: App/Models/RdDownloadLogsListTable.php:153
+#: App/Models/RdDownloadLogsListTable.php:156
 msgid "User agent"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:154 App/Models/RdDownloadsListTable.php:239
+#: App/Models/RdDownloadLogsListTable.php:157 App/Models/RdDownloadsListTable.php:239
 msgid "Date"
 msgstr "วันที่"
 
-#: App/Models/RdDownloadLogsListTable.php:210 App/Models/RdDownloadsListTable.php:293
+#: App/Models/RdDownloadLogsListTable.php:213 App/Models/RdDownloadsListTable.php:293
 msgid "All"
 msgstr "ทั้งหมด"
 
 #. translators: %s: Link to edit user.
-#: App/Models/RdDownloadLogsListTable.php:219 App/Models/RdDownloadsListTable.php:323
+#: App/Models/RdDownloadLogsListTable.php:222 App/Models/RdDownloadsListTable.php:323
 msgid "Filtered user: %s"
 msgstr "กรองผู้ใช้: %s"
 
-#: App/Models/RdDownloadLogsListTable.php:222 App/Models/RdDownloadsListTable.php:326
+#: App/Models/RdDownloadLogsListTable.php:225 App/Models/RdDownloadsListTable.php:326
 msgid "Reset filtered user"
 msgstr "ล้างค่ากรองผู้ใช้"
 
 #. translators: %s: Link to edit download.
-#: App/Models/RdDownloadLogsListTable.php:230
+#: App/Models/RdDownloadLogsListTable.php:233
 msgid "Filtered download: %s"
 msgstr "กรองดาวน์โหลด: %s"
 
-#: App/Models/RdDownloadLogsListTable.php:233
+#: App/Models/RdDownloadLogsListTable.php:236
 msgid "Reset filtered download"
 msgstr "ล้างค่ากรองดาวน์โหลด"
 
-#: App/Models/RdDownloadLogsListTable.php:256
+#: App/Models/RdDownloadLogsListTable.php:259
 msgid "Filter download"
 msgstr "กรองดาวน์โหลด"
 
-#: App/Models/RdDownloadLogsListTable.php:263 App/Models/RdDownloadsListTable.php:370
+#: App/Models/RdDownloadLogsListTable.php:266 App/Models/RdDownloadsListTable.php:370
 msgid "Filter user"
 msgstr "กรองผู้ใช้"
 
@@ -982,15 +1021,19 @@ msgstr "การบันทึกข้อมูลดาวน์โหลด
 #. translators: %s: Full path to this plugin upload folder.
 #: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:5
 msgid ""
-"You can upload a file to the server using upload button below. You can also use FTP for large file size by uploading it to %s and then use "
-"file browser below to select the file."
-msgstr "คุณสามารถอัพโหลดไฟล์ไว้บนเซิร์ฟเวอร์โดยใช้ปุ่มอัปโหลดด้านล่าง. คุณสามารถใช้ FTP สำหรับไฟล์ใหญ่ๆ โดยอัปโหลดไปที่ %s จากนั้นจึงใช้ไฟล์เบราเซอร์ด้านล่างเพื่อเลือกไฟล์."
+"You can upload a file to the server using upload button below. You can also use FTP for large file size by "
+"uploading it to %s and then use file browser below to select the file."
+msgstr ""
+"คุณสามารถอัพโหลดไฟล์ไว้บนเซิร์ฟเวอร์โดยใช้ปุ่มอัปโหลดด้านล่าง. คุณสามารถใช้ FTP สำหรับไฟล์ใหญ่ๆ โดยอัปโหลดไปที่ %s "
+"จากนั้นจึงใช้ไฟล์เบราเซอร์ด้านล่างเพื่อเลือกไฟล์."
 
 #: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:7
 msgid ""
-"If you will be uploading the files using FTP, the file name should be web safe. For example: English, number, dash(-), underscore (_), no "
-"anything else."
-msgstr "ถ้าคุณจะอัปโหลดไฟล์โดย FTP, ชื่อไฟล์ควรปลอดภัยสำหรับเว็บ. ตัวอย่างเช่น: อักขระภาษาอังกฤษ, ตัวเลข, ขีดกลาง (-), ขีดล่าง (_), ไม่ควรใช้อย่างอื่น."
+"If you will be uploading the files using FTP, the file name should be web safe. For example: English, "
+"number, dash(-), underscore (_), no anything else."
+msgstr ""
+"ถ้าคุณจะอัปโหลดไฟล์โดย FTP, ชื่อไฟล์ควรปลอดภัยสำหรับเว็บ. ตัวอย่างเช่น: อักขระภาษาอังกฤษ, ตัวเลข, ขีดกลาง (-), ขีดล่าง (_), "
+"ไม่ควรใช้อย่างอื่น."
 
 #: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:10
 msgid "You can enter the download URL in the Download URL field directly by using one of these URL formats."
@@ -1113,18 +1156,24 @@ msgstr "ลบไฟล์นี้"
 
 #. translators: %s filter_user_id Query string name.
 #: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:4
-msgid "You can filter the log for each user by adding the %s query string as name and the user id as value to the URL."
+msgid ""
+"You can filter the log for each user by adding the %s query string as name and the user id as value to the "
+"URL."
 msgstr "คุณสามารถกรองบันทึกของแต่ละผู้ใช้โดยเพิ่ม query string %s เป็นชื่อและ id ผู้ใช้เป็นค่าของมันลงใน URL."
 
-#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:6 App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:14
-#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:19 App/Views/admin/Downloads/Management/helpTab/adminhelp_v.php:6
+#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:6
+#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:14
+#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:19
+#: App/Views/admin/Downloads/Management/helpTab/adminhelp_v.php:6
 #: App/Views/admin/Downloads/Management/helpTab/shortcodes_v.php:34
 msgid "Example:"
 msgstr "ตัวอย่าง:"
 
 #. translators: %s filter_user_id Query string name.
 #: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:12
-msgid "You can also filter the log for each download item by adding the %s query string as name and the download id as value to the URL."
+msgid ""
+"You can also filter the log for each download item by adding the %s query string as name and the download id "
+"as value to the URL."
 msgstr "คุณสามารถกรองบันทึกสำหรับแต่ละรายการดาวน์โหลดโดยเพิ่ม query string %s เป็นชื่อและ id ดาวน์โหลดเป็นค่าของมันลงใน URL."
 
 #: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:18
@@ -1147,7 +1196,9 @@ msgstr "ค้นหา"
 
 #. translators: %s filter_user_id Query string name.
 #: App/Views/admin/Downloads/Management/helpTab/adminhelp_v.php:4
-msgid "You can filter user's download items by adding the %s query string as name and the user id as value to the URL."
+msgid ""
+"You can filter user's download items by adding the %s query string as name and the user id as value to the "
+"URL."
 msgstr "คุณสามารถกรองดาวน์โหลดของแต่ละผู้ใช้โดยเพิ่ม query string %s เป็นชื่อและ id ผู้ใช้เป็นค่าลงใน URL."
 
 #. translators: %s: edit_posts capability.
@@ -1178,7 +1229,8 @@ msgstr "สำหรับข้อมูลเพิ่มเติมเกี
 #. translators: %1$s: Example basic shortcode, %2$s: text x in shortcode example, %3$s: download_id text, %4$s: id attribute in shortcode.
 #: App/Views/admin/Downloads/Management/helpTab/shortcodes_v.php:5
 msgid ""
-"To display download button, use this shortcode %1$s, the %2$s value have to replace with the %3$s. The attribute %4$s is always required."
+"To display download button, use this shortcode %1$s, the %2$s value have to replace with the %3$s. The "
+"attribute %4$s is always required."
 msgstr "การจะแสดงปุ่มดาวน์โหลด, ใช้ช็อตโค้ดนี้ %1$s, ค่า %2$s จะต้องถูกเปลี่ยนเป็น %3$s. แอตทริบิวท์ %4$s จะต้องกรอกเสมอ."
 
 #: App/Views/admin/Downloads/Management/helpTab/shortcodes_v.php:13
@@ -1186,7 +1238,9 @@ msgid "Additional attribute for shortcode"
 msgstr "แอตทริบิวท์เพิ่มเติม"
 
 #: App/Views/admin/Downloads/Management/helpTab/shortcodes_v.php:33
-msgid "You can use any of the attributes above combine together to match condition in the template and display its value."
+msgid ""
+"You can use any of the attributes above combine together to match condition in the template and display its "
+"value."
 msgstr "คุณสามารถใช้แอตทริบิวท์ใดๆด้วยกันก็ได้จากด้านบนเพื่อให้ตรงตามเงื่อนไขในเท็มเพลทแล้วแสดงค่าของมันออกมา."
 
 #: App/Views/admin/Downloads/Management/helpTab/shortcodes_v.php:40
