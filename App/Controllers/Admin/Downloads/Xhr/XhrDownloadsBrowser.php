@@ -1,7 +1,7 @@
 <?php
 /**
  * Search downloads via editor such as TinyMCE.
- * 
+ *
  * @package rd-downloads
  */
 
@@ -29,7 +29,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrDo
          */
         public function searchDownloads()
         {
-            $this->commonAccessCheck(['get'], ['rd-downloads_editor-ajax-nonce', 'security']);
+            // this was called from classic editor, so it is required at lease "edit_posts" capability.
+            $this->commonAccessCheck(['get'], ['rd-downloads_editor-ajax-nonce', 'security'], 'edit_posts');
 
             if (!current_user_can('edit_posts')) {
                 $output['form_result_class'] = 'notice-error';

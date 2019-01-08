@@ -1,7 +1,7 @@
 <?php
 /**
  * Rundiz Downloads - Xhr based class.
- * 
+ *
  * @package rd-downloads
  */
 
@@ -15,19 +15,25 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\XhrBased')) {
 
         /**
          * Common access check for many controllers.
-         * 
+         *
          * Check for user capability, granted access to the app, allowed methods, CSRF protection.<br>
          * This method return nothing, if all check were passed then just continue working otherwise it will response json and end the process.
-         * 
+         *
          * @param array $allowedMethods Allowed methods.
          * @param array|false $nonce If this value is false then it will skip checking nonce and no CSRF protection.<br>
          *                                           The first array value is action, the second value is query argument.<br>
          *                                           For more information please see <code>check_ajax_referer()</code> function.
+         * @param string $capability The capability to check. See more at https://codex.wordpress.org/Roles_and_Capabilities#Capability_vs._Role_Table
+         *                                          Leave this argument blank for use default (upload_files).
          */
-        protected function commonAccessCheck(array $allowedMethods = ['post'], $nonce = [])
+        protected function commonAccessCheck(array $allowedMethods = ['post'], $nonce = [], $capability = '')
         {
+            if (!is_string($capability) || empty($capability)) {
+                $capability = 'upload_files';
+            }
+
             // check permission
-            if (!current_user_can('upload_files')) {
+            if (!current_user_can($capability)) {
                 // if user has no required permission OR did not granted access to the app.
                 // response failed message immediately.
                 $output['form_result_class'] = 'notice-error';
