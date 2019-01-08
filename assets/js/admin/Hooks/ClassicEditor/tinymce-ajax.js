@@ -5,7 +5,7 @@
 
 /**
  * Ajax search.
- * 
+ *
  * @param {string} searchValue
  * @returns {undefined}
  */
@@ -23,7 +23,7 @@ function rdDownloadsAjaxSearch(searchValue, page = 1) {
     $.ajax({
         'url': ajaxurl,
         'method': 'GET',
-        'data': 'security=' + RdDownloads.nonce + '&action=RdDownloadsBrowserSearch&search=' + searchValue + '&page=' + page,
+        'data': 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsBrowserSearch&search=' + encodeURIComponent(searchValue) + '&page=' + page,
         'dataType': 'json'
     })
     .done(function(data, textStatus, jqXHR) {
@@ -37,8 +37,8 @@ function rdDownloadsAjaxSearch(searchValue, page = 1) {
         }
 
         if (
-            typeof(response.total) !== 'undefined' && 
-            typeof(response.results) !== 'undefined' && 
+            typeof(response.total) !== 'undefined' &&
+            typeof(response.results) !== 'undefined' &&
             typeof(response.per_page) !== 'undefined' &&
             typeof(response.current_page) !== 'undefined' &&
             typeof(response.total_pages) !== 'undefined'
@@ -90,7 +90,7 @@ function rdDownloadsAjaxSearch(searchValue, page = 1) {
 
 /**
  * Return generated HTML for TinyMCE dialog content.
- * 
+ *
  * @returns {RdDownloads.customDialogContent}
  */
 function rdDownloadsCreateDialogContent() {
@@ -100,9 +100,9 @@ function rdDownloadsCreateDialogContent() {
 
 /**
  * Search download.
- * 
+ *
  * This function was called from tinymce-dialog.js
- * 
+ *
  * @returns {undefined}
  */
 function rdDownloadsListenSearchInput() {

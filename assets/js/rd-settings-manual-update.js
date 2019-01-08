@@ -5,7 +5,7 @@
 
 /**
  * Ajax manual update step by step.
- * 
+ *
  * @returns {undefined}
  */
 function rd_downloads_manualUpdateAjax()
@@ -30,7 +30,7 @@ function rd_downloads_manualUpdateAjax()
     $.ajax({
         'url': ajaxurl,
         'method': 'POST',
-        'data': 'security='+RdSettingsManualUpdate.nonce+'&action=rd_downloads_manualUpdate&updateKey='+runUpdateKey,
+        'data': 'security=' + encodeURIComponent(RdSettingsManualUpdate.nonce) + '&action=rd_downloads_manualUpdate&updateKey=' + encodeURIComponent(runUpdateKey),
         'dataType': 'json'
     })
     .done(function(data, textStatus, jqXHR) {
@@ -87,7 +87,7 @@ function rd_downloads_manualUpdateAjax()
 
 /**
  * Get notice html element from class and message specified.
- * 
+ *
  * @param {string} notice_class
  * @param {string} notice_message
  * @returns {String}

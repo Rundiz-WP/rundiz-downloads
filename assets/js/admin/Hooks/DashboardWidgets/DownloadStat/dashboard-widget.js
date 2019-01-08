@@ -14,7 +14,7 @@ class RdDownloadsDashboardWidget {
     ajaxGetAllDownloadsDailyStat() {
         let $ = jQuery.noConflict();
 
-        let formData = 'security=' + RdDownloads.nonce + '&action=RdDownloadsDashboardWidgetAllDownloadsDailyStat';
+        let formData = 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsDashboardWidgetAllDownloadsDailyStat';
 
         return $.ajax({
             'url': ajaxurl,
@@ -60,7 +60,7 @@ class RdDownloadsDashboardWidget {
         let $ = jQuery.noConflict();
 
         let filterScope = $('#rd-downloads_dashboard-widget_top-results-filter-select').val();
-        let formData = 'security=' + RdDownloads.nonce + '&action=RdDownloadsDashboardWidgetTopDownloads&scope=' + filterScope;
+        let formData = 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsDashboardWidgetTopDownloads&scope=' + encodeURIComponent(filterScope);
 
         $('#rd-downloads_dashboard-widget_top-results-filter-select').prop('disabled', true);
 

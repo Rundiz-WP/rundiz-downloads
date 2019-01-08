@@ -1,6 +1,6 @@
 /**
  * Management JS.
- * 
+ *
  * IE not supported.
  */
 
@@ -30,7 +30,7 @@ class RdDownloadsManagement {
 
     /**
      * Enable or disable buttons, form controls.
-     * 
+     *
      * @param {boolean} enable Set to `true` to enable buttons, set to `false` to disable them. Default is `true`.
      * @returns {undefined}
      */
@@ -53,7 +53,7 @@ class RdDownloadsManagement {
 
     /**
      * Listen to search button click and then clean up checkbox, bulk actions select boxes.
-     * 
+     *
      * @returns {undefined}
      */
     eventSearchButtonCleanForm() {
@@ -71,7 +71,7 @@ class RdDownloadsManagement {
 
     /**
      * Listen to short code click and copy.
-     * 
+     *
      * @link https://stackoverflow.com/a/15731900/128761 Fade out and then add hidden class.
      * @link https://stackoverflow.com/a/20372695/128761 Remove inline style reference.
      * @returns {undefined}
@@ -109,7 +109,7 @@ class RdDownloadsManagement {
 
     /**
      * Listen to select bulk action and set from bottom or top to be the same value.
-     * 
+     *
      * @returns {undefined}
      */
     eventSelectBulkActionBothSameValue() {
@@ -129,7 +129,7 @@ class RdDownloadsManagement {
 
     /**
      * Listen to form submit for bulk actions, prevent it and use ajax instead.
-     * 
+     *
      * @returns {undefined}
      */
     eventSubmitBulkActions() {
@@ -152,7 +152,7 @@ class RdDownloadsManagement {
                 $('.rd-downloads-form-result-placeholder').html('');
                 // disable buttons.
                 thisClass.enableDisableButtons(false);
-                var formData = 'security=' + RdDownloads.nonce + '&action=RdDownloadsBulkActions&bulkAction=' + bulkActionValue + '&' + $('#rd-downloads-list-items-form input[type="checkbox"]').serialize();
+                var formData = 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsBulkActions&bulkAction=' + encodeURIComponent(bulkActionValue) + '&' + $('#rd-downloads-list-items-form input[type="checkbox"]').serialize();
 
                 $.ajax({
                     'url': ajaxurl,
@@ -213,7 +213,7 @@ class RdDownloadsManagement {
 
     /**
      * Select all text in target element.
-     * 
+     *
      * @link https://stackoverflow.com/a/987376/128761 Code copied from here.
      * @param {object} node The element object. Example: $('#target')[0];
      * @returns {undefined}

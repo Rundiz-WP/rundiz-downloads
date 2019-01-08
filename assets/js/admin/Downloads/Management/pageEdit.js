@@ -1,6 +1,6 @@
 /**
  * Editing page JS (including add an item page).
- * 
+ *
  * IE not supported.
  */
 
@@ -10,7 +10,7 @@ class RdDownloadsEditing {
 
     /**
      * Ajax save form.
-     * 
+     *
      * @returns {undefined}
      */
     ajaxSaveForm() {
@@ -31,11 +31,11 @@ class RdDownloadsEditing {
 
     /**
      * Do the ajax saving data (insert/update in one function).
-     * 
+     *
      * This method was called from `ajaxSaveForm()` method.
-     * 
+     *
      * This method should be private.
-     * 
+     *
      * @private Private method.
      * @returns {undefined}
      */
@@ -50,7 +50,7 @@ class RdDownloadsEditing {
         $.ajax({
             'url': ajaxurl,
             'method': 'POST',
-            'data': $('#rd-downloads-edit-form').serialize() + '&security=' + RdDownloads.savenonce + '&action=RdDownloadsSaveData',
+            'data': $('#rd-downloads-edit-form').serialize() + '&security=' + encodeURIComponent(RdDownloads.savenonce) + '&action=RdDownloadsSaveData',
             'dataType': 'json'
         })
         .done(function(data, textStatus, jqXHR) {
@@ -112,7 +112,7 @@ class RdDownloadsEditing {
 
     /**
      * Auto input file upload using ajax.
-     * 
+     *
      * @returns {undefined}
      */
     autoUpload() {
@@ -157,7 +157,7 @@ class RdDownloadsEditing {
 
         /**
          * Do ajax upload.
-         * 
+         *
          * @returns {undefined}
          */
         function doUpload() {
@@ -279,7 +279,7 @@ class RdDownloadsEditing {
 
         /**
          * Reset input file.
-         * 
+         *
          * @link https://stackoverflow.com/a/13351234/128761 Reference.
          * @param {object} e
          * @returns {undefined}
@@ -298,7 +298,7 @@ class RdDownloadsEditing {
 
     /**
      * Ajax get remote file data, size (including GitHub) on manually enter download URL.
-     * 
+     *
      * @returns {undefined}
      */
     getRemoteFileData() {
@@ -343,7 +343,7 @@ class RdDownloadsEditing {
 
     /**
      * Begins get remote file size.
-     * 
+     *
      * @returns {undefined}
      */
     _getRemoteFileDataAnyRemote(url) {
@@ -359,7 +359,7 @@ class RdDownloadsEditing {
         $.ajax({
             'url': ajaxurl,
             'method': 'GET',
-            'data': 'security=' + RdDownloads.nonce + '&action=RdDownloadsGetRemoteFileData&remote_file=' + url,
+            'data': 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsGetRemoteFileData&remote_file=' + encodeURIComponent(url),
             'dataType': 'json'
         })
         .done(function(data, textStatus, jqXHR) {
@@ -418,7 +418,7 @@ class RdDownloadsEditing {
 
     /**
      * Get GitHub correct URL and maybe its file size.
-     * 
+     *
      * @returns {undefined}
      */
     _getRemoteFileDataGitHub(url) {
@@ -434,7 +434,7 @@ class RdDownloadsEditing {
         $.ajax({
             'url': ajaxurl,
             'method': 'GET',
-            'data': 'security=' + RdDownloads.nonce + '&action=RdDownloadsGetGithubFileData&remote_file=' + url + '&current_version=' + $('#rd-downloads-edit-form #opt_download_version').val() + '&version_range=' + $('#rd-downloads-edit-form #opt_download_version_range').val(),
+            'data': 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsGetGithubFileData&remote_file=' + encodeURIComponent(url) + '&current_version=' + encodeURIComponent($('#rd-downloads-edit-form #opt_download_version').val()) + '&version_range=' + encodeURIComponent($('#rd-downloads-edit-form #opt_download_version_range').val()),
             'dataType': 'json'
         })
         .done(function(data, textStatus, jqXHR) {
@@ -500,7 +500,7 @@ class RdDownloadsEditing {
 
     /**
      * Listen on version range keyup or change and then trigger to get remote file data.
-     * 
+     *
      * @returns {undefined}
      */
     listenVersionRange() {
@@ -515,7 +515,7 @@ class RdDownloadsEditing {
 
     /**
      * Prevent drag and drop image outside target element.
-     * 
+     *
      * @returns {undefined}
      */
     preventDropImageOutside() {
@@ -532,7 +532,7 @@ class RdDownloadsEditing {
 
     /**
      * Show or hide form on download type change.
-     * 
+     *
      * @returns {undefined}
      */
     showHideFormOnDownloadType() {
@@ -564,9 +564,9 @@ class RdDownloadsEditing {
 
     /**
      * Trigger event(s) on page load.
-     * 
+     *
      * This method was called from DOM ready.
-     * 
+     *
      * @returns {undefined}
      */
     triggerEventsOnLoad() {
@@ -581,9 +581,9 @@ class RdDownloadsEditing {
 
 /**
  * Ajax permanently delete a file.
- * 
+ *
  * This function was called from HTML.
- * 
+ *
  * @param {string} target
  * @param {string} previousId
  * @returns {undefined}
@@ -599,7 +599,7 @@ function rdDownloadsAjaxDeleteFile(target, previousId) {
         rdDownloadsEnableDisableButtons(false);
 
         target = rdDownloadsUnEscapeHtml(target);
-        var formData = 'security=' + RdDownloads.nonce + '&action=RdDownloadsDeleteFile&download_id=' + $('#rd-downloads-edit-form #download_id').val() + '&target=' + target;
+        var formData = 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsDeleteFile&download_id=' + encodeURIComponent($('#rd-downloads-edit-form #download_id').val()) + '&target=' + encodeURIComponent(target);
 
         $.ajax({
             'url': ajaxurl,
@@ -662,9 +662,9 @@ function rdDownloadsAjaxDeleteFile(target, previousId) {
 
 /**
  * Ajax file browser.
- * 
+ *
  * This function was called from HTML and this JS on dom ready.
- * 
+ *
  * @param {string} target
  * @param {string} previousId
  * @returns {Boolean}
@@ -683,7 +683,7 @@ function rdDownloadsAjaxFileBrowser(target, previousId) {
     $('.rd-downloads-form-result-placeholder').html('');
 
     target = rdDownloadsUnEscapeHtml(target);
-    var formData = 'security=' + RdDownloads.nonce + '&action=RdDownloadsBrowseFiles&target=' + target;
+    var formData = 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsBrowseFiles&target=' + encodeURIComponent(target);
 
     if (previousId !== '' && $('#' + previousId).hasClass('is-open')) {
         // if folder is openning, close it.
@@ -786,9 +786,9 @@ function rdDownloadsAjaxFileBrowser(target, previousId) {
 
 /**
  * Enable or diable buttons.
- * 
+ *
  * This function was called from other functions and other class::methods.
- * 
+ *
  * @param {boolean} enable Set to `true` to enable buttons, set to `false` to disable buttons. Default is `true`.
  * @returns {undefined}
  */
@@ -817,9 +817,9 @@ function rdDownloadsEnableDisableButtons(enable) {
 
 /**
  * Select local file.
- * 
+ *
  * This function was called from HTML.
- * 
+ *
  * @param {object} thisObj
  * @returns {undefined}
  */

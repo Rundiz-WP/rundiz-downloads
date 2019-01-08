@@ -25,7 +25,7 @@ class RdDownloadLogs {
 
     /**
      * Enable or disable buttons, form controls.
-     * 
+     *
      * @param {boolean} enable Set to `true` to enable buttons, set to `false` to disable them. Default is `true`.
      * @returns {undefined}
      */
@@ -48,7 +48,7 @@ class RdDownloadLogs {
 
     /**
      * Listen to select bulk action and set from bottom or top to be the same value.
-     * 
+     *
      * @returns {undefined}
      */
     eventSelectBulkActionBothSameValue() {
@@ -68,7 +68,7 @@ class RdDownloadLogs {
 
     /**
      * Listen to form submit for bulk actions, prevent it and use ajax instead.
-     * 
+     *
      * @returns {undefined}
      */
     eventSubmitBulkActions() {
@@ -91,7 +91,7 @@ class RdDownloadLogs {
                 $('.rd-downloads-form-result-placeholder').html('');
                 // disable buttons.
                 thisClass.enableDisableButtons(false);
-                var formData = 'security=' + RdDownloads.nonce + '&action=RdDownloadsBulkActions&bulkAction=' + bulkActionValue;
+                var formData = 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsBulkActions&bulkAction=' + encodeURIComponent(bulkActionValue);
 
                 $.ajax({
                     'url': ajaxurl,
