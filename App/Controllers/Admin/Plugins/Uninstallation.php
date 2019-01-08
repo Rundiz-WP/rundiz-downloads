@@ -74,7 +74,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
                 static::uninstallDropTables();
             }
 
-            static::uninstallDeleteScreenOptions();
+            static::uninstallDeleteUserOptions();
         }// uninstall
 
 
@@ -89,21 +89,6 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
 
             wp_clear_scheduled_hook('rddownloads_cron_purgelogs');
         }// uninstallDeleteOption
-
-
-        /**
-         * Delete screen options values.
-         * 
-         * @global \wpdb $wpdb
-         */
-        private static function uninstallDeleteScreenOptions()
-        {
-            global $wpdb;
-
-            $sql = 'DELETE FROM `' . $wpdb->usermeta . '` WHERE `meta_key` LIKE \'rddownloads_%\'';
-            $wpdb->query($sql);
-            unset($sql);
-        }// uninstallDeleteScreenOptions
 
 
         /**
@@ -125,6 +110,23 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
 
             restore_current_blog();
         }// uninstallDeleteSite
+
+
+        /**
+         * Delete user options values.
+         *
+         * This including screen options, user options such as GitHub connect.
+         *
+         * @global \wpdb $wpdb
+         */
+        private static function uninstallDeleteUserOptions()
+        {
+            global $wpdb;
+
+            $sql = 'DELETE FROM `' . $wpdb->usermeta . '` WHERE `meta_key` LIKE \'rddownloads_%\'';
+            $wpdb->query($sql);
+            unset($sql);
+        }// uninstallDeleteUserOptions
 
 
         /**
