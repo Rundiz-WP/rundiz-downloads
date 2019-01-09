@@ -28,6 +28,7 @@
 
             if (isset($responseBody->data->viewer->login)) {
                 echo '<div>' . PHP_EOL;
+                /* translators: %s: Link to GitHub user profile page and display GitHub logged in name. */
                 printf(__('You had connected to GitHub as %s.', 'rd-downloads'), '<a href="https://github.com/' . $responseBody->data->viewer->login . '" target="github_userprofile">' . $responseBody->data->viewer->login . '</a>');
                 echo '</div>' . PHP_EOL;
             }

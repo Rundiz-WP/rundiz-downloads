@@ -65,7 +65,7 @@ $designHelp .= sprintf(__('The HTML element for replace the %s shortcode.', 'rd-
 $designHelp .= sprintf(__('Default value is %s.', 'rd-downloads'), '<code>' . esc_html($designDefaultValue) . '</code>') . PHP_EOL;
 $designHelp .= '</p>' . PHP_EOL;
 $designHelp .= '<h3>' . __('Available shortcode attributes.', 'rd-downloads') . '</h3>' . PHP_EOL;
-/* translator: %s: id attribute */
+/* translators: %s: id attribute */
 $designHelp .= '<p>' . sprintf(__('Set one or more of these attributes into shortcode to match condition in the template and display its value. The %s attribute is required.', 'rd-downloads'), '<code>id</code>') . '</p>' . PHP_EOL;
 $designHelp .= '<p>' . PHP_EOL;
 $designHelp .=  $availableShortcodeAttributes . PHP_EOL;
