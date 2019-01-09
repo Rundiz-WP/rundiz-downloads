@@ -1,7 +1,7 @@
 <?php
 /**
  * Bulk actions class.
- * 
+ *
  * @package rd-downloads
  */
 
@@ -65,7 +65,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
 
         /**
          * Clear the logs.
-         * 
+         *
          * This method will response json and end process.
          */
         public function clearLogs()
@@ -98,9 +98,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
 
         /**
          * Perform delete downloads data.
-         * 
+         *
          * This method will response json and end process.
-         * 
+         *
          * @global \wpdb $wpdb
          * @param array $download_ids The `download_id` values in one array. Example: `array(1, 2, 4, 5, 6);`
          */
@@ -246,9 +246,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
 
         /**
          * Perform get GitHub repository data and then update the file size, URL.
-         * 
+         *
          * This method will response json and end process.
-         * 
+         *
          * @global \wpdb $wpdb
          * @param array $download_ids The `download_id` values in one array. Example: `array(1, 2, 4, 5, 6);`
          */
@@ -310,7 +310,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                         $download_options = maybe_unserialize($row->download_options);
                         $version_range = '';
                         if (
-                            is_array($download_options) && 
+                            is_array($download_options) &&
                             array_key_exists('opt_download_version_range', $download_options) &&
                             array_key_exists('opt_download_version', $download_options)
                         ) {
@@ -326,7 +326,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                             }
                         }
 
-                        $githubResult = $Github->getLatestRepositoryData($row->download_url, $version_range);
+                        $githubResult = $Github->apiGetLatestRepositoryData($row->download_url, $version_range);
                         unset($version_range);
 
                         if ($githubResult !== false) {
@@ -428,9 +428,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
 
         /**
          * Perform get remote file data and then update the file size.
-         * 
+         *
          * This method will response json and end process.
-         * 
+         *
          * @global \wpdb $wpdb
          * @param array $download_ids The `download_id` values in one array. Example: `array(1, 2, 4, 5, 6);`
          */

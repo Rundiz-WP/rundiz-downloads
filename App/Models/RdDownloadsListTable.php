@@ -206,7 +206,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
             $actions = [];
 
             $Github = new \RdDownloads\App\Libraries\Github();
-            $accessToken = $Github->getAccessToken();
+            $accessToken = $Github->getOAuthAccessToken();
             unset($Github);
 
             if ($accessToken !== false) {

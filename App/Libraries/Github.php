@@ -82,7 +82,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          *
          * @see \RdDownloads\App\Libraries\Github::apiV3Request() about `$headers` and `$postData` arguments.
          * @param integer|false $user_id The current user ID. Set to false to get current user ID.
-         * @param string|false $hook_id The hook_id get from `getGitHubWebhookId()` method. Set to empty if there is no hook ID. Set to false for auto detect.
+         * @param string|false $hook_id The hook_id get from `apiGetWebhookId()` method. Set to empty if there is no hook ID. Set to false for auto detect.
          * @param string $secretKey The secret key to set into GitHub webhook and use it on call back to this site for auto update.
          * @param string $repoOwner Repository owner.
          * @param string $repoName Repository name.
@@ -90,7 +90,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          * @return array Return value from `apiV3Request()` method.
          * @throws \InvalidArgumentException Throw invalid argument error on wrong type.
          */
-        public function addUpdateGitHubWebhook($user_id, $hook_id, $secretKey, $repoOwner, $repoName, array $headers)
+        public function apiAddUpdateGitHubWebhook($user_id, $hook_id, $secretKey, $repoOwner, $repoName, array $headers)
         {
             if (!is_scalar($hook_id) && $hook_id !== false && $hook_id !== '') {
                 // if $hook_id is not string, not false, not empty.
@@ -109,7 +109,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
             if ($hook_id === false) {
                 // if $hook_id is set to auto detect.
-                $hook_id = $this->getGitHubWebhookId($headers, $repoOwner, $repoName);
+                $hook_id = $this->apiGetWebhookId($headers, $repoOwner, $repoName);
                 if ($hook_id === false) {
                     $hook_id = '';
                 }
@@ -130,7 +130,289 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
             } else {
                 return $this->apiV3Request('/repos/' . $repoOwner . '/' . $repoName . '/hooks/' . $hook_id, $headers, '', 'PATCH', $postData);
             }
-        }// addUpdateGitHubWebhook
+        }// apiAddUpdateGitHubWebhook
+
+
+        /**
+         * Get latest downloads URL and data from selected repository URL.
+         *
+         * To determine latest update of downloads URL.
+         * <pre>- If the selected repository contain "release".
+         *     - If contain custom archive file.
+         *         Return release URL.
+         *     - If not contain custom archive file.
+         *         Return auto asset archive file URL.
+         * - If the selected repository does not contain "release".
+         *     It will return default branch with latest zip URL.</pre>
+         *
+         * @link https://developer.github.com/v4/explorer/ For demonstrate API request
+         * @link https://getcomposer.org/doc/articles/versions.md Version range reference.
+         * @param string $url The URL to anywhere in the repository.
+         * @param string|array $version_range The version range. See https://getcomposer.org/doc/articles/versions.md for more description.<br>
+         *                                                          Set this to version range as documented in Composer to get only matched version range. <br>
+         *                                                          Set this to empty string to get latest release.<br>
+         *                                                          Set this to empty array to get all releases into array.<br>
+         * @param integer|empty $user_id The user ID to get user's access token for get latest data. Set to empty for auto detect.
+         * @return array|false Return array if contain latest update by conditions described above, return false for failure.
+         *                                  The return array format is:
+         *                                  <pre>array(
+         *                                      'id' => 'The GitHub archive ID (may not contain this key).',
+         *                                      'date' => 'The archive file pushed date (may not contain this key).',
+         *                                      'url' => 'The archive file URL.',
+         *                                      'size' => 'The archive file size (may not contain this key).',
+         *                                      'version' => 'The tag version number (may not contain this key).',
+         *                                      'nameWithOwner' => 'The name with owner for this repository. The value exactly is "owner/name" (may not contain this key).',
+         *                                  );</pre>
+         *                                  If the $version_range is empty array then the return array format is:
+         *                                  <pre>array(
+         *                                      0 => array(
+         *                                          'id' => '...',
+         *                                          'date' => '...',
+         *                                          '...' => '...',
+         *                                      ),
+         *                                      1 => array(
+         *                                          'id' => '...',
+         *                                          'date' => '...',
+         *                                          '...' => '...',
+         *                                      ),
+         *                                  );</pre>
+         */
+        public function apiGetLatestRepositoryData($url, $version_range = '', $user_id = '')
+        {
+            $owner_name = $this->getNameWithOwnerFromUrl($url);
+            $accessToken = $this->getOAuthAccessToken($user_id);
+
+            if (empty($accessToken)) {
+                // if GitHub access token was not set, return original because it cannot check anything.
+                $output['url'] = $url;
+                if (is_array($owner_name) && isset($owner_name[0]) && isset($owner_name[1])) {
+                    $output['nameWithOwner'] = $owner_name[0] . '/' . $owner_name[1];
+                }
+                unset($accessToken, $owner_name);
+                return $output;
+            }
+
+            if (is_array($owner_name) && isset($owner_name[0]) && isset($owner_name[1])) {
+                $owner = $owner_name[0];
+                $name = $owner_name[1];
+            } else {
+                // cannot detect name/owner from URL. it is not possible to get latest repository data, return false.
+                unset($accessToken, $owner_name);
+                return false;
+            }
+            unset($owner_name);
+
+            $headers = [];
+            $headers['Authorization'] = 'token ' . $accessToken;
+            unset($accessToken);
+            $postData = [
+                'query' => $this->graphQLLatestRepositoryData($owner, $name),
+            ];
+            $postData = wp_json_encode($postData);
+
+            $result = $this->apiV4Request($headers, $postData);
+            unset($headers, $postData);
+
+            Logger::staticDebugLog($result, 'github-api-request-' . current_time('Ymd-Hi'));
+
+            if (is_array($result) && isset($result['body'])) {
+                $result = $result['body'];
+            }
+
+            $defaultBranch = [];
+            if (isset($result->data->repository->defaultBranchRef->target)) {
+                // if contain default branch.
+                if (
+                    isset($result->data->repository->defaultBranchRef->target->pushedDate) &&
+                    isset($result->data->repository->defaultBranchRef->target->zipballUrl)
+                ) {
+                    $defaultBranch['id'] = $result->data->repository->defaultBranchRef->target->id;
+                    $defaultBranch['date'] = $result->data->repository->defaultBranchRef->target->pushedDate;
+                    $defaultBranch['url'] = $result->data->repository->defaultBranchRef->target->zipballUrl;
+                }
+                if (isset($result->data->repository->nameWithOwner)) {
+                    $defaultBranch['nameWithOwner'] = $result->data->repository->nameWithOwner;
+                }
+                if (isset($result->data->repository->url) && isset($result->data->repository->defaultBranchRef->name)) {
+                    $defaultBranch['url'] = $result->data->repository->url . '/archive/' . $result->data->repository->defaultBranchRef->name . '.zip';
+                }
+            }// endif; contain default branch
+
+            $releases = [];
+            if (
+                isset($result->data->repository->releases->edges) &&
+                is_array($result->data->repository->releases->edges)
+            ) {
+                // if contain releases.
+                // setup versions array for re-order its value with Composer/Semver
+                $tmpVersions = [];
+                $tmpReleases = [];
+                foreach ($result->data->repository->releases->edges as $item) {
+                    if (isset($item->node->tag->name)) {
+                        $tmpVersions[] = $item->node->tag->name;
+
+                        $tmpReleases[$item->node->tag->name] = [];
+
+                        $Semver = new Semver();
+                        $tmpReleases[$item->node->tag->name]['version'] = $Semver->removePrefix($item->node->tag->name);// remove prefix "v" for example: v1.0.1 will be 1.0.1
+                        unset($Semver);
+
+                        if (isset($item->node->tag->id)) {
+                            $tmpReleases[$item->node->tag->name]['id'] = $item->node->tag->id;
+                        }
+                        if (isset($item->node->tag->target->pushedDate)) {
+                            $tmpReleases[$item->node->tag->name]['date'] = $item->node->tag->target->pushedDate;
+                        }
+
+                        if (
+                            isset($item->node->releaseAssets->edges) &&
+                            is_array($item->node->releaseAssets->edges) &&
+                            !empty($item->node->releaseAssets->edges)
+                        ) {
+                            // if contain releases AND custom archive file(s).
+                            $fileSizes = [];
+                            $maxFileSize = 0;
+                            foreach ($item->node->releaseAssets->edges as $itemReleaseAsset) {
+                                if (isset($itemReleaseAsset->node->size)) {
+                                    $fileSizes[] = $itemReleaseAsset->node->size;
+                                }
+                            }// endforeach;
+                            unset($itemReleaseAsset);
+
+                            if (!empty($fileSizes)) {
+                                $maxFileSize = max($fileSizes);
+                            }
+                            if ($maxFileSize == 0) {
+                                $maxFileSize = -1;
+                            }
+                            unset($fileSizes);
+
+                            if (isset($item->node->url)) {
+                                $tmpReleases[$item->node->tag->name]['url'] = $item->node->url;
+                            } else {
+                                $tmpReleases[$item->node->tag->name]['url'] = $url;
+                            }
+                            $tmpReleases[$item->node->tag->name]['size'] = $maxFileSize;
+                            unset($maxFileSize);
+                        } else {
+                            // if does not contain custom archive file.
+                            if (isset($item->node->tag->target->zipballUrl)) {
+                                $tmpReleases[$item->node->tag->name]['url'] = $item->node->tag->target->zipballUrl;
+                            } elseif (isset($item->node->url)) {
+                                $tmpReleases[$item->node->tag->name]['url'] = $item->node->url;
+                            } else {
+                                $tmpReleases[$item->node->tag->name]['url'] = $url;
+                            }
+                        }
+                    }
+                }// endforeach; releases->edges
+                unset($item);
+
+                // re-order the versions
+                $tmpVersions = \RdDownloads\Composer\Semver\Semver::rsort($tmpVersions);
+                $tmpReleasesReorder = [];
+                if (is_array($tmpVersions)) {
+                    foreach ($tmpVersions as $tmpVersion) {
+                        if (isset($tmpReleases[$tmpVersion])) {
+                            $tmpReleasesReorder[$tmpVersion] = $tmpReleases[$tmpVersion];
+                        }
+                    }// endforeach; $tmpVersions
+                    unset($tmpVersion);
+                }
+
+                if (empty($tmpReleasesReorder)) {
+                    $tmpReleasesReorder = $tmpReleases;
+                }
+                unset($tmpReleases, $tmpVersions);
+
+                Logger::staticDebugLog($tmpReleasesReorder, 'github-api-request-formatted-and-reordered-array-' . current_time('Ymd-Hi'));
+
+                if (!empty($tmpReleasesReorder) && is_array($tmpReleasesReorder)) {
+                    // if not empty $tmpReleasesReorder
+                    if ($version_range === '' || is_null($version_range)) {
+                        // if version range is empty string, get latest.
+                        reset($tmpReleasesReorder);
+                        $firstRefsKey = key($tmpReleasesReorder);
+                        $releases = $tmpReleasesReorder[$firstRefsKey];
+                        if (defined('WP_DEBUG') && WP_DEBUG === true) {
+                            $releases['debug_version_range_latest'] = true;
+                        }
+                        unset($firstRefsKey);
+                    } elseif (is_scalar($version_range) && !empty($version_range)) {
+                        // if version range is not empty, check using Composer Semver.
+                        foreach ($tmpReleasesReorder as $key => $item) {
+                            if (is_scalar($key) && \RdDownloads\Composer\Semver\Semver::satisfies($key, $version_range)) {
+                                $releases = $tmpReleasesReorder[$key];
+                                if (defined('WP_DEBUG') && WP_DEBUG === true) {
+                                    $releases['debug_version_range_matchsemver'] = true;
+                                }
+                                break;
+                            }
+                        }// endforeach;
+                        unset($item, $key);
+                    } elseif (is_array($version_range) && empty($version_range)) {
+                        // if version range is empty array, get it all.
+                        foreach ($tmpReleasesReorder as $key => $item) {
+                            $releases[] = $tmpReleasesReorder[$key];
+                        }// endforeach;
+                        unset($item, $key);
+                    }// endif;
+
+                    if (isset($result->data->repository->nameWithOwner)) {
+                        $releases['nameWithOwner'] = $result->data->repository->nameWithOwner;
+                    }
+                }// endif; not empty $tmpReleasesReorder
+
+                unset($tmpReleasesReorder);
+            }// endif; contain releases (releases->edges)
+            unset($result);
+
+            if (isset($releases) && !empty($releases)) {
+                return $releases;
+            } elseif (isset($defaultBranch) && !empty($defaultBranch)) {
+                return $defaultBranch;
+            }
+
+            return false;
+        }// apiGetLatestRepositoryData
+
+
+        /**
+         * Make API request to check if there is webhook for this site already on certain repository or not.
+         *
+         * If there already is then get its hook id.
+         *
+         * This will be check on github.com website.
+         *
+         * @link https://developer.github.com/v3/repos/hooks/ repo hook reference.
+         * @see \RdDownloads\App\Libraries\Github::apiV3Request() about `$headers` argument.
+         * @param array $headers The `wp_remote_request()` headers array.
+         * @param string $repoOwner Repository owner.
+         * @param string $repoName Repository name.
+         * @return string|false Return string if there is webhook id, return false if not found any webhook for this website.
+         */
+        public function apiGetWebhookId(array $headers, $repoOwner, $repoName)
+        {
+            $response = $this->apiV3RequestMultiPages('/repos/' . $repoOwner . '/' . $repoName . '/hooks', $headers, '', 'GET');
+
+            if (isset($response['body']) && is_array($response['body'])) {
+                foreach ($response['body'] as $hook) {
+                    if (isset($hook->config->url) && stripos($hook->config->url, $this->getWebhookPayloadUrl()) !== false) {
+                        // if URL in GitHub webhook match this site, this means already have hook.
+                        // get the hook id and skip loop.
+                        $hook_id = $hook->id;
+                        break;
+                    }
+                }// endforeach;
+                unset($hook);
+            }
+            unset($response);
+
+            if (isset($hook_id)) {
+                return $hook_id;
+            }
+            return false;
+        }// apiGetWebhookId
 
 
         /**
@@ -308,26 +590,6 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
 
         /**
-         * Disconnect from GitHub OAuth.
-         *
-         * Clear the cookie and set user meta where access token was stored to empty.
-         *
-         * @param integer|empty $user_id
-         */
-        public function disconnectOAuth($user_id = '')
-        {
-            if (empty($user_id) || $user_id <= 0) {
-                $user_id = get_current_user_id();
-            }
-
-            \RdDownloads\App\Libraries\Cookies::deleteCookie($this->oauthAccessTokenName);
-            unset($_COOKIE[$this->oauthAccessTokenName]);
-
-            update_user_meta($user_id, $this->oauthAccessTokenName, '');
-        }// disconnectOAuth
-
-
-        /**
          * Generate webhook secret key.
          *
          * @param integer $user_id
@@ -341,357 +603,6 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
             return $user_id . '_' . wp_generate_password(20, false, false);
         }// generateWebhookSecretKey
-
-
-        /**
-         * Get access token from user meta.
-         *
-         * The access token have got when user connected with GitHub OAuth.
-         *
-         * @param integer $user_id The user ID. Leave blank for get current user ID.
-         * @return string|false Return user access token. Return false if not found.
-         */
-        public function getAccessToken($user_id = '')
-        {
-            if (empty($user_id) || $user_id <= 0) {
-                $user_id = get_current_user_id();
-            }
-
-            $accessToken = get_user_meta($user_id, $this->oauthAccessTokenName, true);
-            if ($accessToken === '' || $accessToken === null || $accessToken === false) {
-                return false;
-            }
-            return $accessToken;
-        }// getAccessToken
-
-
-        /**
-         * Check if there is already have webhook for this website on certain repository and get its id.
-         *
-         * @link https://developer.github.com/v3/repos/hooks/ repo hook reference.
-         * @see \RdDownloads\App\Libraries\Github::apiV3Request() about `$headers` argument.
-         * @param array $headers The `wp_remote_request()` headers array.
-         * @param string $repoOwner Repository owner.
-         * @param string $repoName Repository name.
-         * @return string|false Return string if there is webhook id, return false if not found any webhook for this website.
-         */
-        public function getGitHubWebhookId(array $headers, $repoOwner, $repoName)
-        {
-            $response = $this->apiV3RequestMultiPages('/repos/' . $repoOwner . '/' . $repoName . '/hooks', $headers, '', 'GET');
-
-            if (isset($response['body']) && is_array($response['body'])) {
-                foreach ($response['body'] as $hook) {
-                    if (isset($hook->config->url) && stripos($hook->config->url, $this->getWebhookPayloadUrl()) !== false) {
-                        // if URL in GitHub webhook match this site, this means already have hook.
-                        // get the hook id and skip loop.
-                        $hook_id = $hook->id;
-                        break;
-                    }
-                }// endforeach;
-                unset($hook);
-            }
-            unset($response);
-
-            if (isset($hook_id)) {
-                return $hook_id;
-            }
-            return false;
-        }// getGitHubWebhookId
-
-
-        /**
-         * Get latest downloads URL and data from selected repository URL.
-         *
-         * To determine latest update of downloads URL.
-         * <pre>- If the selected repository contain "release".
-         *     - If contain custom archive file.
-         *         Return release URL.
-         *     - If not contain custom archive file.
-         *         Return auto asset archive file URL.
-         * - If the selected repository does not contain "release".
-         *     It will return default branch with latest zip URL.</pre>
-         *
-         * @link https://developer.github.com/v4/explorer/ For demonstrate API request
-         * @link https://getcomposer.org/doc/articles/versions.md Version range reference.
-         * @param string $url The URL to anywhere in the repository.
-         * @param string|array $version_range The version range. See https://getcomposer.org/doc/articles/versions.md for more description.<br>
-         *                                                          Set this to version range as documented in Composer to get only matched version range. <br>
-         *                                                          Set this to empty string to get latest release.<br>
-         *                                                          Set this to empty array to get all releases into array.<br>
-         * @param integer|empty $user_id The user ID to get user's access token for get latest data. Set to empty for auto detect.
-         * @return array|false Return array if contain latest update by conditions described above, return false for failure.
-         *                                  The return array format is:
-         *                                  <pre>array(
-         *                                      'id' => 'The GitHub archive ID (may not contain this key).',
-         *                                      'date' => 'The archive file pushed date (may not contain this key).',
-         *                                      'url' => 'The archive file URL.',
-         *                                      'size' => 'The archive file size (may not contain this key).',
-         *                                      'version' => 'The tag version number (may not contain this key).',
-         *                                      'nameWithOwner' => 'The name with owner for this repository. The value exactly is "owner/name" (may not contain this key).',
-         *                                  );</pre>
-         *                                  If the $version_range is empty array then the return array format is:
-         *                                  <pre>array(
-         *                                      0 => array(
-         *                                          'id' => '...',
-         *                                          'date' => '...',
-         *                                          '...' => '...',
-         *                                      ),
-         *                                      1 => array(
-         *                                          'id' => '...',
-         *                                          'date' => '...',
-         *                                          '...' => '...',
-         *                                      ),
-         *                                  );</pre>
-         */
-        public function getLatestRepositoryData($url, $version_range = '', $user_id = '')
-        {
-            $owner_name = $this->getNameWithOwnerFromUrl($url);
-            $accessToken = $this->getAccessToken($user_id);
-
-            if (empty($accessToken)) {
-                // if GitHub access token was not set, return original because it cannot check anything.
-                $output['url'] = $url;
-                if (is_array($owner_name) && isset($owner_name[0]) && isset($owner_name[1])) {
-                    $output['nameWithOwner'] = $owner_name[0] . '/' . $owner_name[1];
-                }
-                unset($accessToken, $owner_name);
-                return $output;
-            }
-
-            if (is_array($owner_name) && isset($owner_name[0]) && isset($owner_name[1])) {
-                $owner = $owner_name[0];
-                $name = $owner_name[1];
-            } else {
-                // cannot detect name/owner from URL. it is not possible to get latest repository data, return false.
-                unset($accessToken, $owner_name);
-                return false;
-            }
-            unset($owner_name);
-
-            $headers = [];
-            $headers['Authorization'] = 'token ' . $accessToken;
-            unset($accessToken);
-            $postData = [
-                'query' => 'query {
-  repository(owner: "' . $owner . '", name: "' . $name . '") {
-    id
-    url
-    nameWithOwner
-    releases(last: 100) {
-      totalCount
-      edges {
-        node {
-          name
-          tag {
-            id
-            name
-            target {
-              ... on Commit {
-                pushedDate
-                zipballUrl
-              }
-            }
-          }
-          releaseAssets(last: 100) {
-            totalCount
-            edges {
-              node {
-                id
-                updatedAt
-                downloadUrl
-                size
-                downloadCount
-                release {
-                  tagName
-                  publishedAt
-                }
-              }
-            }
-          }
-          url
-        }
-      }
-    }
-    defaultBranchRef {
-      name
-      target {
-        ... on Commit {
-          id
-          pushedDate
-          zipballUrl
-        }
-      }
-    }
-  }
-              }'
-            ];
-            $postData = wp_json_encode($postData);
-
-            $result = $this->apiV4Request($headers, $postData);
-            unset($headers, $postData);
-
-            Logger::staticDebugLog($result, 'github-api-request-' . current_time('Ymd-Hi'));
-
-            if (is_array($result) && isset($result['body'])) {
-                $result = $result['body'];
-            }
-
-            $defaultBranch = [];
-            if (isset($result->data->repository->defaultBranchRef->target)) {
-                // if contain default branch.
-                if (
-                    isset($result->data->repository->defaultBranchRef->target->pushedDate) &&
-                    isset($result->data->repository->defaultBranchRef->target->zipballUrl)
-                ) {
-                    $defaultBranch['id'] = $result->data->repository->defaultBranchRef->target->id;
-                    $defaultBranch['date'] = $result->data->repository->defaultBranchRef->target->pushedDate;
-                    $defaultBranch['url'] = $result->data->repository->defaultBranchRef->target->zipballUrl;
-                }
-                if (isset($result->data->repository->nameWithOwner)) {
-                    $defaultBranch['nameWithOwner'] = $result->data->repository->nameWithOwner;
-                }
-                if (isset($result->data->repository->url) && isset($result->data->repository->defaultBranchRef->name)) {
-                    $defaultBranch['url'] = $result->data->repository->url . '/archive/' . $result->data->repository->defaultBranchRef->name . '.zip';
-                }
-            }// endif; contain default branch
-
-            $releases = [];
-            if (
-                isset($result->data->repository->releases->edges) &&
-                is_array($result->data->repository->releases->edges)
-            ) {
-                // if contain releases.
-                // setup versions array for re-order its value with Composer/Semver
-                $tmpVersions = [];
-                $tmpReleases = [];
-                foreach ($result->data->repository->releases->edges as $item) {
-                    if (isset($item->node->tag->name)) {
-                        $tmpVersions[] = $item->node->tag->name;
-
-                        $tmpReleases[$item->node->tag->name] = [];
-
-                        $Semver = new Semver();
-                        $tmpReleases[$item->node->tag->name]['version'] = $Semver->removePrefix($item->node->tag->name);// remove prefix "v" for example: v1.0.1 will be 1.0.1
-                        unset($Semver);
-
-                        if (isset($item->node->tag->id)) {
-                            $tmpReleases[$item->node->tag->name]['id'] = $item->node->tag->id;
-                        }
-                        if (isset($item->node->tag->target->pushedDate)) {
-                            $tmpReleases[$item->node->tag->name]['date'] = $item->node->tag->target->pushedDate;
-                        }
-
-                        if (
-                            isset($item->node->releaseAssets->edges) &&
-                            is_array($item->node->releaseAssets->edges) &&
-                            !empty($item->node->releaseAssets->edges)
-                        ) {
-                            // if contain releases AND custom archive file(s).
-                            $fileSizes = [];
-                            $maxFileSize = 0;
-                            foreach ($item->node->releaseAssets->edges as $itemReleaseAsset) {
-                                if (isset($itemReleaseAsset->node->size)) {
-                                    $fileSizes[] = $itemReleaseAsset->node->size;
-                                }
-                            }// endforeach;
-                            unset($itemReleaseAsset);
-
-                            if (!empty($fileSizes)) {
-                                $maxFileSize = max($fileSizes);
-                            }
-                            if ($maxFileSize == 0) {
-                                $maxFileSize = -1;
-                            }
-                            unset($fileSizes);
-
-                            if (isset($item->node->url)) {
-                                $tmpReleases[$item->node->tag->name]['url'] = $item->node->url;
-                            } else {
-                                $tmpReleases[$item->node->tag->name]['url'] = $url;
-                            }
-                            $tmpReleases[$item->node->tag->name]['size'] = $maxFileSize;
-                            unset($maxFileSize);
-                        } else {
-                            // if does not contain custom archive file.
-                            if (isset($item->node->tag->target->zipballUrl)) {
-                                $tmpReleases[$item->node->tag->name]['url'] = $item->node->tag->target->zipballUrl;
-                            } elseif (isset($item->node->url)) {
-                                $tmpReleases[$item->node->tag->name]['url'] = $item->node->url;
-                            } else {
-                                $tmpReleases[$item->node->tag->name]['url'] = $url;
-                            }
-                        }
-                    }
-                }// endforeach; releases->edges
-                unset($item);
-
-                // re-order the versions
-                $tmpVersions = \RdDownloads\Composer\Semver\Semver::rsort($tmpVersions);
-                $tmpReleasesReorder = [];
-                if (is_array($tmpVersions)) {
-                    foreach ($tmpVersions as $tmpVersion) {
-                        if (isset($tmpReleases[$tmpVersion])) {
-                            $tmpReleasesReorder[$tmpVersion] = $tmpReleases[$tmpVersion];
-                        }
-                    }// endforeach; $tmpVersions
-                    unset($tmpVersion);
-                }
-
-                if (empty($tmpReleasesReorder)) {
-                    $tmpReleasesReorder = $tmpReleases;
-                }
-                unset($tmpReleases, $tmpVersions);
-
-                Logger::staticDebugLog($tmpReleasesReorder, 'github-api-request-formatted-and-reordered-array-' . current_time('Ymd-Hi'));
-
-                if (!empty($tmpReleasesReorder) && is_array($tmpReleasesReorder)) {
-                    // if not empty $tmpReleasesReorder
-                    if ($version_range === '' || is_null($version_range)) {
-                        // if version range is empty string, get latest.
-                        reset($tmpReleasesReorder);
-                        $firstRefsKey = key($tmpReleasesReorder);
-                        $releases = $tmpReleasesReorder[$firstRefsKey];
-                        if (defined('WP_DEBUG') && WP_DEBUG === true) {
-                            $releases['debug_version_range_latest'] = true;
-                        }
-                        unset($firstRefsKey);
-                    } elseif (is_scalar($version_range) && !empty($version_range)) {
-                        // if version range is not empty, check using Composer Semver.
-                        foreach ($tmpReleasesReorder as $key => $item) {
-                            if (is_scalar($key) && \RdDownloads\Composer\Semver\Semver::satisfies($key, $version_range)) {
-                                $releases = $tmpReleasesReorder[$key];
-                                if (defined('WP_DEBUG') && WP_DEBUG === true) {
-                                    $releases['debug_version_range_matchsemver'] = true;
-                                }
-                                break;
-                            }
-                        }// endforeach;
-                        unset($item, $key);
-                    } elseif (is_array($version_range) && empty($version_range)) {
-                        // if version range is empty array, get it all.
-                        foreach ($tmpReleasesReorder as $key => $item) {
-                            $releases[] = $tmpReleasesReorder[$key];
-                        }// endforeach;
-                        unset($item, $key);
-                    }// endif;
-
-                    if (isset($result->data->repository->nameWithOwner)) {
-                        $releases['nameWithOwner'] = $result->data->repository->nameWithOwner;
-                    }
-                }// endif; not empty $tmpReleasesReorder
-
-                unset($tmpReleasesReorder);
-            }// endif; contain releases (releases->edges)
-            unset($result);
-
-            if (isset($releases) && !empty($releases)) {
-                return $releases;
-            } elseif (isset($defaultBranch) && !empty($defaultBranch)) {
-                return $defaultBranch;
-            }
-
-            return false;
-        }// getLatestRepositoryData
 
 
         /**
@@ -721,6 +632,28 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
             return false;
         }// getNameWithOwnerFromUrl
+
+
+        /**
+         * Get access token from user meta (DB).
+         *
+         * The access token have got when user connected with GitHub OAuth.
+         *
+         * @param integer $user_id The user ID. Leave blank for get current user ID.
+         * @return string|false Return user access token. Return false if not found.
+         */
+        public function getOAuthAccessToken($user_id = '')
+        {
+            if (empty($user_id) || $user_id <= 0) {
+                $user_id = get_current_user_id();
+            }
+
+            $accessToken = get_user_meta($user_id, $this->oauthAccessTokenName, true);
+            if ($accessToken === '' || $accessToken === null || $accessToken === false) {
+                return false;
+            }
+            return $accessToken;
+        }// getOAuthAccessToken
 
 
         /**
@@ -828,6 +761,70 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
 
         /**
+         * GitHub GraphQL for latest repository data.
+         *
+         * @param string $owner The repository owner.
+         * @param string $name The repository name.
+         * @return string Return GraphQL string
+         */
+        protected function graphQLLatestRepositoryData($owner, $name)
+        {
+            return 'query {
+  repository(owner: "' . $owner . '", name: "' . $name . '") {
+    id
+    url
+    nameWithOwner
+    releases(last: 100) {
+      totalCount
+      edges {
+        node {
+          name
+          tag {
+            id
+            name
+            target {
+              ... on Commit {
+                pushedDate
+                zipballUrl
+              }
+            }
+          }
+          releaseAssets(last: 100) {
+            totalCount
+            edges {
+              node {
+                id
+                updatedAt
+                downloadUrl
+                size
+                downloadCount
+                release {
+                  tagName
+                  publishedAt
+                }
+              }
+            }
+          }
+          url
+        }
+      }
+    }
+    defaultBranchRef {
+      name
+      target {
+        ... on Commit {
+          id
+          pushedDate
+          zipballUrl
+        }
+      }
+    }
+  }
+              }';
+        }// graphQLLatestRepositoryData
+
+
+        /**
          * Check that if Client ID and Client Secret was set in global plugin settings page.
          *
          * @return boolean
@@ -882,7 +879,29 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
 
         /**
-         * Get OAuth access token.
+         * Disconnect from GitHub OAuth.
+         *
+         * Clear the cookie and set user meta where access token was stored to empty.
+         *
+         * @param integer|empty $user_id
+         */
+        public function oauthDisconnect($user_id = '')
+        {
+            if (empty($user_id) || $user_id <= 0) {
+                $user_id = get_current_user_id();
+            }
+
+            \RdDownloads\App\Libraries\Cookies::deleteCookie($this->oauthAccessTokenName);
+            unset($_COOKIE[$this->oauthAccessTokenName]);
+
+            update_user_meta($user_id, $this->oauthAccessTokenName, '');
+        }// oauthDisconnect
+
+
+        /**
+         * Get OAuth access token from GitHub (github.com) (step 2).
+         *
+         * Use the code receive from GitHub to exchange with access token from GitHub.
          *
          * @param string $code The code receive from authorized at GitHub.
          * @param string $redirect_uri The "redirect_uri" value.
@@ -934,7 +953,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
 
         /**
-         * Get OAuth link (step 1).
+         * Get OAuth link to login (step 1).
          *
          * @link https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/ Reference.
          * @param string $redirect_uri The "redirect_uri" value.

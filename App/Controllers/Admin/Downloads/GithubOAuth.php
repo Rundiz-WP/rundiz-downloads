@@ -22,7 +22,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
 
 
         /**
-         * @var string|object Return string with access token if success, return object if contain error, return empty string if config was not set.
+         * @var string|object Contain string of access token, contain object if error, empty string if it was not set.
          * @see \RdDownloads\App\Libraries\Github::oauthGetAccessToken()
          */
         protected $accessToken;
@@ -144,7 +144,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
                     wp_nonce_ays('rddownloads_github_disconnect');
                 }
 
-                $this->Github->disconnectOAuth($this->currentUserId);
+                $this->Github->oauthDisconnect($this->currentUserId);
 
                 wp_safe_redirect($this->thisPageUrl . '&subpage=disconnect');
                 exit();
@@ -180,10 +180,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
             $accessTokenCookie = filter_input(INPUT_COOKIE, $this->Github->getOAuthAccessTokenName(), FILTER_SANITIZE_STRING);
             if (!empty($accessTokenCookie)) {
                 // if contain access token cookie
-                $accessTokenUserDb = $this->Github->getAccessToken($this->currentUserId);
+                $accessTokenUserDb = $this->Github->getOAuthAccessToken($this->currentUserId);
                 if ($accessTokenUserDb !== $accessTokenCookie) {
                     // if access token from cookie does not match in db.
-                    $this->Github->disconnectOAuth($this->currentUserId);
+                    $this->Github->oauthDisconnect($this->currentUserId);
                     unset($accessTokenCookie, $accessTokenUserDb, $githubReturnCode, $githubReturnState);
 
                     wp_safe_redirect($this->thisPageUrl);
@@ -361,7 +361,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
         {
             $output = [];
 
-            $accessToken = $this->Github->getAccessToken($this->currentUserId);
+            $accessToken = $this->Github->getOAuthAccessToken($this->currentUserId);
 
             if ($accessToken === false) {
                 $output['disconnected'] = true;

@@ -35,7 +35,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
             $Github = new \RdDownloads\App\Libraries\Github();
 
             $user_id = (isset($data['user_id']) && !empty($data['user_id']) ? $data['user_id'] : get_current_user_id());
-            $accessToken = $Github->getAccessToken($user_id);
+            $accessToken = $Github->getOAuthAccessToken($user_id);
             $secretKey = $Github->getWebhookSecretKey($user_id);
 
             if (empty($accessToken) || empty($secretKey)) {
@@ -52,7 +52,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
             unset($expNameWithOwner);
 
             $headers = $Github->apiV3Headers($accessToken);
-            $hook_id = $Github->getGitHubWebhookId($headers, $repoOwner, $repoName);
+            $hook_id = $Github->apiGetWebhookId($headers, $repoOwner, $repoName);
 
             if ($hook_id !== false) {
                 // if already have webhook.
@@ -61,7 +61,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
             }
             unset($hook_id);
 
-            $result = $Github->addUpdateGitHubWebhook($user_id, '', $secretKey, $repoOwner, $repoName, $headers);
+            $result = $Github->apiAddUpdateGitHubWebhook($user_id, '', $secretKey, $repoOwner, $repoName, $headers);
 
             \RdDownloads\App\Libraries\Logger::staticDebugLog($result, 'github-api-add-webhook-on-save-download-data-' . current_time('Ymd-Hi'));
             unset($result);

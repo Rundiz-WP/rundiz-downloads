@@ -19,7 +19,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\WpLogout')) {
         public function disconnectGitHubOAuth()
         {
             $Github = new \RdDownloads\App\Libraries\Github();
-            $Github->disconnectOAuth();
+            $Github->oauthDisconnect();
             unset($Github);
         }// disconnectGitHubOAuth
 

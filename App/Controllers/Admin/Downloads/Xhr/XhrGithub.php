@@ -44,11 +44,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
             $repoName = implode('/', $expNameWithOwner);
             unset($expNameWithOwner);
 
-            $accessToken = $this->Github->getAccessToken();
+            $accessToken = $this->Github->getOAuthAccessToken();
             $headers = $this->Github->apiV3Headers($accessToken);
             unset($accessToken);
 
-            $hook_id = $this->Github->getGitHubWebhookId($headers, $repoOwner, $repoName);
+            $hook_id = $this->Github->apiGetWebhookId($headers, $repoOwner, $repoName);
             unset($headers, $repoName, $repoOwner);
             if ($hook_id === false) {
                 $output['foundWebhook'] = false;
@@ -87,7 +87,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
                 /* translators: %s: Example GitHub repository URL. */
                 $output['form_result_msg'] = sprintf(__('Invalid GitHub repository URL. The correct format should be %s.', 'rd-downloads'), 'https://github.com/owner/name');
             } else {
-                $result = $this->Github->getLatestRepositoryData($remote_file, $version_range);
+                $result = $this->Github->apiGetLatestRepositoryData($remote_file, $version_range);
                 if (is_array($result)) {
                     $output = $output + $result;
                 } elseif ($result === false) {
@@ -152,7 +152,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
             if (isset($rdDownloadsResult['results']) && is_array($rdDownloadsResult['results'])) {
                 set_time_limit((10 * 60));// minutes * 60 seconds = total seconds.
                 $output['hook_ids'] = [];
-                $accessToken = $this->Github->getAccessToken($user_id);
+                $accessToken = $this->Github->getOAuthAccessToken($user_id);
                 $secretKey = $this->Github->getWebhookSecretKey($user_id);
 
                 if (!empty($accessToken) && !empty($secretKey)) {
@@ -172,7 +172,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
                             $headers = $this->Github->apiV3Headers($accessToken);
 
                             // get current hooks to check that there is webhook for this site already or not.
-                            $hook_id = $this->Github->getGitHubWebhookId($headers, $repoOwner, $repoName);
+                            $hook_id = $this->Github->apiGetWebhookId($headers, $repoOwner, $repoName);
                             if ($hook_id === false) {
                                 unset($hook_id);
                             }
@@ -180,7 +180,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
                             if (!isset($hook_id)) {
                                 // if there is no webhook on this GitHub repository.
                                 // add new hook.
-                                $response = $this->Github->addUpdateGitHubWebhook($user_id, '', $secretKey, $repoOwner, $repoName, $headers);
+                                $response = $this->Github->apiAddUpdateGitHubWebhook($user_id, '', $secretKey, $repoOwner, $repoName, $headers);
                                 if (isset($response['body']->id)) {
                                     $hook_id = $response['body']->id;
                                     $totalSynced++;
@@ -190,7 +190,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
                                 // if there is webhook on this GitHub repository already.
                                 // update hook.
                                 $output['hook_ids'][] = $hook_id;
-                                $response = $this->Github->addUpdateGitHubWebhook($user_id, $hook_id, $secretKey, $repoOwner, $repoName, $headers);
+                                $response = $this->Github->apiAddUpdateGitHubWebhook($user_id, $hook_id, $secretKey, $repoOwner, $repoName, $headers);
                                 $totalSynced++;
                                 $totalUpdateSynced++;
                             }

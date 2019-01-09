@@ -162,7 +162,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
          *
          * @global \wpdb $wpdb
          * @param array $results The query results from DB where it contain matched `download_github_name` field.
-         * @param array $latestData The latest data from `\RdDownloads\App\Libraries\GitHub::getLatestRepositoryData()` method.
+         * @param array $latestData The latest data from `\RdDownloads\App\Libraries\GitHub::apiGetLatestRepositoryData()` method.
          * @return array Return array with "responseStatus" and other keys.
          */
         private function subGithubPushDoUpdateData(array $results, array $latestData)
@@ -226,7 +226,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
          *
          * This method was called from `subGithubPushDoUpdateData()` method.
          *
-         * @param array $latestData The latest data from `\RdDownloads\App\Libraries\GitHub::getLatestRepositoryData()` method.
+         * @param array $latestData The latest data from `\RdDownloads\App\Libraries\GitHub::apiGetLatestRepositoryData()` method.
          * @param string $version_range The version range.
          * @param array $download_options Download options in DB.
          * @return array Return the associate array where table field is key.
@@ -361,7 +361,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
                     unset($secretKeyArray);
 
                     // get latest data from GitHub.
-                    $latestData = $this->Github->getLatestRepositoryData($this->payloadObject->repository->url, [], $user_id);
+                    $latestData = $this->Github->apiGetLatestRepositoryData($this->payloadObject->repository->url, [], $user_id);
                     unset($user_id);
 
                     if (is_array($latestData) && isset($latestData[0]) && is_array($latestData[0])) {
