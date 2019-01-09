@@ -76,13 +76,12 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
 
                 if (defined('WP_DEBUG') && WP_DEBUG === true) {
                     $output['debug_sql'] = $sql;
-                    //$output['debug_prepared'] = var_export($prepared, true);
                     $output['debug_last_error'] = var_export($wpdb->last_error, true);
                     $output['debug_last_query'] = var_export($wpdb->last_query, true);
                 }
                 unset($data, $prepared, $sql);
 
-                $cacheLifetime = apply_filters('rddownloads_cachelifetime_dashboardwidget_alldownloadsdailystat', (6 * 60 * 60));// hours * minutes * seconds = total seconds.
+                $cacheLifetime = apply_filters('rddownloads_cachelifetime_dashboardwidget_alldownloadsdailystat', (3 * 60 * 60));// hours * minutes * seconds = total seconds.
                 $SimpleCache->getInstance()->save($cacheKey, $results, $cacheLifetime);
                 unset($cacheLifetime);
             } else {
@@ -206,7 +205,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
                 }
                 unset($sql);
 
-                $cacheLifetime = apply_filters('rddownloads_cachelifetime_dashboardwidget_topdownloads', (6 * 60 * 60));// hours * minutes * seconds = total seconds.
+                $cacheLifetime = apply_filters('rddownloads_cachelifetime_dashboardwidget_topdownloads', (3 * 60 * 60));// hours * minutes * seconds = total seconds.
                 $SimpleCache->getInstance()->save($cacheKey, $results, $cacheLifetime);
                 unset($cacheLifetime);
             } else {

@@ -1,0 +1,75 @@
+/**
+ * GitHub connect (OAuth) page CSS.
+ */
+
+
+.rddownloads_githubrepo_webhook > a {
+    cursor: pointer;
+}
+
+
+.rddownloads_icon-webhook-status {
+    font-size: 0.85rem;
+}
+
+
+.rddownloads_repo_list-table td,
+.rddownloads_repo_list-table th {
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+
+.rddownloads-row .col {
+    padding-bottom: .625rem;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+@media (min-width: 783px) {
+    .rddownloads-row {
+        align-content: stretch;
+        align-items: stretch;
+        display: flex;
+        flex-wrap: nowrap;
+        margin-left: -.625rem;
+        margin-right: -.625rem;
+    }
+
+    .rddownloads-row .col {
+        flex-basis: 0;
+        flex-grow: 1;
+        padding-bottom: 1.25rem;
+        padding-left: .625rem;
+        padding-right: .625rem;
+    }
+}
+
+
+.text-center {
+    text-align: center;
+}
+.text-left {
+    text-align: left;
+}
+.text-right {
+    text-align: right;
+}
+
+@media (min-width: 783px) {
+    .text-center-sm {
+        text-align: center;
+    }
+    .text-left-sm {
+        text-align: left;
+    }
+    .text-right-sm {
+        text-align: right;
+    }
+}
+
+
+/* specific element */
+#rddownloads_githubwebhook_secret {
+    width: 190px;
+}

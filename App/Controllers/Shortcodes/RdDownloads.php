@@ -27,7 +27,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Shortcodes\\RdDownloads')) {
             if ($rendered === false) {
                 $ShortcodeRdDownloads = new \RdDownloads\App\Libraries\ShortcodeRdDownloads();
                 $rendered = $ShortcodeRdDownloads->renderHtml($atts);
-                $cacheLifetime = apply_filters('rddownloads_cachelifetime_shortcode', (12 * 60 * 60));// hours * minutes * seconds = total seconds.
+                $cacheLifetime = apply_filters('rddownloads_cachelifetime_shortcode', (6 * 60 * 60));// hours * minutes * seconds = total seconds.
                 $SimpleCache->getInstance()->save($cacheKey, $rendered, $cacheLifetime);
                 unset($cacheLifetime, $ShortcodeRdDownloads);
             }

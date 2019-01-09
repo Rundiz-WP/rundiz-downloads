@@ -1,7 +1,7 @@
 <?php
 /**
  * Saving the data to DB. (including insert, update).
- * 
+ *
  * @package rd-downloads
  */
 
@@ -14,10 +14,67 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
 
 
         /**
+         * Automatically add GitHub webhook "if not exists".
+         *
+         * This method was called from `saveInsertData()`, `saveUpdateData()` methods.
+         *
+         * @param array $data The data same as prepared for save.
+         */
+        private function addGitHubWebhook(array $data)
+        {
+            if (!isset($data['download_type']) || (isset($data['download_type']) && $data['download_type'] != 1)) {
+                // if not GitHub.
+                return ;
+            }
+
+            if (!isset($data['download_github_name']) || (isset($data['download_github_name']) && empty($data['download_github_name']))) {
+                // if there is no GitHub name.
+                return ;
+            }
+
+            $Github = new \RdDownloads\App\Libraries\Github();
+
+            $user_id = (isset($data['user_id']) && !empty($data['user_id']) ? $data['user_id'] : get_current_user_id());
+            $accessToken = $Github->getAccessToken($user_id);
+            $secretKey = $Github->getWebhookSecretKey($user_id);
+
+            if (empty($accessToken) || empty($secretKey)) {
+                // if there is no access token or secret key.
+                // do nothing
+                unset($accessToken, $Github, $secretKey, $user_id);
+                return ;
+            }
+
+            $expNameWithOwner = explode('/', $data['download_github_name']);
+            $repoOwner = $expNameWithOwner[0];
+            unset($expNameWithOwner[0]);
+            $repoName = implode('/', $expNameWithOwner);
+            unset($expNameWithOwner);
+
+            $headers = $Github->apiV3Headers($accessToken);
+            $hook_id = $Github->getGitHubWebhookId($headers, $repoOwner, $repoName);
+
+            if ($hook_id !== false) {
+                // if already have webhook.
+                unset($accessToken, $Github, $headers, $hook_id, $repoName, $repoOwner, $secretKey, $user_id);
+                return ;
+            }
+            unset($hook_id);
+
+            $result = $Github->addUpdateGitHubWebhook($user_id, '', $secretKey, $repoOwner, $repoName, $headers);
+
+            \RdDownloads\App\Libraries\Logger::staticDebugLog($result, 'github-api-add-webhook-on-save-download-data-' . current_time('Ymd-Hi'));
+            unset($result);
+
+            unset($accessToken, $Github, $headers, $repoName, $repoOwner, $secretKey, $user_id);
+        }// addGitHubWebhook
+
+
+        /**
          * Prepare input data.
-         * 
+         *
          * Also auto detect URL and then get additional data that will be insert/update to DB table.
-         * 
+         *
          * @return array|string Return array with data if success. Return string if there is an error message.
          */
         private function prepareInputData()
@@ -33,6 +90,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
             $data['download_admin_comment'] = filter_input(INPUT_POST, 'download_admin_comment', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $data['download_related_path'] = filter_input(INPUT_POST, 'download_related_path', FILTER_UNSAFE_RAW);
             $data['download_size'] = filter_input(INPUT_POST, 'download_size', FILTER_SANITIZE_NUMBER_INT);
+            if ($data['download_size'] == null) {
+                $data['download_size'] = 0;
+            }
             $data['download_count'] = filter_input(INPUT_POST, 'download_count', FILTER_SANITIZE_NUMBER_INT);
             if (empty($data['download_count'])) {
                 $data['download_count'] = 0;
@@ -164,7 +224,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
 
         /**
          * Determine saving data to be insert or update and call to its function.
-         * 
+         *
          * @return void
          */
         public function saveData()
@@ -191,7 +251,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
 
         /**
          * Save new data (insert) to DB.
-         * 
+         *
          * @global \wpdb $wpdb
          */
         protected function saveInsertData()
@@ -245,6 +305,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                         'download_id' => $output['download_id'],
                     ]);
                     unset($Dll);
+
+                    $this->addGitHubWebhook($data);
                 } else {
                     $responseStatus = 500;
                     $output['form_result_class'] = 'notice-error';
@@ -261,7 +323,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
 
         /**
          * Save update data to DB.
-         * 
+         *
          * @global \wpdb $wpdb
          */
         protected function saveUpdateData()
@@ -277,11 +339,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
             $RdDownloads = new \RdDownloads\App\Models\RdDownloads();
             $checkResult = $RdDownloads->get(['*select' => 'user_id', 'download_id' => $download_id]);
             if (
-                empty($checkResult) || 
-                is_null($checkResult) || 
+                empty($checkResult) ||
+                is_null($checkResult) ||
                 (
                     (
-                        is_array($checkResult) || 
+                        is_array($checkResult) ||
                         is_object($checkResult)
                     ) &&
                     empty($checkResult)
@@ -337,6 +399,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                         'download_id' => $download_id,
                     ]);
                     unset($Dll);
+
+                    $this->addGitHubWebhook($data);
 
                     // clear all cache on save.
                     $Cache = new \RdDownloads\App\Libraries\Cache();

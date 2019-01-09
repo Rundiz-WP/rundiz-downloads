@@ -1,7 +1,7 @@
 <?php
 /**
  * Rundiz Downloads list table.
- * 
+ *
  * @package rd-downloads
  */
 
@@ -13,7 +13,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
      * List data into table.
      * Warning! Do not modify method name because they are extended from WP_List_Table class of WordPress. Changing the method name may cause program error.
      * Warning! this parent class is marked as private. Please read at wordpress source.
-     * 
+     *
      * @link http://wpengineer.com/2426/wp_list_table-a-step-by-step-guide/ tutorial about how to list table data.
      * @link http://www.sitepoint.com/using-wp_list_table-to-create-wordpress-admin-tables/ another tutorial
      * @link https://codex.wordpress.org/Class_Reference/WP_List_Table wordpress list table class source.
@@ -22,15 +22,12 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
     {
 
 
-        use \RdDownloads\App\AppTrait;
-
-
         /**
          * Check that is this user have enough permission to edit.
-         * 
+         *
          * Current user id match db then require just `upload_files` permission.<br>
          * Current user id NOT match db then require `edit_others_posts` permission.
-         * 
+         *
          * @param object $item
          * @return boolean
          */
@@ -79,7 +76,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
                     $size = ($item->{$column_name} != null ? intval($item->{$column_name}) : 0);
                     return str_replace('.00', '', size_format($size, 2));
                 case 'shortcode':
-                    return '<input class="shortcode-text" type="text" readonly="readonly" value="[rddownloads id=&quot;' . esc_attr($item->download_id) . '&quot;]">' . 
+                    return '<input class="shortcode-text" type="text" readonly="readonly" value="[rddownloads id=&quot;' . esc_attr($item->download_id) . '&quot;]">' .
                         '<div class="copied-msg hidden"><i>' . __('Shortcode copied to clipboard.', 'rd-downloads') . '</i></div>';
                 case 'opt_force_download':
                     $download_options = maybe_unserialize($item->download_options);
@@ -137,7 +134,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
 
         /**
          * Column download_name.
-         * 
+         *
          * @param object $item
          * @return string
          */
@@ -160,7 +157,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
             if (isset($item->download_options)) {
                 $download_options = maybe_unserialize($item->download_options);
                 if (
-                    is_array($download_options) && 
+                    is_array($download_options) &&
                     array_key_exists('opt_download_version', $download_options) &&
                     !empty($download_options['opt_download_version'])
                 ) {
@@ -176,7 +173,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
 
         /**
          * Column download_type.
-         * 
+         *
          * @param object $item
          * @return string
          */
@@ -197,7 +194,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
 
         /**
          * Get bulk actions
-         * 
+         *
          * @return array return array key and name. example: [key1 => describe how this work]
          */
         protected function get_bulk_actions()
@@ -206,14 +203,16 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
                 return [];
             }
 
-            $this->getOptions();
-            global $rd_downloads_options;
-
             $actions = [];
 
-            if (isset($rd_downloads_options['rdd_github_token']) && !empty(trim($rd_downloads_options['rdd_github_token']))) {
+            $Github = new \RdDownloads\App\Libraries\Github();
+            $accessToken = $Github->getAccessToken();
+            unset($Github);
+
+            if ($accessToken !== false) {
                 $actions['githubUpdate'] = __('Update GitHub', 'rd-downloads');
             }
+            unset($accessToken);
             $actions['remoteUpdate'] = __('Update remote file', 'rd-downloads');
             $actions['delete'] = __('Delete', 'rd-downloads');
 
@@ -264,7 +263,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
 
         /**
          * {@inheritDoc}
-         * 
+         *
          * @global \wpdb $wpdb
          */
         protected function get_views()
@@ -384,7 +383,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
 
         /**
          * prepare data and items
-         * 
+         *
          * @global \wpdb $wpdb
          * @param array $options available options: user_id, download_type, search, sort (column name), order (ascending descending)
          */
@@ -433,7 +432,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
 
             // create pagination
             $this->set_pagination_args([
-                'total_items' => $total_items, 
+                'total_items' => $total_items,
                 'per_page'    => $per_page
             ]);
 

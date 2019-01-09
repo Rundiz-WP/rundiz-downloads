@@ -1,7 +1,9 @@
 <?php
 /**
  * GitHub auto update main page.
- * 
+ *
+ * This file will be working on GitHub send push event to this site.
+ *
  * @package rd-downloads
  */
 
@@ -14,7 +16,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
 
 
         /**
-         * @var \RdDownloads\App\Libraries\Github 
+         * @var \RdDownloads\App\Libraries\Github
          */
         protected $Github;
 
@@ -76,6 +78,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
                 // if validation is not passed.
                 unset($phpinput);
                 status_header(403);
+                wp_send_json(['result' => 'invalid webhook'], 403);
             }
 
             unset($phpinput);
@@ -84,7 +87,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
 
         /**
          * GitHub ping check.
-         * 
+         *
          * The process will be end here.
          */
         protected function subGithubPingCheck()
@@ -107,9 +110,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
 
         /**
          * GitHub push events. Check that is it commit or release event and then update.
-         * 
+         *
          * The process will be end here.
-         * 
+         *
          * @global array $rd_downloads_options
          */
         protected function subGithubPush()
@@ -132,7 +135,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
             } elseif ($this->Github->webhookIsTagging('created') || $this->Github->webhookIsTagging('deleted')) {
                 // if this event is tagging.
                 if (
-                    isset($rd_downloads_options['rdd_github_auto_update']) && 
+                    isset($rd_downloads_options['rdd_github_auto_update']) &&
                     (
                         $rd_downloads_options['rdd_github_auto_update'] == 'release+commit' ||
                         $rd_downloads_options['rdd_github_auto_update'] == 'release'
@@ -154,9 +157,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
 
         /**
          * Do update data into DB.
-         * 
+         *
          * This method was called from `subGithubPushUpdateData()` method.
-         * 
+         *
          * @global \wpdb $wpdb
          * @param array $results The query results from DB where it contain matched `download_github_name` field.
          * @param array $latestData The latest data from `\RdDownloads\App\Libraries\GitHub::getLatestRepositoryData()` method.
@@ -220,9 +223,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
 
         /**
          * Get latest version data matched on version range.
-         * 
+         *
          * This method was called from `subGithubPushDoUpdateData()` method.
-         * 
+         *
          * @param array $latestData The latest data from `\RdDownloads\App\Libraries\GitHub::getLatestRepositoryData()` method.
          * @param string $version_range The version range.
          * @param array $download_options Download options in DB.
@@ -257,7 +260,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
                     if (isset($item['version']) && \RdDownloads\Composer\Semver\Semver::satisfies($item['version'], $version_range)) {
                         // if matched version range.
                         if (
-                            isset($download_options['opt_download_version']) && 
+                            isset($download_options['opt_download_version']) &&
                             \RdDownloads\Composer\Semver\Semver::satisfies($item['version'], '=' . $download_options['opt_download_version'])
                         ) {
                             // if got version from GitHub as same as the version on DB.
@@ -290,7 +293,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
 
         /**
          * Get version range from `download_options` field.
-         * 
+         *
          * @param string|array $download_options The data from `download_options` field. If string given, it will be unserialize, if array given it was already unserialized.
          * @return string Return version range.
          */
@@ -302,7 +305,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
             $version_range = '';
 
             if (
-                is_array($download_options) && 
+                is_array($download_options) &&
                 array_key_exists('opt_download_version_range', $download_options) &&
                 array_key_exists('opt_download_version', $download_options)
             ) {
@@ -325,9 +328,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
 
         /**
          * Get latest repository data and check if there is something change then update.
-         * 
+         *
          * This method was called from `subGithubPush()` method.
-         * 
+         *
          * The process will be end here.
          */
         private function subGithubPushUpdateData()
@@ -348,8 +351,18 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
 
                 if (isset($results['results']) && is_array($results['results']) && !empty($results['results'])) {
                     // if found data in db.
+                    // get valid user and his key.
+                    $secretKeyArray = $this->Github->getWebhookValidSecretKey();
+                    if (is_array($secretKeyArray)) {
+                        $user_id = key($secretKeyArray);
+                    } else {
+                        $user_id = '';
+                    }
+                    unset($secretKeyArray);
+
                     // get latest data from GitHub.
-                    $latestData = $this->Github->getLatestRepositoryData($this->payloadObject->repository->url, []);
+                    $latestData = $this->Github->getLatestRepositoryData($this->payloadObject->repository->url, [], $user_id);
+                    unset($user_id);
 
                     if (is_array($latestData) && isset($latestData[0]) && is_array($latestData[0])) {
                         // if fetched latest data form GitHub success.

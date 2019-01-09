@@ -15,9 +15,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')) {
 
         /**
          * Manually highlight parent menu.
-         * 
+         *
          * This is very useful on sub pages that is not listing in admin menu/sub menu. It will modify $plugin_page by conditions.
-         * 
+         *
          * @link https://stackoverflow.com/a/28856349/128761 Source code copied from here.
          * @global string $plugin_page
          * @param string $parent_file
@@ -36,7 +36,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')) {
             return $parent_file;
         }// manualHighlightParentMenu
 
-        
+
         /**
          * {@inheritDoc}
          */
@@ -55,7 +55,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')) {
 
         /**
          * Downloads admin menu.
-         * 
+         *
          * This will be call to the manage/add/edit pages.
          */
         public function rdDownloadsMenu() {
@@ -90,6 +90,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')) {
             $Logs = new Logs();
             $Logs->downloadLogsMenu();
             unset($Logs);
+
+            // GitHub OAuth (connect) page.
+            $GithubOAuth = new GithubOAuth();
+            $GithubOAuth->githubOAuthMenu();
+            unset($GithubOAuth);
         }// rdDownloadsMenu
 
 

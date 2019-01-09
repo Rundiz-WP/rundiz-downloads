@@ -1,7 +1,7 @@
 <?php
 /**
  * Add settings sub menu and page into the Settings menu.
- * 
+ *
  * @package rd-downloads
  */
 
@@ -18,7 +18,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
 
         /**
          * An example of how to access settings variable and its values.
-         * 
+         *
          * @global array $rd_downloads_options
          */
         public function pluginReadSettingsPage()
@@ -51,6 +51,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
 
         /**
          * Display plugin settings page.
+         *
+         * @global \wpdb $wpdb
          */
         public function pluginSettingsPage()
         {
@@ -97,11 +99,19 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
 
                 // you may validate form here first.
 
+                // if admin cleanup client id and secret then remove all the access token from users.
+                if ($options_values['rdd_github_client_id'] == '' && $options_values['rdd_github_client_secret'] == '') {
+                    global $wpdb;
+                    $Github = new \RdDownloads\App\Libraries\Github();
+                    $wpdb->query($wpdb->prepare('UPDATE `' . $wpdb->usermeta . '` SET `meta_value`=\'\' WHERE `meta_key` = %s', [$Github->getOAuthAccessTokenName()]));
+                    unset($Github);
+                }
+
                 // create necessary file on save.
                 $FileSystem = new \RdDownloads\App\Libraries\FileSystem();
                 $wp_upload_dir = wp_upload_dir();
                 if (
-                    is_array($wp_upload_dir) && 
+                    is_array($wp_upload_dir) &&
                     array_key_exists('basedir', $wp_upload_dir)
                 ) {
                     if (isset($options_values['rdd_force_download']) && $options_values['rdd_force_download'] == '1') {
@@ -167,7 +177,6 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
                 'RdDownloadsSettings',
                 [
                     'nonce' => wp_create_nonce('rd-downloads-settings_ajax-settings-nonce'),
-                    'txtAreYouSureRegenerateSecret' => __('Are you sure?', 'rd-downloads') . "\n" . __('The generated secret will not working anymore with any GitHub repositories that already has this setting. You have to update new secret on those repositories again', 'rd-downloads'),
                 ]
             );
 

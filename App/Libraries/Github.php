@@ -35,6 +35,12 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
 
         /**
+         * @var string The OAuth access token name will be use in `user_meta` and `cookie`. Do not change this.
+         */
+        protected $oauthAccessTokenName = 'rddownloads_githuboauth_accesstoken';
+
+
+        /**
          * @var array GitHub webhook headers. This will be set via `webhook()` method.
          */
         protected $webhookHeaders = [];
@@ -44,6 +50,18 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          * @var string GitHub raw "php://input". This will be set via `webhook()` method.
          */
         protected $webhookPhpInput;
+
+
+        /**
+         * @var string The GitHub webhook secret name will be use in `user_meta`. Do not change this.
+         */
+        protected $webhookSecretName = 'rddownloads_githubwebhook_secret';
+
+
+        /**
+         * @var array The associate array where key is user_id and its value is the key. This property was set from `validateGetHubWebhook()` method.
+         */
+        protected $webhookValidSecretKey = [];
 
 
         public function __construct()
@@ -58,46 +76,130 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
 
         /**
+         * Add or update GitHub webhook.
+         *
+         * It will be add if `$hook_id` is empty (not exists). Otherwise it will be update.
+         *
+         * @see \RdDownloads\App\Libraries\Github::apiV3Request() about `$headers` and `$postData` arguments.
+         * @param integer|false $user_id The current user ID. Set to false to get current user ID.
+         * @param string|false $hook_id The hook_id get from `getGitHubWebhookId()` method. Set to empty if there is no hook ID. Set to false for auto detect.
+         * @param string $secretKey The secret key to set into GitHub webhook and use it on call back to this site for auto update.
+         * @param string $repoOwner Repository owner.
+         * @param string $repoName Repository name.
+         * @param array $headers The `wp_remote_request()` headers array.
+         * @return array Return value from `apiV3Request()` method.
+         * @throws \InvalidArgumentException Throw invalid argument error on wrong type.
+         */
+        public function addUpdateGitHubWebhook($user_id, $hook_id, $secretKey, $repoOwner, $repoName, array $headers)
+        {
+            if (!is_scalar($hook_id) && $hook_id !== false && $hook_id !== '') {
+                // if $hook_id is not string, not false, not empty.
+                /* translators: %s: Argument name. */
+                throw new \InvalidArgumentException(sprintf(__('The %s must be string.', 'rd-downloads'), '$hook_id'));
+            }
+
+            if ($secretKey == '') {
+                // secret key was not set, no need to continue.
+                return [];
+            }
+
+            if ($user_id === false) {
+                $user_id = get_current_user_id();
+            }
+
+            if ($hook_id === false) {
+                // if $hook_id is set to auto detect.
+                $hook_id = $this->getGitHubWebhookId($headers, $repoOwner, $repoName);
+                if ($hook_id === false) {
+                    $hook_id = '';
+                }
+            }
+
+            $postData = new \stdClass();
+            $postData->config = new \stdClass();
+            $postData->config->url = $this->getWebhookPayloadUrl();
+            $postData->config->content_type = 'json';
+            $postData->config->secret = $secretKey;
+            $postData->config->insecure_ssl = apply_filters('rddownloads_githubapi_webhookinsecure', '0');
+            $postData->events = ['push'];
+            $postData->active = true;
+            $postData = json_encode($postData);
+
+            if ($hook_id === '') {
+                return $this->apiV3Request('/repos/' . $repoOwner . '/' . $repoName . '/hooks', $headers, '', 'POST', $postData);
+            } else {
+                return $this->apiV3Request('/repos/' . $repoOwner . '/' . $repoName . '/hooks/' . $hook_id, $headers, '', 'PATCH', $postData);
+            }
+        }// addUpdateGitHubWebhook
+
+
+        /**
+         * Get GitHub API v3 headers array.
+         *
+         * @param string $accessToken The GitHub access token that got via OAuth.
+         * @return array Return array of headers that can be use in `wp_remote_xxx()` functions.
+         */
+        public function apiV3Headers($accessToken)
+        {
+            $headers = [];
+            $headers['Authorization'] = 'token ' . $accessToken;
+            $headers['Accept'] = 'application/json';
+
+            return $headers;
+        }// apiV3Headers
+
+
+        /**
          * Make an API v3 request.
          *
          * @link https://developer.github.com/v3/ GitHub API v3 document.
          * @param string $uri The v3 API URI. Always begin with slash.
-         * @param array $headers The headers array.
-         * @param string $userPassword Username:Password for basic auth.
+         * @param array $headers The header key or name must be in array key.
+         *                                      For example: The "Authorization: xxx" header must be `$headers['Authorization'] = 'xxx';`.
+         * @param string $userPassword Username:Password for basic auth. To use this, the `Authorization` key in `$headers` array must not exists.
          * @param string $method Request method (GET, POST, PATCH, DELETE, ...).
          * @param string $postData The GitHub API v3 query data.
          * @return array Return array with "header" and "body" in array keys. The "body" key return JSON decoded of result from GitHub.
          */
         public function apiV3Request($uri = '', $headers = [], $userPassword = '', $method = 'GET', $postData = '')
         {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $this->apiV3Url . $uri);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_AUTOREFERER, true);
-            curl_setopt($ch, CURLOPT_MAXREDIRS, 2);
-            curl_setopt($ch, CURLOPT_USERAGENT, $this->setUserAgent());
-            curl_setopt($ch, CURLOPT_HEADER, true);
-            if ($userPassword != '') {
-                curl_setopt($ch, CURLOPT_USERPWD, $userPassword);
+            if ($userPassword !== '' && $userPassword !== null) {
+                // @link https://johnblackbourn.com/wordpress-http-api-basicauth/ Basic auth for `wp_remote_xxx()`.
+                if (!isset($headers['Authorization'])) {
+                    $headers['Authorization'] = 'basic ' . base64_encode($userPassword);
+                }
             }
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            if (strtolower($method) !== 'get') {
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
-            }
-            if ($postData != '') {
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
-            }
-            $response = curl_exec($ch);
-            $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-            curl_close($ch);
-            unset($ch);
+            $remoteArgs = [];
+            $remoteArgs['method'] = $method;
+            $remoteArgs['headers'] = $headers;
+            $remoteArgs['body'] = $postData;
+            $remoteArgs['redirection'] = 0;
+            $remoteArgs['user-agent'] = $this->setUserAgent();
 
-            $Url = new Url();
+            $result = wp_remote_request($this->apiV3Url . $uri, $remoteArgs);
+            Logger::staticDebugLog('Request URL: ' . $this->apiV3Url . $uri, 'github-apiv3-rawresponse-' . current_time('Ymd-Hi'));
+            Logger::staticDebugLog('Arguments: ' . var_export($remoteArgs, true), 'github-apiv3-rawresponse-' . current_time('Ymd-Hi'));
+            Logger::staticDebugLog($result, 'github-apiv3-rawresponse-' . current_time('Ymd-Hi'));
+            Logger::staticDebugLog('END log ' . str_repeat('-', 60), 'github-apiv3-rawresponse-' . current_time('Ymd-Hi'));
+            unset($remoteArgs);
+
             $output = [];
-            $output['header'] = $Url->curlResponseHeaderAs(substr($response, 0, $headerSize));
-            $output['body'] = json_decode(substr($response, $headerSize));
+            $output['header'] = '';
+            $output['body'] = new \stdClass();
 
-            unset($headerSize, $response);
+            if (is_array($result)) {
+                if (isset($result['body'])) {
+                    $output['body'] = json_decode($result['body']);
+                }
+                if (isset($result['headers'])) {
+                    $output['header'] = $result['headers'];
+                }
+                if (isset($result['response']['code'])) {
+                    $output['header']['status-int'] = $result['response']['code'];
+                }
+            }
+
+            unset($result);
             return $output;
         }// apiV3Request
 
@@ -109,8 +211,9 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          *
          * @see apiV3Request() See `apiV3Request()` method for more details.
          * @param string $uri The v3 API URI. Always begin with slash.
-         * @param array $headers The headers array.
-         * @param string $userPassword Username:Password for basic auth.
+         * @param array $headers The header key or name must be in array key.
+         *                                      For example: The "Authorization: xxx" header must be `$headers['Authorization'] = 'xxx';`.
+         * @param string $userPassword Username:Password for basic auth. To use this, the `Authorization` key in `$headers` array must not exists.
          * @param string $method Request method (GET, POST, PATCH, DELETE, ...).
          * @param string $postData The GitHub API v3 query data.
          * @return array Return array with "header" and "body" in array keys. The "body" key return JSON decoded of result from GitHub.
@@ -160,39 +263,140 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          * Make an API v4 request.
          *
          * @link https://developer.github.com/v4/guides/ GitHub API v4 document.
-         * @param array $headers See https://developer.github.com/v4/guides/ for more info.
-         * @param array|string $postData Set data to array or JSON encoded of data array. See https://developer.github.com/v4/guides/using-the-explorer/ for more info or https://developer.github.com/v4/explorer/ for demonstrate API request.
+         * @param array $headers The header key or name must be in array key.
+         *                                      For example: The "Authorization: xxx" header must be `$headers['Authorization'] = 'xxx';`.
+         *                                      For what header GitHub will be accepted, please see https://developer.github.com/v4/guides/ for more info.
+         * @param array|string $postData Set data to array or JSON encoded of data array.
+         *                                      See https://developer.github.com/v4/guides/using-the-explorer/ for more info
+         *                                      or https://developer.github.com/v4/explorer/ for demonstrate API request.
          * @return array Return array with "header" and "body" in array keys. The "body" key return JSON decoded of result from GitHub.
          */
         public function apiV4Request(array $headers, $postData)
         {
             if (!is_string($postData)) {
-                $postData = json_encode($postData);
+                $postData = wp_json_encode($postData);
             }
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $this->apiV4Url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_AUTOREFERER, true);
-            curl_setopt($ch, CURLOPT_MAXREDIRS, 2);
-            curl_setopt($ch, CURLOPT_USERAGENT, $this->setUserAgent());
-            curl_setopt($ch, CURLOPT_HEADER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
-            $response = curl_exec($ch);
-            $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-            curl_close($ch);
-            unset($ch);
+            $remoteArgs = [];
+            $remoteArgs['headers'] = $headers;
+            $remoteArgs['body'] = $postData;
+            $remoteArgs['redirection'] = 0;
+            $remoteArgs['user-agent'] = $this->setUserAgent();
 
-            $Url = new Url();
+            $result = wp_remote_post($this->apiV4Url, $remoteArgs);
+            unset($remoteArgs);
+
             $output = [];
-            $output['header'] = $Url->curlResponseHeaderAs(substr($response, 0, $headerSize));
-            $output['body'] = json_decode(substr($response, $headerSize));
+            $output['header'] = '';
+            $output['body'] = new \stdClass();
 
-            unset($headerSize, $response, $Url);
+            if (is_array($result)) {
+                if (isset($result['body'])) {
+                    $output['body'] = json_decode($result['body']);
+                }
+                if (isset($result['headers'])) {
+                    $output['header'] = $result['headers'];
+                }
+                if (isset($result['response']['code'])) {
+                    $output['header']['status-int'] = $result['response']['code'];
+                }
+            }
+
+            unset($result);
             return $output;
         }// apiV4Request
+
+
+        /**
+         * Disconnect from GitHub OAuth.
+         *
+         * Clear the cookie and set user meta where access token was stored to empty.
+         *
+         * @param integer|empty $user_id
+         */
+        public function disconnectOAuth($user_id = '')
+        {
+            if (empty($user_id) || $user_id <= 0) {
+                $user_id = get_current_user_id();
+            }
+
+            \RdDownloads\App\Libraries\Cookies::deleteCookie($this->oauthAccessTokenName);
+            unset($_COOKIE[$this->oauthAccessTokenName]);
+
+            update_user_meta($user_id, $this->oauthAccessTokenName, '');
+        }// disconnectOAuth
+
+
+        /**
+         * Generate webhook secret key.
+         *
+         * @param integer $user_id
+         * @return string
+         */
+        public function generateWebhookSecretKey($user_id = '')
+        {
+            if (empty($user_id)) {
+                $user_id = get_current_user_id();
+            }
+
+            return $user_id . '_' . wp_generate_password(20, false, false);
+        }// generateWebhookSecretKey
+
+
+        /**
+         * Get access token from user meta.
+         *
+         * The access token have got when user connected with GitHub OAuth.
+         *
+         * @param integer $user_id The user ID. Leave blank for get current user ID.
+         * @return string|false Return user access token. Return false if not found.
+         */
+        public function getAccessToken($user_id = '')
+        {
+            if (empty($user_id) || $user_id <= 0) {
+                $user_id = get_current_user_id();
+            }
+
+            $accessToken = get_user_meta($user_id, $this->oauthAccessTokenName, true);
+            if ($accessToken === '' || $accessToken === null || $accessToken === false) {
+                return false;
+            }
+            return $accessToken;
+        }// getAccessToken
+
+
+        /**
+         * Check if there is already have webhook for this website on certain repository and get its id.
+         *
+         * @link https://developer.github.com/v3/repos/hooks/ repo hook reference.
+         * @see \RdDownloads\App\Libraries\Github::apiV3Request() about `$headers` argument.
+         * @param array $headers The `wp_remote_request()` headers array.
+         * @param string $repoOwner Repository owner.
+         * @param string $repoName Repository name.
+         * @return string|false Return string if there is webhook id, return false if not found any webhook for this website.
+         */
+        public function getGitHubWebhookId(array $headers, $repoOwner, $repoName)
+        {
+            $response = $this->apiV3RequestMultiPages('/repos/' . $repoOwner . '/' . $repoName . '/hooks', $headers, '', 'GET');
+
+            if (isset($response['body']) && is_array($response['body'])) {
+                foreach ($response['body'] as $hook) {
+                    if (isset($hook->config->url) && stripos($hook->config->url, $this->getWebhookPayloadUrl()) !== false) {
+                        // if URL in GitHub webhook match this site, this means already have hook.
+                        // get the hook id and skip loop.
+                        $hook_id = $hook->id;
+                        break;
+                    }
+                }// endforeach;
+                unset($hook);
+            }
+            unset($response);
+
+            if (isset($hook_id)) {
+                return $hook_id;
+            }
+            return false;
+        }// getGitHubWebhookId
 
 
         /**
@@ -214,6 +418,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          *                                                          Set this to version range as documented in Composer to get only matched version range. <br>
          *                                                          Set this to empty string to get latest release.<br>
          *                                                          Set this to empty array to get all releases into array.<br>
+         * @param integer|empty $user_id The user ID to get user's access token for get latest data. Set to empty for auto detect.
          * @return array|false Return array if contain latest update by conditions described above, return false for failure.
          *                                  The return array format is:
          *                                  <pre>array(
@@ -238,20 +443,18 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          *                                      ),
          *                                  );</pre>
          */
-        public function getLatestRepositoryData($url, $version_range = '')
+        public function getLatestRepositoryData($url, $version_range = '', $user_id = '')
         {
             $owner_name = $this->getNameWithOwnerFromUrl($url);
+            $accessToken = $this->getAccessToken($user_id);
 
-            if (
-                !isset($this->pluginOptions['rdd_github_token']) ||
-                (isset($this->pluginOptions['rdd_github_token']) && empty(trim($this->pluginOptions['rdd_github_token'])))
-            ) {
-                // if GitHub token was not set, return original because it cannot check anything.
+            if (empty($accessToken)) {
+                // if GitHub access token was not set, return original because it cannot check anything.
                 $output['url'] = $url;
                 if (is_array($owner_name) && isset($owner_name[0]) && isset($owner_name[1])) {
                     $output['nameWithOwner'] = $owner_name[0] . '/' . $owner_name[1];
                 }
-                unset($owner_name);
+                unset($accessToken, $owner_name);
                 return $output;
             }
 
@@ -260,13 +463,14 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                 $name = $owner_name[1];
             } else {
                 // cannot detect name/owner from URL. it is not possible to get latest repository data, return false.
+                unset($accessToken, $owner_name);
                 return false;
             }
             unset($owner_name);
 
-            $headers = [
-                'Authorization: bearer ' . (isset($this->pluginOptions['rdd_github_token']) ? $this->pluginOptions['rdd_github_token'] : ''),
-            ];
+            $headers = [];
+            $headers['Authorization'] = 'token ' . $accessToken;
+            unset($accessToken);
             $postData = [
                 'query' => 'query {
   repository(owner: "' . $owner . '", name: "' . $name . '") {
@@ -409,7 +613,13 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                             unset($maxFileSize);
                         } else {
                             // if does not contain custom archive file.
-                            $tmpReleases[$item->node->tag->name]['url'] = $item->node->tag->target->zipballUrl;
+                            if (isset($item->node->tag->target->zipballUrl)) {
+                                $tmpReleases[$item->node->tag->name]['url'] = $item->node->tag->target->zipballUrl;
+                            } elseif (isset($item->node->url)) {
+                                $tmpReleases[$item->node->tag->name]['url'] = $item->node->url;
+                            } else {
+                                $tmpReleases[$item->node->tag->name]['url'] = $url;
+                            }
                         }
                     }
                 }// endforeach; releases->edges
@@ -514,22 +724,137 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
 
         /**
+         * Get OAuth access token name that used in `user_meta` and `cookie`.
+         *
+         * @return string Return the name to use in `user_meta` and `cookie`.
+         */
+        public function getOAuthAccessTokenName()
+        {
+            return $this->oauthAccessTokenName;
+        }// getOAuthAccessTokenName
+
+
+        /**
+         * Get GitHub webhook payload URL (for use auto update).
+         *
+         * @return string Return the accept auto update URL.
+         */
+        public function getWebhookPayloadUrl()
+        {
+            return add_query_arg(['pagename' => 'rddownloads_github_autoupdate'], home_url());
+        }// getWebhookPayloadUrl
+
+
+        /**
+         * Get webhook secret key (value).
+         *
+         * The secret key will be use on GitHub auto update (push events).
+         *
+         * @param integer $user_id
+         * @return string|false Return user's secret key. Return false if not found.
+         */
+        public function getWebhookSecretKey($user_id)
+        {
+            if (empty($user_id) || $user_id <= 0) {
+                $user_id = get_current_user_id();
+            }
+
+            $secretKey = get_user_meta($user_id, $this->webhookSecretName, true);
+            if ($secretKey === '' || $secretKey === null || $secretKey === false) {
+                return false;
+            }
+            return $secretKey;
+        }// getWebhookSecretKey
+
+
+        /**
+         * Get GitHub webhook secret name that will be use in `user_meta`.
+         *
+         * @return string Return the name to use in `user_meta`.
+         */
+        public function getWebhookSecretName()
+        {
+            return $this->webhookSecretName;
+        }// getWebhookSecretName
+
+
+        /**
+         * Get valid secret key after called `validateGitHubWebhook()` method.
+         *
+         * @return array Return the associate array where key is user_id and its value is the key.
+         */
+        public function getWebhookValidSecretKey()
+        {
+            return $this->webhookValidSecretKey;
+        }// getWebhookValidSecretKey
+
+
+        /**
+         * GitHub GraphQL for all repositories (users and their organizations).
+         *
+         * @return string Return graphQL string with replacable content.<br>
+         *                          Replacable content: %after%, %before%
+         */
+        public function graphQLAllRepositories()
+        {
+            return 'query {
+  viewer {
+    login
+    name
+    repositories(%after%%before%first: 100, isFork: false, orderBy: {field: PUSHED_AT, direction: DESC}, ownerAffiliations: [OWNER, COLLABORATOR, ORGANIZATION_MEMBER]) {
+      pageInfo {
+        startCursor
+        hasPreviousPage
+        hasNextPage
+        endCursor
+      }
+      totalCount
+      totalDiskUsage
+      edges {
+        node {
+          isArchived
+          name
+          owner {
+            login
+          }
+          nameWithOwner
+          url
+        }
+      }
+    }
+  }
+                }';
+        }// graphQLAllRepositories
+
+
+        /**
+         * Check that if Client ID and Client Secret was set in global plugin settings page.
+         *
+         * @return boolean
+         */
+        protected function isClientIdSecretWasSet()
+        {
+            if (
+                isset($this->pluginOptions['rdd_github_client_id']) &&
+                isset($this->pluginOptions['rdd_github_client_secret']) &&
+                !empty($this->pluginOptions['rdd_github_client_id']) &&
+                !empty($this->pluginOptions['rdd_github_client_secret'])
+            ) {
+                return true;
+            }
+
+            return false;
+        }// isClientIdSecretWasSet
+
+
+        /**
          * Check that if global setting is set to auto update or not.
          *
+         * @global \wpdb $wpdb
          * @return boolean Return true if yes, return false for otherwise.
          */
         public function isSettingToAutoUpdate()
         {
-            if (
-                !isset($this->pluginOptions['rdd_github_secret']) ||
-                (
-                    isset($this->pluginOptions['rdd_github_secret']) &&
-                    empty($this->pluginOptions['rdd_github_secret'])
-                )
-            ) {
-                // if github secret was not set.
-                return false;
-            }
 
             if (
                 !isset($this->pluginOptions['rdd_github_auto_update']) ||
@@ -542,12 +867,110 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                 return false;
             }
 
+            global $wpdb;
+            $sql = 'SELECT * FROM `' . $wpdb->usermeta . '` WHERE `meta_key` = %s AND `meta_value` != \'\'';
+            $result = $wpdb->get_var($wpdb->prepare($sql, [$this->getWebhookSecretName()]));
+            unset($sql);
+
+            if (empty($result)) {
+                return false;
+            }
+            unset($result);
+
             return true;
         }// isSettingToAutoUpdate
 
 
         /**
-         * Setup User agent for the CURL request.
+         * Get OAuth access token.
+         *
+         * @param string $code The code receive from authorized at GitHub.
+         * @param string $redirect_uri The "redirect_uri" value.
+         * @param string $state The "state" value.
+         * @return string|object Return string with access token if success, return object if contain error, return empty string if config was not set.
+         * @throws \Exception
+         */
+        public function oauthGetAccessToken($code, $redirect_uri, $state_nonce)
+        {
+            if ($this->isClientIdSecretWasSet() === true) {
+                $postBody = [];
+                $postBody['client_id'] = $this->pluginOptions['rdd_github_client_id'];
+                $postBody['client_secret'] = $this->pluginOptions['rdd_github_client_secret'];
+                $postBody['code'] = $code;
+                $postBody['redirect_uri'] = $redirect_uri;
+                $postBody['state'] = $state_nonce;
+
+                $remoteArgs = [];
+                $remoteArgs['headers']['Accept'] = 'application/json';
+                $remoteArgs['body'] = $postBody;
+                $remoteArgs['redirection'] = 0;
+                $result = wp_remote_post('https://github.com/login/oauth/access_token', $remoteArgs);
+                unset($postBody, $remoteArgs);
+
+                if (is_array($result) && isset($result['body'])) {
+                    $body = json_decode($result['body']);
+                    if (
+                        is_object($body) &&
+                        isset($body->access_token) &&
+                        isset($body->scope) && // scope can be value1,value2 without space. for example "admin:repo_hook,gist"
+                        stripos($body->scope, 'admin:repo_hook') !== false && // make sure that required scope is met.
+                        stripos($body->scope, 'read:org') !== false
+                    ) {
+                        return $body->access_token;
+                    } elseif (
+                        is_object($body) &&
+                        isset($body->error) &&
+                        isset($body->error_description)
+                    ) {
+                        return $body;
+                    }
+                } elseif (is_wp_error($result)) {
+                    throw new \Exception($result->get_error_message());
+                }
+            }
+
+            return '';
+        }// oauthGetAccessToken
+
+
+        /**
+         * Get OAuth link (step 1).
+         *
+         * @link https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/ Reference.
+         * @param string $redirect_uri The "redirect_uri" value.
+         * @param string $state The "state" value.
+         * @return string Return generated link if success, return empty string if config was not set.
+         * @throws \Exception
+         */
+        public function oauthGetLink($redirect_uri, $state_nonce)
+        {
+            if ($this->isClientIdSecretWasSet() === true) {
+                $getBody = [];
+                $getBody['client_id'] = $this->pluginOptions['rdd_github_client_id'];
+                $getBody['redirect_uri'] = $redirect_uri;
+                $getBody['scope'] = 'admin:repo_hook read:org';// space separate scopes. example: 'admin:repo_hook read:org'
+                $getBody['state'] = $state_nonce;
+                $url = 'https://github.com/login/oauth/authorize?' . http_build_query($getBody);
+                unset($getBody);
+
+                $remoteArgs = [];
+                $remoteArgs['redirection'] = 0;
+                $result = wp_remote_get($url, $remoteArgs);
+                unset($remoteArgs);
+
+                if (is_array($result) && isset($result['headers']['location'])) {
+                    return $result['headers']['location'];
+                } elseif (is_wp_error($result)) {
+                    throw new \Exception($result->get_error_message());
+                }
+            }
+
+            return '';
+        }// oauthGetLink
+
+
+        /**
+         * Setup User agent for the remote request.
          *
          * @return string Return user agent string.
          */
@@ -575,31 +998,94 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          *
          * You have to call `webhook()` method before calling this.
          *
+         * @global \wpdb $wpdb
          * @return boolean Return true on success, return false on failure.
          */
         public function validateGitHubWebhook()
         {
             if (!isset($this->webhookHeaders['X-Hub-Signature']) || (isset($this->webhookHeaders['X-Hub-Signature']) && !is_scalar($this->webhookHeaders['X-Hub-Signature']))) {
+                // if no signature for check.
                 return false;
             }
 
             $explodeSignature = explode('=', $this->webhookHeaders['X-Hub-Signature']);
             if (!isset($explodeSignature[0]) || (isset($explodeSignature[0]) && !is_scalar($explodeSignature[0]))) {
+                // if invalid signature (sha1=xxxx was not found).
                 unset($explodeSignature);
                 return false;
             }
             $hashAlgo = $explodeSignature[0];
             unset($explodeSignature);
 
-            $buildSignature = $hashAlgo . '=' . hash_hmac($hashAlgo, $this->webhookPhpInput, $this->pluginOptions['rdd_github_secret']);
-            unset($hashAlgo);
+            global $wpdb;
 
-            return $buildSignature === $this->webhookHeaders['X-Hub-Signature'];
+            // get the repository name (owner/name) to check that how many users own this.
+            // then get the secret key from those users to validate webhook.
+            $payloadObject = json_decode($this->webhookPhpInput);
+            if (!isset($payloadObject->repository->full_name)) {
+                // if not found repository full name (owner/name).
+                unset($hashAlgo, $payloadObject);
+                return false;
+            } else {
+                $sql = 'SELECT `user_id`, `download_github_name` FROM `' . $wpdb->prefix . 'rd_downloads` WHERE `download_github_name` = %s GROUP BY `user_id`';
+                $downloadItems = $wpdb->get_results($wpdb->prepare($sql, [$payloadObject->repository->full_name]));
+                unset($sql);
+
+                if (is_array($downloadItems) && !empty($downloadItems)) {
+                    // if found.
+                    $user_ids = [];
+                    foreach ($downloadItems as $row) {
+                        $user_ids[] = $row->user_id;
+                    }// endforeach;
+                    unset($row);
+                } else {
+                    // if not found.
+                    unset($downloadItems, $hashAlgo, $payloadObject);
+                    return false;
+                }
+                unset($downloadItems);
+            }
+            unset($payloadObject);
+
+            if (isset($user_ids) && is_array($user_ids)) {
+                // if there is at lease 1 user ID or more.
+                // get secret keys from users.
+                // @link https://stackoverflow.com/a/10634225/128761 WHERE IN prepare.
+                $sql = 'SELECT * FROM `' . $wpdb->usermeta . '` WHERE `meta_key` = %s AND `user_id` IN (' . implode(', ', array_fill(0, count($user_ids), '%d')) . ')';
+                $data = [];
+                $data[] = $this->getWebhookSecretName();
+                $data = array_merge($data, $user_ids);
+                $userMetaResults = $wpdb->get_results($wpdb->prepare($sql, $data));
+                unset($data, $sql);
+            }
+            unset($user_ids);
+
+            if (!isset($userMetaResults) || empty($userMetaResults)) {
+                // if not found any secret key.
+                return false;
+            } else {
+                // if found at lease one secret key or more.
+                // check that which one is match this signature.
+                foreach ($userMetaResults as $row) {
+                    $buildSignature = $hashAlgo . '=' . hash_hmac($hashAlgo, $this->webhookPhpInput, $row->meta_value);
+                    if ($buildSignature === $this->webhookHeaders['X-Hub-Signature']) {
+                        $this->webhookValidSecretKey = [];
+                        $this->webhookValidSecretKey[$row->user_id] = $row->meta_value;
+                        unset($buildSignature, $hashAlgo, $userMetaResults);
+                        return true;
+                    }
+                }// endforeach;
+                unset($hashAlgo, $row, $userMetaResults);
+            }
+
+            return false;
         }// validateGitHubWebhook
 
 
         /**
          * Set webhook data.
+         *
+         * The `webhook` prefix methods is for accept request from GitHub to work with auto update.
          *
          * @param array $headers The header array. This is basically get it from `getallheaders()` PHP function.
          * @param string $phpinput The input from `php://input` that get via `file_get_contents()` PHP function.

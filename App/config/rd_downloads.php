@@ -120,35 +120,44 @@ unset($availableShortcodeAttributes, $dbPlaceholders, $ElementPlaceholders, $txt
 $captchaHelp = __('Captcha is human validation that can help prevent bot, please select how you use captcha.', 'rd-downloads');
 // end captcha help -----------------------------------------------------------------------------------------
 
-$githubSecretHelp = '<p><strong>' . __('To use GitHub auto update', 'rd-downloads') . '</strong></p>
-    <ul class="rd-settings-ul">
-        <li>' . sprintf(__('Go to your %1$sGitHub%2$s repository.', 'rd-downloads'), '<a href="https://github.com/" target="github">', '</a>') . '</li>
-        <li>' . __('Go to Settings &gt; Webhooks.', 'rd-downloads') . '</li>
-        <li>' . sprintf(
-            __('If you didn\'t created Webhooks yet, click on %1$s button. If you want to change the secret, click on %2$s button.', 'rd-downloads'),
-            '<strong>' . __('Add webhook', 'rd-downloads') . '</strong>',
-            '<strong>' . __('Edit', 'rd-downloads') . '</strong>'
-        ) . '</li>
-        <li>' . sprintf(__('Enter %s for payload URL.', 'rd-downloads'), '<code>' . add_query_arg(['pagename' => 'rddownloads_github_autoupdate'], home_url()) . '</code>') . '</li>
-        <li>' . sprintf(__('Content type is %s.', 'rd-downloads'), '<strong>application/json</strong>') . '</li>
-        <li>' . __('On Secret field, enter the secret generated from here.', 'rd-downloads') . '</li>
-        <li>' . sprintf(__('On events to trigger this webhook, choose %s.', 'rd-downloads'), '<strong>' . __('Just the push event', 'rd-downloads') . '</strong>') . '</li>
-        <li>' . sprintf(__('Check on %s checkbox and save.', 'rd-downloads'), '<strong>' . __('Active', 'rd-downloads') . '</strong>') . '</li>
-    </ul>
-' . PHP_EOL;
+// GitHub help -----------------------------------------------------------------------------------------------
+$githubAutoUpdateHelp = __('Choose how the auto update works. Auto update on every release and commit can make your server slow, if you choose every release then it will work less.', 'rd-downloads') . '<br>';
+/* translators: %1$s: Client ID, %2$s: Client Secret. */
+$githubAutoUpdateHelp .= sprintf(__('To make the auto update works, please follow the instruction below to get %1$s and %2$s', 'rd-downloads'), '<strong>' . __('Client ID', 'rd-downloads') . '</strong>', '<strong>' . __('Client Secret', 'rd-downloads') . '</strong>');
 
-$githubTokenHelp = '<p><strong>' . __('To get GitHub token', 'rd-downloads') . '</strong></p>
-    <ul class="rd-settings-ul">
-        <li>' . sprintf(__('Go to your %1$sGitHub%2$s website.', 'rd-downloads'), '<a href="https://github.com/" target="github">', '</a>') . '</li>
-        <li>' . __('Click at your icon on the right of the top bar, the menu will be appear.', 'rd-downloads') . '</li>
-        <li>' . sprintf(__('Go to %1$sSettings &gt; Developer settings &gt; Personal access tokens%2$s page.', 'rd-downloads'), '<a href="https://github.com/settings/tokens" target="githubTOken">', '</a>') . '</li>
-        <li>' . sprintf(__('Click on %s button.', 'rd-downloads'), '<strong>' . __('Generate new token', 'rd-downloads') . '</strong>') . '</li>
-        <li>' . __('Enter Token description.', 'rd-downloads') . '</li>
-        <li>' . sprintf(__('Check for these scopes. %s', 'rd-downloads'), '<strong>repo</strong>, <strong>repo:status</strong>, <strong>repo_deployment</strong>, <strong>public_repo</strong>, <strong>repo:invite</strong>') . '</li>
-        <li>' . sprintf(__('Click on %s button.', 'rd-downloads'), '<strong>' . __('Generate token', 'rd-downloads') . '</strong>') . '</li>
-        <li>' . __('Copy your personal token and paste above field then save changes before you won\'t be able to see it again.', 'rd-downloads') . '</li>
-    </ul>
-' . PHP_EOL;
+$githubOAuthHelp = '<h3>' . __('GitHub OAuth', 'rd-downloads') . '</h3>' . PHP_EOL;
+$githubOAuthHelp .= '<p>' . PHP_EOL;
+$githubOAuthHelp .= __('This plugin use GitHub OAuth to auto update, auto correct repository URL. This is a lot easier for manage many repositories webhook and support multiple user\'s repositories.', 'rd-downloads') . PHP_EOL;
+$githubOAuthHelp .= '<br>' . PHP_EOL;
+$githubOAuthHelp .= __('To make these functions work, you have to register an OAuth application on GitHub for your website.', 'rd-downloads') . PHP_EOL;
+$githubOAuthHelp .= '</p>' . PHP_EOL;
+$githubOAuthHelp .= '<h4>' . __('Register OAuth application', 'rd-downloads') . '</h4>' . PHP_EOL;
+$githubOAuthHelp .= '<ol>' . PHP_EOL;
+/* translators: %1$s: Open link, %2$s: Close link. */
+$githubOAuthHelp .= '<li>' . sprintf(__('Go to %1$sGitHub.com%2$s website.', 'rd-downloads'), '<a href="https://github.com/" target="github">', '</a>') . '</li>' . PHP_EOL;
+$githubOAuthHelp .= '<li>' . __('Register an application', 'rd-downloads') . PHP_EOL;
+$githubOAuthHelp .= '<ol>' . PHP_EOL;
+$githubOAuthHelp .= '<li>' . __('If you want to register an application for your organization, please go to your organization &gt; Settings &gt; Developer settings &gt; OAtuh apps and click on Register an application.', 'rd-downloads') . '</li>' . PHP_EOL;
+/* translators: %1$s: Open link, %2$s: Close link. */
+$githubOAuthHelp .= '<li>' . sprintf(__('If you want to register an application for yourself, please go to your Settings &gt; Developer settings &gt; %1$sOAtuh apps%2$s and click on New OAuth app.', 'rd-downloads'), '<a href="https://github.com/settings/developers" target="github_usersettings">', '</a>') . '</li>' . PHP_EOL;
+$githubOAuthHelp .= '</ol>' . PHP_EOL;
+$githubOAuthHelp .= '</li>' . PHP_EOL;
+/* translators: %s: Home URL. */
+$githubOAuthHelp .= '<li>' . sprintf(__('Enter your application data here and set %s for Homepage URL and Authorization callback URL.', 'rd-downloads'), '<strong>' . get_home_url() . '</strong>') . '</li>' . PHP_EOL;
+$githubOAuthHelp .= '<li>' . __('Click on Register application button.', 'rd-downloads') . '</li>' . PHP_EOL;
+/* translators: %1$s: Client ID, %2$s: Client Secret. */
+$githubOAuthHelp .= '<li>' . sprintf(__('Copy %1$s and %2$s to the form field above. You may add your logo in the OAuth application settings page.', 'rd-downloads'), '<strong>' . __('Client ID', 'rd-downloads') . '</strong>', '<strong>' . __('Client Secret', 'rd-downloads') . '</strong>') . '</li>' . PHP_EOL;
+$githubOAuthHelp .= '</ol>' . PHP_EOL;
+$githubOAuthHelp .= '<h4>' . __('Connect users with their GitHub', 'rd-downloads') . '</h4>' . PHP_EOL;
+$githubOAuthHelp .= '<p>' . PHP_EOL;
+$githubOAuthHelp .= __('Your users who want to add the download data and using GitHub auto update, auto correct repository URL features must connect this website with their GitHub.', 'rd-downloads') . PHP_EOL;
+$githubOAuthHelp .= '</p>' . PHP_EOL;
+$githubOAuthHelp .= '<ol>' . PHP_EOL;
+$githubOAuthHelp .= '<li>' . __('Complete all the steps above and GitHub OAuth link will be appears.', 'rd-downloads') . '</li>' . PHP_EOL;
+/* translators: %1$s: Open link, %2$s: Close link. */
+$githubOAuthHelp .= '<li>' . sprintf(__('Click on %1$sGitHub OAuth%2$s menu and follow instruction.', 'rd-downloads'), '<a href="' . admin_url('admin.php?page=rd-downloads_github_connect') . '">', '</a>') . '</li>' . PHP_EOL;
+$githubOAuthHelp .= '</ol>' . PHP_EOL;
+// end GitHub help ------------------------------------------------------------------------------------------
 
 return [
     'tab_style' => 'vertical',
@@ -211,47 +220,43 @@ return [
             'title' => __('GitHub', 'rd-downloads'),
             'fields' => [
                 [
-                    'default' => '',
-                    'description' => '<button id="rd-downloads-settings-regenerate-secret" class="button" type="button"><i class="re-generate-github-secret-icon fas fa-sync-alt"></i> ' . __('Re-generate', 'rd-downloads') . '</button><br>' .
-                        __('Secret key for use in GitHub webhook auto update', 'rd-downloads'),
-                    'id' => 'rdd_github_secret',
-                    'input_attributes' => [
-                        'readonly' => '',
-                    ],
-                    'title' => __('GitHub Secret', 'rd-downloads'),
-                    'type' => 'text',
-                ],
-                [
                     'default' => 'release',
-                    'description' => __('Choose how auto update work. Auto update on every releases and commits can make your server slow, if you choose every releases then it will work less.', 'rd-downloads'),
+                    'description' => $githubAutoUpdateHelp,
                     'id' => 'rdd_github_auto_update',
                     'options' => [
                         '' => __('Do not auto update', 'rd-downloads'),
-                        'release' => __('Every releases', 'rd-downloads') . ' (' . __('Default', 'rd-downloads') . ')',
-                        'release+commit' => __('Every releases and commits', 'rd-downloads'),
+                        'release' => __('Every release', 'rd-downloads') . ' (' . __('Default', 'rd-downloads') . ')',
+                        'release+commit' => __('Every release and commit', 'rd-downloads'),
                     ],
                     'title' => __('Auto update', 'rd-downloads'),
                     'type' => 'select',
                 ],
                 [
-                    'content' => $githubSecretHelp,
-                    'title' => '',
-                    'type' => 'html',
-                ],
-                [
                     'default' => '',
-                    'description' => '<button id="rd-downloads-settings-test-token" class="button" type="button">' . __('Test token', 'rd-downloads') . '</button><br>' .
-                        __('Token that can be used to access GitHub API such as auto correct repository URL.', 'rd-downloads') . ' ' .
-                        __('This is required to use with GitHub auto update.', 'rd-downloads'),
-                    'id' => 'rdd_github_token',
-                    'title' => __('GitHub token', 'rd-downloads'),
+                    'id' => 'rdd_github_client_id',
+                    'input_attributes' => [
+                        'autocomplete' => 'off',
+                    ],
+                    'title' => __('Client ID', 'rd-downloads'),
                     'type' => 'text',
                 ],
                 [
-                    'content' => $githubTokenHelp,
+                    'default' => '',
+                    'id' => 'rdd_github_client_secret',
+                    'input_attributes' => [
+                        'autocomplete' => 'off',
+                    ],
+                    'title' => __('Client Secret', 'rd-downloads'),
+                    'type' => 'text',
+                ],
+                [
+                    'content' => $githubOAuthHelp,
                     'title' => '',
                     'type' => 'html',
                 ],
+                // GitHub token is for auto correct URL (get latest repository data by version range), auto update from GitHub push event.
+                // GitHub secret is for auto update from GitHub push event via webhook.
+                // GitHub secret must be add to the repository by user's action after connected GitHub OAuth to make auto update work.
             ],// fields
         ],// end GitHub tab.
         [
