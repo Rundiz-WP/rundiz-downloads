@@ -79,7 +79,6 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Url')) {
         /**
          * Get remote file info.
          *
-         * @todo [rd-downloads] change curl to `wp_remote_xxx()` function.
          * @param string $url The URL to get its info.
          * @return array|false Return array with 'data', 'size' keys if success. Return false for failure.
          * @throws \InvalidArgumentException Throw invalid argument error on wrong type.
@@ -96,24 +95,21 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Url')) {
                 // if the URL is valid data.
                 $output = [];
 
-                $ch = curl_init($url);
-                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-                curl_setopt($ch, CURLOPT_HEADER, false);
-                curl_setopt($ch, CURLOPT_MAXREDIRS, 2);
-                curl_setopt($ch, CURLOPT_NOBODY, true);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-                curl_exec($ch);
+                $remoteArgs = [];
+                $remoteArgs['redirection'] = 1;
+                $remoteArgs['user-agent'] = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING);
+                $response = wp_remote_get($url, $remoteArgs);
+                unset($remoteArgs);
 
-                $data = curl_getinfo($ch);
-                if ($data !== false) {
-                    $output['data'] = $data;
-                    $output['size'] = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
+                $headerResult = wp_remote_retrieve_headers($response);
+                unset($response);
+                Logger::staticDebugLog($headerResult, 'get-remote-file-info-header-result-' . current_time('Ymd-Hi'));
+
+                if ((is_array($headerResult) || is_object($headerResult)) && isset($headerResult['content-length'])) {
+                    $output['size'] = $headerResult['content-length'];
+                    $output['data'] = (array) $headerResult;
                 }
-
-                curl_close($ch);
-                unset($ch, $data);
+                unset($headerResult);
 
                 if (isset($output)) {
                     return $output;

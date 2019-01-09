@@ -1,7 +1,7 @@
 <?php
 /**
  * File browser (also working with delete and upload).
- * 
+ *
  * @package rd-downloads
  */
 
@@ -22,7 +22,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
 
         /**
          * Ajax browse files.
-         * 
+         *
          * @global \wpdb $wpdb
          */
         public function browseFiles()
@@ -46,14 +46,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
 
             $wp_upload_dir = wp_upload_dir();
             if (
-                is_array($wp_upload_dir) && 
-                array_key_exists('basedir', $wp_upload_dir) && 
-                array_key_exists('baseurl', $wp_upload_dir) && 
+                is_array($wp_upload_dir) &&
+                array_key_exists('basedir', $wp_upload_dir) &&
+                array_key_exists('baseurl', $wp_upload_dir) &&
                 is_dir($wp_upload_dir['basedir'] . '/' . $target)
             ) {
                 $output['list'] = [];
                 $Fi = new \FilesystemIterator(
-                    realpath($wp_upload_dir['basedir'] . '/' . $target), 
+                    realpath($wp_upload_dir['basedir'] . '/' . $target),
                     \FilesystemIterator::SKIP_DOTS
                 );
                 $folders = [];
@@ -84,7 +84,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
                             $files[$FileInfo->getFilename()]['previousTarget'] = $target . '/' . $FileInfo->getFilename();
                             $files[$FileInfo->getFilename()]['relatedPath'] = ltrim($target . '/' . $FileInfo->getFilename(), '/');
                             if (
-                                stripos($target, '/rd-downloads') !== false && 
+                                stripos($target, '/rd-downloads') !== false &&
                                 $target . '/' . $FileInfo->getFilename() != '/rd-downloads/index.html' &&
                                 current_user_can('upload_files')
                             ) {
@@ -125,9 +125,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
                                         $files[$key]['isDeletable'] = false;
                                         $files[$key]['isLinkedDownloadsData'] = true;
                                         if (
-                                            $row->user_id == get_current_user_id() || 
+                                            $row->user_id == get_current_user_id() ||
                                             (
-                                                $row->user_id != get_current_user_id() && 
+                                                $row->user_id != get_current_user_id() &&
                                                 current_user_can('edit_others_posts')
                                             )
                                         ) {
@@ -155,7 +155,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
 
         /**
          * Change upload folder.
-         * 
+         *
          * @access protected Do not access this method directly, it is called from `add_action()`.
          * @param array $dir
          * @return array
@@ -174,7 +174,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
 
         /**
          * Ajax delete an uploaded file.
-         * 
+         *
          * @global \wpdb $wpdb
          */
         public function deleteFile()
@@ -228,7 +228,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
                     )
                 ) &&
                 (
-                    strtolower($target) == '/rd-downloads/index.html' || 
+                    strtolower($target) == '/rd-downloads/index.html' ||
                     strtolower($target) == 'rd-downloads/index.html'
                 )
             ) {
@@ -241,9 +241,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
             if (!isset($disallowDelete) || (isset($disallowDelete) && $disallowDelete === false)) {
                 $wp_upload_dir = wp_upload_dir();
                 if (
-                    is_array($wp_upload_dir) && 
-                    array_key_exists('basedir', $wp_upload_dir) && 
-                    array_key_exists('baseurl', $wp_upload_dir) && 
+                    is_array($wp_upload_dir) &&
+                    array_key_exists('basedir', $wp_upload_dir) &&
+                    array_key_exists('baseurl', $wp_upload_dir) &&
                     is_file($wp_upload_dir['basedir'] . '/' . $target) &&
                     stripos($target, '/rd-downloads') !== false
                 ) {
@@ -254,7 +254,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
                     global $wpdb;
                     $itemRow = $wpdb->get_row(
                         $wpdb->prepare(
-                            'SELECT `download_id`, `download_type`, `download_url` FROM `' . $wpdb->prefix . 'rd_downloads` WHERE `download_type` = 0 AND `download_url` = %s', 
+                            'SELECT `download_id`, `download_type`, `download_url` FROM `' . $wpdb->prefix . 'rd_downloads` WHERE `download_type` = 0 AND `download_url` = %s',
                             $output['deleteUrl']
                         )
                     );
@@ -282,9 +282,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
                     }
                     unset($itemRow);
                 } elseif (
-                    is_array($wp_upload_dir) && 
-                    array_key_exists('basedir', $wp_upload_dir) && 
-                    array_key_exists('baseurl', $wp_upload_dir) && 
+                    is_array($wp_upload_dir) &&
+                    array_key_exists('basedir', $wp_upload_dir) &&
+                    array_key_exists('baseurl', $wp_upload_dir) &&
                     !is_file($wp_upload_dir['basedir'] . '/' . $target)
                 ) {
                     // if file was not found.
@@ -309,7 +309,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
 
         /**
          * Use server side to get remote file data such as size, content-type.
-         * 
+         *
          * This is to avoid cross origin blocked via ajax.
          */
         public function getRemoteFileData()
@@ -322,8 +322,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
 
             if (filter_var($remote_file, FILTER_VALIDATE_URL) !== false) {
                 $Url = new \RdDownloads\App\Libraries\Url();
-                $output = $output + $Url->getRemoteFileInfo($remote_file);
-                unset($Url);
+                $remoteFileResult = $Url->getRemoteFileInfo($remote_file);
+                if (is_array($remoteFileResult)) {
+                    $output = $output + $remoteFileResult;
+                }
+                unset($remoteFileResult, $Url);
             } else {
                 if (defined('WP_DEBUG') && WP_DEBUG === true) {
                     $output['debug_remoteurl'] = 'invalid';
@@ -352,7 +355,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
 
         /**
          * Set new file name if it is not safe for web (example: contain Thai character) or add number suffix if file exists.
-         * 
+         *
          * @link https://github.com/Rundiz/upload/blob/version2/Rundiz/Upload/Upload.php Reference.
          * @access protected  Do not access this method directly, it is called from `add_action()`.
          * @param string $name
