@@ -1,0 +1,2 @@
+
+* On delete download items, check that if there is no same GitHub repo name (owner/name) on DB then remove the webhook on GitHub website.
