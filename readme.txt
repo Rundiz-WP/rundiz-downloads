@@ -3,7 +3,7 @@ Contributors: okvee
 Tags: downloads, download, download manager, file hosting, GitHub
 Requires at least: 4.0
 Tested up to: 5.0.2
-Stable tag: 0.4
+Stable tag: 1.0
 Requires PHP: 5.5
 License: MIT
 License URI: https://opensource.org/licenses/MIT
@@ -19,7 +19,8 @@ You can change your setting to accept how often of auto update. Every releases a
 = Features =
 
  * Manage files locally or hosted on GitHub or any remote files.
- * Auto update download URL once GitHub repository was updated.
+ * Use GitHub OAuth to manage webhooks (webhook is for auto update). It will be super easy if you have many users or repositories.
+ * Auto update download URL and version once GitHub repository was updated.
  * Setting GitHub auto update to none, every releases, every releases and commits.
  * Manual update multiple remote file data such as file size that was changed.
  * Use version range to compare tags before update.
@@ -61,14 +62,31 @@ Yes, the plugin's tables will be dropped on uninstall.
 2. Manage downloads page.
 3. Add or edit download page.
 4. Download logs page.
-5. Plugin settings tab 1 (General).
-6. Plugin settings tab 2 (GitHub settings).
-7. Plugin settings tab 3 (Log/statistic).
-8. Plugin settings tab 4 (Design). This will be convert from shortcode into the element you design.
-9. Add a download button for TinyMCE (classic editor).
-10. Add a download dialog after clicked on the button in classic editor.
+5. GitHub OAuth page.
+6. Plugin settings tab 1 (General).
+7. Plugin settings tab 2 (Anti robots settings).
+8. Plugin settings tab 3 (GitHub settings).
+9. Plugin settings tab 4 (Statistic/Logs).
+10. Plugin settings tab 5 (Design). This will be convert from shortcode into the element you design.
+11. Add a download button for TinyMCE (classic editor).
+12. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
+= 1.0 =
+2019-01-09
+
+* Use new OAuth to sync webhook for repos. (Use OAuth to sync webhook and secret key for multiple repositories.)
+* Add function to remove webhook on delete download item.
+* Remove old way to manually add webhook per repository.
+* Add filters for cache lifetime.
+* Add more cleanup scheduled hooks, user options on uninstall the plugin.
+* Add user entered wrong captcha log.
+* Display total wrong captcha in dashboard widget graph.
+* Fix capability check for user who is "Author" can't use search dialog in classic editor.
+* Fix querystring data not encoded.
+* Change from CURL to wp_remote_xxx function.
+* Update translation.
+
 = 0.4 =
 2018-12-29
 

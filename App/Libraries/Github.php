@@ -917,7 +917,9 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
             \RdDownloads\App\Libraries\Cookies::deleteCookie($this->oauthAccessTokenName);
             unset($_COOKIE[$this->oauthAccessTokenName]);
 
-            update_user_meta($user_id, $this->oauthAccessTokenName, '');
+            // don't remove access token data.
+            // leave this to make auto update works, the auto update also required this thing.
+            //update_user_meta($user_id, $this->oauthAccessTokenName, '');// don't remove this line to remind myself.
         }// oauthDisconnect
 
 
