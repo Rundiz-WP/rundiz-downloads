@@ -416,6 +416,29 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
 
         /**
+         * Make API request to remove webhook on github.com
+         *
+         * @param string|false $hook_id The hook_id get from `apiGetWebhookId()` method. Set to empty if there is no hook ID. Set to false for auto detect.
+         * @param string $repoOwner Repository owner.
+         * @param string $repoName Repository name.
+         * @param array $headers The `wp_remote_request()` headers array.
+         * @return array Return value from `apiV3Request()` method.
+         */
+        public function apiRemoveWebhook($hook_id, $repoOwner, $repoName, array $headers)
+        {
+            if ($hook_id === false) {
+                // if $hook_id is set to auto detect.
+                $hook_id = $this->apiGetWebhookId($headers, $repoOwner, $repoName);
+                if ($hook_id === false) {
+                    return [];
+                }
+            }
+
+            return $this->apiV3Request('/repos/' . $repoOwner . '/' . $repoName . '/hooks/' . $hook_id, $headers, '', 'DELETE');
+        }// apiRemoveWebhook
+
+
+        /**
          * Get GitHub API v3 headers array.
          *
          * @param string $accessToken The GitHub access token that got via OAuth.

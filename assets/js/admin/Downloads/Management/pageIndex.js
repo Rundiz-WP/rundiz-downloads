@@ -166,7 +166,7 @@ class RdDownloadsManagement {
                     } else {
                         var response = data;
                     }
-                    if (typeof(response) === 'undefined') {
+                    if (typeof(response) === 'undefined' || response === null || response === '') {
                         response = {};
                     }
 

@@ -112,7 +112,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
             // get the data from DB.
             global $wpdb;
             // use WHERE IN to search for *any* of the values. https://mariadb.com/kb/en/library/in/
-            $sql = 'SELECT `download_id`, `user_id`, `download_name`, `download_type`, `download_related_path`
+            $sql = 'SELECT `download_id`, `user_id`, `download_name`, `download_type`, `download_github_name`, `download_related_path`
                 FROM `' . $wpdb->prefix . 'rd_downloads`
                 WHERE `download_id` IN (' . implode(', ', array_fill(0, count($download_ids), '%d')) . ')';// https://stackoverflow.com/a/10634225/128761
             $results = $wpdb->get_results(
@@ -140,8 +140,13 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                 $deleted_download_names = [];
                 $failed_delete_download_ids = [];
                 $failed_delete_download_names = [];
+                $failed_remove_githubwebhook = [];
 
                 $FileSystem = new \RdDownloads\App\Libraries\FileSystem();
+                $Github = new \RdDownloads\App\Libraries\Github();
+                $accessToken = $Github->getOAuthAccessToken($current_user_id);
+                $apiHeader = $Github->apiV3Headers($accessToken);
+                unset($accessToken);
 
                 foreach ($results as $row) {
                     $found_download_ids[] = $row->download_id;
@@ -180,7 +185,28 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                                 unset($wp_upload_dir);
                             }
                             unset($checkExists);
-                        }// endif local file.
+                        } elseif ($row->download_type == '1') {
+                            // if github file.
+                            // check that if there is no same github repo name on db.
+                            $sql = 'SELECT COUNT(`download_id`) AS `total`, `download_id`, `download_github_name` FROM `' . $wpdb->prefix . 'rd_downloads` WHERE `download_github_name` = %s AND `download_id` != %d';
+                            $checkExists = $wpdb->get_var($wpdb->prepare($sql, [$row->download_github_name, $row->download_id]));
+                            unset($sql);
+                            if (is_null($checkExists)) {
+                                // if `get_var()` contain some error.
+                                error_log(
+                                    sprintf(
+                                        /* translators: %1$s: The last query statement, %2$s: MySQL error message. */
+                                        __('An error has been occur in SQL statement (%1$s). The error message: %2$s .'),
+                                        $wpdb->last_query,
+                                        $wpdb->last_error
+                                    )
+                                );
+                            } elseif ($checkExists <= 0) {
+                                // if not exists in other download data, mark as remove webhook.
+                                $removeWebhook = true;
+                            }
+                            unset($checkExists);
+                        }// endif download type.
 
                         if (!isset($donot_delete) || (isset($donot_delete) && $donot_delete === false)) {
                             // if it is able to delete, delete it in db.
@@ -193,20 +219,54 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                                     'download_id' => $row->download_id,
                                 ]);
                                 unset($Dll);
+
+                                if (isset($removeWebhook) && $removeWebhook === true) {
+                                    // if it was marked as remove webhook.
+                                    $expNameOwner = explode('/', $row->download_github_name);
+                                    $repoOwner = $expNameOwner[0];
+                                    unset($expNameOwner[0]);
+                                    $repoName = implode('/', $expNameOwner);
+                                    unset($expNameOwner);
+
+                                    $hook_id = $Github->apiGetWebhookId($apiHeader, $repoOwner, $repoName);
+
+                                    if ($hook_id !== false) {
+                                        $removeWebhookResult = $Github->apiRemoveWebhook($hook_id, $repoOwner, $repoName, $apiHeader);
+                                        if (
+                                            !isset($removeWebhookResult['header']['status-int']) ||
+                                            (
+                                                isset($removeWebhookResult['header']['status-int']) &&
+                                                (
+                                                    $removeWebhookResult['header']['status-int'] < 200 ||
+                                                    $removeWebhookResult['header']['status-int'] >= 300
+                                                )
+                                            )
+                                        ) {
+                                            // if failed to remove.
+                                            $failed_remove_githubwebhook[] = $row->download_github_name;
+                                        }
+                                        unset($removeWebhookResult);
+                                    }
+                                    unset($hook_id, $repoName, $repoOwner);
+                                }
                             } else {
                                 $failed_delete_download_ids[] = $row->download_id;
                                 $failed_delete_download_names[] = $row->download_name;
                             }
                         }
-                        unset($donot_delete);
+                        unset($donot_delete, $removeWebhook);
                     }
                 }// endforeach;
-                unset($current_user_id, $FileSystem, $row);
+                unset($apiHeader, $current_user_id, $FileSystem, $Github, $row);
 
                 // check deleted, failed, result and set the error message.
                 if (count($download_ids) === count($deleted_download_ids)) {
                     $output['form_result_class'] = 'notice-success';
                     $output['form_result_msg'] = __('Success! All selected items have been deleted.', 'rd-downloads');
+                    if (!empty($failed_remove_githubwebhook)) {
+                        $output['form_result_class'] = 'notice-warning';
+                        $output['form_result_msg'] .= '<br>' . __('There are some webhook that is unable to remove, here is the result.', 'rd-downloads') . ' ' . implode(', ', $failed_remove_githubwebhook);
+                    }
                 } else {
                     $notfound_download_ids = array_diff($download_ids, $found_download_ids);
 
@@ -215,6 +275,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                         '<ul class="rd-downloads-ul">' .
                             (count($deleted_download_names) > 0 ? '<li><strong>' . _n('Deleted item', 'Deleted items', count($deleted_download_names), 'rd-downloads') . ':</strong> ' . implode(', ', $deleted_download_names) . '</li>' : '') .
                             (count($failed_delete_download_names) > 0 ? '<li><strong>' . _n('Failed to delete item', 'Failed to delete items', count($failed_delete_download_names), 'rd-downloads') . ':</strong> ' . implode(', ', $failed_delete_download_names) . '</li>' : '') .
+                            (count($failed_remove_githubwebhook) > 0 ? '<li><strong>' . _n('Failed to remove webhook on GitHub', 'Failed to remove webhooks on GitHub', count($failed_remove_githubwebhook), 'rd-downloads') . ':</strong> ' . implode(', ', $failed_remove_githubwebhook) . '</li>' : '') .
                             (count($capability_limited_download_names) > 0 ? '<li><strong>' . _n('Capability limited item', 'Capability limited items', count($capability_limited_download_names), 'rd-downloads') . ':</strong> ' . implode(', ', $capability_limited_download_names) . '</li>' : '') .
                             (count($notfound_download_ids) > 0 ? '<li><strong>' .  _n('Mismatch ID', 'Mismatch IDs', count($notfound_download_ids), 'rd-downloads') . ':</strong> ' . implode(', ', $notfound_download_ids) . '</li>' : '') .
                         '</ul>';
@@ -231,6 +292,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
 
                 unset($capability_limited_download_ids, $capability_limited_download_names);
                 unset($failed_delete_download_ids, $failed_delete_download_names);
+                unset($failed_remove_githubwebhook);
                 unset($found_download_ids, $notfound_download_ids);
                 unset($deleted_download_ids, $deleted_download_names);
             } else {
