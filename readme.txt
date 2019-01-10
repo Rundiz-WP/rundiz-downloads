@@ -3,7 +3,7 @@ Contributors: okvee
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9HQE4GVV4KTZE
 Tags: downloads, download, download manager, file hosting, GitHub
 Requires at least: 4.0
-Tested up to: 5.0.2
+Tested up to: 5.0.3
 Stable tag: 1.0
 Requires PHP: 5.5
 License: MIT
