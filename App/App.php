@@ -20,7 +20,7 @@ if (!class_exists('\\RdDownloads\\App\\App')) {
          */
         public function loadLanguage()
         {
-            load_plugin_textdomain('rd-downloads', false, dirname(plugin_basename(RDDOWNLOADS_FILE)) . '/languages/');
+            load_plugin_textdomain('rd-downloads', false, dirname(plugin_basename(RDDOWNLOADS_FILE)) . '/App/languages/');
         }// loadLanguage
 
 
