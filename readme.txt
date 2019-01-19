@@ -2,7 +2,7 @@
 Contributors: okvee
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9HQE4GVV4KTZE
 Tags: downloads, download, download manager, file hosting, GitHub
-Requires at least: 4.0
+Requires at least: 4.6.0
 Tested up to: 5.0.3
 Stable tag: 1.0
 Requires PHP: 5.5
@@ -38,7 +38,7 @@ You can change your setting to accept how often of auto update. Every releases a
 
 = System requirement =
 PHP 5.5 or higher
-WordPress 4.0 or higher
+WordPress 4.6.0 or higher
 
 Browse the source code, bug report, pull request on [GitHub repository](https://github.com/Rundiz-WP/rundiz-downloads). 
 
