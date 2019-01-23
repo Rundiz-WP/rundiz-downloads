@@ -1,1 +1,1 @@
-This folder is for place language translation .po and .mo files. The file name should be pluginName-locale.po and pluginName-locale.mo. For example: rd-downloads-th.po, rd-downloads-th.mo for Thai language.
+This folder is for place language translation .po and .mo files. The file name should be pluginDomain-locale.po and pluginDomain-locale.mo. For example: rd-downloads-th.po, rd-downloads-th.mo for Thai language.

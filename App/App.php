@@ -1,7 +1,7 @@
 <?php
 /**
  * Main app class. extend this class if you want to use any method of this class.
- * 
+ *
  * @package rd-downloads
  */
 
