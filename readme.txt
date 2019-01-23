@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: downloads, download, download manager, file hosting, GitHub
 Requires at least: 4.6.0
 Tested up to: 5.0.3
-Stable tag: 1.0
+Stable tag: 1.0.1
 Requires PHP: 5.5
 License: MIT
 License URI: https://opensource.org/licenses/MIT
@@ -73,6 +73,14 @@ Yes, the plugin's tables will be dropped on uninstall.
 12. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
+= 1.0.1 =
+2019-01-23
+
+* Update tested up to (WordPress).
+* Fix load language in wrong path.
+* Update required at least (WordPress).
+* Update translation.
+
 = 1.0 =
 2019-01-09
 
