@@ -47,7 +47,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')) {
                 add_filter('parent_file', [$this, 'manualHighlightParentMenu']);
 
                 $Management = new Management();
-                add_filter('set-screen-option', [$Management, 'filterScreenOption'], 10, 3);
+                add_filter('set-screen-option', [$Management, 'filterScreenOption'], 11, 3);
                 unset($Management);
             }
         }// registerHooks
