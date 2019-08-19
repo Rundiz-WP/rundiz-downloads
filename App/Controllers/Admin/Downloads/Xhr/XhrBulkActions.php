@@ -60,7 +60,6 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                         return $this->deleteDownloads($download_ids);
                 }// endswitch;
             }// endif;
-            $output['bka'] = $bulkAction;
             unset($bulkAction);
 
             $output['form_result_class'] = 'notice-error';
