@@ -38,7 +38,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                 $download_ids = $download_ids['download_id'];
             }
 
-            if (!is_array($download_ids) || (is_array($download_ids) && empty($download_ids))) {
+            if (
+                (
+                    !is_array($download_ids) || 
+                    (
+                        is_array($download_ids) && empty($download_ids)
+                    )
+                )
+            ) {
                 status_header(400);
                 exit();
             }
@@ -51,49 +58,15 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                         return $this->remoteUpdate($download_ids);
                     case 'delete':
                         return $this->deleteDownloads($download_ids);
-                    case 'clearlogs':
-                        return $this->clearLogs();
                 }// endswitch;
             }// endif;
+            $output['bka'] = $bulkAction;
             unset($bulkAction);
 
             $output['form_result_class'] = 'notice-error';
             $output['form_result_msg'] = __('Invalid form action, please try again.', 'rd-downloads');
             wp_send_json($output, 400);
         }// bulkActions
-
-
-        /**
-         * Clear the logs.
-         *
-         * This method will response json and end process.
-         */
-        public function clearLogs()
-        {
-            // check the most basic capability (permission).
-            if (!current_user_can('delete_users')) {
-                $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('You do not have permission to access this page.');
-                wp_send_json($output, 403);
-            }
-
-            $responseStatus = 200;
-            $output = [];
-
-            $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
-            $clearResult = $RdDownloadLogs->clearLogs();
-            unset($RdDownloadLogs);
-
-            if (isset($clearResult['delete_error'])) {
-                $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = $clearResult['delete_error'];
-            } else {
-                $output['form_result_class'] = 'notice-success';
-                $output['form_result_msg'] = __('All logs were cleared.', 'rd-downloads');
-            }
-
-            wp_send_json($output, $responseStatus);
-        }// clearLogs
 
 
         /**

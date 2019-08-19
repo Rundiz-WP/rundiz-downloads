@@ -91,7 +91,7 @@ class RdDownloadLogs {
                 $('.rd-downloads-form-result-placeholder').html('');
                 // disable buttons.
                 thisClass.enableDisableButtons(false);
-                var formData = 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsBulkActions&bulkAction=' + encodeURIComponent(bulkActionValue);
+                var formData = 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsLogsBulkActions&bulkAction=' + encodeURIComponent(bulkActionValue);
 
                 $.ajax({
                     'url': ajaxurl,
