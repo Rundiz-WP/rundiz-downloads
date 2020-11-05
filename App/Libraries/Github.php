@@ -1047,12 +1047,13 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          */
         public function validateGitHubWebhook()
         {
-            if (!isset($this->webhookHeaders['X-Hub-Signature']) || (isset($this->webhookHeaders['X-Hub-Signature']) && !is_scalar($this->webhookHeaders['X-Hub-Signature']))) {
+            $headers = array_change_key_case($this->webhookHeaders);
+            if (!isset($headers['x-hub-signature']) || (isset($headers['x-hub-signature']) && !is_scalar($headers['x-hub-signature']))) {
                 // if no signature for check.
                 return false;
             }
 
-            $explodeSignature = explode('=', $this->webhookHeaders['X-Hub-Signature']);
+            $explodeSignature = explode('=', $headers['x-hub-signature']);
             if (!isset($explodeSignature[0]) || (isset($explodeSignature[0]) && !is_scalar($explodeSignature[0]))) {
                 // if invalid signature (sha1=xxxx was not found).
                 unset($explodeSignature);
@@ -1112,7 +1113,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                 // check that which one is match this signature.
                 foreach ($userMetaResults as $row) {
                     $buildSignature = $hashAlgo . '=' . hash_hmac($hashAlgo, $this->webhookPhpInput, $row->meta_value);
-                    if ($buildSignature === $this->webhookHeaders['X-Hub-Signature']) {
+                    if ($buildSignature === $headers['x-hub-signature']) {
                         $this->webhookValidSecretKey = [];
                         $this->webhookValidSecretKey[$row->user_id] = $row->meta_value;
                         unset($buildSignature, $hashAlgo, $userMetaResults);

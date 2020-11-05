@@ -3,7 +3,7 @@ Contributors: okvee
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9HQE4GVV4KTZE
 Tags: downloads, download, download manager, file hosting, GitHub
 Requires at least: 4.6.0
-Tested up to: 5.3
+Tested up to: 5.5.3
 Stable tag: 1.0.3
 Requires PHP: 5.5
 License: MIT
@@ -73,6 +73,11 @@ Yes, the plugin's tables will be dropped on uninstall.
 12. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
+= 1.0.4 =
+2020-11-06
+
+* Fix `Github->validateGitHubWebhook()` method to accept different case of `x-hub-signature` that was sent from GitHub.
+
 = 1.0.3 =
 2019-08-19
 
