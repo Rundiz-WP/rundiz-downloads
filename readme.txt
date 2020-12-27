@@ -3,8 +3,8 @@ Contributors: okvee
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9HQE4GVV4KTZE
 Tags: downloads, download, download manager, file hosting, GitHub
 Requires at least: 4.6.0
-Tested up to: 5.5.3
-Stable tag: 1.0.4
+Tested up to: 5.6
+Stable tag: 1.0.5
 Requires PHP: 5.5
 License: MIT
 License URI: https://opensource.org/licenses/MIT
@@ -73,6 +73,11 @@ Yes, the plugin's tables will be dropped on uninstall.
 12. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
+= 1.0.5 =
+2020-12-27
+
+* Add `session_write_close()` to class destructor to prevent site health error about **An active PHP session was detected**, **The REST API encountered an error**, and **Your site could not complete a loopback request**.
+
 = 1.0.4 =
 2020-11-06
 

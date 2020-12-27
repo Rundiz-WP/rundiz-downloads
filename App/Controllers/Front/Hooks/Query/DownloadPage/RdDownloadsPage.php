@@ -39,6 +39,17 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                 session_start();
             }
         }// __construct
+    
+
+        /**
+         * Class destructor.
+         * 
+         * @since 1.0.5
+         */
+        public function __destruct()
+        {
+            session_write_close();
+        }// __destruct
 
 
         /**
