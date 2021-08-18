@@ -3,7 +3,7 @@
  * Plugin Name: Rundiz Downloads
  * Plugin URI: https://rundiz.com/?p=319
  * Description: Download manager for WordPress that support GitHub auto update.
- * Version: 1.0.5
+ * Version: 1.0.6
  * Author: Vee Winch
  * Author URI: https://rundiz.com
  * License: MIT

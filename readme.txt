@@ -3,8 +3,8 @@ Contributors: okvee
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9HQE4GVV4KTZE
 Tags: downloads, download, download manager, file hosting, GitHub
 Requires at least: 4.6.0
-Tested up to: 5.6
-Stable tag: 1.0.5
+Tested up to: 5.8
+Stable tag: 1.0.6
 Requires PHP: 5.5
 License: MIT
 License URI: https://opensource.org/licenses/MIT
@@ -73,6 +73,11 @@ Yes, the plugin's tables will be dropped on uninstall.
 12. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
+= 1.0.6 =
+2021-08-18
+
+* Update Securimage to work with PHP 8.0.
+
 = 1.0.5 =
 2020-12-27
 
