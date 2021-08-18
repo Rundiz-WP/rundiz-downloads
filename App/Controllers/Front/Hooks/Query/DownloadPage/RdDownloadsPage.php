@@ -405,7 +405,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                     if ($checkResult === false) {
                         // if enter wrong captcha code.
                         status_header(400);
-                        $_SESSION['rddownloads_enter_wrong_captcha'] = ($_SESSION['rddownloads_enter_wrong_captcha'] + 1);
+                        $_SESSION['rddownloads_enter_wrong_captcha'] = (isset($_SESSION['rddownloads_enter_wrong_captcha']) ? ($_SESSION['rddownloads_enter_wrong_captcha'] + 1) : 0);
                         $output['form_result'] = 'error';
                         $output['form_result_msg'] = __('The security code entered was incorrect.', 'rd-downloads') . ' ' .
                             sprintf(
