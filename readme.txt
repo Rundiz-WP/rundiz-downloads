@@ -1,13 +1,12 @@
 === Rundiz Downloads ===
 Contributors: okvee
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9HQE4GVV4KTZE
 Tags: downloads, download, download manager, file hosting, GitHub
-Requires at least: 4.6.0
-Tested up to: 5.8
-Stable tag: 1.0.6
-Requires PHP: 5.5
+Tested up to: 5.8.2
+Stable tag: 1.0.7
 License: MIT
 License URI: https://opensource.org/licenses/MIT
+Requires at least: 4.6.0
+Requires PHP: 5.5
 
 Download manager for WordPress that support GitHub auto update.
 
@@ -73,6 +72,13 @@ Yes, the plugin's tables will be dropped on uninstall.
 12. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
+= 1.0.7 =
+2021-12-14
+
+* Fix error `FILTER_SANITIZE_STRING` is deprecated in PHP 8.1.
+* Update translation.
+* Update WPListTable class based on WordPress 5.8.2.
+
 = 1.0.6 =
 2021-08-18
 
