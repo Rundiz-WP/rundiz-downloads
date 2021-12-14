@@ -340,7 +340,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
 
             $output = [];
             $output['captchaImage'] = add_query_arg([
-                'pagename' => filter_input(INPUT_GET, 'pagename', FILTER_SANITIZE_STRING),
+                'pagename' => strip_tags((string) filter_input(INPUT_GET, 'pagename')),
                 'rddownloads_subpage' => 'securimage_captcha',
                 'download_id' => false,
             ], home_url());
@@ -349,7 +349,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
             if (isset($rd_downloads_options['rdd_use_captcha']) && $rd_downloads_options['rdd_use_captcha'] == 'captcha+audio') {
                 // if setting was set to enable captcha audio.
                 $output['captchaAudio'] = add_query_arg([
-                    'pagename' => filter_input(INPUT_GET, 'pagename', FILTER_SANITIZE_STRING),
+                    'pagename' => strip_tags((string) filter_input(INPUT_GET, 'pagename')),
                     'rddownloads_subpage' => 'securimage_captcha',
                     'rddownloads_subpage' => 'securimage_captcha_audio',
                     'download_id' => false,
@@ -383,8 +383,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                 $output['disableCaptchaForm'] = false;
             }
 
-            $input_captcha = filter_input(INPUT_POST, 'rddownloads_captcha', FILTER_SANITIZE_STRING);
-            $request_method = filter_input(INPUT_SERVER, 'REQUEST_METHOD', FILTER_SANITIZE_STRING);
+            $input_captcha = filter_input(INPUT_POST, 'rddownloads_captcha');
+            if (is_string($input_captcha)) {
+                $input_captcha = strip_tags($input_captcha);
+            }
+            $request_method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
+            if (is_string($request_method)) {
+                $request_method = strip_tags($request_method);
+            }
 
             if (strtolower($request_method) === 'post' && !empty($input_captcha) && is_scalar($input_captcha)) {
                 // if method post and form data is not empty.

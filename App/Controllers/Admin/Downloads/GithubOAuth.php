@@ -170,14 +170,24 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
             $this->thisPageUrl = admin_url('admin.php?page=rd-downloads_github_connect');
             $this->currentUserId = get_current_user_id();
 
-            $subpage = filter_input(INPUT_GET, 'subpage', FILTER_SANITIZE_STRING);
+            $subpage = filter_input(INPUT_GET, 'subpage');
+            $subpage = (is_string($subpage) ? htmlspecialchars($subpage, ENT_QUOTES) : $subpage);
             if ($subpage === 'disconnect' && $_POST) {
                 return $this->headerSubPageDisconnect();
             }
 
-            $githubReturnCode = filter_input(INPUT_GET, 'code', FILTER_SANITIZE_STRING);
-            $githubReturnState = filter_input(INPUT_GET, 'state', FILTER_SANITIZE_STRING);
-            $accessTokenCookie = filter_input(INPUT_COOKIE, $this->Github->getOAuthAccessTokenName(), FILTER_SANITIZE_STRING);
+            $githubReturnCode = filter_input(INPUT_GET, 'code');
+            if (is_string($githubReturnCode)) {
+                $githubReturnCode = strip_tags($githubReturnCode);
+            }
+            $githubReturnState = filter_input(INPUT_GET, 'state');
+            if (is_string($githubReturnState)) {
+                $githubReturnState = strip_tags($githubReturnState);
+            }
+            $accessTokenCookie = filter_input(INPUT_COOKIE, $this->Github->getOAuthAccessTokenName());
+            if (is_string($accessTokenCookie)) {
+                $accessTokenCookie = strip_tags($accessTokenCookie);
+            }
             if (!empty($accessTokenCookie)) {
                 // if contain access token cookie
                 $accessTokenUserDb = $this->Github->getOAuthAccessToken($this->currentUserId);
@@ -247,7 +257,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
                 wp_die(__('You do not have permission to access this page.'), '', ['response' => 403]);
             }
 
-            $subpage = filter_input(INPUT_GET, 'subpage', FILTER_SANITIZE_STRING);
+            $subpage = filter_input(INPUT_GET, 'subpage');
+            if (is_string($subpage)) {
+                $subpage = strip_tags($subpage);
+            }
             if ($subpage === 'disconnect') {
                 return $this->subPageDisconnect();
             }

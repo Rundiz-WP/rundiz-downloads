@@ -107,8 +107,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
             if ($domainNoSub !== null && $domainNoSub !== false) {
                 // if can get domain without sub domain from the specific URL.
                 $opt_force_download = filter_input(INPUT_POST, 'opt_force_download', FILTER_SANITIZE_NUMBER_INT);
-                $opt_download_version = filter_input(INPUT_POST, 'opt_download_version', FILTER_SANITIZE_STRING);
-                $opt_download_version_range = filter_input(INPUT_POST, 'opt_download_version_range', FILTER_SANITIZE_STRING);
+                $opt_download_version = filter_input(INPUT_POST, 'opt_download_version');
+                if (is_string($opt_download_version)) {
+                    $opt_download_version = strip_tags($opt_download_version);
+                }
+                $opt_download_version_range = filter_input(INPUT_POST, 'opt_download_version_range');
+                if (is_string($opt_download_version_range)) {
+                    $opt_download_version_range = htmlspecialchars($opt_download_version_range, ENT_QUOTES);
+                }
                 $data['download_options'] = maybe_serialize(
                     [
                         'opt_force_download' => $opt_force_download,
@@ -190,8 +196,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                 }
 
                 $opt_force_download = filter_input(INPUT_POST, 'opt_force_download', FILTER_SANITIZE_NUMBER_INT);
-                $opt_download_version = filter_input(INPUT_POST, 'opt_download_version', FILTER_SANITIZE_STRING);
-                $opt_download_version_range = filter_input(INPUT_POST, 'opt_download_version_range', FILTER_SANITIZE_STRING);
+                $opt_download_version = filter_input(INPUT_POST, 'opt_download_version');
+                if (is_string($opt_download_version)) {
+                    $opt_download_version = strip_tags($opt_download_version);
+                }
+                $opt_download_version_range = filter_input(INPUT_POST, 'opt_download_version_range');
+                if (is_string($opt_download_version_range)) {
+                    $opt_download_version_range = htmlspecialchars($opt_download_version_range, ENT_QUOTES);
+                }
                 $data['download_options'] = maybe_serialize(
                     [
                         'opt_force_download' => $opt_force_download,

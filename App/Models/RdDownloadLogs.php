@@ -480,8 +480,10 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
             if ($prepareData['user_id'] == '0' || empty($prepareData['user_id'])) {
                 unset($prepareData['user_id']);
             }
-            $prepareData['dl_ip'] = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_SANITIZE_STRING);
-            $prepareData['dl_user_agent'] = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING);
+            $prepareData['dl_ip'] = filter_input(INPUT_SERVER, 'REMOTE_ADDR');
+            $prepareData['dl_ip'] = (is_string($prepareData['dl_ip']) ? htmlspecialchars($prepareData['dl_ip'], ENT_QUOTES) : $prepareData['dl_ip']);
+            $prepareData['dl_user_agent'] = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
+            $prepareData['dl_user_agent'] = (is_string($prepareData['dl_user_agent']) ? htmlspecialchars($prepareData['dl_user_agent'], ENT_QUOTES) : $prepareData['dl_user_agent']);
             $prepareData['dl_date'] = current_time('mysql');
             $prepareData['dl_date_gmt'] = current_time('mysql', true);
 

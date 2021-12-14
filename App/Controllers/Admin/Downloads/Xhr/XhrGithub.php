@@ -37,7 +37,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
             $output = [];
             $responseStatus = 200;
 
-            $namewithowner = filter_input(INPUT_GET, 'namewithowner', FILTER_SANITIZE_STRING);
+            $namewithowner = filter_input(INPUT_GET, 'namewithowner');
+            if (is_string($namewithowner)) {
+                $namewithowner = htmlspecialchars($namewithowner, ENT_QUOTES);
+            }
             $expNameWithOwner = explode('/', $namewithowner);
             $repoOwner = $expNameWithOwner[0];
             unset($expNameWithOwner[0], $namewithowner);
@@ -72,8 +75,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
             $output = [];
             $responseStatus = 200;
             $remote_file = trim(filter_input(INPUT_GET, 'remote_file', FILTER_SANITIZE_URL));
-            $current_version = trim(filter_input(INPUT_GET, 'current_version', FILTER_SANITIZE_STRING));
-            $version_range = trim(filter_input(INPUT_GET, 'version_range', FILTER_SANITIZE_STRING));
+            $current_version = trim(filter_input(INPUT_GET, 'current_version'));
+            if (is_string($current_version)) {
+                $current_version = strip_tags($current_version);
+            }
+            $version_range = trim(filter_input(INPUT_GET, 'version_range'));
+            if (is_string($version_range)) {
+                $version_range = strip_tags($version_range);
+            }
 
             $Semver = new \RdDownloads\App\Libraries\Semver();
             if ((is_null($version_range) || $version_range === '')) {
@@ -243,7 +252,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
             $responseStatus = 200;
 
             $user_id = get_current_user_id();
-            $rddownloads_githubwebhook_secret = filter_input(INPUT_POST, 'rddownloads_githubwebhook_secret', FILTER_SANITIZE_STRING);
+            $rddownloads_githubwebhook_secret = filter_input(INPUT_POST, 'rddownloads_githubwebhook_secret');
+            if (is_string($rddownloads_githubwebhook_secret)) {
+                $rddownloads_githubwebhook_secret = htmlspecialchars($rddownloads_githubwebhook_secret, ENT_QUOTES);
+            }
             if (mb_strlen(trim($rddownloads_githubwebhook_secret)) < 20) {
                 $output['secretLengthFailed'] = true;
                 $output['secretLength'] = mb_strlen(trim($rddownloads_githubwebhook_secret));

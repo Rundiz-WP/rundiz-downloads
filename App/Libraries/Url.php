@@ -97,7 +97,10 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Url')) {
 
                 $remoteArgs = [];
                 $remoteArgs['redirection'] = 1;
-                $remoteArgs['user-agent'] = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING);
+                $remoteArgs['user-agent'] = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
+                if (is_string($remoteArgs['user-agent'])) {
+                    $remoteArgs['user-agent'] = htmlspecialchars($remoteArgs['user-agent'], ENT_QUOTES);
+                }
                 $response = wp_remote_get($url, $remoteArgs);
                 unset($remoteArgs);
 

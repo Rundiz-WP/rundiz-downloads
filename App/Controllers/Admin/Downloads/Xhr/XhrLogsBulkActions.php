@@ -27,7 +27,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrLo
                 wp_send_json($output, 403);
             }
 
-            $bulkAction = filter_input(INPUT_POST, 'bulkAction', FILTER_SANITIZE_STRING);
+            $bulkAction = filter_input(INPUT_POST, 'bulkAction');
+            if (is_string($bulkAction)) {
+                $bulkAction = strip_tags($bulkAction);
+            }
 
             switch ($bulkAction) {
                 case 'clearlogs':

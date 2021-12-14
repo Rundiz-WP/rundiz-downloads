@@ -27,7 +27,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                 wp_send_json($output, 403);
             }
 
-            $bulkAction = filter_input(INPUT_POST, 'bulkAction', FILTER_SANITIZE_STRING);
+            $bulkAction = filter_input(INPUT_POST, 'bulkAction');
+            if (is_string($bulkAction)) {
+                $bulkAction = strip_tags($bulkAction);
+            }
             $download_ids = filter_input_array(INPUT_POST, [
                 'download_id' => [
                     'filter' => FILTER_SANITIZE_NUMBER_INT,
