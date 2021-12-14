@@ -4,24 +4,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rundiz Downloads 0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rd-downloads\n"
-"POT-Creation-Date: 2019-01-09T15:53:37+07:00\n"
-"PO-Revision-Date: 2019-01-23 13:35+0700\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2021-12-14T20:51:55+07:00\n"
+"PO-Revision-Date: 2021-12-14 20:52+0700\n"
+"Last-Translator: Vee W.\n"
 "Language-Team: \n"
 "Language: th_TH\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Domain: rd-downloads\n"
 "X-Poedit-Basepath: ..\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #. Plugin Name of the plugin
 #: App/Controllers/Admin/Downloads/Menu.php:63
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:116
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:127
 #: App/Controllers/Front/Hooks/Query/GithubAutoUpdatePage/GithubAutoUpdatePage.php:55
 #: App/Views/admin/Hooks/DashboardWidgets/DownloadStat/displayDownloadStat_v.php:15
 msgid "Rundiz Downloads"
@@ -356,7 +356,7 @@ msgstr "เพิ่มดาวน์โหลดใหม่"
 msgid "Edit download"
 msgstr "แก้ไขดาวน์โหลด"
 
-#: App/Controllers/Admin/Downloads/Editing.php:127 App/Controllers/Admin/Downloads/Xhr/XhrSave.php:353
+#: App/Controllers/Admin/Downloads/Editing.php:127 App/Controllers/Admin/Downloads/Xhr/XhrSave.php:365
 msgid "The editing item was not found."
 msgstr "ไม่พบรายการที่กำลังจะแก้ไข."
 
@@ -364,7 +364,7 @@ msgstr "ไม่พบรายการที่กำลังจะแก้
 msgid "You do not have permission to edit other's downloads data."
 msgstr "คุณไม่มีสิทธิที่จะแก้ไขข้อมูลดาวน์โหลดของผู้อื่น."
 
-#: App/Controllers/Admin/Downloads/Editing.php:170 App/Controllers/Admin/Downloads/GithubOAuth.php:335
+#: App/Controllers/Admin/Downloads/Editing.php:170 App/Controllers/Admin/Downloads/GithubOAuth.php:348
 #: App/Controllers/Admin/Downloads/Logs.php:197 App/Controllers/Admin/Downloads/Management.php:188
 msgid "Are you sure?"
 msgstr "คุณแน่ใจหรือ?"
@@ -392,37 +392,37 @@ msgid "GitHub Webhook"
 msgstr "GitHub Webhook"
 
 #. translators: %1$s: Open link, %2$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:269 App/Controllers/Admin/Downloads/GithubOAuth.php:279
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:282 App/Controllers/Admin/Downloads/GithubOAuth.php:292
 msgid "Please %1$sgo back%2$s and try again."
 msgstr "โปรด%1$sย้อนกลับไป%2$sแล้วลองอีกครั้ง."
 
 #. translators: %1$s: Open link, %2$s: The link URL, %3$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:277
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:290
 msgid "%1$s%2$s%3$s."
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:305
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:318
 msgid "Please %1$sdisconnect from GitHub OAuth%2$s and try again."
 msgstr "โปรด%1$sเลิกเชื่อมต่อกับ GitHub OAuth%2$sแล้วลองอีกครั้ง."
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:335
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:348
 msgid "You have to sync the secret key with your GitHub repositories again to make the auto update works."
 msgstr "คุณจำเป็นต้องประสานข้อมูลกุญแจลับกับ repository ของ GitHub ของคุณทั้งหลายอีกครั้ง เพื่อให้อัปเดตอัตโนมัติทำงานได้."
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:336
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:349
 msgid "Exists"
 msgstr "มีอยู่"
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:337
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:350
 msgid "Not exists"
 msgstr "ไม่มี"
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:338
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:351
 msgid "Re-generating the secret key, please wait."
 msgstr "กำลังสร้างกุญแจลับใหม่, โปรดรอสักครู่."
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:339
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:352
 msgid "Synchronizing, please wait."
 msgstr "กำลังประสานข้อมูล, โปรดรอสักครู่."
 
@@ -458,83 +458,80 @@ msgstr "ดาวน์โหลด"
 msgid "Add New"
 msgstr "เพิ่มใหม่"
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:61
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:69
+#: App/Controllers/Admin/Downloads/Xhr/XhrLogsBulkActions.php:42
 msgid "Invalid form action, please try again."
 msgstr "การทำงานไม่ถูกต้อง, โปรดลองอีกครั้ง."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:92
-msgid "All logs were cleared."
-msgstr "ล้างบันทึกทั้งหมดแล้ว."
-
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:265
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:240
 msgid "Success! All selected items have been deleted."
 msgstr "สำเร็จ! ลบรายการที่เลือกแล้ว."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:268
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:243
 msgid "There are some webhook that is unable to remove, here is the result."
 msgstr "มี webhook บางรายการที่ไม่สามารถเอาออกได้, นี่คือผลลัพธ์."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:274
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:249
 msgid "Warning! There are some problem about delete the items, here are the results."
 msgstr "คำเตือน! มีปัญหาบางอย่างเกี่ยวกับการลบรายการ, นี่คือผลลัพธ์."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:276
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:251
 msgid "Deleted item"
 msgid_plural "Deleted items"
 msgstr[0] "รายการที่ลบแล้ว"
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:277
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:252
 msgid "Failed to delete item"
 msgid_plural "Failed to delete items"
 msgstr[0] "ล้มเหลวในการลบรายการ"
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:278
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:253
 msgid "Failed to remove webhook on GitHub"
 msgid_plural "Failed to remove webhooks on GitHub"
 msgstr[0] "ล้มเหลวในการเอา webhook ออกจาก GitHub"
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:279
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:451
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:586
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:254
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:426
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:561
 msgid "Capability limited item"
 msgid_plural "Capability limited items"
 msgstr[0] "รายการที่ติดขัดสิทธิ"
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:280
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:452
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:587
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:255
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:427
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:562
 msgid "Mismatch ID"
 msgid_plural "Mismatch IDs"
 msgstr[0] "ID ไม่ตรง"
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:301
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:276
 msgid "The selected items was not found."
 msgstr "ไม่พบรายการที่เลือก."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:442
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:577
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:417
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:552
 msgid "Success! All selected items have been updated."
 msgstr "สำเร็จ! อัปเดทรายการที่เลือกทั้งหมดแล้ว."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:447
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:582
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:422
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:557
 msgid "Warning! There are some problem about update the items, here are the results."
 msgstr "คำเตือน! มีปัญหาบางอย่างเกี่ยวกับการอัปเดทรายการ, นี่คือผลลัพธ์."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:449
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:584
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:424
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:559
 msgid "Updated item"
 msgid_plural "Updated items"
 msgstr[0] "รายการที่อัปเดทแล้ว"
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:450
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:585
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:425
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:560
 msgid "Failed to update item"
 msgid_plural "Failed to update items"
 msgstr[0] "รายการที่ล้มเหลวในการอัปเดท"
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:472
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:607
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:447
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:582
 msgid "The selected items was not found or not matched download type."
 msgstr "ไม่พบรายการที่เลือกหรือประเภทดาวน์โหลดไม่ตรงกัน."
 
@@ -578,27 +575,31 @@ msgid "Unable to process your request, please reload the page and try again."
 msgstr "ไม่สามารถดำเนินการประมวลผลได้, โปรดโหลดหน้านี้ใหม่แล้วลองอีกครั้ง."
 
 #. translators: %s: Example GitHub repository URL.
-#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:88
+#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:97
 msgid "Invalid GitHub repository URL. The correct format should be %s."
 msgstr "URL GitHub ไม่ถูกต้อง. รูปแบบที่ถูกต้องควรเป็น %s."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:261
+#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:273
 msgid "Unable to update secret key, please reload the page and try again."
 msgstr "ไม่สามารถอัปเดทกุญแจลับได้, โปรดโหลดหน้านี้ใหม่แล้วลองอีกครั้ง."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:269
+#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:281
 msgid "The secret key was updated successfully."
 msgstr "อัปเดทกุญแจลับสำเร็จแล้ว."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:206
+#: App/Controllers/Admin/Downloads/Xhr/XhrLogsBulkActions.php:73
+msgid "All logs were cleared."
+msgstr "ล้างบันทึกทั้งหมดแล้ว."
+
+#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:218
 msgid "Incorrect Download URL value."
 msgstr "URL ดาวน์โหลดไม่ถูกต้อง."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:283 App/Controllers/Admin/Downloads/Xhr/XhrSave.php:379
+#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:295 App/Controllers/Admin/Downloads/Xhr/XhrSave.php:391
 msgid "Unknown error, please reload the webpage and try again."
 msgstr "ไม่ทราบข้อผิดพลาด, โปรดโหลดหน้านี้ใหม่แล้วลองอีกครั้ง."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:301 App/Controllers/Admin/Downloads/Xhr/XhrSave.php:395
+#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:313 App/Controllers/Admin/Downloads/Xhr/XhrSave.php:407
 msgid "Your download was saved successfully."
 msgstr "บันทึกดาวน์โหลดสำเร็จแล้ว."
 
@@ -652,6 +653,11 @@ msgstr "แคปต์ชาผิดทั้งหมด"
 #: App/Controllers/Admin/Hooks/EditorHelptab/rdDownloadsShortcode.php:36
 msgid "Rundiz Downloads shortcodes"
 msgstr "ช็อตโค้ดต่างๆ"
+
+#. translators: %s: Current DB version.
+#: App/Controllers/Admin/Plugins.php:79
+msgid "DB version %s"
+msgstr "รุ่นฐานข้อมูล %s"
 
 #. translators: %1$s: Current PHP version, %2$s: Required PHP version.
 #: App/Controllers/Admin/Plugins/Activation.php:43
@@ -718,11 +724,6 @@ msgstr "เรียบร้อยแล้ว"
 msgid "Next"
 msgstr "ถัดไป"
 
-#. translators: %s: Current DB version.
-#: App/Controllers/Admin/Plugins.php:79
-msgid "DB version %s"
-msgstr "รุ่นฐานข้อมูล %s"
-
 #: App/Controllers/Admin/Settings.php:43 App/Views/admin/settings_v.php:2
 msgid "Downloads Settings"
 msgstr "ตั้งค่าดาวน์โหลด"
@@ -740,21 +741,21 @@ msgstr "จำเป็นต้องดำเนินการอัปเด
 msgid "The manual update is required, please tell administrator to update first."
 msgstr "จำเป็นต้องดำเนินการอัปเดทด้วยตนเอง, โปรดติดต่อผู้ดูแลเพื่อดำเนินการอัปเดทก่อน."
 
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:363
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:374
 msgid "Too many attempts for wrong captcha code."
 msgstr "แคปต์ชาผิดพลาดหลายครั้งเกินไป."
 
 #. translators: %s: Date/time that un-banned captcha page.
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:366
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:377
 msgid "Please wait until %s and try again."
 msgstr "โปรดรอจนถึง %s แล้วลองอีกครั้ง."
 
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:399
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:416
 msgid "The security code entered was incorrect."
 msgstr "รหัสความปลอดภัยที่กรอกไม่ถูกต้อง."
 
 #. translators: %d: Number of time incorrect.
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:402
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:419
 msgid "You had entered incorrectly for %s time."
 msgid_plural "You had enter incorrectly for %s times."
 msgstr[0] "คุณกรอกผิด %s ครั้ง."
@@ -769,7 +770,7 @@ msgstr "โปรดโหลดหน้านี้ใหม่แล้วล
 
 #. translators: %s: Argument name.
 #: App/Libraries/DateTime.php:30 App/Libraries/FileSystem.php:113 App/Libraries/Github.php:98
-#: App/Libraries/Github.php:1140 App/Libraries/Semver.php:72 App/Libraries/Semver.php:77
+#: App/Libraries/Github.php:1143 App/Libraries/Semver.php:72 App/Libraries/Semver.php:77
 #: App/Libraries/Url.php:27 App/Libraries/Url.php:89
 msgid "The %s must be string."
 msgstr "%s ต้องเป็นสตริง."
@@ -1295,28 +1296,28 @@ msgid "You has beed disconnected from GitHub. %1$sGo back%2$s to connect page."
 msgstr "คุณเลิกการเชื่อมต่อกับ GitHub แล้ว. %1$sย้อนกลับ%2$sไปยังหน้าเชื่อมต่อ."
 
 #. translators: %s filter_user_id Query string name.
-#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:4
+#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:7
 msgid ""
 "You can filter the log for each user by adding the %s query string as name and the user id as value to the "
 "URL."
 msgstr "คุณสามารถกรองบันทึกของแต่ละผู้ใช้โดยเพิ่ม query string %s เป็นชื่อและ id ผู้ใช้เป็นค่าของมันลงใน URL."
 
-#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:6
-#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:14
-#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:19
-#: App/Views/admin/Downloads/Management/helpTab/adminhelp_v.php:6
+#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:9
+#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:17
+#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:22
+#: App/Views/admin/Downloads/Management/helpTab/adminhelp_v.php:9
 #: App/Views/admin/Downloads/Management/helpTab/shortcodes_v.php:34
 msgid "Example:"
 msgstr "ตัวอย่าง:"
 
 #. translators: %s filter_user_id Query string name.
-#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:12
+#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:15
 msgid ""
 "You can also filter the log for each download item by adding the %s query string as name and the download id "
 "as value to the URL."
 msgstr "คุณสามารถกรองบันทึกสำหรับแต่ละรายการดาวน์โหลดโดยเพิ่ม query string %s เป็นชื่อและ id ดาวน์โหลดเป็นค่าของมันลงใน URL."
 
-#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:18
+#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:21
 msgid "The filters can be combined together."
 msgstr "ตัวกรองสามารถนำมาใช้ด้วยกันได้."
 
@@ -1335,7 +1336,7 @@ msgid "Search"
 msgstr "ค้นหา"
 
 #. translators: %s filter_user_id Query string name.
-#: App/Views/admin/Downloads/Management/helpTab/adminhelp_v.php:4
+#: App/Views/admin/Downloads/Management/helpTab/adminhelp_v.php:7
 msgid ""
 "You can filter user's download items by adding the %s query string as name and the user id as value to the "
 "URL."

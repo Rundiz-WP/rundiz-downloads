@@ -1,22 +1,22 @@
-# Copyright (C) 2019 Vee Winch
-# This file is distributed under the same license as the Rundiz Downloads plugin.
+# Copyright (C) 2021 Vee Winch
+# This file is distributed under the MIT.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rundiz Downloads 0.4\n"
+"Project-Id-Version: Rundiz Downloads 1.0.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rd-downloads\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-01-09T15:53:37+07:00\n"
+"POT-Creation-Date: 2021-12-14T20:51:55+07:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.1.0\n"
+"X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: rd-downloads\n"
 
 #. Plugin Name of the plugin
 #: App/Controllers/Admin/Downloads/Menu.php:63
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:116
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:127
 #: App/Controllers/Front/Hooks/Query/GithubAutoUpdatePage/GithubAutoUpdatePage.php:55
 #: App/Views/admin/Hooks/DashboardWidgets/DownloadStat/displayDownloadStat_v.php:15
 msgid "Rundiz Downloads"
@@ -344,7 +344,7 @@ msgid "Edit download"
 msgstr ""
 
 #: App/Controllers/Admin/Downloads/Editing.php:127
-#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:353
+#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:365
 msgid "The editing item was not found."
 msgstr ""
 
@@ -353,7 +353,7 @@ msgid "You do not have permission to edit other's downloads data."
 msgstr ""
 
 #: App/Controllers/Admin/Downloads/Editing.php:170
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:335
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:348
 #: App/Controllers/Admin/Downloads/Logs.php:197
 #: App/Controllers/Admin/Downloads/Management.php:188
 msgid "Are you sure?"
@@ -385,38 +385,38 @@ msgid "GitHub Webhook"
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:269
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:279
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:282
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:292
 msgid "Please %1$sgo back%2$s and try again."
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: The link URL, %3$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:277
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:290
 msgid "%1$s%2$s%3$s."
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:305
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:318
 msgid "Please %1$sdisconnect from GitHub OAuth%2$s and try again."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:335
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:348
 msgid "You have to sync the secret key with your GitHub repositories again to make the auto update works."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:336
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:349
 msgid "Exists"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:337
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:350
 msgid "Not exists"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:338
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:351
 msgid "Re-generating the secret key, please wait."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:339
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:352
 msgid "Synchronizing, please wait."
 msgstr ""
 
@@ -457,83 +457,87 @@ msgstr ""
 msgid "Add New"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:61
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:69
+#: App/Controllers/Admin/Downloads/Xhr/XhrLogsBulkActions.php:42
 msgid "Invalid form action, please try again."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:92
-msgid "All logs were cleared."
-msgstr ""
-
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:265
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:240
 msgid "Success! All selected items have been deleted."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:268
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:243
 msgid "There are some webhook that is unable to remove, here is the result."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:274
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:249
 msgid "Warning! There are some problem about delete the items, here are the results."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:276
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:251
 msgid "Deleted item"
 msgid_plural "Deleted items"
 msgstr[0] ""
+msgstr[1] ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:277
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:252
 msgid "Failed to delete item"
 msgid_plural "Failed to delete items"
 msgstr[0] ""
+msgstr[1] ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:278
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:253
 msgid "Failed to remove webhook on GitHub"
 msgid_plural "Failed to remove webhooks on GitHub"
 msgstr[0] ""
+msgstr[1] ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:279
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:451
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:586
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:254
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:426
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:561
 msgid "Capability limited item"
 msgid_plural "Capability limited items"
 msgstr[0] ""
+msgstr[1] ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:280
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:452
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:587
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:255
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:427
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:562
 msgid "Mismatch ID"
 msgid_plural "Mismatch IDs"
 msgstr[0] ""
+msgstr[1] ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:301
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:276
 msgid "The selected items was not found."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:442
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:577
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:417
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:552
 msgid "Success! All selected items have been updated."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:447
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:582
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:422
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:557
 msgid "Warning! There are some problem about update the items, here are the results."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:449
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:584
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:424
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:559
 msgid "Updated item"
 msgid_plural "Updated items"
 msgstr[0] ""
+msgstr[1] ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:450
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:585
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:425
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:560
 msgid "Failed to update item"
 msgid_plural "Failed to update items"
 msgstr[0] ""
+msgstr[1] ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:472
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:607
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:447
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:582
 msgid "The selected items was not found or not matched download type."
 msgstr ""
 
@@ -576,29 +580,33 @@ msgid "Unable to process your request, please reload the page and try again."
 msgstr ""
 
 #. translators: %s: Example GitHub repository URL.
-#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:88
+#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:97
 msgid "Invalid GitHub repository URL. The correct format should be %s."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:261
+#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:273
 msgid "Unable to update secret key, please reload the page and try again."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:269
+#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:281
 msgid "The secret key was updated successfully."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:206
+#: App/Controllers/Admin/Downloads/Xhr/XhrLogsBulkActions.php:73
+msgid "All logs were cleared."
+msgstr ""
+
+#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:218
 msgid "Incorrect Download URL value."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:283
-#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:379
+#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:295
+#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:391
 msgid "Unknown error, please reload the webpage and try again."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:301
-#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:395
+#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:313
+#: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:407
 msgid "Your download was saved successfully."
 msgstr ""
 
@@ -660,6 +668,11 @@ msgstr ""
 msgid "Rundiz Downloads shortcodes"
 msgstr ""
 
+#. translators: %s: Current DB version.
+#: App/Controllers/Admin/Plugins.php:79
+msgid "DB version %s"
+msgstr ""
+
 #. translators: %1$s: Current PHP version, %2$s: Required PHP version.
 #: App/Controllers/Admin/Plugins/Activation.php:43
 msgid "You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or contact plugin author for this help.<br><br>Minimum requirement:<br>PHP %2$s"
@@ -717,11 +730,6 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#. translators: %s: Current DB version.
-#: App/Controllers/Admin/Plugins.php:79
-msgid "DB version %s"
-msgstr ""
-
 #: App/Controllers/Admin/Settings.php:43
 #: App/Views/admin/settings_v.php:2
 msgid "Downloads Settings"
@@ -740,24 +748,25 @@ msgstr ""
 msgid "The manual update is required, please tell administrator to update first."
 msgstr ""
 
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:363
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:374
 msgid "Too many attempts for wrong captcha code."
 msgstr ""
 
 #. translators: %s: Date/time that un-banned captcha page.
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:366
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:377
 msgid "Please wait until %s and try again."
 msgstr ""
 
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:399
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:416
 msgid "The security code entered was incorrect."
 msgstr ""
 
 #. translators: %d: Number of time incorrect.
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:402
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:419
 msgid "You had entered incorrectly for %s time."
 msgid_plural "You had enter incorrectly for %s times."
 msgstr[0] ""
+msgstr[1] ""
 
 #: App/Controllers/XhrBased.php:54
 msgid "Method not allowed."
@@ -771,7 +780,7 @@ msgstr ""
 #: App/Libraries/DateTime.php:30
 #: App/Libraries/FileSystem.php:113
 #: App/Libraries/Github.php:98
-#: App/Libraries/Github.php:1140
+#: App/Libraries/Github.php:1143
 #: App/Libraries/Semver.php:72
 #: App/Libraries/Semver.php:77
 #: App/Libraries/Url.php:27
@@ -1305,24 +1314,24 @@ msgid "You has beed disconnected from GitHub. %1$sGo back%2$s to connect page."
 msgstr ""
 
 #. translators: %s filter_user_id Query string name.
-#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:4
+#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:7
 msgid "You can filter the log for each user by adding the %s query string as name and the user id as value to the URL."
 msgstr ""
 
-#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:6
-#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:14
-#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:19
-#: App/Views/admin/Downloads/Management/helpTab/adminhelp_v.php:6
+#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:9
+#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:17
+#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:22
+#: App/Views/admin/Downloads/Management/helpTab/adminhelp_v.php:9
 #: App/Views/admin/Downloads/Management/helpTab/shortcodes_v.php:34
 msgid "Example:"
 msgstr ""
 
 #. translators: %s filter_user_id Query string name.
-#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:12
+#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:15
 msgid "You can also filter the log for each download item by adding the %s query string as name and the download id as value to the URL."
 msgstr ""
 
-#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:18
+#: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:21
 msgid "The filters can be combined together."
 msgstr ""
 
@@ -1342,7 +1351,7 @@ msgid "Search"
 msgstr ""
 
 #. translators: %s filter_user_id Query string name.
-#: App/Views/admin/Downloads/Management/helpTab/adminhelp_v.php:4
+#: App/Views/admin/Downloads/Management/helpTab/adminhelp_v.php:7
 msgid "You can filter user's download items by adding the %s query string as name and the user id as value to the URL."
 msgstr ""
 
