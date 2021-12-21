@@ -2,7 +2,7 @@
 Contributors: okvee
 Tags: downloads, download, download manager, file hosting, GitHub
 Tested up to: 5.8.2
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 4.6.0
@@ -72,6 +72,13 @@ Yes, the plugin's tables will be dropped on uninstall.
 12. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
+= 1.0.8 =
+2021-12-21
+
+* Fix disconnect page.
+* Update GitHub OAuth settings page.
+* Remove abandoned Securimage class.
+
 = 1.0.7 =
 2021-12-14
 
