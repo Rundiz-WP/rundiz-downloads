@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rundiz Downloads 0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rd-downloads\n"
-"POT-Creation-Date: 2021-12-21T16:42:03+07:00\n"
-"PO-Revision-Date: 2021-12-21 16:42+0700\n"
+"POT-Creation-Date: 2021-12-21T16:43:04+07:00\n"
+"PO-Revision-Date: 2021-12-21 16:43+0700\n"
 "Last-Translator: Vee W.\n"
 "Language-Team: \n"
 "Language: th_TH\n"
@@ -643,8 +643,8 @@ msgid "Total errors"
 msgstr "ผิดพลาดทั้งหมด"
 
 #: App/Controllers/Admin/Hooks/DashboardWidgets/DownloadStat.php:40
-msgid "Total user failed on anti robot"
-msgstr "ผู้ใช้ล้มเหลวในการตรวจสอบป้องกันบอต"
+msgid "Total failed on anti robot"
+msgstr "ล้มเหลวในการตรวจสอบป้องกันบอต"
 
 #: App/Controllers/Admin/Hooks/EditorHelptab/rdDownloadsShortcode.php:36
 msgid "Rundiz Downloads shortcodes"
