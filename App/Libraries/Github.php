@@ -868,6 +868,20 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
 
         /**
+         * Check if OAuth disconnected.
+         * 
+         * @return bool
+         */
+        public function isOAuthDisconnected()
+        {
+            if (isset($_COOKIE[$this->oauthAccessTokenName])) {
+                return false;
+            }
+            return true;
+        }// isOAuthDisconnected
+
+
+        /**
          * Check that if global setting is set to auto update or not.
          *
          * @global \wpdb $wpdb

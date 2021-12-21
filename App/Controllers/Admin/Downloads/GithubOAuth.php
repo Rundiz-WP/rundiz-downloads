@@ -374,9 +374,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
         {
             $output = [];
 
-            $accessToken = $this->Github->getOAuthAccessToken($this->currentUserId);
-
-            if ($accessToken === false) {
+            if ($this->Github->isOAuthDisconnected()) {
                 $output['disconnected'] = true;
             }
 
