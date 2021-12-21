@@ -37,7 +37,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\DashboardWidge
                     'txtNoTopDownload' => __('There are no data.', 'rd-downloads'),
                     'txtTotalDownload' => __('Total downloads', 'rd-downloads'),
                     'txtTotalErrorDownload' => __('Total errors', 'rd-downloads'),
-                    'txtTotalAntibotFailed' => __('Total anti robot failed', 'rd-downloads'),
+                    'txtTotalAntibotFailed' => __('Total user failed on anti robot', 'rd-downloads'),
                 ]
             );
         }// addWidget
