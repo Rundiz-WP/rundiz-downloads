@@ -136,11 +136,11 @@ $githubOAuthHelp .= '<ol>' . PHP_EOL;
 /* translators: %1$s: Open link, %2$s: Close link. */
 $githubOAuthHelp .= '<li>' . sprintf(__('Go to %1$sGitHub.com%2$s website.', 'rd-downloads'), '<a href="https://github.com/" target="github">', '</a>') . '</li>' . PHP_EOL;
 $githubOAuthHelp .= '<li>' . __('Register an application', 'rd-downloads') . PHP_EOL;
-$githubOAuthHelp .= '<ol>' . PHP_EOL;
+$githubOAuthHelp .= '<ul class="rd-settings-ul">' . PHP_EOL;
 $githubOAuthHelp .= '<li>' . __('If you want to register an application for your organization, please go to your organization &gt; Settings &gt; Developer settings &gt; OAtuh apps and click on Register an application.', 'rd-downloads') . '</li>' . PHP_EOL;
 /* translators: %1$s: Open link, %2$s: Close link. */
 $githubOAuthHelp .= '<li>' . sprintf(__('If you want to register an application for yourself, please go to your Settings &gt; Developer settings &gt; %1$sOAtuh apps%2$s and click on New OAuth app.', 'rd-downloads'), '<a href="https://github.com/settings/developers" target="github_usersettings">', '</a>') . '</li>' . PHP_EOL;
-$githubOAuthHelp .= '</ol>' . PHP_EOL;
+$githubOAuthHelp .= '</ul>' . PHP_EOL;
 $githubOAuthHelp .= '</li>' . PHP_EOL;
 /* translators: %s: Home URL. */
 $githubOAuthHelp .= '<li>' . sprintf(__('Enter your application data here and set %s for Homepage URL and Authorization callback URL.', 'rd-downloads'), '<strong>' . get_home_url() . '</strong>') . '</li>' . PHP_EOL;
