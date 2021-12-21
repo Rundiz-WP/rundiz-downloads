@@ -29,7 +29,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
             'user_dl_success', // user (guests and members) download success
             'user_dl_error', // user got an error while downloading
             'user_dl_banned', // user gets banned while downloading
-            'user_dl_wr_captcha', // user enter wrong captcha code
+            'user_dl_antbotfailed',// user failed to verify antibot
         ];
 
 
@@ -188,7 +188,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
          * Get searchable fields.
          *
          * @global \wpdb $wpdb
-         * @param boolean $returnStatement Set to false to return as array fields, set to true to generate SQL statement string.
+         * @param bool $returnStatement Set to false to return as array fields, set to true to generate SQL statement string.
          * @return array|string Return array values of searchable fields or return SQL statement string with parenthesis.
          */
         public function getSearchFields($returnStatement = true)
@@ -233,7 +233,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
          * Get select fields.
          *
          * @global \wpdb $wpdb
-         * @param boolean $returnStatement Set to false to return as array fields, set to true to generate SQL statement string.
+         * @param bool $returnStatement Set to false to return as array fields, set to true to generate SQL statement string.
          * @return array|string Return array values of select fields or return SQL statement string.
          */
         public function getSelectFields($returnStatement = true)
@@ -453,13 +453,15 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
          * @global \wpdb $wpdb
          * @param string $status The log status, please refer from `dlStatuses` property.
          * @param array $data The associate array where key is table fields.
-         * @return boolean
+         * @return bool
+         * @throws \InvalidArgumentException
          */
         public function writeLog($status, array $data = [])
         {
             if (!is_scalar($status)) {
                 return false;
             } elseif (!in_array(strtolower($status), $this->dlStatuses)) {
+                throw new \InvalidArgumentException('Failed to validate `$status` with class property `dlStatuses` on ' . __FILE__ . ' line ' . (__LINE__ - 1) . '.');
                 return false;
             }
 

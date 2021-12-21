@@ -4,8 +4,6 @@
  * 
  * This page require Bootstrap 4.0, Font Awesome 5.3.0 CSS.
  * 
- * Available variables please look in `App\Controllers\Front\RdDownloadsPage` class `subUseCaptcha()` method.
- * 
  * To make very sure that it is download not found page, check $download_not_found variable must be true.
  */
 

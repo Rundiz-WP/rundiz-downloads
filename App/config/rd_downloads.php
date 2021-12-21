@@ -116,9 +116,6 @@ $designHelp .= '</pre>' . PHP_EOL;
 unset($availableShortcodeAttributes, $dbPlaceholders, $ElementPlaceholders, $txtPlaceholders);
 // end design help ------------------------------------------------------------------------------------------
 
-// captcha help ----------------------------------------------------------------------------------------------
-$captchaHelp = __('Captcha is human validation that can help prevent bot, please select how you use captcha.', 'rd-downloads');
-// end captcha help -----------------------------------------------------------------------------------------
 
 // GitHub help -----------------------------------------------------------------------------------------------
 $githubAutoUpdateHelp = __('Choose how the auto update works. Auto update on every release and commit can make your server slow, if you choose every release then it will work less.', 'rd-downloads') . '<br>';
@@ -193,14 +190,13 @@ return [
             'fields' => [
                 [
                     'default' => '',
-                    'description' => $captchaHelp,
-                    'id' => 'rdd_use_captcha',
+                    'description' => '<p class="description">' . __('Anti bot form will display the form field for user to fill and another form field for bot to fill.', 'rd-downloads') . '</p>',
+                    'id' => 'rdd_use_antibotfield',
                     'options' => [
                         '' => __('Do not use', 'rd-downloads') . ' (' . __('Default', 'rd-downloads') . ')',
-                        'captcha' => __('Use captcha text only', 'rd-downloads'),
-                        'captcha+audio' => __('Use captcha text with audio', 'rd-downloads'),
+                        'yes' => __('Use anti bot form field', 'rd-downloads'),
                     ],
-                    'title' => __('Use captcha', 'rd-downloads'),
+                    'title' => __('Use anti bot form', 'rd-downloads'),
                     'type' => 'select',
                 ],
                 [

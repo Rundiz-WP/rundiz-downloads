@@ -15,7 +15,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
 
 
         /**
-         * Get all downloads daily statistic.
+         * Get all downloads daily statistic for display in graph on admin dashboard.
          *
          * @link https://stackoverflow.com/a/2041619/128761 Query last 30 days example.
          * @global \wpdb $wpdb
@@ -51,7 +51,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
                 $sql = 'SELECT ' . $tableRdDownloadLogs . '.*,
                     COUNT(IF (`dl_status` = \'user_dl_success\', 1, NULL)) AS `dl_total_success`,
                     COUNT(IF (`dl_status` = \'user_dl_error\', 1, NULL)) AS `dl_total_error`,
-                    COUNT(IF (`dl_status` = \'user_dl_wr_captcha\', 1, NULL)) AS `dl_total_wrong_captcha`
+                    COUNT(IF (`dl_status` = \'user_dl_antbotfailed\', 1, NULL)) AS `dl_total_antibot_failed`
                     FROM ' . $tableRdDownloadLogs . '
                     WHERE
                         (
@@ -68,7 +68,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
                 $data = [];
                 $data[] = 'user_dl_success';
                 $data[] = 'user_dl_error';
-                $data[] = 'user_dl_wr_captcha';
+                $data[] = 'user_dl_antbotfailed';
                 $data[] = min($output['part_date_gmt']);
                 $data[] = max($output['part_date_gmt']);
                 $prepared = $wpdb->prepare($sql, $data);
@@ -94,7 +94,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
             foreach ($output['part_date_gmt'] as $key => $date) {
                 $output['part_total_success'][$key] = 0;
                 $output['part_total_error'][$key] = 0;
-                $output['part_total_wrongcaptcha'][$key] = 0;
+                $output['part_total_antibotfailed'][$key] = 0;
             }// endforeach;
             unset($data, $key);
 
@@ -110,8 +110,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
                         if (isset($row->dl_total_error) && isset($output['part_total_error'][$dateKey])) {
                             $output['part_total_error'][$dateKey] = (isset($row->dl_total_error) ? $row->dl_total_error : 0);
                         }
-                        if (isset($row->dl_total_wrong_captcha) && isset($output['part_total_wrongcaptcha'][$dateKey])) {
-                            $output['part_total_wrongcaptcha'][$dateKey] = (isset($row->dl_total_wrong_captcha) ? $row->dl_total_wrong_captcha : 0);
+                        if (isset($row->dl_total_antibot_failed) && isset($output['part_total_antibotfailed'][$dateKey])) {
+                            $output['part_total_antibotfailed'][$dateKey] = (isset($row->dl_total_antibot_failed) ? $row->dl_total_antibot_failed : 0);
                         }
                     }
 
@@ -144,7 +144,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
 
 
         /**
-         * Get top downloads.
+         * Get top downloads for display as a list on admin dashboard.
          *
          * @link https://stackoverflow.com/a/2041619/128761 Query last xx days example.
          * @global \wpdb $wpdb

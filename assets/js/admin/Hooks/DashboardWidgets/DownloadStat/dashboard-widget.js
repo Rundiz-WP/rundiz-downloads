@@ -137,8 +137,8 @@ class RdDownloadsDashboardWidget {
                         lineTension: 0
                     },
                     {
-                        label: RdDownloads.txtTotalWrongCaptcha,
-                        data: response.part_total_wrongcaptcha,
+                        label: RdDownloads.txtTotalAntibotFailed,
+                        data: response.part_total_antibotfailed,
                         backgroundColor: 'rgba(255, 150, 0, 0.3)',
                         borderColor: 'rgba(255, 150, 0, 0.3)',
                         fill: false,

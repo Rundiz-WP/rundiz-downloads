@@ -110,8 +110,11 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
                 case 'user_dl_banned':
                     $output .= __('User download banned', 'rd-downloads');
                     break;
-                case 'user_dl_wr_captcha':
+                case 'user_dl_wr_captcha':// from previous version, keep it here.
                     $output .= __('User enter wrong captcha code', 'rd-downloads');
+                    break;
+                case 'user_dl_antbotfailed':
+                    $output .= __('User has failed to verify antibot', 'rd-downloads');
                     break;
                 default:
                     $output .= $item->dl_status;

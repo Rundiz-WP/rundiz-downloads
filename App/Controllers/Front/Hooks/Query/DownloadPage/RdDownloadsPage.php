@@ -83,10 +83,12 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
 
             unset($Finfo);
 
-            if (ob_get_level() > 0) {
+            // flush and turn off all the output buffering that were left.
+            for ($i = 0; $i < ob_get_level(); $i++) {
                 ob_end_flush();
             }
 
+            // read file contents and send output to browser.
             $readfile = @readfile($downloadFullPath);
 
             if ($readfile === false) {
@@ -108,16 +110,18 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
          *
          * These are process steps.
          *
-         * Check that the setting was set to use captcha or not.<br>
-         * Check that the user agent was blocked or not.<br>
-         * Check that `download_id` exists or not.<br>
-         * Check that downloading file is local or not.<br>
+         * Check that the setting was set to use antibot or not.<br>
+         * Check that the user agent was blocked (banned) or not. (see `subCheckBannedUA()`)<br>
+         * Check that `download_id` exists or not. (see `subGetDownloadData()`)<br>
+         * Check that downloading file is local or not. (see `subGetDownloadData()`)<br>
          * Increase download count.<br>
          *  - If remote or GitHub then redirect to start download.<br>
          *  - If local then check that setting to force download (global and individual) or not. Start download after force download check.
+         * 
+         * This method will be echo out, or response to the browser including headers.
          *
          * @global array $rd_downloads_options
-         * @param integer The `download_id` to match in DB.
+         * @param int The `download_id` to match in DB.
          */
         public function pageIndex($download_id)
         {
@@ -126,31 +130,31 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
             // set page title.
             $this->setTitle(__('Rundiz Downloads', 'rd-downloads'));
 
-            if (isset($rd_downloads_options['rdd_use_captcha']) && !empty($rd_downloads_options['rdd_use_captcha'])) {
-                // if setting was set to use captcha.
-                // has a filter hook to allow custom captcha.
-                $useCustomCaptcha = apply_filters('rddownloads_use_custom_captcha', false);
+            if (isset($rd_downloads_options['rdd_use_antibotfield']) && !empty($rd_downloads_options['rdd_use_antibotfield'])) {
+                // if setting was set to use anti bot form field.
+                // do a filter hook to allow custom antibot.
+                $useCustomAntibot = apply_filters('rddownloads_use_custom_antibot', false);
 
-                if ($useCustomCaptcha === true) {
-                    // if there is filter hook to use custom captcha.
-                    // has a filter hook to display captcha page (return false) and validate the captcha value (return true on success, false on failure).
-                    $stepCaptcha = apply_filters('rddownloads_use_custom_captcha_result', false, $download_id);
+                if ($useCustomAntibot === true) {
+                    // if there is filter hook to use custom antibot.
+                    // do a filter hook to display anti page (return false) and validate the anti value (return true on success, false on failure).
+                    $stepAntibot = apply_filters('rddownloads_use_custom_antibot_result', false, $download_id);
                 } else {
-                    $stepCaptcha = $this->subUseCaptcha($download_id);
+                    $stepAntibot = $this->subUseAntibot($download_id);
                 }
 
-                unset($useCustomCaptcha);
+                unset($useCustomAntibot);
             } else {
-                // if setting was not set to use captcha.
-                $stepCaptcha = true;
+                // if setting was not set to use antibot.
+                $stepAntibot = true;
             }
 
-            if (isset($stepCaptcha) && $stepCaptcha === true) {
-                // if captcha passed (or setting not to use it).
+            if (isset($stepAntibot) && $stepAntibot === true) {
+                // if antibot passed (or setting not to use it).
                 // check for banned user agent.
                 $stepCheckBannedUA = $this->subCheckBannedUA($download_id);
             }
-            unset($stepCaptcha);
+            unset($stepAntibot);
 
             if (isset($stepCheckBannedUA) && $stepCheckBannedUA === true) {
                 // if not banned user agent.
@@ -165,8 +169,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
          * Sub page check banned User Agent.
          *
          * @global array $rd_downloads_options
-         * @param integer $download_id The download_id field.
-         * @return boolean Return true on success (not banned), return false for banned or otherwise.
+         * @param int $download_id The download_id field.
+         * @return bool Return true on success (not banned), return false for banned or otherwise.
          */
         protected function subCheckBannedUA($download_id)
         {
@@ -207,11 +211,34 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
 
 
         /**
+         * Display download not found page and then return `false`.
+         * 
+         * @param int $download_id The `download_id` that matched in DB.
+         * @return false Return `false`.
+         */
+        protected function subDownloadNotFound($download_id)
+        {
+            $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
+
+            // write download log.
+            $data = [];
+            $data['download_id'] = $download_id;
+            $RdDownloadLogs->writeLog('user_dl_error', $data);
+            unset($data, $RdDownloadLogs);
+
+            status_header(404);
+            $this->Loader->loadTemplate('RdDownloadsPage/subDownloadNotFound_v', ['download_not_found' => true]);
+
+            return false;
+        }// subDownloadNotFound
+
+
+        /**
          * Sub page check for download item exists and start download.
          *
          * @global array $rd_downloads_options
-         * @param integer $download_id The `download_id` that matched in DB.
-         * @return boolean Return false for failure. If success then it will process the download here and exit.
+         * @param int $download_id The `download_id` that matched in DB.
+         * @return bool Return false for failure. If success then it will process the download here and exit.
          */
         protected function subGetDownloadData($download_id)
         {
@@ -221,15 +248,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
 
             if (empty($downloadRow) || is_null($downloadRow)) {
                 // if not found.
-                // write download log.
-                $data = [];
-                $data['download_id'] = $download_id;
-                $RdDownloadLogs->writeLog('user_dl_error', $data);
-                unset($data, $RdDownloadLogs);
-
-                status_header(404);
-                $this->Loader->loadTemplate('RdDownloadsPage/subGetDownloadData_v', ['download_not_found' => true]);
-                return false;
+                return $this->subDownloadNotFound($download_id);
             } else {
                 // if found download item.
                 // write download log.
@@ -311,151 +330,110 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
 
 
         /**
-         * Sub page use captcha.
-         *
-         * Show captcha and check it before go to next step.
-         *
-         * @global array $rd_downloads_options
-         * @param integer $download_id The download_id field.
-         * @return boolean Return true on success validated captcha.
+         * Display antibot form field including validate the submitted form.
+         * 
+         * @param int $download_id
+         * @return bool Return `true` on success, `false` on failure or displaying antibot form field.
          */
-        protected function subUseCaptcha($download_id)
+        protected function subUseAntibot($download_id)
         {
-            // check for validated captcha and do not enter again on every request for xx minutes.
-            if (
-                isset($_SESSION['rddownloads_correct_captcha_time']) &&
-                current_time('timestamp') <= $_SESSION['rddownloads_correct_captcha_time']
-            ) {
-                // if in skip time.
-                return true;
-            } else {
-                unset($_SESSION['rddownloads_correct_captcha_time']);
-            }
-
-            global $rd_downloads_options;
-
-            if (!isset($_SESSION['rddownloads_enter_wrong_captcha'])) {
-                $_SESSION['rddownloads_enter_wrong_captcha'] = 0;
-            }
-
+            session_start();
+            $cookieName = 'rddownloads_antibotcookietest';
             $output = [];
-            $output['captchaImage'] = add_query_arg([
-                'pagename' => strip_tags((string) filter_input(INPUT_GET, 'pagename')),
-                'rddownloads_subpage' => 'securimage_captcha',
-                'download_id' => false,
-            ], home_url());
 
-            // about captcha audio.
-            if (isset($rd_downloads_options['rdd_use_captcha']) && $rd_downloads_options['rdd_use_captcha'] == 'captcha+audio') {
-                // if setting was set to enable captcha audio.
-                $output['captchaAudio'] = add_query_arg([
-                    'pagename' => strip_tags((string) filter_input(INPUT_GET, 'pagename')),
-                    'rddownloads_subpage' => 'securimage_captcha',
-                    'rddownloads_subpage' => 'securimage_captcha_audio',
-                    'download_id' => false,
-                    'id' => uniqid(),
-                ], home_url());
-                $output['useCaptchaAudio'] = true;
-            } else {
-                // if setting was set to disable captcha audio.
-                $output['captchaAudio'] = '';
-                $output['useCaptchaAudio'] = false;
-            }
-
-            // check for too many attempts wrong captcha.
-            if (
-                isset($_SESSION['rddownloads_enter_wrong_captcha_waituntil']) &&
-                current_time('timestamp') <= $_SESSION['rddownloads_enter_wrong_captcha_waituntil']
-            ) {
-                // if in banned time.
-                status_header(429);
-                $output['disableCaptchaForm'] = true;
-                $output['form_result'] = 'error';
-                $output['form_result_msg'] = __('Too many attempts for wrong captcha code.', 'rd-downloads') . ' ' .
-                    sprintf(
-                        /* translators: %s: Date/time that un-banned captcha page. */
-                        __('Please wait until %s and try again.', 'rd-downloads'),
-                        date('Y-m-d H:i:s', $_SESSION['rddownloads_enter_wrong_captcha_waituntil'])
-                    );
-            } else {
-                // if not in banned time.
-                unset($_SESSION['rddownloads_enter_wrong_captcha_waituntil']);
-                $output['disableCaptchaForm'] = false;
-            }
-
-            $input_captcha = filter_input(INPUT_POST, 'rddownloads_captcha');
-            if (is_string($input_captcha)) {
-                $input_captcha = strip_tags($input_captcha);
-            }
-            $request_method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
-            if (is_string($request_method)) {
-                $request_method = strip_tags($request_method);
-            }
-
-            if (strtolower($request_method) === 'post' && !empty($input_captcha) && is_scalar($input_captcha)) {
-                // if method post and form data is not empty.
-                if ($_SESSION['rddownloads_enter_wrong_captcha'] >= 5 && $_SESSION['rddownloads_enter_wrong_captcha'] <= 10) {
-                    // if starting incorrect many times.
-                    sleep(($_SESSION['rddownloads_enter_wrong_captcha'] - 4));// 4 because starting incorrect many times is 5, let it sleep 1 second. 9 times sleep = (9-4) = 5 seconds.
-                } elseif ($_SESSION['rddownloads_enter_wrong_captcha'] > 10) {
-                    $_SESSION['rddownloads_enter_wrong_captcha_waituntil'] = (current_time('timestamp') + (15 * 60));// wait for 15 minutes.
-                    // and yes, if user is trying to enter again then they have to wait longer. keep current timestamp + 15 minutes for more waiting.
+            // cookie test.
+            $validatedCookieTest = false;
+            if (!isset($_COOKIE[$cookieName]) || 'true' !== $_COOKIE[$cookieName]) {
+                if (isset($_GET['redir-set-cookie'])) {
+                    // if redirected but still not found cookie.
+                    // just display banned message.
+                    status_header(400);
+                    $output['disableAntibotForm'] = true;
+                    $output['form_result'] = 'error';
+                    $output['form_result_msg'] = __('You are not authorized to download the file. Failed to set required cookie.', 'rd-downloads');
+                } else {
+                    // if not redirected.
+                    // set cookie and redirect to page with ?redir-set-cookie=1.
+                    \RdDownloads\App\Libraries\Cookies::setCookie($cookieName, 'true', time()+60*60*24*1);
+                    wp_safe_redirect(add_query_arg(['redir-set-cookie' => 1]));
+                    exit();
                 }
+            } else {
+                $validatedCookieTest = true;
+            }// endif;
+            // end cookie test.
 
-                if (isset($output['disableCaptchaForm']) && $output['disableCaptchaForm'] === false) {
-                    // if not banned too many attampts for wrong captcha.
-                    require_once plugin_dir_path(RDDOWNLOADS_FILE) . 'vendor/securimage/securimage.php';
-                    $Img = new \Securimage();
-                    $Img->namespace = 'rddownloads_download_page';
-                    $checkResult = $Img->check($input_captcha);
-                    if ($checkResult === false) {
-                        // if enter wrong captcha code.
+            if (true === $validatedCookieTest) {
+                // if validated cookie test.
+                // retrieve download data to show.
+                $RdDownloads = new \RdDownloads\App\Models\RdDownloads();
+                $downloadRow = $RdDownloads->get(['download_id' => $download_id]);
+                if (empty($downloadRow) || is_null($downloadRow)) {
+                    // if not found.
+                    return $this->subDownloadNotFound($download_id);
+                } else {
+                    $output['downloadRow'] = $downloadRow;
+                }
+                unset($downloadRow, $RdDownloads);
+                // end retrieve download data to show.
+
+                $requestMethod = (isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'get');
+                if ('get' === $requestMethod) {
+                    // if method GET, displaying antibot form field.
+                    $AntiBot = new \RdDownloads\App\Libraries\AntiBot();
+                    $output['honeypotName'] = $AntiBot->setAndGetHoneypotName();
+                    unset($AntiBot);
+                } elseif ('post' === $requestMethod) {
+                    // if method POST, process form submitted.
+                    $honeypotName = \RdDownloads\App\Libraries\AntiBot::staticGetHoneypotName();
+                    $validatedHoneypot = false;
+                    if (!isset($_POST[$honeypotName]) || !empty($_POST[$honeypotName])) {
+                        // if honeypot name is not in the form or it is in but not empty (bot filled).
                         status_header(400);
-                        $_SESSION['rddownloads_enter_wrong_captcha'] = (isset($_SESSION['rddownloads_enter_wrong_captcha']) ? ($_SESSION['rddownloads_enter_wrong_captcha'] + 1) : 0);
+                        $output['disableAntibotForm'] = true;
                         $output['form_result'] = 'error';
-                        $output['form_result_msg'] = __('The security code entered was incorrect.', 'rd-downloads') . ' ' .
-                            sprintf(
-                                /* translators: %d: Number of time incorrect. */
-                                _n('You had entered incorrectly for %s time.', 'You had enter incorrectly for %s times.', $_SESSION['rddownloads_enter_wrong_captcha'], 'rd-downloads'),
-                                $_SESSION['rddownloads_enter_wrong_captcha']
-                            );
+                        $output['form_result_msg'] = __('You are not authorized to download the file. Failed to validate human.', 'rd-downloads');
 
                         $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
-                        $RdDownloadLogs->writeLog('user_dl_wr_captcha', ['download_id' => $download_id]);
+                        $RdDownloadLogs->writeLog('user_dl_antbotfailed', ['download_id' => $download_id]);
                         unset($RdDownloadLogs);
-                    } else {
-                        // if check captcha passed.
-                        unset($_SESSION['rddownloads_enter_wrong_captcha'], $_SESSION['rddownloads_enter_wrong_captcha_waituntil']);
-                        $_SESSION['rddownloads_correct_captcha_time'] = (current_time('timestamp') + (30 * 60));// add validated captcha and no need to check captcha again for xx minutes.
-                        return true;
+                    } elseif (isset($_POST[$honeypotName]) && empty($_POST[$honeypotName])) {
+                        // if honeypot name is in the form and empty. correct!
+                        $AntiBot = new \RdDownloads\App\Libraries\AntiBot();
+                        $AntiBot->unsetHoneypotName();
+                        unset($AntiBot);
+                        $validatedHoneypot = true;
                     }
-                    unset($checkResult, $Img);
-                }
-            } else {
-                status_header(200);
-            }// endif method post.
+                    unset($honeypotName);
 
-            unset($input_captcha, $request_method);
+                    if (isset($validatedHoneypot) && true === $validatedHoneypot) {
+                        // if validated honeypot.
+                        $iamhuman = filter_input(INPUT_POST, 'iamhuman');
+                        if (1 === $iamhuman || '1' === $iamhuman) {
+                            // if user checked on i am human field.
+                            return true;
+                        } else {
+                            // if user not checked on iam human field.
+                            status_header(400);
+                            $output['disableAntibotForm'] = true;
+                            $output['form_result'] = 'error';
+                            $output['form_result_msg'] = __('You are not authorized to download the file. Failed to validate human.', 'rd-downloads');
 
-            if (isset($output['disableCaptchaForm']) && $output['disableCaptchaForm'] === false) {
-                // if not banned too many attampts for wrong captcha.
-                wp_enqueue_script('rd-downloads-securimage-controller', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/securimage-controller.js', ['jquery'], RDDOWNLOADS_VERSION, true);
-                wp_localize_script(
-                    'rd-downloads-securimage-controller',
-                    'RdDownloads',
-                    [
-                        'captchaImageUrl' => $output['captchaImage'],
-                        'captchaAudioUrl' => $output['captchaAudio'],
-                        'useCaptchaAudio' => ($output['useCaptchaAudio'] === true ? 'true' : 'false'),
-                    ]
-                );
-            }
+                            $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
+                            $RdDownloadLogs->writeLog('user_dl_antbotfailed', ['download_id' => $download_id]);
+                            unset($RdDownloadLogs);
+                        }
+                        unset($iamhuman);
+                    }
+                }// endif; method
+                unset($requestMethod);
+            }// endif; validated cookie test
 
-            $this->Loader->loadTemplate('RdDownloadsPage/subUseCaptcha_v', $output);
+            $this->Loader->loadTemplate('RdDownloadsPage/subUseAntibot_v', $output);
             unset($output);
 
             return false;
-        }// subUseCaptcha
+        }// subUseAntibot
 
 
     }

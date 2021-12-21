@@ -16,20 +16,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
         /**
          * Select which page and sub-page will be use.
          * 
-         * In this method will call to other controllers depends on sub page.
+         * In this method will call to other controllers depend on sub page.<br>
+         * This method will be send output such as echo, response including headers.
          */
         public function goToRdDownloadsPage()
         {
             if (get_query_var('pagename') == 'rddownloads_page') {
                 $subpage = get_query_var('rddownloads_subpage');
                 switch ($subpage) {
-                    case 'securimage_captcha':
-                        // show captcha image here.
-                    case 'securimage_captcha_audio':
-                        // send captcha audio here.
-                        $CaptchaPage = new DownloadPage\SecurimageCaptchaPage();
-                        $CaptchaPage->pageIndex($subpage);
-                        unset($CaptchaPage);
                     default:
                         $RdDownloadsPage = new DownloadPage\RdDownloadsPage();
                         $RdDownloadsPage->pageIndex(intval(get_query_var('download_id')));

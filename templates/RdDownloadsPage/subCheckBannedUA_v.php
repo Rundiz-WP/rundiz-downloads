@@ -4,7 +4,7 @@
  * 
  * This page require Bootstrap 4.0, Font Awesome 5.3.0 CSS.
  * 
- * Available variables please look in `App\Controllers\Front\RdDownloadsPage` class `subUseCaptcha()` method.
+ * Available variables please look in `App\Controllers\Front\RdDownloadsPage` class `subCheckBannedUA()` method.
  * 
  * This page only visible if user agent has been blocked.
  */

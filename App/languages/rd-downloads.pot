@@ -9,14 +9,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-12-14T20:51:55+07:00\n"
+"POT-Creation-Date: 2021-12-21T16:36:24+07:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: rd-downloads\n"
 
 #. Plugin Name of the plugin
 #: App/Controllers/Admin/Downloads/Menu.php:63
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:127
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:131
 #: App/Controllers/Front/Hooks/Query/GithubAutoUpdatePage/GithubAutoUpdatePage.php:55
 #: App/Views/admin/Hooks/DashboardWidgets/DownloadStat/displayDownloadStat_v.php:15
 msgid "Rundiz Downloads"
@@ -85,116 +85,112 @@ msgstr ""
 msgid "More advance example:"
 msgstr ""
 
-#: App/config/rd_downloads.php:120
-msgid "Captcha is human validation that can help prevent bot, please select how you use captcha."
-msgstr ""
-
-#: App/config/rd_downloads.php:124
+#: App/config/rd_downloads.php:121
 msgid "Choose how the auto update works. Auto update on every release and commit can make your server slow, if you choose every release then it will work less."
 msgstr ""
 
 #. translators: %1$s: Client ID, %2$s: Client Secret.
-#: App/config/rd_downloads.php:126
+#: App/config/rd_downloads.php:123
 msgid "To make the auto update works, please follow the instruction below to get %1$s and %2$s"
 msgstr ""
 
 #. translators: %1$s: Client ID, %2$s: Client Secret.
-#: App/config/rd_downloads.php:126
-#: App/config/rd_downloads.php:149
-#: App/config/rd_downloads.php:240
+#: App/config/rd_downloads.php:123
+#: App/config/rd_downloads.php:146
+#: App/config/rd_downloads.php:236
 msgid "Client ID"
 msgstr ""
 
 #. translators: %1$s: Client ID, %2$s: Client Secret.
-#: App/config/rd_downloads.php:126
-#: App/config/rd_downloads.php:149
-#: App/config/rd_downloads.php:249
+#: App/config/rd_downloads.php:123
+#: App/config/rd_downloads.php:146
+#: App/config/rd_downloads.php:245
 msgid "Client Secret"
 msgstr ""
 
-#: App/config/rd_downloads.php:128
+#: App/config/rd_downloads.php:125
 #: App/Controllers/Admin/Downloads/GithubOAuth.php:127
 #: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:5
 #: App/Views/admin/Downloads/GithubOAuth/subPageDisconnect_v.php:2
 msgid "GitHub OAuth"
 msgstr ""
 
-#: App/config/rd_downloads.php:130
+#: App/config/rd_downloads.php:127
 msgid "This plugin use GitHub OAuth to auto update, auto correct repository URL. This is a lot easier for manage many repositories webhook and support multiple user's repositories."
 msgstr ""
 
-#: App/config/rd_downloads.php:132
+#: App/config/rd_downloads.php:129
 msgid "To make these functions work, you have to register an OAuth application on GitHub for your website."
 msgstr ""
 
-#: App/config/rd_downloads.php:134
+#: App/config/rd_downloads.php:131
 msgid "Register OAuth application"
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: Close link.
-#: App/config/rd_downloads.php:137
+#: App/config/rd_downloads.php:134
 msgid "Go to %1$sGitHub.com%2$s website."
 msgstr ""
 
-#: App/config/rd_downloads.php:138
+#: App/config/rd_downloads.php:135
 msgid "Register an application"
 msgstr ""
 
-#: App/config/rd_downloads.php:140
+#: App/config/rd_downloads.php:137
 msgid "If you want to register an application for your organization, please go to your organization &gt; Settings &gt; Developer settings &gt; OAtuh apps and click on Register an application."
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: Close link.
-#: App/config/rd_downloads.php:142
+#: App/config/rd_downloads.php:139
 msgid "If you want to register an application for yourself, please go to your Settings &gt; Developer settings &gt; %1$sOAtuh apps%2$s and click on New OAuth app."
 msgstr ""
 
 #. translators: %s: Home URL.
-#: App/config/rd_downloads.php:146
+#: App/config/rd_downloads.php:143
 msgid "Enter your application data here and set %s for Homepage URL and Authorization callback URL."
 msgstr ""
 
-#: App/config/rd_downloads.php:147
+#: App/config/rd_downloads.php:144
 msgid "Click on Register application button."
 msgstr ""
 
 #. translators: %1$s: Client ID, %2$s: Client Secret.
-#: App/config/rd_downloads.php:149
+#: App/config/rd_downloads.php:146
 msgid "Copy %1$s and %2$s to the form field above. You may add your logo in the OAuth application settings page."
 msgstr ""
 
-#: App/config/rd_downloads.php:151
+#: App/config/rd_downloads.php:148
 msgid "Connect users with their GitHub"
 msgstr ""
 
-#: App/config/rd_downloads.php:153
+#: App/config/rd_downloads.php:150
 msgid "Your users who want to add the download data and using GitHub auto update, auto correct repository URL features must connect this website with their GitHub."
 msgstr ""
 
-#: App/config/rd_downloads.php:156
+#: App/config/rd_downloads.php:153
 msgid "Complete all the steps above and GitHub OAuth link will be appears."
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: Close link.
-#: App/config/rd_downloads.php:158
+#: App/config/rd_downloads.php:155
 msgid "Click on %1$sGitHub OAuth%2$s menu and follow instruction."
 msgstr ""
 
-#: App/config/rd_downloads.php:167
+#: App/config/rd_downloads.php:164
 msgid "General"
 msgstr ""
 
-#: App/config/rd_downloads.php:173
+#: App/config/rd_downloads.php:170
 msgid "Check this to use force download instead of redirect to file. (This will work with local file only.)"
 msgstr ""
 
-#: App/config/rd_downloads.php:173
+#: App/config/rd_downloads.php:170
 msgid "Default is no."
 msgstr ""
 
-#: App/config/rd_downloads.php:175
-#: App/config/rd_downloads.php:272
-#: App/config/rd_downloads.php:298
+#: App/config/rd_downloads.php:172
+#: App/config/rd_downloads.php:268
+#: App/config/rd_downloads.php:294
 #: App/Models/GitHubOAuthListTable.php:57
 #: App/Models/RdDownloadsListTable.php:88
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:109
@@ -202,7 +198,7 @@ msgid "Yes"
 msgstr ""
 
 #. translators: %s: Force download option.
-#: App/config/rd_downloads.php:179
+#: App/config/rd_downloads.php:176
 #: App/Controllers/Admin/Downloads/Editing.php:59
 #: App/Models/RdDownloadsListTable.php:236
 #: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:4
@@ -213,119 +209,119 @@ msgstr ""
 msgid "Force download"
 msgstr ""
 
-#: App/config/rd_downloads.php:183
+#: App/config/rd_downloads.php:180
 msgid "Clear cache"
 msgstr ""
 
-#: App/config/rd_downloads.php:184
+#: App/config/rd_downloads.php:181
 msgid "If something seems not up-to-date, please try to clear the cache first. This will be clear all plugin's cache."
 msgstr ""
 
-#: App/config/rd_downloads.php:185
+#: App/config/rd_downloads.php:182
 msgid "Cache"
 msgstr ""
 
-#: App/config/rd_downloads.php:192
+#: App/config/rd_downloads.php:189
 msgid "Anti robots"
 msgstr ""
 
-#: App/config/rd_downloads.php:199
+#: App/config/rd_downloads.php:193
+msgid "Anti bot form will display the form field for user to fill and another form field for bot to fill."
+msgstr ""
+
+#: App/config/rd_downloads.php:196
 msgid "Do not use"
 msgstr ""
 
-#: App/config/rd_downloads.php:199
-#: App/config/rd_downloads.php:228
+#: App/config/rd_downloads.php:196
+#: App/config/rd_downloads.php:224
 #: App/Models/RdDownloadsListTable.php:90
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:113
 msgid "Default"
 msgstr ""
 
-#: App/config/rd_downloads.php:200
-msgid "Use captcha text only"
+#: App/config/rd_downloads.php:197
+msgid "Use anti bot form field"
 msgstr ""
 
-#: App/config/rd_downloads.php:201
-msgid "Use captcha text with audio"
+#: App/config/rd_downloads.php:199
+msgid "Use anti bot form"
 msgstr ""
 
-#: App/config/rd_downloads.php:203
-msgid "Use captcha"
-msgstr ""
-
-#: App/config/rd_downloads.php:208
+#: App/config/rd_downloads.php:204
 msgid "User agent that contain text in one of this will be blocked. One per line, case insensitive."
 msgstr ""
 
-#: App/config/rd_downloads.php:213
+#: App/config/rd_downloads.php:209
 msgid "Block user agents"
 msgstr ""
 
-#: App/config/rd_downloads.php:220
+#: App/config/rd_downloads.php:216
 msgid "GitHub"
 msgstr ""
 
-#: App/config/rd_downloads.php:227
+#: App/config/rd_downloads.php:223
 msgid "Do not auto update"
 msgstr ""
 
-#: App/config/rd_downloads.php:228
+#: App/config/rd_downloads.php:224
 msgid "Every release"
 msgstr ""
 
-#: App/config/rd_downloads.php:229
+#: App/config/rd_downloads.php:225
 msgid "Every release and commit"
 msgstr ""
 
-#: App/config/rd_downloads.php:231
+#: App/config/rd_downloads.php:227
 msgid "Auto update"
 msgstr ""
 
-#: App/config/rd_downloads.php:264
+#: App/config/rd_downloads.php:260
 msgid "Logs/statistic"
 msgstr ""
 
-#: App/config/rd_downloads.php:270
+#: App/config/rd_downloads.php:266
 msgid "Check this to automatically delete old logs."
 msgstr ""
 
-#: App/config/rd_downloads.php:270
-#: App/config/rd_downloads.php:296
+#: App/config/rd_downloads.php:266
+#: App/config/rd_downloads.php:292
 msgid "Default is yes."
 msgstr ""
 
 #. translators: %s is Auto delete logs option
-#: App/config/rd_downloads.php:276
-#: App/config/rd_downloads.php:282
+#: App/config/rd_downloads.php:272
+#: App/config/rd_downloads.php:278
 msgid "Auto delete logs"
 msgstr ""
 
 #. translators: %s is Auto delete logs option
-#: App/config/rd_downloads.php:282
+#: App/config/rd_downloads.php:278
 msgid "Auto delete logs after specific days. This will be skipped if %s was not checked."
 msgstr ""
 
 #. translators: %s is Auto delete logs option
-#: App/config/rd_downloads.php:282
+#: App/config/rd_downloads.php:278
 msgid "Default is 90."
 msgstr ""
 
-#: App/config/rd_downloads.php:289
+#: App/config/rd_downloads.php:285
 msgid "Days limit"
 msgstr ""
 
-#: App/config/rd_downloads.php:296
+#: App/config/rd_downloads.php:292
 msgid "Check this to logs admin actions such as add, update, delete downloads."
 msgstr ""
 
-#: App/config/rd_downloads.php:302
+#: App/config/rd_downloads.php:298
 msgid "Admin actions"
 msgstr ""
 
-#: App/config/rd_downloads.php:309
+#: App/config/rd_downloads.php:305
 msgid "Design"
 msgstr ""
 
-#: App/config/rd_downloads.php:316
+#: App/config/rd_downloads.php:312
 msgid "Downloads element"
 msgstr ""
 
@@ -661,7 +657,7 @@ msgid "Total errors"
 msgstr ""
 
 #: App/Controllers/Admin/Hooks/DashboardWidgets/DownloadStat.php:40
-msgid "Total wrong captcha"
+msgid "Total anti robot failed"
 msgstr ""
 
 #: App/Controllers/Admin/Hooks/EditorHelptab/rdDownloadsShortcode.php:36
@@ -748,25 +744,14 @@ msgstr ""
 msgid "The manual update is required, please tell administrator to update first."
 msgstr ""
 
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:374
-msgid "Too many attempts for wrong captcha code."
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:353
+msgid "You are not authorized to download the file. Failed to set required cookie."
 msgstr ""
 
-#. translators: %s: Date/time that un-banned captcha page.
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:377
-msgid "Please wait until %s and try again."
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:395
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:420
+msgid "You are not authorized to download the file. Failed to validate human."
 msgstr ""
-
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:416
-msgid "The security code entered was incorrect."
-msgstr ""
-
-#. translators: %d: Number of time incorrect.
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:419
-msgid "You had entered incorrectly for %s time."
-msgid_plural "You had enter incorrectly for %s times."
-msgstr[0] ""
-msgstr[1] ""
 
 #: App/Controllers/XhrBased.php:54
 msgid "Method not allowed."
@@ -780,7 +765,7 @@ msgstr ""
 #: App/Libraries/DateTime.php:30
 #: App/Libraries/FileSystem.php:113
 #: App/Libraries/Github.php:98
-#: App/Libraries/Github.php:1143
+#: App/Libraries/Github.php:1157
 #: App/Libraries/Semver.php:72
 #: App/Libraries/Semver.php:77
 #: App/Libraries/Url.php:27
@@ -793,10 +778,11 @@ msgid "Download"
 msgstr ""
 
 #: App/Libraries/ElementPlaceholders.php:58
-#: App/Models/RdDownloadLogsListTable.php:152
+#: App/Models/RdDownloadLogsListTable.php:155
 #: App/Models/RdDownloadsListTable.php:230
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:19
 #: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:19
+#: templates/RdDownloadsPage/subUseAntibot_v.php:31
 msgid "Downloads name"
 msgstr ""
 
@@ -811,10 +797,12 @@ msgid "Size"
 msgstr ""
 
 #: App/Libraries/ElementPlaceholders.php:61
+#: templates/RdDownloadsPage/subUseAntibot_v.php:43
 msgid "File name"
 msgstr ""
 
 #: App/Libraries/ElementPlaceholders.php:62
+#: templates/RdDownloadsPage/subUseAntibot_v.php:37
 msgid "File size"
 msgstr ""
 
@@ -959,61 +947,65 @@ msgstr ""
 msgid "User enter wrong captcha code"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:140
+#: App/Models/RdDownloadLogsListTable.php:117
+msgid "User has failed to verify antibot"
+msgstr ""
+
+#: App/Models/RdDownloadLogsListTable.php:143
 msgid "Clear"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:153
+#: App/Models/RdDownloadLogsListTable.php:156
 msgid "User"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:154
+#: App/Models/RdDownloadLogsListTable.php:157
 msgid "Status"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:155
+#: App/Models/RdDownloadLogsListTable.php:158
 msgid "IP Address"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:156
+#: App/Models/RdDownloadLogsListTable.php:159
 msgid "User agent"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:157
+#: App/Models/RdDownloadLogsListTable.php:160
 #: App/Models/RdDownloadsListTable.php:238
 msgid "Date"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:213
+#: App/Models/RdDownloadLogsListTable.php:216
 #: App/Models/RdDownloadsListTable.php:292
 msgid "All"
 msgstr ""
 
 #. translators: %s: Link to edit user.
-#: App/Models/RdDownloadLogsListTable.php:222
+#: App/Models/RdDownloadLogsListTable.php:225
 #: App/Models/RdDownloadsListTable.php:322
 msgid "Filtered user: %s"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:225
+#: App/Models/RdDownloadLogsListTable.php:228
 #: App/Models/RdDownloadsListTable.php:325
 msgid "Reset filtered user"
 msgstr ""
 
 #. translators: %s: Link to edit download.
-#: App/Models/RdDownloadLogsListTable.php:233
+#: App/Models/RdDownloadLogsListTable.php:236
 msgid "Filtered download: %s"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:236
+#: App/Models/RdDownloadLogsListTable.php:239
 msgid "Reset filtered download"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:259
+#: App/Models/RdDownloadLogsListTable.php:262
 msgid "Filter download"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:266
+#: App/Models/RdDownloadLogsListTable.php:269
 #: App/Models/RdDownloadsListTable.php:369
 msgid "Filter user"
 msgstr ""
@@ -1464,38 +1456,30 @@ msgstr ""
 msgid "Match banned user agent: %s."
 msgstr ""
 
-#: templates/RdDownloadsPage/subGetDownloadData_v.php:19
+#: templates/RdDownloadsPage/subDownloadNotFound_v.php:17
 msgid "Not found"
 msgstr ""
 
-#: templates/RdDownloadsPage/subGetDownloadData_v.php:20
+#: templates/RdDownloadsPage/subDownloadNotFound_v.php:18
 msgid "The download you have requested could not be found, please verify your link again."
 msgstr ""
 
-#: templates/RdDownloadsPage/subUseCaptcha_v.php:15
+#: templates/RdDownloadsPage/subUseAntibot_v.php:17
 msgid "Human verification"
 msgstr ""
 
-#: templates/RdDownloadsPage/subUseCaptcha_v.php:16
-msgid "Please enter the text you see on the image into the form below. Sorry for the inconvenient."
+#: templates/RdDownloadsPage/subUseAntibot_v.php:26
+msgid "Please enter the form below. Sorry for the inconvenient."
 msgstr ""
 
-#: templates/RdDownloadsPage/subUseCaptcha_v.php:30
-msgid "Captcha image"
+#: templates/RdDownloadsPage/subUseAntibot_v.php:55
+msgid "Please skip this field."
 msgstr ""
 
-#: templates/RdDownloadsPage/subUseCaptcha_v.php:46
-msgid "Play audio"
+#: templates/RdDownloadsPage/subUseAntibot_v.php:60
+msgid "I'm human."
 msgstr ""
 
-#: templates/RdDownloadsPage/subUseCaptcha_v.php:51
-msgid "Text"
-msgstr ""
-
-#: templates/RdDownloadsPage/subUseCaptcha_v.php:52
-msgid "Please enter the text you see above."
-msgstr ""
-
-#: templates/RdDownloadsPage/subUseCaptcha_v.php:54
+#: templates/RdDownloadsPage/subUseAntibot_v.php:62
 msgid "Continue to download"
 msgstr ""
