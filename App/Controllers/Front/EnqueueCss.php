@@ -18,7 +18,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\EnqueueCss')) {
          */
         public function enqueueStyles()
         {
-            wp_enqueue_style('rd-downloads-front-css', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/css/front/rd-downloads.min.css', ['rd-downloads-font-awesome5'], RDDOWNLOADS_VERSION);
+            wp_enqueue_style('rd-downloads-font-awesome5');
+            wp_enqueue_style('rd-downloads-front-css', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/css/front/rd-downloads.min.css', [], RDDOWNLOADS_VERSION);
         }// enqueueStyles
 
 
