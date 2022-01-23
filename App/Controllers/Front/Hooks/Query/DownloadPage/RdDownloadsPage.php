@@ -125,10 +125,26 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
          */
         public function pageIndex($download_id)
         {
+            if (!is_numeric($download_id) || $download_id <= 0) {
+                // if download id is something wrong.
+                // don't waste your time for this.
+                return ;
+            }
+
             global $rd_downloads_options;
 
             // set page title.
             $this->setTitle(__('Rundiz Downloads', 'rd-downloads'));
+
+            // check for banned user agent.
+            $result = $this->subCheckBannedUA($download_id);
+            if (isset($result) && $result === true) {
+                // if banned.
+                // stop process here.
+                unset($result);
+                return ;
+            }
+            unset($result);
 
             if (isset($rd_downloads_options['rdd_use_antibotfield']) && !empty($rd_downloads_options['rdd_use_antibotfield'])) {
                 // if setting was set to use anti bot form field.
@@ -137,8 +153,12 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
 
                 if ($useCustomAntibot === true) {
                     // if there is filter hook to use custom antibot.
-                    // do a filter hook to display anti page (return false) and validate the anti value (return true on success, false on failure).
+                    // do a filter hook to display anti bot page. while displaying anti bot page, return `false` only.
+                    // when validate the anti bot form, return `true` on success and `false` on failure.
                     $stepAntibot = apply_filters('rddownloads_use_custom_antibot_result', false, $download_id);
+                    if (!is_bool($stepAntibot)) {
+                        $stepAntibot = false;
+                    }
                 } else {
                     $stepAntibot = $this->subUseAntibot($download_id);
                 }
@@ -150,18 +170,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
             }
 
             if (isset($stepAntibot) && $stepAntibot === true) {
-                // if antibot passed (or setting not to use it).
-                // check for banned user agent.
-                $stepCheckBannedUA = $this->subCheckBannedUA($download_id);
-            }
-            unset($stepAntibot);
-
-            if (isset($stepCheckBannedUA) && $stepCheckBannedUA === true) {
-                // if not banned user agent.
+                // if anti bot validated pass.
                 // check download exists and start download is the last step.
                 $this->subGetDownloadData($download_id);
             }
-            unset($stepCheckBannedUA);
+            unset($stepAntibot);
         }// pageIndex
 
 
@@ -170,7 +183,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
          *
          * @global array $rd_downloads_options
          * @param int $download_id The download_id field.
-         * @return bool Return true on success (not banned), return false for banned or otherwise.
+         * @return bool Return `true` if BANNED and displaying banned page.<br>
+         *      Return `false` if not banned but not display anything.
          */
         protected function subCheckBannedUA($download_id)
         {
@@ -196,16 +210,16 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                             $output['currentUserAgent'] = $currentUserAgent;
                             $output['matchBannedUserAgent'] = $bannedUserAgent;
                             $this->Loader->loadTemplate('RdDownloadsPage/subCheckBannedUA_v', $output);
-                            return false;
+                            return true;
                         }
                     }// endforeach;
                     unset($bannedUserAgent);
                 }
                 unset($bannedUserAgents, $currentUserAgent);
-                return true;
+                return false;
             } else {
                 // no banned user agent.
-                return true;
+                return false;
             }
         }// subCheckBannedUA
 
@@ -333,7 +347,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
          * Display antibot form field including validate the submitted form.
          * 
          * @param int $download_id
-         * @return bool Return `true` on success, `false` on failure or displaying antibot form field.
+         * @return bool Return `true` if validated anti bot succeeded but not display anything.<br>
+         *      Return `false` and display anti bot form page if form is not validated or validated but failed.
          */
         protected function subUseAntibot($download_id)
         {
