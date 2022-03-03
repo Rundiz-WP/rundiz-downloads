@@ -258,8 +258,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
                             $output['deleteUrl']
                         )
                     );
-                    if (count($itemRow) > 0) {
+                    if (is_object($itemRow) && property_exists($itemRow, 'download_id')) {
                         // if found item in db. unable to delete this, never!
+                        $output['debug'] = $itemRow;
                         $output['download_id'] = $itemRow->download_id;
                         $output['unlink'] = false;
                         $output['deleted'] = false;
