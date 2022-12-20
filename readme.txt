@@ -1,8 +1,8 @@
 === Rundiz Downloads ===
 Contributors: okvee
 Tags: downloads, download, download manager, file hosting, GitHub
-Tested up to: 6.0
-Stable tag: 1.0.10
+Tested up to: 6.1
+Stable tag: 1.0.11
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 4.6.0
@@ -72,6 +72,11 @@ Yes, the plugin's tables will be dropped on uninstall.
 12. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
+= 1.0.11 =
+2022-12-20
+
+* Fix "PHP Deprecated: Creation of dynamic property" on PHP 8.2.
+
 = 1.0.10 =
 2022-03-03
 
@@ -82,13 +87,6 @@ Yes, the plugin's tables will be dropped on uninstall.
 
 * Remove use dependency CSS to let dequeue duplicated Font Awesome work.
 * Re-order the process in downloads.
-
-= 1.0.8 =
-2021-12-21
-
-* Fix disconnect page.
-* Update GitHub OAuth settings page.
-* Remove abandoned Securimage class.
 
 Previous version updates:  
 Please read on changelog.md

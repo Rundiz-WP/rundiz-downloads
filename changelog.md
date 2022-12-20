@@ -2,6 +2,13 @@
 
 ## Version 1.x
 
+### 1.0.8
+2021-12-21
+
+* Fix disconnect page.
+* Update GitHub OAuth settings page.
+* Remove abandoned Securimage class.
+
 ### 1.0.7
 2021-12-14
 
