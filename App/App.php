@@ -16,6 +16,12 @@ if (!class_exists('\\RdDownloads\\App\\App')) {
 
 
         /**
+         * @var \RdDownloads\App\Libraries\Loader
+         */
+        public $Loader;
+
+
+        /**
          * Load text domain. (language files)
          */
         public function loadLanguage()
