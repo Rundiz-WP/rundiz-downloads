@@ -33,7 +33,9 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\DateTime')) {
             if (!is_scalar($format)) {
                 $format = null;
             }
-            $format = trim($format);
+            if (is_string($format)) {
+                $format = trim($format);
+            }
             if (empty($format) || is_null($format)) {
                 $format = get_option('date_format') . ' ' . get_option('time_format') . ' (P)';
             }
