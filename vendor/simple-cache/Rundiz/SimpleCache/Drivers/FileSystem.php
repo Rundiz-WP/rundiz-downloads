@@ -254,7 +254,7 @@ class FileSystem implements SimpleCacheInterface
                 $data_type = $match_data_type[1];
             }
             if (isset($match_data[1])) {
-                $data = unserialize($match_data[1]);
+                $data = unserialize(trim($match_data[1]));
             }
             unset($match_data, $match_data_type, $match_lifetime);
         }
