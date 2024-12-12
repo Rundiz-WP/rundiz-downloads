@@ -1,8 +1,8 @@
 === Rundiz Downloads ===
 Contributors: okvee
 Tags: downloads, download, download manager, file hosting, GitHub
-Tested up to: 6.6
-Stable tag: 1.0.11
+Tested up to: 6.8
+Stable tag: 1.0.12
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 4.6.0
@@ -72,6 +72,12 @@ Yes, the plugin's tables will be dropped on uninstall.
 12. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
+= 1.0.12 =
+2024-12-12
+
+* Fix `unserialize()` error since PHP 8.3.
+* Fix pass `null` to string argument error since PHP 8.1.
+
 = 1.0.11 =
 2022-12-20
 
