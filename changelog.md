@@ -2,6 +2,17 @@
 
 ## Version 1.x
 
+### 1.0.10
+2022-03-03
+
+* Fix `count()` error on PHP 7.2+.
+
+### 1.0.9
+2022-01-23
+
+* Remove use dependency CSS to let dequeue duplicated Font Awesome work.
+* Re-order the process in downloads.
+
 ### 1.0.8
 2021-12-21
 
