@@ -1,7 +1,7 @@
 === Rundiz Downloads ===
 Contributors: okvee
 Tags: downloads, download, download manager, file hosting, GitHub
-Tested up to: 6.8
+Tested up to: 6.9
 Stable tag: 1.0.13
 License: MIT
 License URI: https://opensource.org/licenses/MIT
