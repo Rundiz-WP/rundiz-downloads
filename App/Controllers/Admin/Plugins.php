@@ -80,6 +80,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins')) {
                 }
                 unset($configValues);
 
+                $after_link[] = '<a href="https://rundiz.com/en/donate" target="donate">' . __('Donate', 'rd-downloads') . '</a>';
+
                 $links = array_merge($links, $after_link);
                 unset($after_link);
             }

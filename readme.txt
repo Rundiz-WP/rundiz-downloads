@@ -35,12 +35,6 @@ You can change your setting to accept how often of auto update. Every releases a
  * Automatically delete logs older than specific number of days.
  * Localisation support
 
-= System requirement =
-PHP 5.5 or higher
-WordPress 4.6.0 or higher
-
-Browse the source code, bug report, pull request on [GitHub repository](https://github.com/Rundiz-WP/rundiz-downloads). 
-
 == Installation ==
 1. Upload "rd-downloads" folder to the "/wp-content/plugins/" directory.
 2. Activate the plugin through the "Plugins" menu in WordPress.

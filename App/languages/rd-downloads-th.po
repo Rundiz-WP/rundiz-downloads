@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rundiz Downloads 0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rd-downloads\n"
-"POT-Creation-Date: 2021-12-21T16:43:04+07:00\n"
-"PO-Revision-Date: 2021-12-21 16:43+0700\n"
+"POT-Creation-Date: 2025-09-02T14:23:59+07:00\n"
+"PO-Revision-Date: 2025-09-02 14:24+0700\n"
 "Last-Translator: Vee W.\n"
 "Language-Team: \n"
 "Language: th_TH\n"
@@ -13,33 +13,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.7\n"
 "X-Domain: rd-downloads\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #. Plugin Name of the plugin
-#: App/Controllers/Admin/Downloads/Menu.php:63
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:131
+#: rd-downloads.php App/Controllers/Admin/Downloads/Menu.php:63
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:137
 #: App/Controllers/Front/Hooks/Query/GithubAutoUpdatePage/GithubAutoUpdatePage.php:55
 #: App/Views/admin/Hooks/DashboardWidgets/DownloadStat/displayDownloadStat_v.php:15
 msgid "Rundiz Downloads"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: rd-downloads.php
 msgid "https://rundiz.com/?p=319"
 msgstr ""
 
 #. Description of the plugin
+#: rd-downloads.php
 msgid "Download manager for WordPress that support GitHub auto update."
 msgstr "ระบบจัดการดาวน์โหลดสำหรับเวิร์ดเพราสที่รองรับการอัปเดทอัตโนมัติจาก GitHub."
 
 #. Author of the plugin
+#: rd-downloads.php
 msgid "Vee Winch"
 msgstr ""
 
 #. Author URI of the plugin
+#: rd-downloads.php
 msgid "https://rundiz.com"
 msgstr ""
 
@@ -49,11 +53,13 @@ msgstr "ไม่ได้กำหนดไฟล์ตั้งค่า."
 
 #. translators: %s: Example shortcode.
 #: App/config/rd_downloads.php:63
+#, php-format
 msgid "The HTML element for replace the %s shortcode."
 msgstr "HTML ที่จะแทนที่ช็อตโค้ด %s."
 
 #. translators: %s: Default html elements that will be convert shortcode to this.
 #: App/config/rd_downloads.php:65
+#, php-format
 msgid "Default value is %s."
 msgstr "ค่าเดิมคือ %s."
 
@@ -63,6 +69,7 @@ msgstr "แอตทริบิวท์ช็อตโค้ดที่มี
 
 #. translators: %s: id attribute
 #: App/config/rd_downloads.php:69
+#, php-format
 msgid ""
 "Set one or more of these attributes into shortcode to match condition in the template and display its value. "
 "The %s attribute is required."
@@ -102,6 +109,7 @@ msgstr ""
 
 #. translators: %1$s: Client ID, %2$s: Client Secret.
 #: App/config/rd_downloads.php:123
+#, php-format
 msgid "To make the auto update works, please follow the instruction below to get %1$s and %2$s"
 msgstr "การทำให้ระบบอัปเดตอัตโนมัติทำงาน, โปรดทำตามคำแนะนำด้านล่างเพื่อรับ %1$s และ %2$s"
 
@@ -139,6 +147,7 @@ msgstr "Register OAuth application"
 
 #. translators: %1$s: Open link, %2$s: Close link.
 #: App/config/rd_downloads.php:134
+#, php-format
 msgid "Go to %1$sGitHub.com%2$s website."
 msgstr "ไปยังเว็บไซต์ %1$sGitHub%2$s."
 
@@ -156,15 +165,17 @@ msgstr ""
 
 #. translators: %1$s: Open link, %2$s: Close link.
 #: App/config/rd_downloads.php:139
+#, php-format
 msgid ""
 "If you want to register an application for yourself, please go to your Settings &gt; Developer settings &gt; "
 "%1$sOAtuh apps%2$s and click on New OAuth app."
 msgstr ""
-"ถ้าคุณต้องการลงทะเบียนแอปพลิเคชันสำหรับคุณเอง(ส่วนตัว), โปรดไปยัง Settings &gt; Developer settings &gt; %1$sOAtuh apps"
-"%2$s แล้วคลิกที่ New OAuth app."
+"ถ้าคุณต้องการลงทะเบียนแอปพลิเคชันสำหรับคุณเอง(ส่วนตัว), โปรดไปยัง Settings &gt; Developer settings &gt; %1$sOAtuh "
+"apps%2$s แล้วคลิกที่ New OAuth app."
 
 #. translators: %s: Home URL.
 #: App/config/rd_downloads.php:143
+#, php-format
 msgid "Enter your application data here and set %s for Homepage URL and Authorization callback URL."
 msgstr "กรอกข้อมูลแอปพลิเคชันที่นี่แล้วกำหนด %s Homepage URL และ Authorization callback URL."
 
@@ -174,6 +185,7 @@ msgstr "คลิกบนปุ่ม Register application."
 
 #. translators: %1$s: Client ID, %2$s: Client Secret.
 #: App/config/rd_downloads.php:146
+#, php-format
 msgid ""
 "Copy %1$s and %2$s to the form field above. You may add your logo in the OAuth application settings page."
 msgstr "คัดลอก %1$s และ %2$s ไปยังฟอร์มด้านบน. คุณอาจเพิ่มโลโก้ในหน้าตั้งค่า OAuth แอปพลิเคชัน."
@@ -196,6 +208,7 @@ msgstr "ทำขั้นตอนด้านบนให้สำเร็จ
 
 #. translators: %1$s: Open link, %2$s: Close link.
 #: App/config/rd_downloads.php:155
+#, php-format
 msgid "Click on %1$sGitHub OAuth%2$s menu and follow instruction."
 msgstr "คลิกบนเมนู %1$sGitHub OAuth%2$s  และทำตามคำแนะนำ."
 
@@ -312,6 +325,7 @@ msgstr "ลบบันทึกอัตโนมัติ"
 
 #. translators: %s is Auto delete logs option
 #: App/config/rd_downloads.php:278
+#, php-format
 msgid "Auto delete logs after specific days. This will be skipped if %s was not checked."
 msgstr "ลบล็อกอัตโนมัติหลังจากวันที่ระบุ. สิ่งนี้จะไม่ทำงานถ้า %s ไม่ถูกติ๊ก."
 
@@ -389,16 +403,19 @@ msgstr "GitHub Webhook"
 
 #. translators: %1$s: Open link, %2$s: Close link.
 #: App/Controllers/Admin/Downloads/GithubOAuth.php:282 App/Controllers/Admin/Downloads/GithubOAuth.php:292
+#, php-format
 msgid "Please %1$sgo back%2$s and try again."
 msgstr "โปรด%1$sย้อนกลับไป%2$sแล้วลองอีกครั้ง."
 
 #. translators: %1$s: Open link, %2$s: The link URL, %3$s: Close link.
 #: App/Controllers/Admin/Downloads/GithubOAuth.php:290
+#, php-format
 msgid "%1$s%2$s%3$s."
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: Close link.
 #: App/Controllers/Admin/Downloads/GithubOAuth.php:318
+#, php-format
 msgid "Please %1$sdisconnect from GitHub OAuth%2$s and try again."
 msgstr "โปรด%1$sเลิกเชื่อมต่อกับ GitHub OAuth%2$sแล้วลองอีกครั้ง."
 
@@ -535,10 +552,11 @@ msgstr "ไม่พบรายการที่เลือกหรือป
 #: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:191
 #: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:86
 msgid "Hacking attempt!"
-msgstr ""
+msgstr "พยายามแฮ็ก!"
 
 #. translators: %s: list of banned files
 #: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:207
+#, php-format
 msgid "Unable to delete file that is in system file (%s)."
 msgstr "ไม่สามารถลบไฟล์ของระบบได้ (%s)."
 
@@ -547,31 +565,35 @@ msgid "Unable to delete index file that is preventing directory browsing."
 msgstr "ไม่สามารถลบไฟล์ index ซึ่งป้องกันการเปิดดูโฟลเดอร์."
 
 #. translators: %1$s: Open link tag, %2$s Close link tag.
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:271
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:272
+#, php-format
 msgid ""
 "Unable to delete the selected file. The file is already in use. Please %1$sedit%2$s this downloads instead.."
 msgstr "ไม่สามารถลบไฟล์ที่เลือก. ไฟล์กำลังถูกใช้งานอยู่. โปรด%1$sแก้ไข%2$sดาวน์โหลดนี้แทน."
 
 #. translators: %s: The selected URL to show in error.
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:294
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:295
+#, php-format
 msgid "The selected file was not found (%s)."
 msgstr "ไม่พบไฟล์ที่เลือก (%s)."
 
 #. translators: %1$s: /rd-downloads path string, %2$s: The selected URL to show in error.
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:300
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:301
+#, php-format
 msgid "Unable to delete file that is not in %1$s folder (%2$s)."
 msgstr "ไม่สามารถลบไฟล์ที่ไม่อยู่ในโฟลเดอร์ %1$s (%2$s)."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:335
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:336
 msgid "Invalid URL."
 msgstr "URL ไม่ถูกต้อง."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:465
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:466
 msgid "Unable to process your request, please reload the page and try again."
 msgstr "ไม่สามารถดำเนินการประมวลผลได้, โปรดโหลดหน้านี้ใหม่แล้วลองอีกครั้ง."
 
 #. translators: %s: Example GitHub repository URL.
 #: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:97
+#, php-format
 msgid "Invalid GitHub repository URL. The correct format should be %s."
 msgstr "URL GitHub ไม่ถูกต้อง. รูปแบบที่ถูกต้องควรเป็น %s."
 
@@ -652,11 +674,17 @@ msgstr "ช็อตโค้ดต่างๆ"
 
 #. translators: %s: Current DB version.
 #: App/Controllers/Admin/Plugins.php:79
+#, php-format
 msgid "DB version %s"
 msgstr "รุ่นฐานข้อมูล %s"
 
+#: App/Controllers/Admin/Plugins.php:83
+msgid "Donate"
+msgstr "บริจาค"
+
 #. translators: %1$s: Current PHP version, %2$s: Required PHP version.
 #: App/Controllers/Admin/Plugins/Activation.php:43
+#, php-format
 msgid ""
 "You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or "
 "contact plugin author for this help.<br><br>Minimum requirement:<br>PHP %2$s"
@@ -671,6 +699,7 @@ msgstr "รุ่น PHP ที่ใช้ไม่ตรงตามควา�
 
 #. translators: %1$s: Current WordPress version, %2$s: Required WordPress version.
 #: App/Controllers/Admin/Plugins/Activation.php:48
+#, php-format
 msgid "Your WordPress version does not meet the requirement. (%1$s < %2$s)."
 msgstr "รุ่นเวิร์ดเพรสของคุณไม่ตรงตามความต้องการขั้นต่ำ. (%1$s < %2$s)."
 
@@ -702,6 +731,7 @@ msgstr "ไม่สามารถทำการอัปเดทได้, �
 
 #. translators: %1$s: Open link tag, %2$s: Close link tag.
 #: App/Controllers/Admin/Plugins/Upgrader.php:130
+#, php-format
 msgid ""
 "The Rundiz Downloads is just upgraded and need to be manually update. Please continue to the %1$splugin "
 "update page%2$s."
@@ -730,6 +760,7 @@ msgstr "ตั้งค่า"
 
 #. translators: %1$s: Open link tag, %2$s: Close link tag.
 #: App/Controllers/Admin/Settings.php:67
+#, php-format
 msgid "The manual update is required, please %1$supdate first%2$s."
 msgstr "จำเป็นต้องดำเนินการอัปเดทด้วยตนเอง, โปรด %1$sทำการอัปเดทก่อน%2$s."
 
@@ -737,12 +768,12 @@ msgstr "จำเป็นต้องดำเนินการอัปเด
 msgid "The manual update is required, please tell administrator to update first."
 msgstr "จำเป็นต้องดำเนินการอัปเดทด้วยตนเอง, โปรดติดต่อผู้ดูแลเพื่อดำเนินการอัปเดทก่อน."
 
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:353
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:368
 msgid "You are not authorized to download the file. Failed to set required cookie."
 msgstr "คุณไม่ได้รับอนุญาตให้ดาวน์โหลดไฟล์. ล้มเหลวในการกำหนดคุกกี้."
 
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:395
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:420
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:410
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:435
 msgid "You are not authorized to download the file. Failed to validate human."
 msgstr "คุณไม่ได้รับอนุญาตให้ดาวน์โหลดไฟล์. ล้มเหลวในการตรวจสอบความเป็นมนุษย์."
 
@@ -758,6 +789,7 @@ msgstr "โปรดโหลดหน้านี้ใหม่แล้วล
 #: App/Libraries/DateTime.php:30 App/Libraries/FileSystem.php:113 App/Libraries/Github.php:98
 #: App/Libraries/Github.php:1157 App/Libraries/Semver.php:72 App/Libraries/Semver.php:77
 #: App/Libraries/Url.php:27 App/Libraries/Url.php:89
+#, php-format
 msgid "The %s must be string."
 msgstr "%s ต้องเป็นสตริง."
 
@@ -807,11 +839,13 @@ msgstr "รุ่น"
 
 #. translators: %s: Template path.
 #: App/Libraries/Loader.php:196
+#, php-format
 msgid "The template file was not found. (%s)"
 msgstr "ไม่พบไฟล์เทมเพลท. (%s)"
 
 #. translators: %s: Path to template file to show in error.
 #: App/Libraries/Loader.php:244
+#, php-format
 msgid "The views file was not found (%s)."
 msgstr "ไม่พบไฟล์ views  (%s)."
 
@@ -829,36 +863,43 @@ msgstr "แอตทริบิวท์ที่ต้องการเพื
 
 #. translators: %s: true (boolean)
 #: App/Libraries/ShortcodeRdDownloads.php:35
+#, php-format
 msgid "Set to %s to display file size. Default is not set."
 msgstr "กำหนดเป็น %s เพื่อแสดงขนาดไฟล์. ค่าเดิมคือไม่กำหนด."
 
 #. translators: %s: true (boolean)
 #: App/Libraries/ShortcodeRdDownloads.php:41
+#, php-format
 msgid "Set to %s to display file name. Default is not set."
 msgstr "กำหนดเป็น %s เพื่อแสดงชื่อไฟล์. ค่าเดิมคือไม่กำหนด."
 
 #. translators: %s: true (boolean)
 #: App/Libraries/ShortcodeRdDownloads.php:47
+#, php-format
 msgid "Set to %s to display download count. Default is not set."
 msgstr "กำหนดเป็น %s เพื่อแสดงจำนวนดาวน์โหลด. ค่าเดิมคือไม่กำหนด."
 
 #. translators: %s: true (boolean)
 #: App/Libraries/ShortcodeRdDownloads.php:53
+#, php-format
 msgid "Set to %s to display download file version. Default is not set."
 msgstr "กำหนดเป็น %s เพื่อแสดงรุ่นของไฟล์. ค่าเดิมคือไม่กำหนด."
 
 #. translators: %s: true (boolean)
 #: App/Libraries/ShortcodeRdDownloads.php:59
+#, php-format
 msgid "Set to %s to display create date. Default is not set."
 msgstr "กำหนดเป็น %s เพื่อแสดงวันที่สร้าง. ค่าเดิมคือไม่กำหนด."
 
 #. translators: %s: true (boolean)
 #: App/Libraries/ShortcodeRdDownloads.php:65
+#, php-format
 msgid "Set to %s to display last update. Default is not set."
 msgstr "กำหนดเป็น %s เพื่อแสดงวันที่อัปเดทล่าสุด. ค่าเดิมคือไม่กำหนด."
 
 #. translators: %1$s: Open link, %2$s: Close link, %3$s: Default value.
 #: App/Libraries/ShortcodeRdDownloads.php:70
+#, php-format
 msgid "Use %1$sPHP date/time format%2$s. Default is %3$s."
 msgstr "ใช้รูปแบบวันที่ %1$sPHP %2$s. ค่าเดิมคือ %3$s."
 
@@ -961,6 +1002,7 @@ msgstr "ทั้งหมด"
 
 #. translators: %s: Link to edit user.
 #: App/Models/RdDownloadLogsListTable.php:225 App/Models/RdDownloadsListTable.php:322
+#, php-format
 msgid "Filtered user: %s"
 msgstr "กรองผู้ใช้: %s"
 
@@ -970,6 +1012,7 @@ msgstr "ล้างค่ากรองผู้ใช้"
 
 #. translators: %s: Link to edit download.
 #: App/Models/RdDownloadLogsListTable.php:236
+#, php-format
 msgid "Filtered download: %s"
 msgstr "กรองดาวน์โหลด: %s"
 
@@ -991,16 +1034,19 @@ msgstr "คัดลอกช็อตโค้ดไปยังคลิปบ
 
 #. translators: %s: Date/time value.
 #: App/Models/RdDownloadsListTable.php:118
+#, php-format
 msgid "Created: %s"
 msgstr "สร้างเมื่อ: %s"
 
 #. translators: %s: Date/time value.
 #: App/Models/RdDownloadsListTable.php:123
+#, php-format
 msgid "Updated: %s"
 msgstr "อัปเดท: %s"
 
 #. translators: %s: version number.
 #: App/Models/RdDownloadsListTable.php:165
+#, php-format
 msgid "Version %s"
 msgstr "รุ่น %s"
 
@@ -1052,6 +1098,7 @@ msgstr "การบันทึกข้อมูลดาวน์โหลด
 
 #. translators: %s: Full path to this plugin upload folder.
 #: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:5
+#, php-format
 msgid ""
 "You can upload a file to the server using upload button below. You can also use FTP for large file size by "
 "uploading it to %s and then use file browser below to select the file."
@@ -1085,11 +1132,13 @@ msgstr "ตัวเลือกบังคับดาวน์โหลดจ
 
 #. translators: %s: Force download option.
 #: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:4
+#, php-format
 msgid "If you want to use redirect, the %s option in plugin setting page must be unchecked."
 msgstr "ถ้าคุณต้องการใช้เปลี่ยนเส้นทาง, ตัวเลือก %s ในหน้าตั้งค่าปลั๊กอินจะต้องไม่ถูกติ๊ก."
 
 #. translators: %s: Force download option.
 #: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:8
+#, php-format
 msgid "If you choose this option to default, it will use %s option from plugin setting page."
 msgstr "ถ้าคุณเลือกค่านี้เป็นค่าเดิม, มันจะใช้ตัวเลือก %s จากหน้าตั้งค่าปลั๊กอิน."
 
@@ -1099,6 +1148,7 @@ msgstr "เปลี่ยนเส้นทางไปยังไฟล์"
 
 #. translators: %s: Force download option value for main plugin setting.
 #: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:17 App/Views/admin/Downloads/Editing/pageEdit_v.php:121
+#, php-format
 msgid "The plugin setting is using %s."
 msgstr "ตั้งค่าปลั๊กอินใช้ %s."
 
@@ -1120,11 +1170,13 @@ msgstr "โหลดใหม่"
 
 #. translators: %s: Max upload size.
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:51
+#, php-format
 msgid "Maximum upload file size: %s."
 msgstr "ขนาดไฟล์สูงสุด: %s."
 
 #. translators: %s: example version number. 1.0.0
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:63
+#, php-format
 msgid "The version number of this download. Example: %s"
 msgstr "หมายเลขรุ่นของไฟล์ดาวน์โหลดนี้. ตัวอย่าง: %s"
 
@@ -1138,11 +1190,13 @@ msgstr "ขอบเขตระยะของรุ่นที่จะรั
 
 #. translators: %1$s: Open link, %2$s: Close link.
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:80
+#, php-format
 msgid "We use the same versions and constraints as %1$scomposer%2$s."
 msgstr "เราใช้การเทียบเลขรุ่นและขีดจำกัด แบบเดียวกับใน %1$scomposer%2$s."
 
 #. translators: %s: Example version constraints. >=your current version
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:86
+#, php-format
 msgid "Default is %s"
 msgstr "ค่าเดิมคือ %s"
 
@@ -1197,17 +1251,20 @@ msgstr "ผู้ใช้ที่ต้องการจะเข้าถึ
 #. translators: %s: upload_files capability.
 #: App/Views/admin/Downloads/GithubOAuth/helpTab/permission_v.php:7
 #: App/Views/admin/Downloads/Management/helpTab/permission_v.php:8
+#, php-format
 msgid "To manage downloads (including add or edit downloads), user require %s capability."
 msgstr "การจัดการดาวน์โหลด (รวมถึงการเพิ่ม, แก้ไข), ผู้ใช้จะต้องมีความสามารถ %s."
 
 #. translators: %1$s: Open link tag, %2$s: Close link tag.
 #: App/Views/admin/Downloads/GithubOAuth/helpTab/permission_v.php:12
 #: App/Views/admin/Downloads/Management/helpTab/permission_v.php:24
+#, php-format
 msgid "For more information about these capabilities, please continue reading on %1$sWordPress%2$s website."
 msgstr "สำหรับข้อมูลเพิ่มเติมเกี่ยวกับความสามารถเหล่านี้, โปรดอ่านได้ที่เว็บไซต์ของ %1$sWordPress%2$s."
 
 #. translators: %1$s: HTTPS, %2$s: SSL verification
 #: App/Views/admin/Downloads/GithubOAuth/helpTab/webhook_v.php:5
+#, php-format
 msgid ""
 "To sync secret key with GitHub, by default if this website is using %1$s then the %2$s will be enable by "
 "default."
@@ -1219,6 +1276,7 @@ msgstr "SSL verification"
 
 #. translators: %1$s: Filter name, %2$s: "1" value (string).
 #: App/Views/admin/Downloads/GithubOAuth/helpTab/webhook_v.php:13
+#, php-format
 msgid ""
 "To disable it, you have to go to your repository setting on GitHub and change this setting or use %1$s "
 "filter and change value to %2$s (string) and then sync again."
@@ -1238,6 +1296,7 @@ msgstr "เชื่อมต่อไปยัง GitHub"
 
 #. translators: %s: Link to GitHub user profile page and display GitHub logged in name.
 #: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:32
+#, php-format
 msgid "You had connected to GitHub as %s."
 msgstr "คุณได้เชื่อมต่อกับ GitHub เป็น %s."
 
@@ -1283,11 +1342,13 @@ msgstr "ยืนยันเลิกการเชื่อมต่อ"
 
 #. translators: %1$s: Open link, %2$s: Close link.
 #: App/Views/admin/Downloads/GithubOAuth/subPageDisconnect_v.php:17
+#, php-format
 msgid "You has beed disconnected from GitHub. %1$sGo back%2$s to connect page."
 msgstr "คุณเลิกการเชื่อมต่อกับ GitHub แล้ว. %1$sย้อนกลับ%2$sไปยังหน้าเชื่อมต่อ."
 
 #. translators: %s filter_user_id Query string name.
 #: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:7
+#, php-format
 msgid ""
 "You can filter the log for each user by adding the %s query string as name and the user id as value to the "
 "URL."
@@ -1303,6 +1364,7 @@ msgstr "ตัวอย่าง:"
 
 #. translators: %s filter_user_id Query string name.
 #: App/Views/admin/Downloads/Logs/helpTab/adminhelp_v.php:15
+#, php-format
 msgid ""
 "You can also filter the log for each download item by adding the %s query string as name and the download id "
 "as value to the URL."
@@ -1318,6 +1380,7 @@ msgstr "ทำไมฉันไม่สามารถล้างบันท
 
 #. translators: %1$s: administrator, %2$s: delete_users
 #: App/Views/admin/Downloads/Logs/helpTab/permission_v.php:6
+#, php-format
 msgid "You have to be an %1$s or have %2$s capability to clear the logs."
 msgstr "คุณต้องเป็น %1$s หรือมีความสามารถ %2$s เพื่อจะล้างบันทึก."
 
@@ -1328,6 +1391,7 @@ msgstr "ค้นหา"
 
 #. translators: %s filter_user_id Query string name.
 #: App/Views/admin/Downloads/Management/helpTab/adminhelp_v.php:7
+#, php-format
 msgid ""
 "You can filter user's download items by adding the %s query string as name and the user id as value to the "
 "URL."
@@ -1335,16 +1399,19 @@ msgstr "คุณสามารถกรองดาวน์โหลดขอ
 
 #. translators: %s: edit_posts capability.
 #: App/Views/admin/Downloads/Management/helpTab/permission_v.php:4
+#, php-format
 msgid "To view downloads, user require %s capability."
 msgstr "การดูดาวน์โหลด ผู้ใช้ต้องมีความสามารถ %s."
 
 #. translators: %s: upload_files capability.
 #: App/Views/admin/Downloads/Management/helpTab/permission_v.php:12
+#, php-format
 msgid "To delete an uploaded file, user require %s capability."
 msgstr "การจะลบไฟล์, ผู้ใช้จะต้องมีหน้าที่ %s."
 
 #. translators: %s: edit_others_posts capability.
 #: App/Views/admin/Downloads/Management/helpTab/permission_v.php:17
+#, php-format
 msgid "Users cannot edit other's download if they don't have %s capability."
 msgstr "ผู้ใช้ไม่สามารถแก้ไขของผู้อื่นได้ ถ้าหากไม่มีหน้าที่ %s."
 
@@ -1354,6 +1421,7 @@ msgstr "ผู้ใช้ไม่สามารถดำเนินการ
 
 #. translators: %1$s: Example basic shortcode, %2$s: text x in shortcode example, %3$s: download_id text, %4$s: id attribute in shortcode.
 #: App/Views/admin/Downloads/Management/helpTab/shortcodes_v.php:5
+#, php-format
 msgid ""
 "To display download button, use this shortcode %1$s, the %2$s value have to replace with the %3$s. The "
 "attribute %4$s is always required."
@@ -1379,6 +1447,7 @@ msgstr "พบทั้งหมด"
 
 #. translators: %1$s: Current page, %2$s: Total pages.
 #: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:35
+#, php-format
 msgid "Page %1$s of %2$s"
 msgstr "หน้า %1$s จาก %2$s"
 
@@ -1416,11 +1485,13 @@ msgstr "อัปเดทด้วยตนเอง"
 
 #. translators: %d: Number of total manual update actions.
 #: App/Views/admin/Plugins/Upgrader_v.php:18
+#, php-format
 msgid "There are total %d actions for this manual update, please continue step by step."
 msgstr "มีการทำงานทั้งหมด %d รายการสำหรับการอัปเดทด้วยตนเองนี้, โปรดดำเนินการไปทีละขั้นตอน."
 
 #. translators: %1$s: Number with span wrapped of already action, %2$d: Number of total manual update actions.
 #: App/Views/admin/Plugins/Upgrader_v.php:22
+#, php-format
 msgid "You are running %1$s of %2$d."
 msgstr "คุณกำลังทำงาน %1$s จาก %2$d."
 
@@ -1438,11 +1509,13 @@ msgstr "User agent ของคุณถูกบล็อคโดยผู้�
 
 #. translators: %s: Current user agent.
 #: templates/RdDownloadsPage/subCheckBannedUA_v.php:23
+#, php-format
 msgid "Your user agent: %s."
 msgstr "User agent ของคุณ: %s."
 
 #. translators: %s: Match banned user agent.
 #: templates/RdDownloadsPage/subCheckBannedUA_v.php:29
+#, php-format
 msgid "Match banned user agent: %s."
 msgstr "ตรงกับ user agent ที่ถูกแบน: %s."
 
