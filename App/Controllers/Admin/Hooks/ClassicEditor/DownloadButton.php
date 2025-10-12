@@ -115,8 +115,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEditor\
                     unset($StylesScripts);
                 }
                 wp_enqueue_style('rd-downloads-font-awesome5');
-                wp_enqueue_style('rd-downloads-tinymce-font-awesome5', plugin_dir_url(RDDOWNLOADS_FILE).'assets/css/admin/Hooks/ClassicEditor/tinymce-font-awesome5.css');
-                wp_enqueue_style('rd-downloads-tinymce-custom-dialog', plugin_dir_url(RDDOWNLOADS_FILE).'assets/css/admin/Hooks/ClassicEditor/tinymce-custom-dialog.css');
+                wp_enqueue_style('rd-downloads-tinymce-font-awesome5', plugin_dir_url(RDDOWNLOADS_FILE).'assets/css/admin/Hooks/ClassicEditor/tinymce-font-awesome5.css', [], RDDOWNLOADS_VERSION);
+                wp_enqueue_style('rd-downloads-tinymce-custom-dialog', plugin_dir_url(RDDOWNLOADS_FILE).'assets/css/admin/Hooks/ClassicEditor/tinymce-custom-dialog.css', [], RDDOWNLOADS_VERSION);
             }
         }// registerStyles
 
