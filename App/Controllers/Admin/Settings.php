@@ -197,7 +197,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
             wp_enqueue_script('rd-downloads-settings-tabs-js');
 
             // custom ajax for settings page.
-            wp_enqueue_script('rd-downloads-settings-ajax', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/admin/settings/settings-ajax.js', ['jquery'], RDDOWNLOADS_VERSION, true);
+            wp_enqueue_script('rd-downloads-settings-ajax', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/admin/settings/settings-ajax.js', [], RDDOWNLOADS_VERSION, true);
             wp_localize_script(
                 'rd-downloads-settings-ajax',
                 'RdDownloadsSettings',

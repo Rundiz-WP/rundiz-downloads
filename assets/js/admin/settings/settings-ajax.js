@@ -6,49 +6,63 @@
  * @returns {undefined}
  */
 function rdDownloadsSettingsAjaxClearCache() {
-    var $ = jQuery.noConflict();
+    const clearCacheButton = document.querySelector('#rd-downloads-settings-clear-cache');
+    if (!clearCacheButton) {
+        console.error('[rd-downloads]: The clear cache button does not exists on this page.');
+        return;
+    }
 
-    $('#rd-downloads-settings-clear-cache').off('click');
-    $('#rd-downloads-settings-clear-cache').on('click', function(e) {
-        e.preventDefault();
+    clearCacheButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        const thisTarget = event.target;
 
-        $(this).find('.icon-correct').remove();
-        $(this).prepend('<i class="fas fa-spinner fa-pulse icon-loading"></i> ');
+        thisTarget.querySelector('.icon-correct')?.remove();
+        thisTarget.insertAdjacentHTML('afterbegin', '<i class="fas fa-spinner fa-pulse icon-loading"></i> ');
 
-        $.ajax({
-            'url': ajaxurl,
+        const formData = new FormData();
+        formData.set('security', RdDownloadsSettings.nonce);
+        formData.set('action', 'RdDownloadsSettingsClearCache');
+
+        fetch(ajaxurl, {
             'method': 'POST',
-            'data': 'security=' + encodeURIComponent(RdDownloadsSettings.nonce) + '&action=RdDownloadsSettingsClearCache',
-            'dataType': 'json'
+            'headers': {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            },
+            'body': new URLSearchParams(formData),
         })
-        .done(function() {
-            $('#rd-downloads-settings-clear-cache .icon-loading').remove();
-            $('#rd-downloads-settings-clear-cache').prepend('<i class="fas fa-check icon-correct"></i>');
-        })
-        .fail(function() {
-            $('#rd-downloads-settings-clear-cache .icon-loading').remove();
-        })
-        .always(function(jqXHR, textStatus, data) {
-            if (typeof(jqXHR) !== 'undefined' && typeof(jqXHR.responseJSON) !== 'undefined') {
-                var response = jqXHR.responseJSON;
+        .then(async (rawResponse) => {
+            const contentType = rawResponse.headers.get('content-type');
+            let response;
+            if (contentType && contentType.includes('application/json')) {
+                response = await rawResponse.json();
             } else {
-                var response = jqXHR;
-            }
-            if (typeof(response) === 'undefined') {
-                response = {};
+                let message = await rawResponse.text();
+                if ('' === message) {
+                    if (400 === rawResponse.status) {
+                        message = 'Bad Request';
+                    }
+                }
+                console.warn('[rd-downloads]: Response is not JSON:', message);
+                throw new Error(message); // throw the error to make `.catch()` work due to response must be JSON only.
             }
 
-            if (typeof(response.form_result_msg) !== 'undefined') {
-                alert(response.form_result_msg);
-            }
-
-            response = undefined;
-        });
+            return response;
+        })
+        .then((response) => {
+            thisTarget.insertAdjacentHTML('afterbegin', '<i class="fas fa-check icon-correct"></i> ');
+        })
+        .catch((response) => {
+            alert(response);
+        })
+        .finally(() => {
+            thisTarget.querySelector('.icon-loading')?.remove();
+        })
+        ;
     });
 }// rdDownloadsSettingsAjaxClearCache
 
 
 // on dom ready --------------------------------------------------------------------------------------------------------
-(function($) {
+document.addEventListener('DOMContentLoaded', () => {
     rdDownloadsSettingsAjaxClearCache();
-})(jQuery);
+});
