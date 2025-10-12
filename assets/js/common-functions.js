@@ -89,13 +89,13 @@ function rdDownloadsExtractRootDomain(url) {
  */
 function rdDownloadsGetNoticeElement(notice_class, notice_message) {
     var isHTML = RegExp.prototype.test.bind(/(<([^>]+)>)/i);
-    var output = '<div class="'+notice_class+' notice is-dismissible">';
+    var output = '<div class="' + notice_class + ' notice is-dismissible">';
     if (isHTML(notice_message)) {
         output += notice_message;
     } else {
-        output += '<p><strong>'+notice_message+'</strong></p>'
+        output += '<p><strong>' + notice_message + '</strong></p>'
     }
-    output += '<button type="button" class="notice-dismiss"><span class="screen-reader-text">'+RdDownloads.txtDismiss+'</span></button>'
+    output += '<button type="button" class="notice-dismiss" onclick="javascript: this.closest(\'.notice\').remove();"><span class="screen-reader-text">' + RdDownloads.txtDismiss + '</span></button>'
         +'</div>';
     return output;
 }// rdDownloadsGetNoticeElement
@@ -124,18 +124,6 @@ function rdDownloadsHumanFileSize(bytes, si) {
     } while(Math.abs(bytes) >= thresh && u < units.length - 1);
     return bytes.toFixed(1)+' '+units[u];
 }// rdDownloadsHumanFileSize
-
-
-/**
- * Re-activate notice dismissable.
- * 
- * @returns {undefined}
- */
-function rdDownloadsReActiveDismissable() {
-    jQuery('.notice.is-dismissible').on('click', '.notice-dismiss', function(event){
-        jQuery(this).closest('.notice').remove();
-    });
-}// rdDownloadsReActiveDismissable
 
 
 /**

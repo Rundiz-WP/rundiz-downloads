@@ -128,8 +128,6 @@ class RdDownloadLogs {
                         $('html, body').animate({
                             scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
                         },500);
-
-                        rdDownloadsReActiveDismissable();
                     }
 
                     // enable buttons

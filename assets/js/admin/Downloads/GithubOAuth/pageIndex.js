@@ -86,8 +86,6 @@ class RdDownloadsGitHubOAuth {
                     $('html, body').animate({
                         scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
                     }, 500);
-
-                    rdDownloadsReActiveDismissable();
                 }
             });
         })
@@ -138,7 +136,6 @@ class RdDownloadsGitHubOAuth {
             $('html, body').animate({
                 scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
             }, 500);
-            rdDownloadsReActiveDismissable();
 
             $.ajax({
                 'url': ajaxurl,
@@ -166,8 +163,6 @@ class RdDownloadsGitHubOAuth {
                     $('html, body').animate({
                         scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
                     }, 500);
-
-                    rdDownloadsReActiveDismissable();
                 }
 
                 thisClass.enableDisableButtons(false);
@@ -202,7 +197,6 @@ class RdDownloadsGitHubOAuth {
                 $('html, body').animate({
                     scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
                 }, 500);
-                rdDownloadsReActiveDismissable();
 
                 $.ajax({
                     'url': ajaxurl,
@@ -248,8 +242,6 @@ class RdDownloadsGitHubOAuth {
                         $('html, body').animate({
                             scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
                         }, 500);
-
-                        rdDownloadsReActiveDismissable();
                     }
 
                     thisClass.enableDisableButtons(false);

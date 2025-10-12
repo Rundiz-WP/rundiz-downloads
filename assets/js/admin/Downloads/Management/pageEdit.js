@@ -103,8 +103,6 @@ class RdDownloadsEditing {
                 $('html, body').animate({
                     scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
                 }, 500);
-
-                rdDownloadsReActiveDismissable();
             }
         });
     }// _ajaxSaveFormDoSaveForm
@@ -258,8 +256,6 @@ class RdDownloadsEditing {
                     $('html, body').animate({
                         scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
                     },500);
-
-                    rdDownloadsReActiveDismissable();
                 }
 
                 // enable buttons.
@@ -407,8 +403,6 @@ class RdDownloadsEditing {
                 $('html, body').animate({
                     scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
                 }, 500);
-
-                rdDownloadsReActiveDismissable();
             }
 
             rdDownloadsEnableDisableButtons();
@@ -489,8 +483,6 @@ class RdDownloadsEditing {
                 $('html, body').animate({
                     scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
                 }, 500);
-
-                rdDownloadsReActiveDismissable();
             }
 
             rdDownloadsEnableDisableButtons();
@@ -647,8 +639,6 @@ function rdDownloadsAjaxDeleteFile(target, previousId) {
                 $('html, body').animate({
                     scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
                 },500);
-
-                rdDownloadsReActiveDismissable();
             }
 
             // enable buttons.
@@ -771,8 +761,6 @@ function rdDownloadsAjaxFileBrowser(target, previousId) {
             $('html, body').animate({
                 scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
             },500);
-
-            rdDownloadsReActiveDismissable();
         }
 
         $('.rd-downloads-reload-button .icon-reload').removeClass('fa-spin');
