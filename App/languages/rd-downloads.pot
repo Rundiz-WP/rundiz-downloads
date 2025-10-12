@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-10-12T19:49:35+07:00\n"
+"POT-Creation-Date: 2025-10-12T21:17:44+07:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: rd-downloads\n"
@@ -206,18 +206,17 @@ msgstr ""
 #: App/config/rd_downloads.php:268
 #: App/config/rd_downloads.php:294
 #: App/Models/GitHubOAuthListTable.php:57
-#: App/Models/RdDownloadsListTable.php:88
+#: App/Models/RdDownloadsListTable.php:89
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:109
 msgid "Yes"
 msgstr ""
 
-#. translators: %s: Force download option.
 #: App/config/rd_downloads.php:176
 #: App/Controllers/Admin/Downloads/Editing.php:59
-#: App/Models/RdDownloadsListTable.php:236
-#: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:4
-#: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:8
-#: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:12
+#: App/Models/RdDownloadsListTable.php:237
+#: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:6
+#: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:13
+#: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:18
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:107
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:116
 msgid "Force download"
@@ -249,7 +248,7 @@ msgstr ""
 
 #: App/config/rd_downloads.php:196
 #: App/config/rd_downloads.php:224
-#: App/Models/RdDownloadsListTable.php:90
+#: App/Models/RdDownloadsListTable.php:91
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:113
 msgid "Default"
 msgstr ""
@@ -445,7 +444,7 @@ msgid "Download logs"
 msgstr ""
 
 #: App/Controllers/Admin/Downloads/Logs.php:90
-#: App/Models/RdDownloadsListTable.php:376
+#: App/Models/RdDownloadsListTable.php:377
 msgid "Logs"
 msgstr ""
 
@@ -471,129 +470,129 @@ msgstr ""
 msgid "Add New"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:69
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:70
 #: App/Controllers/Admin/Downloads/Xhr/XhrLogsBulkActions.php:42
 msgid "Invalid form action, please try again."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:240
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:241
 msgid "Success! All selected items have been deleted."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:243
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:244
 msgid "There are some webhook that is unable to remove, here is the result."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:249
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:250
 msgid "Warning! There are some problem about delete the items, here are the results."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:251
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:252
 msgid "Deleted item"
 msgid_plural "Deleted items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:252
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:253
 msgid "Failed to delete item"
 msgid_plural "Failed to delete items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:253
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:254
 msgid "Failed to remove webhook on GitHub"
 msgid_plural "Failed to remove webhooks on GitHub"
-msgstr[0] ""
-msgstr[1] ""
-
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:254
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:426
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:561
-msgid "Capability limited item"
-msgid_plural "Capability limited items"
 msgstr[0] ""
 msgstr[1] ""
 
 #: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:255
 #: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:427
 #: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:562
+msgid "Capability limited item"
+msgid_plural "Capability limited items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:256
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:428
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:563
 msgid "Mismatch ID"
 msgid_plural "Mismatch IDs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:276
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:277
 msgid "The selected items was not found."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:417
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:552
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:418
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:553
 msgid "Success! All selected items have been updated."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:422
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:557
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:423
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:558
 msgid "Warning! There are some problem about update the items, here are the results."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:424
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:559
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:425
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:560
 msgid "Updated item"
 msgid_plural "Updated items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:425
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:560
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:426
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:561
 msgid "Failed to update item"
 msgid_plural "Failed to update items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:447
-#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:582
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:448
+#: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:583
 msgid "The selected items was not found or not matched download type."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:39
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:191
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:40
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:192
 #: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:86
 msgid "Hacking attempt!"
 msgstr ""
 
 #. translators: %s: list of banned files
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:207
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:208
 #, php-format
 msgid "Unable to delete file that is in system file (%s)."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:237
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:238
 msgid "Unable to delete index file that is preventing directory browsing."
 msgstr ""
 
 #. translators: %1$s: Open link tag, %2$s Close link tag.
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:272
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:273
 #, php-format
 msgid "Unable to delete the selected file. The file is already in use. Please %1$sedit%2$s this downloads instead.."
 msgstr ""
 
 #. translators: %s: The selected URL to show in error.
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:295
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:296
 #, php-format
 msgid "The selected file was not found (%s)."
 msgstr ""
 
 #. translators: %1$s: /rd-downloads path string, %2$s: The selected URL to show in error.
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:301
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:302
 #, php-format
 msgid "Unable to delete file that is not in %1$s folder (%2$s)."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:336
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:337
 msgid "Invalid URL."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:466
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:467
 msgid "Unable to process your request, please reload the page and try again."
 msgstr ""
 
@@ -634,28 +633,28 @@ msgid "Add a download"
 msgstr ""
 
 #: App/Controllers/Admin/Hooks/ClassicEditor/DownloadButton.php:93
-#: App/Models/RdDownloadsListTable.php:188
-#: App/Models/RdDownloadsListTable.php:313
-#: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:20
+#: App/Models/RdDownloadsListTable.php:189
+#: App/Models/RdDownloadsListTable.php:314
+#: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:24
 msgid "Any remote file"
 msgstr ""
 
 #: App/Controllers/Admin/Hooks/ClassicEditor/DownloadButton.php:94
-#: App/Models/RdDownloadsListTable.php:186
-#: App/Models/RdDownloadsListTable.php:306
-#: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:8
+#: App/Models/RdDownloadsListTable.php:187
+#: App/Models/RdDownloadsListTable.php:307
+#: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:12
 msgid "GitHub file"
 msgstr ""
 
 #: App/Controllers/Admin/Hooks/ClassicEditor/DownloadButton.php:95
-#: App/Models/RdDownloadsListTable.php:184
-#: App/Models/RdDownloadsListTable.php:299
+#: App/Models/RdDownloadsListTable.php:185
+#: App/Models/RdDownloadsListTable.php:300
 #: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:2
 msgid "Local file"
 msgstr ""
 
 #: App/Controllers/Admin/Hooks/ClassicEditor/DownloadButton.php:96
-#: App/Models/RdDownloadsListTable.php:190
+#: App/Models/RdDownloadsListTable.php:191
 msgid "Unknown"
 msgstr ""
 
@@ -698,23 +697,22 @@ msgid "Donate"
 msgstr ""
 
 #. translators: %1$s: Current PHP version, %2$s: Required PHP version.
-#: App/Controllers/Admin/Plugins/Activation.php:43
+#: App/Controllers/Admin/Plugins/Activation.php:45
 #, php-format
 msgid "You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or contact plugin author for this help.<br><br>Minimum requirement:<br>PHP %2$s"
 msgstr ""
 
-#. translators: %1$s: Current PHP version, %2$s: Required PHP version.
-#: App/Controllers/Admin/Plugins/Activation.php:43
+#: App/Controllers/Admin/Plugins/Activation.php:49
 msgid "Minimum requirement of PHP version does not meet."
 msgstr ""
 
 #. translators: %1$s: Current WordPress version, %2$s: Required WordPress version.
-#: App/Controllers/Admin/Plugins/Activation.php:48
+#: App/Controllers/Admin/Plugins/Activation.php:57
 #, php-format
 msgid "Your WordPress version does not meet the requirement. (%1$s < %2$s)."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Activation.php:54
+#: App/Controllers/Admin/Plugins/Activation.php:67
 msgid "Unable to network activate, please activate from each site that have to use it only."
 msgstr ""
 
@@ -767,12 +765,12 @@ msgid "Settings"
 msgstr ""
 
 #. translators: %1$s: Open link tag, %2$s: Close link tag.
-#: App/Controllers/Admin/Settings.php:87
+#: App/Controllers/Admin/Settings.php:89
 #, php-format
 msgid "The manual update is required, please %1$supdate first%2$s."
 msgstr ""
 
-#: App/Controllers/Admin/Settings.php:89
+#: App/Controllers/Admin/Settings.php:95
 msgid "The manual update is required, please tell administrator to update first."
 msgstr ""
 
@@ -796,8 +794,8 @@ msgstr ""
 #. translators: %s Argument name.
 #: App/Libraries/DateTime.php:33
 #: App/Libraries/FileSystem.php:116
-#: App/Libraries/Github.php:98
-#: App/Libraries/Github.php:1157
+#: App/Libraries/Github.php:99
+#: App/Libraries/Github.php:1158
 #: App/Libraries/Semver.php:72
 #: App/Libraries/Semver.php:77
 #: App/Libraries/Url.php:27
@@ -811,8 +809,8 @@ msgid "Download"
 msgstr ""
 
 #: App/Libraries/ElementPlaceholders.php:58
-#: App/Models/RdDownloadLogsListTable.php:155
-#: App/Models/RdDownloadsListTable.php:230
+#: App/Models/RdDownloadLogsListTable.php:156
+#: App/Models/RdDownloadsListTable.php:231
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:19
 #: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:19
 #: templates/RdDownloadsPage/subUseAntibot_v.php:31
@@ -824,7 +822,7 @@ msgid "GitHub repository name"
 msgstr ""
 
 #: App/Libraries/ElementPlaceholders.php:60
-#: App/Models/RdDownloadsListTable.php:234
+#: App/Models/RdDownloadsListTable.php:235
 #: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:22
 msgid "Size"
 msgstr ""
@@ -844,7 +842,7 @@ msgid "Create on"
 msgstr ""
 
 #: App/Libraries/ElementPlaceholders.php:64
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:136
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:150
 msgid "Last update"
 msgstr ""
 
@@ -858,13 +856,13 @@ msgid "Version"
 msgstr ""
 
 #. translators: %s: Template path.
-#: App/Libraries/Loader.php:196
+#: App/Libraries/Loader.php:198
 #, php-format
 msgid "The template file was not found. (%s)"
 msgstr ""
 
 #. translators: %s: Path to template file to show in error.
-#: App/Libraries/Loader.php:244
+#: App/Libraries/Loader.php:250
 #, php-format
 msgid "The views file was not found (%s)."
 msgstr ""
@@ -924,7 +922,7 @@ msgid "Use %1$sPHP date/time format%2$s. Default is %3$s."
 msgstr ""
 
 #: App/Models/GitHubOAuthListTable.php:55
-#: App/Models/RdDownloadsListTable.php:86
+#: App/Models/RdDownloadsListTable.php:87
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:110
 msgid "No"
 msgstr ""
@@ -945,181 +943,181 @@ msgstr ""
 msgid "Webhook"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:42
+#: App/Models/RdDownloadLogsListTable.php:43
 msgid "Unknow"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:87
+#: App/Models/RdDownloadLogsListTable.php:88
 msgid "Admin add new item"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:90
+#: App/Models/RdDownloadLogsListTable.php:91
 msgid "Admin update an item"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:93
+#: App/Models/RdDownloadLogsListTable.php:94
 msgid "Admin delete an item"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:96
+#: App/Models/RdDownloadLogsListTable.php:97
 msgid "Admin clear logs"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:99
+#: App/Models/RdDownloadLogsListTable.php:100
 msgid "Auto purge old logs"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:102
+#: App/Models/RdDownloadLogsListTable.php:103
 msgid "GitHub auto update"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:105
+#: App/Models/RdDownloadLogsListTable.php:106
 msgid "User download success"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:108
+#: App/Models/RdDownloadLogsListTable.php:109
 msgid "User download failed"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:111
+#: App/Models/RdDownloadLogsListTable.php:112
 msgid "User download banned"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:114
+#: App/Models/RdDownloadLogsListTable.php:115
 msgid "User enter wrong captcha code"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:117
+#: App/Models/RdDownloadLogsListTable.php:118
 msgid "User has failed to verify antibot"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:143
+#: App/Models/RdDownloadLogsListTable.php:144
 msgid "Clear"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:156
+#: App/Models/RdDownloadLogsListTable.php:157
 msgid "User"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:157
+#: App/Models/RdDownloadLogsListTable.php:158
 msgid "Status"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:158
+#: App/Models/RdDownloadLogsListTable.php:159
 msgid "IP Address"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:159
+#: App/Models/RdDownloadLogsListTable.php:160
 msgid "User agent"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:160
-#: App/Models/RdDownloadsListTable.php:238
+#: App/Models/RdDownloadLogsListTable.php:161
+#: App/Models/RdDownloadsListTable.php:239
 msgid "Date"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:216
-#: App/Models/RdDownloadsListTable.php:292
+#: App/Models/RdDownloadLogsListTable.php:217
+#: App/Models/RdDownloadsListTable.php:293
 msgid "All"
 msgstr ""
 
 #. translators: %s: Link to edit user.
-#: App/Models/RdDownloadLogsListTable.php:225
-#: App/Models/RdDownloadsListTable.php:322
+#: App/Models/RdDownloadLogsListTable.php:226
+#: App/Models/RdDownloadsListTable.php:323
 #, php-format
 msgid "Filtered user: %s"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:228
-#: App/Models/RdDownloadsListTable.php:325
+#: App/Models/RdDownloadLogsListTable.php:229
+#: App/Models/RdDownloadsListTable.php:326
 msgid "Reset filtered user"
 msgstr ""
 
 #. translators: %s: Link to edit download.
-#: App/Models/RdDownloadLogsListTable.php:236
+#: App/Models/RdDownloadLogsListTable.php:237
 #, php-format
 msgid "Filtered download: %s"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:239
+#: App/Models/RdDownloadLogsListTable.php:240
 msgid "Reset filtered download"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:262
+#: App/Models/RdDownloadLogsListTable.php:263
 msgid "Filter download"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:269
-#: App/Models/RdDownloadsListTable.php:369
+#: App/Models/RdDownloadLogsListTable.php:270
+#: App/Models/RdDownloadsListTable.php:370
 msgid "Filter user"
 msgstr ""
 
-#: App/Models/RdDownloadsListTable.php:80
+#: App/Models/RdDownloadsListTable.php:81
 msgid "Shortcode copied to clipboard."
 msgstr ""
 
 #. translators: %s: Date/time value.
-#: App/Models/RdDownloadsListTable.php:118
+#: App/Models/RdDownloadsListTable.php:119
 #, php-format
 msgid "Created: %s"
 msgstr ""
 
 #. translators: %s: Date/time value.
-#: App/Models/RdDownloadsListTable.php:123
+#: App/Models/RdDownloadsListTable.php:124
 #, php-format
 msgid "Updated: %s"
 msgstr ""
 
 #. translators: %s: version number.
-#: App/Models/RdDownloadsListTable.php:165
+#: App/Models/RdDownloadsListTable.php:166
 #, php-format
 msgid "Version %s"
 msgstr ""
 
-#: App/Models/RdDownloadsListTable.php:213
+#: App/Models/RdDownloadsListTable.php:214
 msgid "Update GitHub"
 msgstr ""
 
-#: App/Models/RdDownloadsListTable.php:216
+#: App/Models/RdDownloadsListTable.php:217
 msgid "Update remote file"
 msgstr ""
 
-#: App/Models/RdDownloadsListTable.php:217
+#: App/Models/RdDownloadsListTable.php:218
 msgid "Delete"
 msgstr ""
 
-#: App/Models/RdDownloadsListTable.php:231
+#: App/Models/RdDownloadsListTable.php:232
 msgid "Author"
 msgstr ""
 
-#: App/Models/RdDownloadsListTable.php:232
+#: App/Models/RdDownloadsListTable.php:233
 #: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:20
 msgid "Type"
 msgstr ""
 
-#: App/Models/RdDownloadsListTable.php:233
+#: App/Models/RdDownloadsListTable.php:234
 #: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:21
 msgid "File"
 msgstr ""
 
-#: App/Models/RdDownloadsListTable.php:235
+#: App/Models/RdDownloadsListTable.php:236
 msgid "Shortcode"
 msgstr ""
 
-#: App/Models/RdDownloadsListTable.php:237
+#: App/Models/RdDownloadsListTable.php:238
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:100
 msgid "Download count"
 msgstr ""
 
-#: App/Models/RdDownloadsListTable.php:355
+#: App/Models/RdDownloadsListTable.php:356
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:36
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:148
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:160
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:161
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:166
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:178
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:179
 msgid "Preview"
 msgstr ""
 
-#: App/Models/RdDownloadsListTable.php:362
+#: App/Models/RdDownloadsListTable.php:363
 msgid "GitHub repository"
 msgstr ""
 
@@ -1128,24 +1126,24 @@ msgid "To save the downloads data, the Download URL field is required."
 msgstr ""
 
 #. translators: %s: Full path to this plugin upload folder.
-#: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:5
+#: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:6
 #, php-format
 msgid "You can upload a file to the server using upload button below. You can also use FTP for large file size by uploading it to %s and then use file browser below to select the file."
 msgstr ""
 
-#: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:7
+#: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:11
 msgid "If you will be uploading the files using FTP, the file name should be web safe. For example: English, number, dash(-), underscore (_), no anything else."
 msgstr ""
 
-#: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:10
+#: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:14
 msgid "You can enter the download URL in the Download URL field directly by using one of these URL formats."
 msgstr ""
 
-#: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:18
+#: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:22
 msgid "Users cannot use auto correct GitHub URL if they don't connect to GitHub OAuth."
 msgstr ""
 
-#: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:21
+#: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:25
 msgid "You can enter the download URL in the Download URL field directly for any remotely hosted file."
 msgstr ""
 
@@ -1154,24 +1152,24 @@ msgid "The Force download option will work with the local file only."
 msgstr ""
 
 #. translators: %s: Force download option.
-#: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:4
+#: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:5
 #, php-format
 msgid "If you want to use redirect, the %s option in plugin setting page must be unchecked."
 msgstr ""
 
 #. translators: %s: Force download option.
-#: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:8
+#: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:12
 #, php-format
 msgid "If you choose this option to default, it will use %s option from plugin setting page."
 msgstr ""
 
-#: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:14
+#: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:20
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:118
 msgid "redirect to file"
 msgstr ""
 
 #. translators: %s: Force download option value for main plugin setting.
-#: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:17
+#: App/Views/admin/Downloads/Editing/helpTab/tab2_v.php:24
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:121
 #, php-format
 msgid "The plugin setting is using %s."
@@ -1254,21 +1252,21 @@ msgstr ""
 msgid "Created by"
 msgstr ""
 
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:135
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:145
 msgid "Created on"
 msgstr ""
 
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:143
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:161
 msgid "Save"
 msgstr ""
 
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:165
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:169
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:183
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:187
 msgid "This file is linked with other downloads data."
 msgstr ""
 
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:177
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:178
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:195
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:196
 msgid "Delete this file"
 msgstr ""
 

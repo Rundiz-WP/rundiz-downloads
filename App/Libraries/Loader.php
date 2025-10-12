@@ -116,7 +116,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Loader')) {
                         if (!$TestClass->isAbstract() && !$TestClass->isTrait()) {
                             $UpdateClass = new $this_file_classname();
                             if (method_exists($UpdateClass, 'run') && property_exists($UpdateClass, 'manual_update_version')) {
-                                if ($manual_update_to == '' || version_compare($manual_update_to, $UpdateClass->manual_update_version, '<')) {
+                                if ('' === $manual_update_to || version_compare($manual_update_to, $UpdateClass->manual_update_version, '<')) {
                                     $this->manualUpdateClasses[] = $this_file_classname;
                                 }
                             }
@@ -148,10 +148,10 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Loader')) {
          */
         public function loadConfig($config_file_name = 'config', $require_once = false)
         {
-            $config_dir = dirname(__DIR__).'/config/';
+            $config_dir = dirname(__DIR__) . '/config/';
 
-            if ($config_dir != null && file_exists($config_dir) && is_file($config_dir.$config_file_name.'.php')) {
-                if ($require_once === true) {
+            if (file_exists($config_dir) && is_file($config_dir.$config_file_name.'.php')) {
+                if (true === $require_once) {
                     $config_values = require_once $config_dir.$config_file_name.'.php';
                 } else {
                     $config_values = require $config_dir.$config_file_name.'.php';
@@ -179,12 +179,14 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Loader')) {
          * @global \WP_Query $wp_query
          * @param string $view_name The template file name.
          * @param array $data The data to send to template file. The array key will becomes variable in template file.
+         * @throws \Exception Throws exception if file is not found.
          */
         public function loadTemplate($view_name, array $data = [])
         {
             global $wp_query;
 
-            if ($template_path = locate_template('rd-downloads/templates/' . $view_name . '.php')) {
+            $template_path = locate_template('rd-downloads/templates/' . $view_name . '.php');
+            if ($template_path) {
                 // if template found in the theme location.
             } else {
                 // if template was not found in theme location.
@@ -192,10 +194,14 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Loader')) {
                 if (!is_file($template_path)) {
                     // if not found the template file in plugin itself.
                     // throw the error to notice the developers.
-                    /* translators: %s: Template path. */
-                    throw new \Exception(sprintf(__('The template file was not found. (%s)', 'rd-downloads'), $template_path));
-                    // remove the variable.
-                    unset($template_path);
+                    // phpcs:ignore Squiz.PHP.NonExecutableCode.Unreachable
+                    throw new \Exception(
+                        sprintf(
+                            /* translators: %s: Template path. */
+                            esc_html__('The template file was not found. (%s)', 'rd-downloads'), 
+                            $template_path// phpcs:ignore
+                        )
+                    );
                 }
             }
 
@@ -222,15 +228,15 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Loader')) {
         public function loadView($view_name, array $data = [], $require_once = false)
         {
             $view_dir = dirname(__DIR__).'/Views/';
-            $templateFile = $view_dir . $view_name . '.php';
+            $templateFile = $view_dir . (is_string($view_name) ? $view_name : '') . '.php';
             unset($view_dir);
 
-            if ($view_name != null && file_exists($templateFile) && is_file($templateFile)) {
+            if (file_exists($templateFile) && is_file($templateFile)) {
                 if (is_array($data)) {
                     extract($data, EXTR_PREFIX_SAME, 'dupvar_');
                 }
 
-                if ($require_once === true) {
+                if (true === $require_once) {
                     include_once $templateFile;
                 } else {
                     include $templateFile;
@@ -240,8 +246,11 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Loader')) {
                 return true;
             } elseif (!file_exists($templateFile)) {
                 trigger_error(
-                    /* translators: %s: Path to template file to show in error. */
-                    sprintf(__('The views file was not found (%s).', 'rd-downloads'), str_replace(['\\', '/'], '/', $templateFile)),
+                    sprintf(
+                        /* translators: %s: Path to template file to show in error. */
+                        esc_html__('The views file was not found (%s).', 'rd-downloads'), 
+                        str_replace(['\\', '/'], '/', $templateFile)// phpcs:ignore
+                    ),
                     E_USER_WARNING
                 );
             }

@@ -21,7 +21,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
          */
         public function goToRdDownloadsPage()
         {
-            if (get_query_var('pagename') == 'rddownloads_page') {
+            if (get_query_var('pagename') === 'rddownloads_page') {
                 $subpage = get_query_var('rddownloads_subpage');
                 switch ($subpage) {
                     default:

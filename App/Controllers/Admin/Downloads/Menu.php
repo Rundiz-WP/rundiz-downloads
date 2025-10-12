@@ -27,9 +27,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')) {
         {
             global $plugin_page;
 
-            if ($plugin_page == 'rd-downloads_edit') {
+            if ('rd-downloads_edit' === $plugin_page) {
                 // if in rundiz downloads/edit page.
                 // modify $plugin_page as parent menu ('rd-downloads');
+                // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
                 $plugin_page = 'rd-downloads';
             }
 

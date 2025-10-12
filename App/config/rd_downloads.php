@@ -16,7 +16,7 @@ unset($arrayKeys);
 $txtPlaceholders = '';
 foreach ($placeholders as $placeholder => $translated) {
     $txtPlaceholders .= '<code>{{' . $placeholder . '}}</code> =&gt; ' . $translated;
-    if ($placeholder != $lastArrayKey) {
+    if ($placeholder !== $lastArrayKey) {
         $txtPlaceholders .= '<br>' . PHP_EOL;
     }
 }
@@ -30,7 +30,7 @@ unset($arrayKeys);
 $dbPlaceholders = '';
 foreach ($placeholders as $placeholder) {
     $dbPlaceholders .= '<code>{{' . $placeholder . '}}</code>';
-    if ($placeholder != $lastArrayKey) {
+    if ($placeholder !== $lastArrayKey) {
         $dbPlaceholders .= '<br>' . PHP_EOL;
     }
 }
@@ -49,7 +49,7 @@ foreach ($attributes as $attribute => $item) {
     if (isset($item['helpmsg'])) {
         $availableShortcodeAttributes .= ' =&gt; ' . $item['helpmsg'];
     }
-    if ($attribute != $lastArrayKey) {
+    if ($attribute !== $lastArrayKey) {
         $availableShortcodeAttributes .= '<br>' . PHP_EOL;
     }
 }
@@ -68,11 +68,11 @@ $designHelp .= '<h3>' . __('Available shortcode attributes.', 'rd-downloads') . 
 /* translators: %s: id attribute */
 $designHelp .= '<p>' . sprintf(__('Set one or more of these attributes into shortcode to match condition in the template and display its value. The %s attribute is required.', 'rd-downloads'), '<code>id</code>') . '</p>' . PHP_EOL;
 $designHelp .= '<p>' . PHP_EOL;
-$designHelp .=  $availableShortcodeAttributes . PHP_EOL;
+$designHelp .= $availableShortcodeAttributes . PHP_EOL;
 $designHelp .= '</p>' . PHP_EOL;
 $designHelp .= '<h3>' . __('Placeholders for the text replacement.', 'rd-downloads') . '</h3>' . PHP_EOL;
 $designHelp .= '<p>' . PHP_EOL;
-$designHelp .=  $txtPlaceholders;
+$designHelp .= $txtPlaceholders;
 $designHelp .= '</p>' . PHP_EOL;
 $designHelp .= '<h3>' . __('Placeholders for DB fields replacement.', 'rd-downloads') . '</h3>' . PHP_EOL;
 $designHelp .= '<p>' . PHP_EOL;

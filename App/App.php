@@ -8,7 +8,6 @@
 
 namespace RdDownloads\App;
 
-use RdDownloads\App\Controllers as Controllers;
 
 if (!class_exists('\\RdDownloads\\App\\App')) {
     class App

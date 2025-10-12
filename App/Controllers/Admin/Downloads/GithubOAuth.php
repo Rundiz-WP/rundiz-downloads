@@ -72,6 +72,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
         protected $verifyNonce = false;
 
 
+        /**
+         * GitHubOAuth class constructor.
+         */
         public function __construct()
         {
             $this->Github = new \RdDownloads\App\Libraries\Github();
@@ -160,7 +163,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
          */
         protected function headerSubPageDisconnect()
         {
-            if ($_POST) {
+            if (isset($_SERVER['REQUEST_METHOD']) && 'POST' === $_SERVER['REQUEST_METHOD']) {
                 if (!check_admin_referer('rddownloads_github_disconnect', 'rddownloads_github_disconnect')) {
                     wp_nonce_ays('rddownloads_github_disconnect');
                 }
@@ -185,7 +188,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
         {
             // check permission.
             if (!current_user_can('upload_files')) {
-                wp_die(__('You do not have permission to access this page.'), '', ['response' => 403]);
+                wp_die(esc_html__('You do not have permission to access this page.'), '', ['response' => 403]);
             }
 
             $this->thisPageUrl = admin_url('admin.php?page=rd-downloads_github_connect');
@@ -193,21 +196,21 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
 
             $subpage = filter_input(INPUT_GET, 'subpage');
             $subpage = (is_string($subpage) ? htmlspecialchars($subpage, ENT_QUOTES) : $subpage);
-            if ($subpage === 'disconnect' && $_POST) {
+            if ('disconnect' === $subpage && isset($_SERVER['REQUEST_METHOD']) && 'POST' === $_SERVER['REQUEST_METHOD']) {
                 return $this->headerSubPageDisconnect();
             }
 
             $githubReturnCode = filter_input(INPUT_GET, 'code');
             if (is_string($githubReturnCode)) {
-                $githubReturnCode = strip_tags($githubReturnCode);
+                $githubReturnCode = wp_strip_all_tags($githubReturnCode);
             }
             $githubReturnState = filter_input(INPUT_GET, 'state');
             if (is_string($githubReturnState)) {
-                $githubReturnState = strip_tags($githubReturnState);
+                $githubReturnState = wp_strip_all_tags($githubReturnState);
             }
             $accessTokenCookie = filter_input(INPUT_COOKIE, $this->Github->getOAuthAccessTokenName());
             if (is_string($accessTokenCookie)) {
-                $accessTokenCookie = strip_tags($accessTokenCookie);
+                $accessTokenCookie = wp_strip_all_tags($accessTokenCookie);
             }
             if (!empty($accessTokenCookie)) {
                 // if contain access token cookie
@@ -241,16 +244,16 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
                 $this->connectStep = 1;
             }
 
-            if ($this->connectStep == 2) {
+            if (2 === $this->connectStep) {
                 // if 2nd step, get access token from the code.
                 $this->verifyNonce = wp_verify_nonce($githubReturnState, $this->nonceAction);
-                if ($this->verifyNonce !== false) {
+                if (false !== $this->verifyNonce) {
                     $this->accessToken = $this->Github->oauthGetAccessToken($githubReturnCode, $this->thisPageUrl, $githubReturnState);
 
                     if (is_string($this->accessToken) && !empty($this->accessToken)) {
                         update_user_meta($this->currentUserId, $this->Github->getOAuthAccessTokenName(), $this->accessToken);
                         $userGitHubSecret = get_user_meta($this->currentUserId, $this->Github->getWebhookSecretName(), true);
-                        if (empty($userGitHubSecret) || $userGitHubSecret === false) {
+                        if (empty($userGitHubSecret) || false === $userGitHubSecret) {
                             update_user_meta($this->currentUserId, $this->Github->getWebhookSecretName(), $this->Github->generateWebhookSecretKey($this->currentUserId));
                         }
                         unset($userGitHubSecret);
@@ -275,14 +278,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
         {
             // check permission.
             if (!current_user_can('upload_files')) {
-                wp_die(__('You do not have permission to access this page.'), '', ['response' => 403]);
+                wp_die(esc_html__('You do not have permission to access this page.'), '', ['response' => 403]);
             }
 
             $subpage = filter_input(INPUT_GET, 'subpage');
             if (is_string($subpage)) {
-                $subpage = strip_tags($subpage);
+                $subpage = wp_strip_all_tags($subpage);
             }
-            if ($subpage === 'disconnect') {
+            if ('disconnect' === $subpage) {
                 return $this->subPageDisconnect();
             }
 
@@ -291,10 +294,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
             $output['accessToken'] = (is_string($this->accessToken) ? $this->accessToken : '');
             $output['thisPageUrl'] = $this->thisPageUrl;
 
-            if ($this->connectStep == 1) {
+            if (1 === $this->connectStep) {
                 // if 1st step, get the link.
                 $output['githubOAuthLink'] = $this->Github->oauthGetLink($output['thisPageUrl'], wp_create_nonce($this->nonceAction));
-            } elseif ($this->connectStep == 2) {
+            } elseif (2 === $this->connectStep) {
                 // if 2nd step, get access token from the code.
                 if (!$this->verifyNonce) {
                     // if failed to verify nonce.
@@ -313,13 +316,13 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
                         $output['form_result_msg'] .= '<br><br>' . sprintf(__('Please %1$sgo back%2$s and try again.', 'rd-downloads'), '<a href="' . esc_url($output['thisPageUrl']) . '">', '</a>');
                     }
                 }
-            } elseif ($this->connectStep == 3) {
+            } elseif (3 === $this->connectStep) {
                 // if 3rd step, list user's repositories.
                 $GitHubOAuthListTable = new \RdDownloads\App\Models\GitHubOAuthListTable();
                 $prepareResult = $GitHubOAuthListTable->prepare_items([
                     'Github' => $this->Github,
                     'accessToken' => $this->accessToken,
-                    'userId' => $this->currentUserId
+                    'userId' => $this->currentUserId,
                 ]);
                 $output['GitHubOAuthListTable'] = $GitHubOAuthListTable;
                 unset($GitHubOAuthListTable);

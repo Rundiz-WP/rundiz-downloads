@@ -12,7 +12,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\GitHubOAuthListTable')) {
     /**
      * List data into table.
      * Warning! Do not modify method name because they are extended from WP_List_Table class of WordPress. Changing the method name may cause program error.
-     * Warning! this parent class is marked as private. Please read at wordpress source.
+     * Warning! this parent class is marked as private. Please read at WordPress source.
      *
      * @link http://wpengineer.com/2426/wp_list_table-a-step-by-step-guide/ tutorial about how to list table data.
      * @link http://www.sitepoint.com/using-wp_list_table-to-create-wordpress-admin-tables/ another tutorial
@@ -51,7 +51,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\GitHubOAuthListTable')) {
         {
             switch ($column_name) {
                 case 'archived':
-                    if (isset($item->node->isArchived) && $item->node->isArchived === false) {
+                    if (isset($item->node->isArchived) && false === $item->node->isArchived) {
                         return '<i class="fas fa-times"></i> ' . __('No', 'rd-downloads');
                     } else {
                         return '<i class="fas fa-check"></i> ' . __('Yes', 'rd-downloads');
@@ -59,9 +59,10 @@ if (!class_exists('\\RdDownloads\\App\\Models\\GitHubOAuthListTable')) {
                 case 'namewithowner':
                     return '<a href="' . $item->node->url . '" target="github_repository">' . esc_html($item->node->nameWithOwner) . '</a>';
                 case 'webhook':
-                    if (isset($item->node->isArchived) && $item->node->isArchived === false) {
+                    if (isset($item->node->isArchived) && false === $item->node->isArchived) {
                         return '<a class="rddownloads_githubrepo_webhook_check"><i class="rddownloads_icon-webhook-status fas fa-question"></i> ' . __('Check this.', 'rd-downloads') . '</a>';
                     }
+                    // not in condition above, go to default.
                 default:
                     if (isset($item->node->{$column_name}) && is_scalar($item->node->{$column_name})) {
                         return esc_html($item->node->{$column_name});
@@ -158,7 +159,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\GitHubOAuthListTable')) {
 
             $graphQLAllRepos = $Github->graphQLAllRepositories();
             $postBody = [
-                'query' => str_replace(['%after%', '%before%'], '', $graphQLAllRepos)
+                'query' => str_replace(['%after%', '%before%'], '', $graphQLAllRepos),
             ];
 
             $cacheKey = 'rd-downloads.github-connect.github-repositories.blog-id-' . get_current_blog_id()
@@ -173,7 +174,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\GitHubOAuthListTable')) {
 
             $output = [];
 
-            if ($cacheResult === false || !is_array($cacheResult) || !isset($cacheResult['header']) || !isset($cacheResult['body'])) {
+            if (false === $cacheResult || !is_array($cacheResult) || !isset($cacheResult['header']) || !isset($cacheResult['body'])) {
                 $i = 1;
                 $end = false;
                 $endCursor = '';
@@ -184,7 +185,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\GitHubOAuthListTable')) {
                 do {
                     if (!empty($endCursor)) {
                         $postBody = [
-                            'query' => str_replace(['%after%', '%before%'], ['after: "' . $endCursor . '", ', ''], $graphQLAllRepos)
+                            'query' => str_replace(['%after%', '%before%'], ['after: "' . $endCursor . '", ', ''], $graphQLAllRepos),
                         ];
                     }
 
@@ -221,13 +222,13 @@ if (!class_exists('\\RdDownloads\\App\\Models\\GitHubOAuthListTable')) {
                         !isset($response['body']->data->viewer->repositories->pageInfo->hasNextPage) ||
                         (
                             isset($response['body']->data->viewer->repositories->pageInfo->hasNextPage) &&
-                            $response['body']->data->viewer->repositories->pageInfo->hasNextPage === false
+                            false === $response['body']->data->viewer->repositories->pageInfo->hasNextPage
                         )
                     ) {
                         $end = true;
                     }
 
-                    $i++;
+                    ++$i;
 
                     if ($i > 100) {
                         $end = true;
@@ -235,7 +236,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\GitHubOAuthListTable')) {
 
                     unset($response);
                 }
-                while($end == false);
+                while (false === $end);
 
                 unset($end, $endCursor, $i);
 
@@ -258,7 +259,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\GitHubOAuthListTable')) {
             // create pagination
             $this->set_pagination_args([
                 'total_items' => (isset($responseBody->data->viewer->repositories->totalCount) ? $responseBody->data->viewer->repositories->totalCount : 0),
-                'per_page'    => (isset($responseBody->data->viewer->repositories->edges) && is_array($responseBody->data->viewer->repositories->edges) ? count($responseBody->data->viewer->repositories->edges) : 0)
+                'per_page'    => (isset($responseBody->data->viewer->repositories->edges) && is_array($responseBody->data->viewer->repositories->edges) ? count($responseBody->data->viewer->repositories->edges) : 0),
             ]);
 
             if (isset($responseBody->data->viewer->repositories->edges)) {
@@ -278,14 +279,14 @@ if (!class_exists('\\RdDownloads\\App\\Models\\GitHubOAuthListTable')) {
             $output = '<tr';
             $output .= ' data-namewithowner="' . esc_attr($item->node->nameWithOwner) . '"';
             $output .= ' data-url="' . esc_attr($item->node->url) . '"';
-            $output .= ' data-isarchived="' . ($item->node->isArchived === false ? 'false' : 'true') . '"';
+            $output .= ' data-isarchived="' . (false === $item->node->isArchived ? 'false' : 'true') . '"';
             $output .= '>' . PHP_EOL;
-            echo $output;
+            echo $output;// phpcs:ignore
 
             $this->single_row_columns($item);
 
             $output = '</tr>' . PHP_EOL;
-            echo $output;
+            echo $output;// phpcs:ignore
         }// single_row
 
 

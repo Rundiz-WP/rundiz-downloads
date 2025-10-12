@@ -21,15 +21,15 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) 
         public function ajaxManualUpdate()
         {
             if (!current_user_can('update_plugins')) {
-                wp_die(__('You do not have permission to access this page.'), '', ['response' => 403]);
+                wp_die(esc_html__('You do not have permission to access this page.'), '', ['response' => 403]);
             }
 
             $output = [];
 
-            if (isset($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) === 'post' && isset($_POST) && !empty($_POST)) {
+            if (isset($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) === 'post' && isset($_POST) && !empty($_POST)) {// phpcs:ignore
                 if (check_ajax_referer('rd_downloads_nonce', 'security', false) === false) {
                     status_header(403);
-                    wp_die(__('Please reload this page and try again.', 'rd-downloads'), '', ['response' => 403]);
+                    wp_die(esc_html__('Please reload this page and try again.', 'rd-downloads'), '', ['response' => 403]);
                 }
 
                 $updateKey = filter_input(INPUT_POST, 'updateKey', FILTER_SANITIZE_NUMBER_INT);
@@ -40,7 +40,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) 
                 unset($Loader);
 
                 if (is_array($manualUpdateClasses) && array_key_exists($updateKey, $manualUpdateClasses) && class_exists($manualUpdateClasses[$updateKey])) {
-                    $UpdateClass = new $manualUpdateClasses[$updateKey];
+                    $UpdateClass = new $manualUpdateClasses[$updateKey]();
 
                     try {
                         $UpdateClass->run();// run a manual update single action
@@ -122,7 +122,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) 
                     // display link or redirect to manual update page. (display link is preferred to prevent bad user experience.)
                     // -------------------------------------------------------------------------------------
                     // display link to manual update page.
-                    if (!isset($_REQUEST['page']) || (isset($_REQUEST['page']) && $_REQUEST['page'] !== 'rd-downloads-manual-update')) {
+                    if (!isset($_REQUEST['page']) || (isset($_REQUEST['page']) && 'rd-downloads-manual-update' !== $_REQUEST['page'])) {
                         $manualUpdateNotice = '<div class="notice notice-warning is-dismissible">
                             <p>' . 
                                 sprintf(
@@ -135,10 +135,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) 
                         </div>';
 
                         add_action('admin_notices', function() use ($manualUpdateNotice) {
-                            echo $manualUpdateNotice."\n";
+                            echo $manualUpdateNotice."\n";// phpcs:ignore
                         });
                         add_action('network_admin_notices', function() use ($manualUpdateNotice) {
-                            echo $manualUpdateNotice."\n";
+                            echo $manualUpdateNotice."\n";// phpcs:ignore
                         });
 
                         unset($manualUpdateNotice);
@@ -181,7 +181,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) 
         public function displayManualUpdatePage()
         {
             if (!current_user_can('update_plugins')) {
-                wp_die(__('You do not have permission to access this page.'));
+                wp_die(esc_html__('You do not have permission to access this page.'));
             }
 
             $output = [];
@@ -257,10 +257,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) 
         public function updateProcessComplete(\WP_Upgrader $upgrader, array $hook_extra)
         {
             if (is_array($hook_extra) && array_key_exists('action', $hook_extra) && array_key_exists('type', $hook_extra) && array_key_exists('plugins', $hook_extra)) {
-                if ($hook_extra['action'] == 'update' && $hook_extra['type'] == 'plugin' && is_array($hook_extra['plugins']) && !empty($hook_extra['plugins'])) {
+                if ('update' === $hook_extra['action'] && 'plugin' === $hook_extra['type'] && is_array($hook_extra['plugins']) && !empty($hook_extra['plugins'])) {
                     $this_plugin = plugin_basename(RDDOWNLOADS_FILE);
                     foreach ($hook_extra['plugins'] as $key => $plugin) {
-                        if ($this_plugin == $plugin) {
+                        if ($this_plugin === $plugin) {
                             // if this plugin is in the updated plugins.
                             // set transient to let it run later. this transient will be called and run in `detectPluginUpdate()` method.
                             set_transient('rd_downloads_updated', 1);

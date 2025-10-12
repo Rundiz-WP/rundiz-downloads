@@ -31,7 +31,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins')) {
                 $plugin = plugin_basename(RDDOWNLOADS_FILE);
             }
             
-            if ($plugin == $plugin_file) {
+            if ($plugin === $plugin_file) {
                 $link = [];
                 $link['settings'] = '<a href="'.  esc_url(get_admin_url(null, 'admin.php?page=rd-downloads_settings')).'">'.__('Settings').'</a>';
                 $actions = array_merge($link, $actions);

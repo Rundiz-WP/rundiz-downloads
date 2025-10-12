@@ -75,7 +75,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEditor\
         public function registerScripts($hook)
         {
             
-            if ($hook == 'post.php' || $hook == 'post-new.php') {
+            if ('post.php' === $hook || 'post-new.php' === $hook) {
                 $Loader = new \RdDownloads\App\Libraries\Loader();
                 ob_start();
                 $Loader->loadView('admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v');
@@ -108,7 +108,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEditor\
          */
         public function registerStyles($hook)
         {
-            if ($hook == 'post.php' || $hook == 'post-new.php') {
+            if ('post.php' === $hook || 'post-new.php' === $hook) {
                 if (!wp_script_is('rd-downloads-font-awesome5', 'registered')) {
                     $StylesScripts = new \RdDownloads\App\Libraries\StylesAndScripts();
                     $StylesScripts->registerStylesAndScripts();
@@ -129,7 +129,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEditor\
          */
         public function registerTinyMceJavascript($plugin_array)
         {
-            $plugin_array['rddownloads_button'] =  plugins_url('/assets/js/admin/Hooks/ClassicEditor/tinymce-dialog.js', RDDOWNLOADS_FILE);
+            $plugin_array['rddownloads_button'] = plugins_url('/assets/js/admin/Hooks/ClassicEditor/tinymce-dialog.js', RDDOWNLOADS_FILE);
             return $plugin_array;
         }// registerTinyMceJavascript
 

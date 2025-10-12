@@ -78,15 +78,21 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
         {
             // check permission.
             if (!current_user_can('manage_options')) {
-                wp_die(__('You do not have permission to access this page.'));
+                wp_die(esc_html__('You do not have permission to access this page.'));
             }
 
             if (get_transient('rd_downloads_updated')) {
                 if (current_user_can('update_plugins')) {
-                    /* translators: %1$s: Open link tag, %2$s: Close link tag. */
-                    wp_die(sprintf(__('The manual update is required, please %1$supdate first%2$s.', 'rd-downloads'), '<a href="' . esc_attr(network_admin_url('index.php?page=rd-downloads-manual-update')) . '">', '</a>'));
+                    wp_die(
+                        sprintf(
+                            /* translators: %1$s: Open link tag, %2$s: Close link tag. */
+                            esc_html__('The manual update is required, please %1$supdate first%2$s.', 'rd-downloads'), 
+                            '<a href="' . esc_attr(network_admin_url('index.php?page=rd-downloads-manual-update')) . '">', 
+                            '</a>'
+                        )
+                    );
                 } else {
-                    wp_die(__('The manual update is required, please tell administrator to update first.', 'rd-downloads'));
+                    wp_die(esc_html__('The manual update is required, please tell administrator to update first.', 'rd-downloads'));
                 }
             }
 
@@ -98,7 +104,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
             } else {
                 echo 'Settings configuration file was not set.';
                 die('Settings configuration file was not set.');
-                exit;
+                exit(1);// phpcs:ignore Squiz.PHP.NonExecutableCode.Unreachable
             }
             unset($config_values);
 
@@ -110,7 +116,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
 
             // if form submitted
             if (isset($_POST) && !empty($_POST)) {
-                if (!wp_verify_nonce((isset($_POST['_wpnonce']) ? $_POST['_wpnonce'] : ''))) {
+                if (!wp_verify_nonce((isset($_POST['_wpnonce']) ? sanitize_text_field(wp_unslash($_POST['_wpnonce'])) : ''))) {
                     wp_nonce_ays('-1');
                 }
 
@@ -120,10 +126,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
                 // you may validate form here first.
 
                 // if admin cleanup client id and secret then remove all the access token from users.
-                if ($options_values['rdd_github_client_id'] == '' && $options_values['rdd_github_client_secret'] == '') {
+                if ('' === $options_values['rdd_github_client_id'] && '' === $options_values['rdd_github_client_secret']) {
                     global $wpdb;
                     $Github = new \RdDownloads\App\Libraries\Github();
-                    $wpdb->query($wpdb->prepare('UPDATE `' . $wpdb->usermeta . '` SET `meta_value`=\'\' WHERE `meta_key` = %s', [$Github->getOAuthAccessTokenName()]));
+                    $wpdb->query($wpdb->prepare('UPDATE `' . $wpdb->usermeta . '` SET `meta_value`=\'\' WHERE `meta_key` = %s', [$Github->getOAuthAccessTokenName()]));// phpcs:ignore WordPress.DB.DirectDatabaseQuery
                     unset($Github);
                 }
 
@@ -134,7 +140,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
                     is_array($wp_upload_dir) &&
                     array_key_exists('basedir', $wp_upload_dir)
                 ) {
-                    if (isset($options_values['rdd_force_download']) && $options_values['rdd_force_download'] == '1') {
+                    if (isset($options_values['rdd_force_download']) && strval($options_values['rdd_force_download']) === '1') {
                         // if setting is to Force download, create .htaccess to prevent direct access file.
                         $FileSystem->writeFile(trailingslashit($wp_upload_dir['basedir']) . 'rd-downloads/.htaccess', 'Options -Indexes' . PHP_EOL . 'deny from all', false);
                     } else {
@@ -147,12 +153,12 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
                 // then save data.
                 $result = $this->saveOptions($options_values);
 
-                if ($result === true) {
+                if (true === $result) {
                     $output['form_result_class'] = 'notice-success';
                     $output['form_result_msg'] = __('Settings saved.');
                 } else {
                     $output['form_result_class'] = 'notice-success';
-                    $output['form_result_msg'] =  __('Settings saved.');
+                    $output['form_result_msg'] = __('Settings saved.');
                 }
 
                 // clear all cache on save.

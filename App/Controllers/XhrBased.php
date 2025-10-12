@@ -56,7 +56,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\XhrBased')) {
             }
 
             // verify nonce (CSRF protection)
-            if ($nonce !== false) {
+            if (false !== $nonce) {
                 if (is_array($nonce) && empty($nonce)) {
                     $action = -1;
                     $query_arg = false;

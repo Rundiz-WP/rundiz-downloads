@@ -27,13 +27,16 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
         protected $Loader;
 
 
+        /**
+         * Process download class constructor.
+         */
         public function __construct()
         {
             $this->Loader = new \RdDownloads\App\Libraries\Loader();
 
             $this->getOptions();
 
-            if (session_id() == '') {
+            if (session_status() === PHP_SESSION_NONE) {
                 // if no session ID.
                 // start the session.
                 session_start();
@@ -84,14 +87,15 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
             unset($Finfo);
 
             // flush and turn off all the output buffering that were left.
-            for ($i = 0; $i < ob_get_level(); $i++) {
+            for ($i = 0; $i < ob_get_level(); ++$i) {
                 ob_end_flush();
             }
 
             // read file contents and send output to browser.
+            // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.WP.AlternativeFunctions.file_system_operations_readfile
             $readfile = @readfile($downloadFullPath);
 
-            if ($readfile === false) {
+            if (false === $readfile) {
                 $error = error_get_last();
                 if (isset($error['message']) && is_scalar($error['message'])) {
                     error_log($error['message']);
@@ -121,7 +125,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
          * This method will be echo out, or response to the browser including headers.
          *
          * @global array $rd_downloads_options
-         * @param int The `download_id` to match in DB.
+         * @param int $download_id The `download_id` to match in DB.
          */
         public function pageIndex($download_id)
         {
@@ -138,7 +142,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
 
             // check for banned user agent.
             $result = $this->subCheckBannedUA($download_id);
-            if (isset($result) && $result === true) {
+            if (isset($result) && true === $result) {
                 // if banned.
                 // stop process here.
                 unset($result);
@@ -151,7 +155,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                 // do a filter hook to allow custom antibot.
                 $useCustomAntibot = apply_filters('rddownloads_use_custom_antibot', false);
 
-                if ($useCustomAntibot === true) {
+                if (true === $useCustomAntibot) {
                     // if there is filter hook to use custom antibot.
                     // do a filter hook to display anti bot page. while displaying anti bot page, return `false` only.
                     // when validate the anti bot form, return `true` on success and `false` on failure.
@@ -169,7 +173,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                 $stepAntibot = true;
             }
 
-            if (isset($stepAntibot) && $stepAntibot === true) {
+            if (isset($stepAntibot) && true === $stepAntibot) {
                 // if anti bot validated pass.
                 // check download exists and start download is the last step.
                 $this->subGetDownloadData($download_id);
@@ -275,26 +279,26 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                 $RdDownloads->increaseDownloadCount($download_id);
                 unset($RdDownloads);
 
-                if ($downloadRow->download_type !== '0') {
+                if (strval($downloadRow->download_type) !== '0') {
                     // if download type is NOT local.
                     // it is not possible or not good to use force download. just redirect.
                     // not set status header here because it is already in redirect function.
-                    wp_redirect($downloadRow->download_url);
+                    wp_safe_redirect($downloadRow->download_url);
                     exit();
                 } else {
                     // if download type is local.
                     // check for global setting is force download or not.
                     global $rd_downloads_options;
-                    if (isset($rd_downloads_options['rdd_force_download']) && $rd_downloads_options['rdd_force_download'] == '1') {
+                    if (isset($rd_downloads_options['rdd_force_download']) && strval($rd_downloads_options['rdd_force_download']) === '1') {
                         // if "global setting" is using force download.
                         $forceDownload = true;
                     }
 
-                    if (!isset($forceDownload) || (isset($forceDownload) && $forceDownload === false)) {
+                    if (!isset($forceDownload) || (isset($forceDownload) && false === $forceDownload)) {
                         // if "global setting" was not set or means set to NOT force download.
                         // check for "per download setting" is force download or not.
                         $download_options = maybe_unserialize($downloadRow->download_options);
-                        if (is_array($download_options) && isset($download_options['opt_force_download']) && $download_options['opt_force_download'] == '1') {
+                        if (is_array($download_options) && isset($download_options['opt_force_download']) && strval($download_options['opt_force_download']) === '1') {
                             // if per download setting is using force download.
                             $forceDownload = true;
                         } else {
@@ -304,8 +308,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                         unset($download_options);
                     }
 
-                    if (!isset($forceDownload) || (isset($forceDownload) && $forceDownload !== true)) {
+                    if (!isset($forceDownload) || (isset($forceDownload) && true !== $forceDownload)) {
                         // if not force download means redirect. do it.
+                        // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
                         wp_redirect($downloadRow->download_url);
                         exit();
                     }
@@ -327,8 +332,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                     }
                     unset($wp_upload_dir);
 
-                    if (isset($redirectInstead) && $redirectInstead === true) {
+                    if (isset($redirectInstead) && true === $redirectInstead) {
                         // if there is something change. don't force download the file, redirect to it.
+                        // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
                         wp_redirect($downloadRow->download_url);
                         exit();
                     }
@@ -392,7 +398,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                 unset($downloadRow, $RdDownloads);
                 // end retrieve download data to show.
 
-                $requestMethod = (isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'get');
+                $requestMethod = (isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'get');// phpcs:ignore
                 if ('get' === $requestMethod) {
                     // if method GET, displaying antibot form field.
                     $AntiBot = new \RdDownloads\App\Libraries\AntiBot();
@@ -402,7 +408,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                     // if method POST, process form submitted.
                     $honeypotName = \RdDownloads\App\Libraries\AntiBot::staticGetHoneypotName();
                     $validatedHoneypot = false;
-                    if (!isset($_POST[$honeypotName]) || !empty($_POST[$honeypotName])) {
+                    if (!isset($_POST[$honeypotName]) || !empty($_POST[$honeypotName])) {// phpcs:ignore
                         // if honeypot name is not in the form or it is in but not empty (bot filled).
                         status_header(400);
                         $output['disableAntibotForm'] = true;
@@ -412,7 +418,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                         $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
                         $RdDownloadLogs->writeLog('user_dl_antbotfailed', ['download_id' => $download_id]);
                         unset($RdDownloadLogs);
-                    } elseif (isset($_POST[$honeypotName]) && empty($_POST[$honeypotName])) {
+                    } elseif (isset($_POST[$honeypotName]) && empty($_POST[$honeypotName])) {// phpcs:ignore
                         // if honeypot name is in the form and empty. correct!
                         $AntiBot = new \RdDownloads\App\Libraries\AntiBot();
                         $AntiBot->unsetHoneypotName();

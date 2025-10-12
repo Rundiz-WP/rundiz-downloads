@@ -22,7 +22,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
          */
         private function addGitHubWebhook(array $data)
         {
-            if (!isset($data['download_type']) || (isset($data['download_type']) && $data['download_type'] != 1)) {
+            if (!isset($data['download_type']) || (isset($data['download_type']) && intval($data['download_type']) !== 1)) {
                 // if not GitHub.
                 return ;
             }
@@ -54,7 +54,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
             $headers = $Github->apiV3Headers($accessToken);
             $hook_id = $Github->apiGetWebhookId($headers, $repoOwner, $repoName);
 
-            if ($hook_id !== false) {
+            if (false !== $hook_id) {
                 // if already have webhook.
                 unset($accessToken, $Github, $headers, $hook_id, $repoName, $repoOwner, $secretKey, $user_id);
                 return ;
@@ -90,7 +90,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
             $data['download_admin_comment'] = filter_input(INPUT_POST, 'download_admin_comment', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $data['download_related_path'] = filter_input(INPUT_POST, 'download_related_path', FILTER_UNSAFE_RAW);
             $data['download_size'] = filter_input(INPUT_POST, 'download_size', FILTER_SANITIZE_NUMBER_INT);
-            if ($data['download_size'] == null) {
+            if (empty($data['download_size'])) {
                 $data['download_size'] = 0;
             }
             $data['download_count'] = filter_input(INPUT_POST, 'download_count', FILTER_SANITIZE_NUMBER_INT);
@@ -102,14 +102,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
 
             $Url = new \RdDownloads\App\Libraries\Url();
             $domainNoSub = strtolower($Url->getDomain($data['download_url']));
-            $currentDomain = strtolower($Url->getDomain('http://' . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '') . '/'));
+            $currentDomain = strtolower($Url->getDomain('http://' . (isset($_SERVER['HTTP_HOST']) ? sanitize_text_field(wp_unslash($_SERVER['HTTP_HOST'])) : '') . '/'));
             $FileSystem = new \RdDownloads\App\Libraries\FileSystem();
-            if ($domainNoSub !== null && $domainNoSub !== false) {
+            if (null !== $domainNoSub && false !== $domainNoSub) {
                 // if can get domain without sub domain from the specific URL.
                 $opt_force_download = filter_input(INPUT_POST, 'opt_force_download', FILTER_SANITIZE_NUMBER_INT);
                 $opt_download_version = filter_input(INPUT_POST, 'opt_download_version');
                 if (is_string($opt_download_version)) {
-                    $opt_download_version = strip_tags($opt_download_version);
+                    $opt_download_version = wp_strip_all_tags($opt_download_version);
                 }
                 $opt_download_version_range = filter_input(INPUT_POST, 'opt_download_version_range');
                 if (is_string($opt_download_version_range)) {
@@ -131,7 +131,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
 
                         $Semver = new \RdDownloads\App\Libraries\Semver();
                         $version_range = $opt_download_version_range;
-                        if ((is_null($version_range) || $version_range === '')) {
+                        if ((is_null($version_range) || '' === $version_range)) {
                             $version_range = $Semver->getDefaultVersionConstraint($opt_download_version);
                         }
                         unset($Semver);
@@ -166,7 +166,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                             $wp_upload_dir = wp_upload_dir();
                             if (isset($wp_upload_dir['baseurl'])) {
                                 $relatedPathUrl = str_replace(trailingslashit($wp_upload_dir['baseurl']), '', $data['download_url']);
-                                if ($relatedPathUrl != $data['download_related_path']) {
+                                if ($relatedPathUrl !== $data['download_related_path']) {
                                     // if related path is missing from manual enter path that is on this server.
                                     $data['download_related_path'] = $relatedPathUrl;
                                 }
@@ -198,7 +198,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                 $opt_force_download = filter_input(INPUT_POST, 'opt_force_download', FILTER_SANITIZE_NUMBER_INT);
                 $opt_download_version = filter_input(INPUT_POST, 'opt_download_version');
                 if (is_string($opt_download_version)) {
-                    $opt_download_version = strip_tags($opt_download_version);
+                    $opt_download_version = wp_strip_all_tags($opt_download_version);
                 }
                 $opt_download_version_range = filter_input(INPUT_POST, 'opt_download_version_range');
                 if (is_string($opt_download_version_range)) {
@@ -298,14 +298,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
             unset($additionalData);
 
             // ready to insert the data.
-            if (isset($validated) && $validated === true) {
+            if (isset($validated) && true === $validated) {
                 if (defined('WP_DEBUG') && WP_DEBUG === true) {
                     $output['debugDataToSave'] = $data;
                 }
 
                 global $wpdb;
-                $output['insertResult'] = $wpdb->insert($wpdb->prefix . 'rd_downloads', $data);
-                if ($output['insertResult'] !== false) {
+                $output['insertResult'] = $wpdb->insert($wpdb->prefix . 'rd_downloads', $data);// phpcs:ignore
+                if (false !== $output['insertResult']) {
                     $output['download_id'] = $wpdb->insert_id;
                     $output['saved'] = true;
                     $output['editUrl'] = admin_url('admin.php?page=rd-downloads_edit&download_id=' . $output['download_id']);
@@ -365,7 +365,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                 $output['form_result_msg'] = __('The editing item was not found.', 'rd-downloads');
                 wp_send_json($output, 404);
             } else {
-                if (isset($checkResult->user_id) && $checkResult->user_id != get_current_user_id() && !current_user_can('edit_others_posts')) {
+                if (isset($checkResult->user_id) && intval($checkResult->user_id) !== get_current_user_id() && !current_user_can('edit_others_posts')) {
                     $output['form_result_class'] = 'notice-error';
                     $output['form_result_msg'] = __('You do not have permission to access this page.');
                     wp_send_json($output, 403);
@@ -394,13 +394,13 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
             unset($additionalData);
 
             // ready to update the data.
-            if (isset($validated) && $validated === true) {
+            if (isset($validated) && true === $validated) {
                 if (defined('WP_DEBUG') && WP_DEBUG === true) {
                     $output['debugDataToSave'] = $data;
                 }
 
                 $output['updateResult'] = $RdDownloads->update($data, ['download_id' => $download_id]);
-                if ($output['updateResult'] !== false) {
+                if (false !== $output['updateResult']) {
                     $output['last_update'] = \RdDownloads\App\Libraries\DateTime::displayDateTime(current_time('mysql', true));
                     $output['saved'] = true;
                     $output['form_result_class'] = 'notice-success';

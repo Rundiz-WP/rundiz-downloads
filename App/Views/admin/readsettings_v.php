@@ -1,4 +1,5 @@
-<?php /*<div class="wrap">
+<?php // phpcs:ignore
+/*<div class="wrap">
     <h1><?php _e('Example of how to access settings values in option db.', 'rd-downloads'); ?></h1>
 
     <ol>

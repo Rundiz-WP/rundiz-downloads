@@ -24,10 +24,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Logs')) {
          */
         public function addScreenOptions()
         {
-            add_screen_option('per_page', [
+            add_screen_option('per_page', 
+                [
                     'label' => __('Number of items per page:'),
                     'default' => 20,
-                    'option' => 'rddownloads_logs_items_perpage'// require alpha-numeric, underscore (_). no dash (-) allowed.
+                    'option' => 'rddownloads_logs_items_perpage',// require alpha-numeric, underscore (_). no dash (-) allowed.
                 ]
             );
         }// addScreenOptions
@@ -112,7 +113,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Logs')) {
          */
         public function filterScreenOption($status, $option, $value)
         {
-            if ($option === 'rddownloads_logs_items_perpage') {
+            if ('rddownloads_logs_items_perpage' === $option) {
                 $value = intval($value);
                 if ($value <= 0) {
                     $value = 20;
@@ -133,7 +134,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Logs')) {
         {
             // check permission.
             if (!current_user_can('upload_files')) {
-                wp_die(__('You do not have permission to access this page.'), '', ['response' => 403]);
+                wp_die(esc_html__('You do not have permission to access this page.'), '', ['response' => 403]);
             }
 
             // preset output value to views.
@@ -142,23 +143,23 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Logs')) {
             // initialize list table model
             $RdDownloadLogsListTable = new \RdDownloads\App\Models\RdDownloadLogsListTable();
             $options = [];
-            if (isset($_REQUEST['filter_user_id']) && trim($_REQUEST['filter_user_id']) != null) {
-                $options['user_id'] = intval($_REQUEST['filter_user_id']);
+            if (isset($_REQUEST['filter_user_id']) && trim($_REQUEST['filter_user_id']) !== '') {// phpcs:ignore
+                $options['user_id'] = intval(wp_unslash($_REQUEST['filter_user_id']));
             }
-            if (isset($_REQUEST['filter_download_id']) && trim($_REQUEST['filter_download_id']) != null) {
-                $options['download_id'] = trim($_REQUEST['filter_download_id']);
+            if (isset($_REQUEST['filter_download_id']) && trim($_REQUEST['filter_download_id']) !== '') {// phpcs:ignore
+                $options['download_id'] = sanitize_text_field(wp_unslash($_REQUEST['filter_download_id']));
             }
-            if (isset($_REQUEST['s']) && trim($_REQUEST['s']) != null) {
+            if (isset($_REQUEST['s']) && trim($_REQUEST['s']) !== '') {// phpcs:ignore
                 // the s is forced by WordPress.
-                $options['search'] = $_REQUEST['s'];
+                $options['search'] = sanitize_text_field(wp_unslash($_REQUEST['s']));
             }
             if (isset($_REQUEST['orderby'])) {
                 // the orderby is forced by WordPress.
-                $options['sort'] = $_REQUEST['orderby'];
+                $options['sort'] = sanitize_text_field(wp_unslash($_REQUEST['orderby']));
             }
             if (isset($_REQUEST['order'])) {
                 // the order is forced by WordPress.
-                $options['order'] = $_REQUEST['order'];
+                $options['order'] = sanitize_text_field(wp_unslash($_REQUEST['order']));
             }
             $RdDownloadLogsListTable->prepare_items($options);
             unset($options);
@@ -184,7 +185,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Logs')) {
             foreach ($current_query_names as $name) {
                 if (in_array($name, $unwanted_querystring)) {
                     unset($current_query_names);
-                    wp_redirect(remove_query_arg($unwanted_querystring));
+                    wp_safe_redirect(remove_query_arg($unwanted_querystring));
                     exit();
                 }
             }// endforeach;

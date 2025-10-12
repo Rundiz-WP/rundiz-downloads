@@ -92,7 +92,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
         {
             // check permission.
             if (!current_user_can('upload_files')) {
-                wp_die(__('You do not have permission to access this page.'), '', ['response' => 403]);
+                wp_die(esc_html__('You do not have permission to access this page.'), '', ['response' => 403]);
             }
 
             global $rd_downloads_options;
@@ -118,7 +118,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
         {
             // check permission.
             if (!current_user_can('upload_files')) {
-                wp_die(__('You do not have permission to access this page.'), '', ['response' => 403]);
+                wp_die(esc_html__('You do not have permission to access this page.'), '', ['response' => 403]);
             }
 
             global $rd_downloads_options;
@@ -137,10 +137,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
             unset($RdDownloads);
 
             if (empty($rdDownloadsData) || is_null($rdDownloadsData)) {
-                wp_die(__('The editing item was not found.', 'rd-downloads'), '', ['response' => 404]);
-            } elseif (isset($rdDownloadsData->user_id) && $rdDownloadsData->user_id != get_current_user_id() && !current_user_can('edit_others_posts')) {
+                wp_die(esc_html__('The editing item was not found.', 'rd-downloads'), '', ['response' => 404]);
+            } elseif (
+                isset($rdDownloadsData->user_id) && 
+                intval($rdDownloadsData->user_id) !== get_current_user_id() && 
+                !current_user_can('edit_others_posts')
+            ) {
                 // if this user is not editing own downloads data and do not have permission to edit other's posts.
-                wp_die(__('You do not have permission to edit other\'s downloads data.', 'rd-downloads'), '', ['response' => 403]);
+                wp_die(esc_html__('You do not have permission to edit other\'s downloads data.', 'rd-downloads'), '', ['response' => 403]);
             }
 
             if (is_object($rdDownloadsData)) {

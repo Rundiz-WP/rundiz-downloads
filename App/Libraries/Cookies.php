@@ -41,16 +41,16 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Cookies')) {
          */
         public static function setCookie($name, $value = '', $expire = false, $path = false, $domain = false, $secure = '', $httponly = true)
         {
-            if ($expire === false) {
+            if (false === $expire) {
                 $expire = apply_filters('rddownloads_cookie_expires', (time() + (14 * DAY_IN_SECONDS)));
             }
-            if ($path === false) {
+            if (false === $path) {
                 $path = COOKIEPATH;
             }
-            if ($domain === false) {
+            if (false === $domain) {
                 $domain = COOKIE_DOMAIN;
             }
-            if ($secure === '') {
+            if ('' === $secure) {
                 $secure = is_ssl();
             }
             if (!is_bool($httponly)) {

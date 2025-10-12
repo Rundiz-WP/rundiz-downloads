@@ -36,6 +36,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
         use \RdDownloads\App\AppTrait;
 
 
+        /**
+         * GitHub auto update class constructor.
+         */
         public function __construct()
         {
             $this->getOptions();
@@ -62,11 +65,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
                 $headerEvent = $this->Github->webhookGetHeaderEvent();
 
                 // check header event trigger.
-                if ($headerEvent === 'ping') {
+                if ('ping' === $headerEvent) {
                     // if pinging.
                     // check for ping.
                     $this->subGithubPingCheck();
-                } elseif ($headerEvent === 'push' || $headerEvent === 'release') {
+                } elseif ('push' === $headerEvent || 'release' === $headerEvent) {
                     // if push event trigger.
                     $this->payloadObject = json_decode($phpinput);
                     unset($headerEvent, $phpinput);
@@ -94,10 +97,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
         {
             $acceptPingResult = $this->Github->webhookPingCheckConfig();
 
-            if ($acceptPingResult === true) {
+            if (true === $acceptPingResult) {
                 wp_send_json(['ping' => 'pong', 'pingDate' => current_time('mysql', true)], 200);
                 exit();
-            } elseif ($acceptPingResult === false) {
+            } elseif (false === $acceptPingResult) {
                 wp_send_json(['config_error' => 'required: event = push, content-type = application/json'], 400);
             }
 
@@ -123,7 +126,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
 
             if ($this->Github->webhookIsCommit() === true) {
                 // if this event is commit.
-                if (isset($rd_downloads_options['rdd_github_auto_update']) && $rd_downloads_options['rdd_github_auto_update'] == 'release+commit') {
+                if (isset($rd_downloads_options['rdd_github_auto_update']) && 'release+commit' === $rd_downloads_options['rdd_github_auto_update']) {
                     // if global setting is allow to update release+commit.
                     $this->subGithubPushUpdateData();
                 } else {
@@ -137,8 +140,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
                 if (
                     isset($rd_downloads_options['rdd_github_auto_update']) &&
                     (
-                        $rd_downloads_options['rdd_github_auto_update'] == 'release+commit' ||
-                        $rd_downloads_options['rdd_github_auto_update'] == 'release'
+                        'release+commit' === $rd_downloads_options['rdd_github_auto_update'] ||
+                        'release' === $rd_downloads_options['rdd_github_auto_update']
                     )
                 ) {
                     // if global setting is allow to update release or release+commit.
@@ -187,7 +190,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
                     $updateResult = $this->RdDownloads->update($data, $where);
                     unset($data, $where);
 
-                    if ($updateResult !== false) {
+                    if (false !== $updateResult) {
                         // if update success.
                         $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
                         $RdDownloadLogs->writeLog('github_autoupdate', [
@@ -195,7 +198,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
                         ]);
                         unset($RdDownloadLogs);
 
-                        $updatedDb++;
+                        ++$updatedDb;
                     } else {
                         $updatedErrors = true;
                     }
@@ -206,7 +209,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
             }// endforeach; $results
             unset($downloadRow);
 
-            if ($updatedErrors === true) {
+            if (true === $updatedErrors) {
                 global $wpdb;
                 $output['responseStatus'] = 500;
                 $output['error'] = $wpdb->last_error;

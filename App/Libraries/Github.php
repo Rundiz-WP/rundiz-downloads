@@ -3,6 +3,7 @@
  * GitHub class
  *
  * @package rd-downloads
+ * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
@@ -64,6 +65,9 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
         protected $webhookValidSecretKey = [];
 
 
+        /**
+         * GitHub class constructor.
+         */
         public function __construct()
         {
             $this->getOptions();
@@ -92,25 +96,25 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          */
         public function apiAddUpdateGitHubWebhook($user_id, $hook_id, $secretKey, $repoOwner, $repoName, array $headers)
         {
-            if (!is_scalar($hook_id) && $hook_id !== false && $hook_id !== '') {
+            if (!is_scalar($hook_id) && false !== $hook_id && '' !== $hook_id) {
                 // if $hook_id is not string, not false, not empty.
                 /* translators: %s Argument name. */
-                throw new \InvalidArgumentException(sprintf(__('The %s must be string.', 'rd-downloads'), '$hook_id'));
+                throw new \InvalidArgumentException(sprintf(esc_html__('The %s must be string.', 'rd-downloads'), '$hook_id'));
             }
 
-            if ($secretKey == '') {
+            if ('' === $secretKey) {
                 // secret key was not set, no need to continue.
                 return [];
             }
 
-            if ($user_id === false) {
+            if (false === $user_id) {
                 $user_id = get_current_user_id();
             }
 
-            if ($hook_id === false) {
+            if (false === $hook_id) {
                 // if $hook_id is set to auto detect.
                 $hook_id = $this->apiGetWebhookId($headers, $repoOwner, $repoName);
-                if ($hook_id === false) {
+                if (false === $hook_id) {
                     $hook_id = '';
                 }
             }
@@ -123,9 +127,9 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
             $postData->config->insecure_ssl = apply_filters('rddownloads_githubapi_webhookinsecure', '0');
             $postData->events = ['push'];
             $postData->active = true;
-            $postData = json_encode($postData);
+            $postData = wp_json_encode($postData);
 
-            if ($hook_id === '') {
+            if ('' === $hook_id) {
                 return $this->apiV3Request('/repos/' . $repoOwner . '/' . $repoName . '/hooks', $headers, '', 'POST', $postData);
             } else {
                 return $this->apiV3Request('/repos/' . $repoOwner . '/' . $repoName . '/hooks/' . $hook_id, $headers, '', 'PATCH', $postData);
@@ -282,7 +286,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                             if (!empty($fileSizes)) {
                                 $maxFileSize = max($fileSizes);
                             }
-                            if ($maxFileSize == 0) {
+                            if (intval($maxFileSize) === 0) {
                                 $maxFileSize = -1;
                             }
                             unset($fileSizes);
@@ -329,7 +333,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
 
                 if (!empty($tmpReleasesReorder) && is_array($tmpReleasesReorder)) {
                     // if not empty $tmpReleasesReorder
-                    if ($version_range === '' || is_null($version_range)) {
+                    if ('' === $version_range || is_null($version_range)) {
                         // if version range is empty string, get latest.
                         reset($tmpReleasesReorder);
                         $firstRefsKey = key($tmpReleasesReorder);
@@ -426,10 +430,10 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          */
         public function apiRemoveWebhook($hook_id, $repoOwner, $repoName, array $headers)
         {
-            if ($hook_id === false) {
+            if (false === $hook_id) {
                 // if $hook_id is set to auto detect.
                 $hook_id = $this->apiGetWebhookId($headers, $repoOwner, $repoName);
-                if ($hook_id === false) {
+                if (false === $hook_id) {
                     return [];
                 }
             }
@@ -468,7 +472,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          */
         public function apiV3Request($uri = '', $headers = [], $userPassword = '', $method = 'GET', $postData = '')
         {
-            if ($userPassword !== '' && $userPassword !== null) {
+            if ('' !== $userPassword && !is_null($userPassword)) {
                 // @link https://johnblackbourn.com/wordpress-http-api-basicauth/ Basic auth for `wp_remote_xxx()`.
                 if (!isset($headers['Authorization'])) {
                     $headers['Authorization'] = 'basic ' . base64_encode($userPassword);
@@ -549,14 +553,14 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                     $end = true;
                 }
 
-                $i++;
+                ++$i;
                 unset($response);
 
                 if ($i > 100) {
                     $end = true;
                 }
             }// end do;
-            while($end == false);
+            while (false === $end);
 
             unset($end, $i, $perPage);
 
@@ -637,7 +641,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          */
         public function getNameWithOwnerFromUrl($url)
         {
-            $urlParts = parse_url($url);
+            $urlParts = wp_parse_url($url);
             if (isset($urlParts['path'])) {
                 $pathExp = explode('/', ltrim($urlParts['path'], '/'));
                 if (is_array($pathExp) && count($pathExp) >= 2) {
@@ -672,7 +676,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
             }
 
             $accessToken = get_user_meta($user_id, $this->oauthAccessTokenName, true);
-            if ($accessToken === '' || $accessToken === null || $accessToken === false) {
+            if ('' === $accessToken || is_null($accessToken) || false === $accessToken) {
                 return false;
             }
             return $accessToken;
@@ -716,7 +720,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
             }
 
             $secretKey = get_user_meta($user_id, $this->webhookSecretName, true);
-            if ($secretKey === '' || $secretKey === null || $secretKey === false) {
+            if ('' === $secretKey || is_null($secretKey) || false === $secretKey) {
                 return false;
             }
             return $secretKey;
@@ -894,7 +898,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                 !isset($this->pluginOptions['rdd_github_auto_update']) ||
                 (
                     isset($this->pluginOptions['rdd_github_auto_update']) &&
-                    $this->pluginOptions['rdd_github_auto_update'] == ''
+                    '' === $this->pluginOptions['rdd_github_auto_update']
                 )
             ) {
                 // if github setting is not to auto update.
@@ -944,9 +948,9 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          *
          * @param string $code The code receive from authorized at GitHub.
          * @param string $redirect_uri The "redirect_uri" value.
-         * @param string $state The "state" value.
+         * @param string $state_nonce The "state" value.
          * @return string|object Return string with access token if success, return object if contain error, return empty string if config was not set.
-         * @throws \Exception
+         * @throws \Exception Throws exception on WP error.
          */
         public function oauthGetAccessToken($code, $redirect_uri, $state_nonce)
         {
@@ -983,7 +987,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                         return $body;
                     }
                 } elseif (is_wp_error($result)) {
-                    throw new \Exception($result->get_error_message());
+                    throw new \Exception($result->get_error_message());// phpcs:ignore
                 }
             }
 
@@ -996,9 +1000,9 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          *
          * @link https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/ Reference.
          * @param string $redirect_uri The "redirect_uri" value.
-         * @param string $state The "state" value.
+         * @param string $state_nonce The "state" value.
          * @return string Return generated link if success, return empty string if config was not set.
-         * @throws \Exception
+         * @throws \Exception Throws error on WP error.
          */
         public function oauthGetLink($redirect_uri, $state_nonce)
         {
@@ -1019,7 +1023,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                 if (is_array($result) && isset($result['headers']['location'])) {
                     return $result['headers']['location'];
                 } elseif (is_wp_error($result)) {
-                    throw new \Exception($result->get_error_message());
+                    throw new \Exception($result->get_error_message());// phpcs:ignore
                 }
             }
 
@@ -1039,9 +1043,9 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
             }
 
             if (!isset($ua) || (isset($ua) && !is_string($ua))) {
-                $ua = (isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '');
+                $ua = (isset($_SERVER['SERVER_ADDR']) ? sanitize_text_field(wp_unslash($_SERVER['SERVER_ADDR'])) : '');
                 if (empty($ua)) {
-                    $ua = (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'Unknow server address.');
+                    $ua = (isset($_SERVER['HTTP_USER_AGENT']) ? sanitize_text_field(wp_unslash($_SERVER['HTTP_USER_AGENT'])) : 'Unknow server address.');
                 }
             }
 
@@ -1154,7 +1158,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
         {
             if (!is_scalar($phpinput)) {
                 /* translators: %s Argument name. */
-                throw new \InvalidArgumentException(sprintf(__('The %s must be string.', 'rd-downloads'), '$phpinput'));
+                throw new \InvalidArgumentException(sprintf(esc_html__('The %s must be string.', 'rd-downloads'), '$phpinput'));
             }
 
             $this->webhookHeaders = $headers;
@@ -1198,10 +1202,10 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                 stripos($payloadObject->ref, 'refs/heads/') !== false &&
                 // not created (this can be happens on create new branch).
                 isset($payloadObject->created) &&
-                $payloadObject->created === false &&
+                false === $payloadObject->created &&
                 // not deleted (this can happens on delete branch).
                 isset($payloadObject->deleted) &&
-                $payloadObject->deleted === false &&
+                false === $payloadObject->deleted &&
                 // must have commit or head_commit data.
                 (
                     (
@@ -1246,7 +1250,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                     strtolower($action) === 'created' &&
                     // is created.
                     isset($payloadObject->created) &&
-                    $payloadObject->created === true
+                    true === $payloadObject->created
                 ) {
                     // if action to check is created and it is created.
                     return true;
@@ -1255,7 +1259,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                     strtolower($action) === 'deleted' &&
                     // is deleted.
                     isset($payloadObject->deleted) &&
-                    $payloadObject->deleted === true
+                    true === $payloadObject->deleted
                 ) {
                     // if action to check is deleted and it is deleted.
                     return true;
@@ -1286,7 +1290,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                 return null;
             }
 
-            if (isset($contentTypeOkay) && $contentTypeOkay === true) {
+            if (isset($contentTypeOkay) && true === $contentTypeOkay) {
                 // if content type was checked and ok!
                 $payloadObject = json_decode($this->webhookPhpInput);
 
@@ -1304,7 +1308,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                             unset($configEvent);
                         }
 
-                        if (isset($pingOkay) && $pingOkay === true) {
+                        if (isset($pingOkay) && true === $pingOkay) {
                             unset($contentTypeOkay, $payloadObject, $pingOkay);
                             return true;
                         }

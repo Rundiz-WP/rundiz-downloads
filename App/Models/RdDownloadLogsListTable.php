@@ -3,6 +3,7 @@
  * Rundiz Download Logs list table.
  *
  * @package rd-downloads
+ * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
@@ -12,7 +13,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
     /**
      * List data into table.
      * Warning! Do not modify method name because they are extended from WP_List_Table class of WordPress. Changing the method name may cause program error.
-     * Warning! this parent class is marked as private. Please read at wordpress source.
+     * Warning! this parent class is marked as private. Please read at WordPress source.
      *
      * @link http://wpengineer.com/2426/wp_list_table-a-step-by-step-guide/ tutorial about how to list table data.
      * @link http://www.sitepoint.com/using-wp_list_table-to-create-wordpress-admin-tables/ another tutorial
@@ -33,7 +34,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
             switch ($column_name) {
                 case 'download_name':
                     $output = '';
-                    if ($item->user_id == get_current_user_id() || ($item->user_id != get_current_user_id() && current_user_can('edit_others_posts'))) {
+                    if (intval($item->user_id) === get_current_user_id() || (intval($item->user_id) !== get_current_user_id() && current_user_can('edit_others_posts'))) {
                         $output .= '<a href="' . admin_url('admin.php?page=rd-downloads_edit&download_id=' . $item->download_id) . '">';
                     }
                     if (!empty($item->{$column_name})) {
@@ -41,7 +42,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
                     } else {
                         $output .= __('Unknow', 'rd-downloads');
                     }
-                    if ($item->user_id == get_current_user_id() || ($item->user_id != get_current_user_id() && current_user_can('edit_others_posts'))) {
+                    if (intval($item->user_id) === get_current_user_id() || (intval($item->user_id) !== get_current_user_id() && current_user_can('edit_others_posts'))) {
                         $output .= '</a>';
                     }
                     return $output;
@@ -194,12 +195,12 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
             $views = [];
             $options = [];
 
-            $filter_user_id = (isset($_REQUEST['filter_user_id']) && trim($_REQUEST['filter_user_id']) != null ? trim($_REQUEST['filter_user_id']) : null);
+            $filter_user_id = (isset($_REQUEST['filter_user_id']) && trim($_REQUEST['filter_user_id']) !== '' ? sanitize_text_field(wp_unslash($_REQUEST['filter_user_id'])) : null);// phpcs:ignore
             if (!current_user_can('edit_others_posts')) {
                 $filter_user_id = get_current_user_id();
             }
-            $filter_download_id = (isset($_REQUEST['filter_download_id']) && trim($_REQUEST['filter_download_id']) != null ? trim($_REQUEST['filter_download_id']) : null);
-            $search = (isset($_REQUEST['s']) && !empty(trim($_REQUEST['s'])) ? trim($_REQUEST['s']) : null);
+            $filter_download_id = (isset($_REQUEST['filter_download_id']) && trim($_REQUEST['filter_download_id']) !== '' ? sanitize_text_field(wp_unslash($_REQUEST['filter_download_id'])) : null);// phpcs:ignore
+            $search = (isset($_REQUEST['s']) && !empty(trim($_REQUEST['s'])) ? sanitize_text_field(wp_unslash($_REQUEST['s'])) : null);// phpcs:ignore
 
             // get result using `RdDownloadLogs` class.
             $RdDownloadLogs = new RdDownloadLogs();
@@ -212,12 +213,12 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
             unset($search);
 
             // all items
-            $class = ($filter_download_id == null && $filter_user_id == null ? ' class="current"' : '');
+            $class = (is_null($filter_download_id) && is_null($filter_user_id) ? ' class="current"' : '');
             $views['all'] = '<a' . $class . ' href="' . esc_url(remove_query_arg(['filter_download_id', 'filter_user_id'])) . '">' . __('All', 'rd-downloads') . ' <span class="count">(' . $wpdb->get_var($sql) . ')</span></a>';
             unset($class);
 
             // filtered user
-            if ($filter_user_id != null) {
+            if (!is_null($filter_user_id)) {
                 $User = get_user_by('ID', $filter_user_id);
                 $options['user_id'] = $filter_user_id;
                 $sqlFiltered = $RdDownloadLogs->get($options);
@@ -229,7 +230,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
             }
 
             // filtered download_id
-            if ($filter_download_id != null) {
+            if (!is_null($filter_download_id)) {
                 $options['download_id'] = $filter_download_id;
                 $sqlFiltered = $RdDownloadLogs->get($options);
                 /* translators: %s: Link to edit download. */
@@ -325,7 +326,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
             // create pagination
             $this->set_pagination_args([
                 'total_items' => $total_items,
-                'per_page'    => $per_page
+                'per_page'    => $per_page,
             ]);
 
             $this->items = $results;
@@ -337,7 +338,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
          */
         public function single_row($item)
         {
-            echo '<tr class="rd-download-logs_dl_id_' . $item->dl_id . '">';
+            echo '<tr class="rd-download-logs_dl_id_' . esc_attr($item->dl_id) . '">';
             $this->single_row_columns($item);
             echo '</tr>';
         }// single_row

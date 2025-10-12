@@ -1,6 +1,8 @@
 <?php
 /**
  * Logger
+ * 
+ * @package rd-downloads
  */
 
 
@@ -27,22 +29,23 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Logger')) {
         public function debugLog($content, $fileName = '')
         {
             if (defined('WP_DEBUG') && WP_DEBUG === true) {
-                if (file_exists(plugin_dir_path(RDDOWNLOADS_FILE).'/_logdebug') && !is_dir(plugin_dir_path(RDDOWNLOADS_FILE).'/_logdebug')) {
-                    error_log('Unable to create folder: ' . plugin_dir_path(RDDOWNLOADS_FILE).'/_logdebug');
+                if (file_exists(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug') && !is_dir(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug')) {
+                    error_log('Unable to create folder: ' . plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug');
                     return false;
                 }
 
-                if (is_dir(plugin_dir_path(RDDOWNLOADS_FILE).'/_logdebug') && !wp_is_writable(plugin_dir_path(RDDOWNLOADS_FILE).'/_logdebug')) {
-                    error_log('The folder ' . plugin_dir_path(RDDOWNLOADS_FILE).'/_logdebug' . ' is unable to create files, please set the write permission.');
+                if (is_dir(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug') && !wp_is_writable(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug')) {
+                    error_log('The folder ' . plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug is unable to create files, please set the write permission.');
                     return false;
                 }
 
-                if (!file_exists(plugin_dir_path(RDDOWNLOADS_FILE).'/_logdebug') && wp_is_writable(plugin_dir_path(RDDOWNLOADS_FILE))) {
-                    wp_mkdir_p(plugin_dir_path(RDDOWNLOADS_FILE).'/_logdebug');
+                if (!file_exists(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug') && wp_is_writable(plugin_dir_path(RDDOWNLOADS_FILE))) {
+                    wp_mkdir_p(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug');
                 }
 
-                if (!is_file(plugin_dir_path(RDDOWNLOADS_FILE).'/_logdebug/index.html')) {
-                    file_put_contents(plugin_dir_path(RDDOWNLOADS_FILE).'/_logdebug/index.html', '');
+                if (!is_file(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug/index.html')) {
+                    // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
+                    file_put_contents(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug/index.html', '');
                 }
 
                 // sanitize file section.
@@ -53,14 +56,15 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Logger')) {
                 }
                 $fileName .= '.txt';
 
-                $myfile = fopen(plugin_dir_path(RDDOWNLOADS_FILE).'/_logdebug/'.$fileName, 'a');
+                // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
+                $myfile = fopen(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug/' . $fileName, 'a');
                 unset($fileName);
 
-                if ($myfile === false) {
+                if (false === $myfile) {
                     return;
                 }
 
-                if ($content == null) {
+                if (is_null($content) || '' === $content) {
                     $content = 'This file was generated for debug data while `WP_DEBUG` constant is set to `true`.'."\r\n";
                     $content .= 'This debug data was generated from '.__FILE__.' at `debugLog()` method.'."\r\n";
                     $content .= 'To turn off this debug, set `WP_DEBUG` to `false` or add `return false;` at the top of this method.'."\r\n\r\n";
@@ -71,7 +75,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Logger')) {
                     $content .= var_export(stripslashes_deep($_GET), true);
                     $content .= "\r\n\r\n";
                     $content .= 'POST data'."\r\n";
-                    $content .= var_export(stripslashes_deep($_POST), true);
+                    $content .= var_export(stripslashes_deep($_POST), true);// phpcs:ignore
                     $content .= "\r\n\r\n";
                     $content .= 'SERVER data'."\r\n";
                     $content .= var_export(stripslashes_deep($_SERVER), true);
@@ -84,8 +88,10 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Logger')) {
                     $content .= "\r\n\r\n\r\n";
                 }
 
+                // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
                 fwrite($myfile, $content);
                 unset($content);
+                // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
                 fclose($myfile);
                 unset($myfile);
             }

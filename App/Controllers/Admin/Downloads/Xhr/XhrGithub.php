@@ -19,6 +19,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
         protected $Github;
 
 
+        /**
+         * GitHub XHR class constructor.
+         */
         public function __construct()
         {
             $this->Github = new \RdDownloads\App\Libraries\Github();
@@ -53,7 +56,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
 
             $hook_id = $this->Github->apiGetWebhookId($headers, $repoOwner, $repoName);
             unset($headers, $repoName, $repoOwner);
-            if ($hook_id === false) {
+            if (false === $hook_id) {
                 $output['foundWebhook'] = false;
             } else {
                 $output['foundWebhook'] = true;
@@ -77,15 +80,15 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
             $remote_file = trim(filter_input(INPUT_GET, 'remote_file', FILTER_SANITIZE_URL));
             $current_version = trim(filter_input(INPUT_GET, 'current_version'));
             if (is_string($current_version)) {
-                $current_version = strip_tags($current_version);
+                $current_version = wp_strip_all_tags($current_version);
             }
             $version_range = trim(filter_input(INPUT_GET, 'version_range'));
             if (is_string($version_range)) {
-                $version_range = strip_tags($version_range);
+                $version_range = wp_strip_all_tags($version_range);
             }
 
             $Semver = new \RdDownloads\App\Libraries\Semver();
-            if ((is_null($version_range) || $version_range === '')) {
+            if ((is_null($version_range) || '' === $version_range)) {
                 $version_range = $Semver->getDefaultVersionConstraint($current_version);
             }
             unset($Semver);
@@ -99,7 +102,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
                 $result = $this->Github->apiGetLatestRepositoryData($remote_file, $version_range);
                 if (is_array($result)) {
                     $output = $output + $result;
-                } elseif ($result === false) {
+                } elseif (false === $result) {
                     // if cannot get repository data.
                     // return as-is in case the user input some url on GitHub.
                     $responseStatus = 202;
@@ -166,7 +169,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
 
                 if (!empty($accessToken) && !empty($secretKey)) {
                     foreach ($rdDownloadsResult['results'] as $row) {
-                        if ($row->download_github_name != null) {
+                        if ('' !== $row->download_github_name) {
                             $expNameWithOwner = explode('/', $row->download_github_name);
                             $repoOwner = $expNameWithOwner[0];
                             unset($expNameWithOwner[0]);
@@ -182,7 +185,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
 
                             // get current hooks to check that there is webhook for this site already or not.
                             $hook_id = $this->Github->apiGetWebhookId($headers, $repoOwner, $repoName);
-                            if ($hook_id === false) {
+                            if (false === $hook_id) {
                                 unset($hook_id);
                             }
 
@@ -192,16 +195,16 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
                                 $response = $this->Github->apiAddUpdateGitHubWebhook($user_id, '', $secretKey, $repoOwner, $repoName, $headers);
                                 if (isset($response['body']->id)) {
                                     $hook_id = $response['body']->id;
-                                    $totalSynced++;
-                                    $totalNewSynced++;
+                                    ++$totalSynced;
+                                    ++$totalNewSynced;
                                 }
                             } else {
                                 // if there is webhook on this GitHub repository already.
                                 // update hook.
                                 $output['hook_ids'][] = $hook_id;
                                 $response = $this->Github->apiAddUpdateGitHubWebhook($user_id, $hook_id, $secretKey, $repoOwner, $repoName, $headers);
-                                $totalSynced++;
-                                $totalUpdateSynced++;
+                                ++$totalSynced;
+                                ++$totalUpdateSynced;
                             }
 
                             unset($headers, $hook_id, $repoName, $repoOwner, $response);
@@ -226,8 +229,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
             $output['totalUpdateSynced'] = $totalUpdateSynced;
 
             $output['form_result_class'] = 'notice-success';
-            /* translators: %1$d: Total synced, %2$d: Total new webhooks, %3$d: Total existing webhooks (use update), %4$d: Total download items. */
             $output['form_result_msg'] = sprintf(
+                /* translators: %1$d: Total synced, %2$d: Total new webhooks, %3$d: Total existing webhooks (use update), %4$d: Total download items. */
                 __('Synced successfully. Total %1$d synced (%2$d new, %3$d exists) from total %4$d download items.'),
                 $totalSynced,
                 $totalNewSynced,
@@ -264,11 +267,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
             }
 
             $output['updateResult'] = update_user_meta($user_id, $this->Github->getWebhookSecretName(), $rddownloads_githubwebhook_secret);
-            $output['updated'] = ($output['updateResult'] === false ? false : true);
+            $output['updated'] = (false === $output['updateResult'] ? false : true);
             $output['githubSecret'] = $rddownloads_githubwebhook_secret;
             unset($rddownloads_githubwebhook_secret, $user_id);
 
-            if ($output['updated'] === false) {
+            if (false === $output['updated']) {
                 $output['form_result_class'] = 'notice-error';
                 $output['form_result_msg'] = __('Unable to update secret key, please reload the page and try again.', 'rd-downloads');
 

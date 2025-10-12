@@ -30,7 +30,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')
             if (function_exists('phpversion')) {
                 $phpversion = phpversion();
             }
-            if (!isset($phpversion) || (isset($phpversion) && $phpversion === false)) {
+            if (!isset($phpversion) || (isset($phpversion) && false === $phpversion)) {
                 if (defined('PHP_VERSION')) {
                     $phpversion = PHP_VERSION;
                 } else {
@@ -39,19 +39,32 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')
                 }
             }
             if (version_compare($phpversion, $phpversion_required, '<')) {
-                /* translators: %1$s: Current PHP version, %2$s: Required PHP version. */
-                wp_die(sprintf(__('You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or contact plugin author for this help.<br><br>Minimum requirement:<br>PHP %2$s', 'rd-downloads'), $phpversion, $phpversion_required), __('Minimum requirement of PHP version does not meet.', 'rd-downloads'));
+                wp_die(
+                    sprintf(
+                        /* translators: %1$s: Current PHP version, %2$s: Required PHP version. */
+                        __('You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or contact plugin author for this help.<br><br>Minimum requirement:<br>PHP %2$s', 'rd-downloads'),// phpcs:ignore 
+                        $phpversion,// phpcs:ignore 
+                        $phpversion_required// phpcs:ignore
+                    ), 
+                    esc_html__('Minimum requirement of PHP version does not meet.', 'rd-downloads')
+                );
                 exit;
             }
             if (version_compare(get_bloginfo('version'), $wordpress_required_version, '<')) {
-                /* translators: %1$s: Current WordPress version, %2$s: Required WordPress version. */
-                wp_die(sprintf(__('Your WordPress version does not meet the requirement. (%1$s < %2$s).', 'rd-downloads'), get_bloginfo('version'), $wordpress_required_version));
+                wp_die(
+                    sprintf(
+                        /* translators: %1$s: Current WordPress version, %2$s: Required WordPress version. */
+                        esc_html__('Your WordPress version does not meet the requirement. (%1$s < %2$s).', 'rd-downloads'), 
+                        get_bloginfo('version'),// phpcs:ignore 
+                        $wordpress_required_version// phpcs:ignore
+                    )
+                );
                 exit;
             }
             unset($phpversion, $phpversion_required, $wordpress_required_version);
 
             if (is_multisite() && $network_wide) {
-                wp_die(__('Unable to network activate, please activate from each site that have to use it only.', 'rd-downloads'));
+                wp_die(esc_html__('Unable to network activate, please activate from each site that have to use it only.', 'rd-downloads'));
                 exit;
             }
 
@@ -62,7 +75,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')
             // add option to site or multisite -----------------------------
             if (is_multisite()) {
                 // this site is multisite. add/update options, create/alter tables on all sites.
-                $blog_ids = $wpdb->get_col('SELECT blog_id FROM '.$wpdb->blogs);
+                $blog_ids = $wpdb->get_col('SELECT blog_id FROM '.$wpdb->blogs);// phpcs:ignore
                 $original_blog_id = get_current_blog_id();
                 if ($blog_ids) {
                     foreach ($blog_ids as $blog_id) {
@@ -99,7 +112,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')
             // check current option exists or not.
             $current_options = get_option($this->main_option_name);
 
-            if ($current_options === false) {
+            if (false === $current_options) {
                 // if this is newly activate. it is never activated before, add the options.
                 $this->setupAllOptions();
                 $this->saveOptions($this->all_options);
@@ -165,7 +178,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')
                     if (isset($item['statement']) && isset($item['tablename'])) {
                         $sql = str_replace('%TABLE%', $item['tablename'], $item['statement']);
 
-                        if (isset($item['is_multisite']) && $item['is_multisite'] === true) {
+                        if (isset($item['is_multisite']) && true === $item['is_multisite']) {
                             // if set to multisite table then it will create prefix_sitenumber_tablename.
                             $prefix = $wpdb->prefix;
                         } else {
@@ -198,10 +211,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')
             // register activate hook
             register_activation_hook(RDDOWNLOADS_FILE, [$this, 'activate']);
 
-            if (is_multisite()) {
+            //if (is_multisite()) {
                 // hook on create new site (for multisite installation).
                 //add_action('wpmu_new_blog', [$this, 'activateNewSite'], 10, 6);// comment this line because we don't want it to create table on create new site. just create table on activate plugin on certain site only.
-            }
+            //}
         }// registerHooks
 
 

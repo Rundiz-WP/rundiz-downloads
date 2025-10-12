@@ -23,7 +23,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Input')) {
         {
             if (is_array($data)) {
                 foreach ($data as $name => $value) {
-                    if (is_scalar($value) && trim($value) == '') {
+                    if (is_scalar($value) && trim($value) === '') {
                         $data[$name] = null;
                     }
                 }// endforeach;

@@ -23,14 +23,14 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\DateTime')) {
          * @return string Return date/time in local time zone setting in the WordPress.
          * @throws \InvalidArgumentException Throw invalid argument error on wrong type.
          */
-        static public function displayDateTime($datetime_gmt, $format = null)
+        public static function displayDateTime($datetime_gmt, $format = null)
         {
             if (!is_scalar($datetime_gmt)) {
                 /* translators: %s Argument name. */
                 throw new \InvalidArgumentException(
                     sprintf(
                         /* translators: %s Argument name. */
-                        __('The %s must be string.', 'rd-downloads')
+                        esc_html__('The %s must be string.', 'rd-downloads')
                         , '$datetime_gmt'
                     )
                 );

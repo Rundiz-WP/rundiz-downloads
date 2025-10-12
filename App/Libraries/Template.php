@@ -59,7 +59,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Template')) {
             if (
                 is_scalar($tVarName) && 
                 preg_match('#^[' . $this->allowedTemplateVariable . ']+$#iu', $tVarName) && 
-                (strtolower($tVarName) != 'if' && strtolower($tVarName) != 'endif')
+                (strtolower($tVarName) !== 'if' && strtolower($tVarName) !== 'endif')
             ) {
                 $this->templateData[$tVarName] = $value;
             }
@@ -98,9 +98,9 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Template')) {
             $pattern .= '|#\}';// #}
             $pattern .= ')';
 
-            $template = preg_replace_callback('/' . $pattern . '/siu', function($m) use($replaces) {
+            $template = preg_replace_callback('/' . $pattern . '/siu', function($m) use ($replaces) {
                 if (is_array($m) && count($m) >= 5) {
-                    if (trim($m[1]) == '{{' && trim($m[4]) == '}}' && isset($replaces[trim($m[3])])) {
+                    if (trim($m[1]) === '{{' && trim($m[4]) === '}}' && isset($replaces[trim($m[3])])) {
                         return $replaces[trim($m[3])];
                     }
                     if (preg_match('/\{[\s]*if[\s]*(.+?)[\s]*\}/iu', trim($m[1])) && preg_match('/\{[\s]*endif[\s]*\}/iu', trim($m[4]))) {
@@ -112,7 +112,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Template')) {
                             return '';
                         }
                     }
-                    if (trim($m[1]) == '{#' && trim($m[4]) == '#}') {
+                    if (trim($m[1]) === '{#' && trim($m[4]) === '#}') {
                         return $m[0];
                     }
                 }
@@ -158,12 +158,14 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Template')) {
             $pattern .= '((?>(?R)|.)*?)';
             $pattern .= '[\s]*\}\}';
 
-            $template = preg_replace_callback('/' . $pattern . '/siu', function($m) use($replaces) {
-                if (isset($replaces[trim($m[1])])) {
-                    return $replaces[trim($m[1])];
-                }
-
-            }, $template);
+            $template = preg_replace_callback('/' . $pattern . '/siu', 
+                function($m) use ($replaces) {
+                    if (isset($replaces[trim($m[1])])) {
+                        return $replaces[trim($m[1])];
+                    }
+                }, 
+                $template
+            );
 
             return $template;
         }// replaceVariable

@@ -1,6 +1,6 @@
 <table class="form-table">
     <tr>
-        <th><?php _e('Search', 'rd-downloads'); ?></th>
+        <th><?php esc_html_e('Search', 'rd-downloads'); ?></th>
         <td>
             <input id="rd-downloads-search-input" class="rd-downloads-input-full" type="text" name="search" autofocus="">
             <span class="rd-downloads-inside-input-icon fas fa-spinner fa-pulse hidden"></span>
@@ -11,15 +11,15 @@
 
 
 <script type="text/html" id="tmpl-rd-downloads-search-table-result">
-    <?php _e('Found total', 'rd-downloads'); ?>: {{data.total}}
+    <?php esc_html_e('Found total', 'rd-downloads'); ?>: {{data.total}}
     <div class="rd-downloads-table-responsive">
         <table class="striped rd-downloads-search-result-table">
             <thead>
                 <tr>
-                    <th class="download_name"><?php _e('Downloads name', 'rd-downloads'); ?></th>
-                    <th class="download_type"><?php _e('Type', 'rd-downloads'); ?></th>
-                    <th class="download_file_name"><?php _e('File', 'rd-downloads'); ?></th>
-                    <th class="download_size"><?php _e('Size', 'rd-downloads'); ?></th>
+                    <th class="download_name"><?php esc_html_e('Downloads name', 'rd-downloads'); ?></th>
+                    <th class="download_type"><?php esc_html_e('Type', 'rd-downloads'); ?></th>
+                    <th class="download_file_name"><?php esc_html_e('File', 'rd-downloads'); ?></th>
+                    <th class="download_size"><?php esc_html_e('Size', 'rd-downloads'); ?></th>
                     <th class="actions"></th><!--action column-->
                 </tr>
             </thead>
@@ -32,17 +32,17 @@
             <?php 
             printf(
                 /* translators: %1$s: Current page, %2$s: Total pages. */
-                __('Page %1$s of %2$s', 'rd-downloads'),
+                esc_html__('Page %1$s of %2$s', 'rd-downloads'),
                 '<span class="current-page">{{data.current_page}}</span>',
                 '<span class="total-pages">{{data.total_pages}}</span>'
             ); 
             ?>
         </span><!--.rd-downloads-current-paging-status-->
         <# if (data.current_page > 1) { #>
-        <button class="button rd-downloads-ajax-search-paging-button" onclick="return rdDownloadsAjaxSearch(jQuery('#rd-downloads-search-input').val(), {{data.previous_page}});"><?php _e('Previous', 'rd-downloads'); ?></button>
+        <button class="button rd-downloads-ajax-search-paging-button" onclick="return rdDownloadsAjaxSearch(jQuery('#rd-downloads-search-input').val(), {{data.previous_page}});"><?php esc_html_e('Previous', 'rd-downloads'); ?></button>
         <# } #>
         <#if (data.current_page < data.total_pages) { #>
-        <button class="button rd-downloads-ajax-search-paging-button" onclick="return rdDownloadsAjaxSearch(jQuery('#rd-downloads-search-input').val(), {{data.next_page}});"><?php _e('Next', 'rd-downloads'); ?></button>
+        <button class="button rd-downloads-ajax-search-paging-button" onclick="return rdDownloadsAjaxSearch(jQuery('#rd-downloads-search-input').val(), {{data.next_page}});"><?php esc_html_e('Next', 'rd-downloads'); ?></button>
         <# } #>
     </div><!--.rd-downloads-ajax-search-paging-buttons-->
 </script>
@@ -57,6 +57,6 @@
         <td>{{data.type}}</td>
         <td>{{data.download_file_name}}</td>
         <td>{{data.size}}</td>
-        <td><button class="button rd-downloads-insert-shortcode-button" data-download_id="{{data.download_id}}" onclick="return rdDownloadsInsertShortCodeButton(this);"><?php _e('Insert', 'rd-downloads'); ?></button></td>
+        <td><button class="button rd-downloads-insert-shortcode-button" data-download_id="{{data.download_id}}" onclick="return rdDownloadsInsertShortCodeButton(this);"><?php esc_html_e('Insert', 'rd-downloads'); ?></button></td>
     </tr>
 </script>

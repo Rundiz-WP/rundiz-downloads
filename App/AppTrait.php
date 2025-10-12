@@ -68,7 +68,7 @@ if (!trait_exists('\\RdDownloads\\App\\AppTrait')) {
             global ${$this->main_option_name};
 
             $get_option = get_option($this->main_option_name);
-            if ($get_option !== false) {
+            if (false !== $get_option) {
                 ${$this->main_option_name} = maybe_unserialize($get_option);
                 unset($get_option);
                 return (array) ${$this->main_option_name};
@@ -131,7 +131,7 @@ if (!trait_exists('\\RdDownloads\\App\\AppTrait')) {
             if (is_array($config_values) && array_key_exists('rundiz_settings_config_file', $config_values)) {
                 $settings_config_file = $config_values['rundiz_settings_config_file'];
             } else {
-                wp_die(__('Settings configuration file was not set.', 'rd-downloads'));
+                wp_die(esc_html__('Settings configuration file was not set.', 'rd-downloads'));
                 exit;
             }
             unset($config_values, $loader);

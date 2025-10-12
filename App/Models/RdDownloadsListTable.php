@@ -3,6 +3,7 @@
  * Rundiz Downloads list table.
  *
  * @package rd-downloads
+ * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
@@ -12,7 +13,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
     /**
      * List data into table.
      * Warning! Do not modify method name because they are extended from WP_List_Table class of WordPress. Changing the method name may cause program error.
-     * Warning! this parent class is marked as private. Please read at wordpress source.
+     * Warning! this parent class is marked as private. Please read at WordPress source.
      *
      * @link http://wpengineer.com/2426/wp_list_table-a-step-by-step-guide/ tutorial about how to list table data.
      * @link http://www.sitepoint.com/using-wp_list_table-to-create-wordpress-admin-tables/ another tutorial
@@ -37,7 +38,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
                 return false;
             }
 
-            return ($item->user_id == get_current_user_id() && current_user_can('upload_files')) || ($item->user_id != get_current_user_id() && current_user_can('edit_others_posts'));
+            return (intval($item->user_id) === get_current_user_id() && current_user_can('upload_files')) || (intval($item->user_id) !== get_current_user_id() && current_user_can('edit_others_posts'));
         }// checkPermissionEdit
 
 
@@ -73,7 +74,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
                 case 'download_file_name':
                     return '<span title="' . esc_attr($item->{$column_name}) . '">' . esc_html($item->{$column_name}) . '</span>';
                 case 'download_size':
-                    $size = ($item->{$column_name} != null ? intval($item->{$column_name}) : 0);
+                    $size = ('' !== $item->{$column_name} ? intval($item->{$column_name}) : 0);
                     return str_replace('.00', '', size_format($size, 2));
                 case 'shortcode':
                     return '<input class="shortcode-text" type="text" readonly="readonly" value="[rddownloads id=&quot;' . esc_attr($item->download_id) . '&quot;]">' .
@@ -115,12 +116,12 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
                     $datetime_local = strtotime(get_date_from_gmt($item->download_create_gmt, 'Y-m-d H:i:s'));
                     $datetime_withtimezone = date_i18n('Y-m-d H:i:s (P)', $datetime_local);
                     /* translators: %s: Date/time value. */
-                    $output .= sprintf(__('Created: %s', 'rd-downloads'), '<time datetime="' . esc_attr(mysql2date('c', $item->download_create_gmt, false)) . '" title="' . esc_attr($datetime_withtimezone) . '">' . date('Y-m-d', strtotime($item->download_create)) . '</time>') . PHP_EOL;
+                    $output .= sprintf(__('Created: %s', 'rd-downloads'), '<time datetime="' . esc_attr(mysql2date('c', $item->download_create_gmt, false)) . '" title="' . esc_attr($datetime_withtimezone) . '">' . wp_date('Y-m-d', strtotime($item->download_create)) . '</time>') . PHP_EOL;
                     $output .= '<br>' . PHP_EOL;
                     $datetime_local = strtotime(get_date_from_gmt($item->download_update_gmt, 'Y-m-d H:i:s'));
                     $datetime_withtimezone = date_i18n('Y-m-d H:i:s (P)', $datetime_local);
                     /* translators: %s: Date/time value. */
-                    $output .= sprintf(__('Updated: %s', 'rd-downloads'), '<time datetime="' . esc_attr(mysql2date('c', $item->download_update_gmt, false)) . '" title="' . esc_attr($datetime_withtimezone) . '">' . date('Y-m-d', strtotime($item->download_update)) . '</time>') . PHP_EOL;
+                    $output .= sprintf(__('Updated: %s', 'rd-downloads'), '<time datetime="' . esc_attr(mysql2date('c', $item->download_update_gmt, false)) . '" title="' . esc_attr($datetime_withtimezone) . '">' . wp_date('Y-m-d', strtotime($item->download_update)) . '</time>') . PHP_EOL;
                     unset($datetime_local, $datetime_withtimezone);
                     return $output;
                 default:
@@ -209,7 +210,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
             $accessToken = $Github->getOAuthAccessToken();
             unset($Github);
 
-            if ($accessToken !== false) {
+            if (false !== $accessToken) {
                 $actions['githubUpdate'] = __('Update GitHub', 'rd-downloads');
             }
             unset($accessToken);
@@ -273,9 +274,9 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
             $views = [];
             $options = [];
 
-            $filter_user_id = (isset($_REQUEST['filter_user_id']) && trim($_REQUEST['filter_user_id']) != null ? trim($_REQUEST['filter_user_id']) : null);
-            $filter_download_type = (isset($_REQUEST['filter_download_type']) && trim($_REQUEST['filter_download_type']) != null ? trim($_REQUEST['filter_download_type']) : null);
-            $search = (isset($_REQUEST['s']) && !empty(trim($_REQUEST['s'])) ? trim($_REQUEST['s']) : null);
+            $filter_user_id = (isset($_REQUEST['filter_user_id']) && trim($_REQUEST['filter_user_id']) !== '' ? sanitize_text_field(wp_unslash($_REQUEST['filter_user_id'])) : null);// phpcs:ignore
+            $filter_download_type = (isset($_REQUEST['filter_download_type']) && trim($_REQUEST['filter_download_type']) !== '' ? sanitize_text_field(wp_unslash($_REQUEST['filter_download_type'])) : null);// phpcs:ignore
+            $search = (isset($_REQUEST['s']) && !empty(trim($_REQUEST['s'])) ? sanitize_text_field(wp_unslash($_REQUEST['s'])) : null);// phpcs:ignore
 
             // get result using `RdDownloads` class.
             $RdDownloads = new RdDownloads();
@@ -288,33 +289,33 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
             unset($search);
 
             // all items
-            $class = ($filter_download_type == null && $filter_user_id == null ? ' class="current"' : '');
+            $class = (is_null($filter_download_type) && is_null($filter_user_id) ? ' class="current"' : '');
             $views['all'] = '<a' . $class . ' href="' . esc_url(remove_query_arg(['filter_download_type', 'filter_user_id'])) . '">' . __('All', 'rd-downloads') . ' <span class="count">(' . $wpdb->get_var($sql) . ')</span></a>';
             unset($class);
 
             // local uploaded items
             $options['download_type'] = '0';
             $sqlFiltered = $RdDownloads->get($options);
-            $class = ($filter_download_type == $options['download_type'] ? ' class="current"' : '');
+            $class = (strval($filter_download_type) === $options['download_type'] ? ' class="current"' : '');
             $views['download_type_' . $options['download_type']] = '<a' . $class . ' href="' . esc_url(add_query_arg('filter_download_type', $options['download_type'])) . '">' . __('Local file', 'rd-downloads') . ' <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>';
             unset($class, $options['download_type'], $sqlFiltered);
 
             // GitHub items
             $options['download_type'] = '1';
             $sqlFiltered = $RdDownloads->get($options);
-            $class = ($filter_download_type == $options['download_type'] ? ' class="current"' : '');
+            $class = (strval($filter_download_type) === $options['download_type'] ? ' class="current"' : '');
             $views['download_type_' . $options['download_type']] = '<a' . $class . ' href="' . esc_url(add_query_arg('filter_download_type', $options['download_type'])) . '">' . __('GitHub file', 'rd-downloads') . ' <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>';
             unset($class, $options['download_type'], $sqlFiltered);
 
             // any remote file
             $options['download_type'] = '2';
             $sqlFiltered = $RdDownloads->get($options);
-            $class = ($filter_download_type == $options['download_type'] ? ' class="current"' : '');
+            $class = (strval($filter_download_type) === $options['download_type'] ? ' class="current"' : '');
             $views['download_type_' . $options['download_type']] = '<a' . $class . ' href="' . esc_url(add_query_arg('filter_download_type', $options['download_type'])) . '">' . __('Any remote file', 'rd-downloads') . ' <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>';
             unset($class, $options['download_type'], $sqlFiltered);
 
             // filtered user
-            if ($filter_user_id != null) {
+            if (!is_null($filter_user_id)) {
                 $User = get_user_by('ID', $filter_user_id);
                 $options['user_id'] = $filter_user_id;
                 $sqlFiltered = $RdDownloads->get($options);
@@ -355,7 +356,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
                 __('Preview', 'rd-downloads')
             );
 
-            if ($item->download_type == '1' && !empty($item->download_github_name)) {
+            if (strval($item->download_type) === '1' && !empty($item->download_github_name)) {
                 $actions['githubRepository'] = sprintf(
                     '<a href="%s" target="rddownloads_github_repository">%s</a>',
                     esc_url('https://github.com/' . $item->download_github_name),
@@ -433,7 +434,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
             // create pagination
             $this->set_pagination_args([
                 'total_items' => $total_items,
-                'per_page'    => $per_page
+                'per_page'    => $per_page,
             ]);
 
             $this->items = $results;
@@ -445,7 +446,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
          */
         public function single_row($item)
         {
-            echo '<tr class="rd-downloads_download_id_' . $item->download_id . '">';
+            echo '<tr class="rd-downloads_download_id_' . esc_attr($item->download_id) . '">';
             $this->single_row_columns($item);
             echo '</tr>';
         }// single_row

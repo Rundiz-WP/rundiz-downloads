@@ -3,6 +3,7 @@
  * Download logs.
  *
  * @package rd-downloads
+ * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
@@ -46,11 +47,11 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
 
             $truncateResult = $wpdb->query('TRUNCATE TABLE `' . $wpdb->prefix . 'rd_download_logs`');
             $output['truncate'] = $truncateResult;
-            if ($truncateResult === false) {
+            if (false === $truncateResult) {
                 $output['truncate_error'] = $wpdb->last_error;
                 $deleteResult = $wpdb->query('DELETE FROM `' . $wpdb->prefix . 'rd_download_logs`');
                 $output['delete'] = $deleteResult;
-                if ($deleteResult === false) {
+                if (false === $deleteResult) {
                     $output['delete_error'] = $wpdb->last_error;
                 }
             }
@@ -115,7 +116,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
                 $sql .= $this->getSelectFields();
             }
             $sql .= ' FROM `' . $wpdb->prefix . 'rd_download_logs`';
-            $sql .= ' LEFT JOIN `' . $wpdb->prefix . 'rd_downloads' . '` ON `' . $wpdb->prefix . 'rd_download_logs`.`download_id` = `' . $wpdb->prefix . 'rd_downloads' . '`.`download_id`';
+            $sql .= ' LEFT JOIN `' . $wpdb->prefix . 'rd_downloads` ON `' . $wpdb->prefix . 'rd_download_logs`.`download_id` = `' . $wpdb->prefix . 'rd_downloads`.`download_id`';
             $sql .= ' LEFT JOIN `' . $wpdb->users . '` ON `' . $wpdb->prefix . 'rd_download_logs`.`user_id` = `' . $wpdb->users . '`.`ID`';
 
             $sql .= ' WHERE %d';
@@ -174,7 +175,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
             $prepared = $wpdb->prepare($sql, $prepareValues);
             unset($prepareValues, $sql);
 
-            if (isset($options['*return_prepare']) && $options['*return_prepare'] === true) {
+            if (isset($options['*return_prepare']) && true === $options['*return_prepare']) {
                 return $prepared;
             }
 
@@ -207,7 +208,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
                 '`download_file_name`',
             ];
 
-            if ($returnStatement === true) {
+            if (true === $returnStatement) {
                 $statement = '(';
                 // Get array keys
                 $arrayKeys = array_keys($fields);
@@ -252,7 +253,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
                 '`' . $wpdb->users . '`.`display_name`',
             ];
 
-            if ($returnStatement === true) {
+            if (true === $returnStatement) {
                 return implode(', ', $fields);
             } else {
                 return $fields;
@@ -312,7 +313,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
             $prepareValues = [];
             $sql = 'SELECT %*%, `' . $wpdb->prefix . 'rd_download_logs`.`download_id` AS `download_id`, `' . $wpdb->prefix . 'rd_download_logs`.`user_id` AS `user_id`';
             $sql .= ' FROM `' . $wpdb->prefix . 'rd_download_logs`';
-            $sql .= ' LEFT JOIN `' . $wpdb->prefix . 'rd_downloads' . '` ON `' . $wpdb->prefix . 'rd_download_logs`.`download_id` = `' . $wpdb->prefix . 'rd_downloads' . '`.`download_id`';
+            $sql .= ' LEFT JOIN `' . $wpdb->prefix . 'rd_downloads` ON `' . $wpdb->prefix . 'rd_download_logs`.`download_id` = `' . $wpdb->prefix . 'rd_downloads`.`download_id`';
             $sql .= ' LEFT JOIN `' . $wpdb->users . '` ON `' . $wpdb->prefix . 'rd_download_logs`.`user_id` = `' . $wpdb->users . '`.`ID`';
 
             $sql .= ' WHERE %d';
@@ -370,7 +371,8 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
 
             $total_items = $wpdb->get_var(
                 $wpdb->prepare(
-                    str_replace(['%*%'], ['COUNT(' . $wpdb->prefix . 'rd_download_logs' . '.download_id)'], $sql),
+                    // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnsupportedPlaceholder, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+                    str_replace(['%*%'], ['COUNT(' . $wpdb->prefix . 'rd_download_logs.download_id)'], $sql),
                     $prepareValues
                 )
             );
@@ -380,17 +382,17 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
             if (isset($options['*sort'])) {
                 $sort = $options['*sort'];
             }
-            if ($sort == 'user_id') {
+            if ('user_id' === $sort) {
                 $sort = $wpdb->users . '.display_name';
-            } elseif ($sort == 'download_id') {
+            } elseif ('download_id' === $sort) {
                 $sort = $wpdb->prefix . 'rd_download_logs.download_id';
             }
 
             $order = 'DESC';
             if (isset($options['*order'])) {
-                if (strtolower($options['*order']) == 'asc') {
+                if (strtolower($options['*order']) === 'asc') {
                     $order = 'ASC';
-                }  elseif (strtolower($options['*order']) == 'desc') {
+                }  elseif (strtolower($options['*order']) === 'desc') {
                     $order = 'DESC';
                 }
             }
@@ -399,7 +401,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
             $sql = str_replace('%*%', '*', $sql);
             // sort order
             $sql .= ' ORDER BY ' . $sort . ' ' . $order;
-            if (!isset($options['*unlimit']) || (isset($options['*unlimit']) && $options['*unlimit'] === false)) {
+            if (!isset($options['*unlimit']) || (isset($options['*unlimit']) && false === $options['*unlimit'])) {
                 // sliced per page
                 $current_page = 1;
                 if (isset($options['*current_page']) && is_numeric($options['*current_page'])) {
@@ -454,7 +456,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
          * @param string $status The log status, please refer from `dlStatuses` property.
          * @param array $data The associate array where key is table fields.
          * @return bool
-         * @throws \InvalidArgumentException
+         * @throws \InvalidArgumentException Throws exception if there is invalid argument value.
          */
         public function writeLog($status, array $data = [])
         {
@@ -462,13 +464,12 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
                 return false;
             } elseif (!in_array(strtolower($status), $this->dlStatuses)) {
                 throw new \InvalidArgumentException('Failed to validate `$status` with class property `dlStatuses` on ' . __FILE__ . ' line ' . (__LINE__ - 1) . '.');
-                return false;
             }
 
             $this->getOptions();
             global $rd_downloads_options;
 
-            if (isset($rd_downloads_options['rdd_admin_logs']) && $rd_downloads_options['rdd_admin_logs'] != '1') {
+            if (isset($rd_downloads_options['rdd_admin_logs']) && strval($rd_downloads_options['rdd_admin_logs']) !== '1') {
                 // if admin logs is in the settings page was not set (set to do not log admin actions).
                 if (stripos($status, 'admin_') !== false) {
                     // if found admin log.
@@ -479,7 +480,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
 
             $prepareData = [];
             $prepareData['user_id'] = get_current_user_id();
-            if ($prepareData['user_id'] == '0' || empty($prepareData['user_id'])) {
+            if (strval($prepareData['user_id']) === '0' || empty($prepareData['user_id'])) {
                 unset($prepareData['user_id']);
             }
             $prepareData['dl_ip'] = filter_input(INPUT_SERVER, 'REMOTE_ADDR');
@@ -496,7 +497,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
 
             global $wpdb;
             $saveResult = $wpdb->insert($wpdb->prefix . 'rd_download_logs', $data);
-            if ($saveResult !== false) {
+            if (false !== $saveResult) {
                 unset($saveResult);
                 return true;
             } else {

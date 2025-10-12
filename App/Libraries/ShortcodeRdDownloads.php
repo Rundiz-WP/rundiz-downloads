@@ -99,7 +99,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\ShortcodeRdDownloads')) {
                 foreach ($combinedAttributes as $attribute_name => $value) {
                     if (
                         isset($availableAttributes[$attribute_name]['isbool']) && 
-                        $availableAttributes[$attribute_name]['isbool'] === true
+                        true === $availableAttributes[$attribute_name]['isbool']
                     ) {
                         // if default available attributes of this name is exists and its value must be boolean.
                         if (strtolower($value) !== 'true') {
@@ -109,7 +109,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\ShortcodeRdDownloads')) {
                     }
                     if (
                         strtolower($attribute_name) !== 'id' &&
-                        $value == ''
+                        '' === $value
                     ) {
                         // if attribute name is not id and its value is empty.
                         unset($combinedAttributes[$attribute_name]);

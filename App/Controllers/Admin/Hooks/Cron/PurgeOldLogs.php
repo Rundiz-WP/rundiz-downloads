@@ -3,6 +3,7 @@
  * Purge old logs
  * 
  * @package rd-downloads
+ * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
@@ -28,7 +29,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\Cron\\PurgeOld
             $this->getOptions();
             global $rd_downloads_options;
 
-            if (isset($rd_downloads_options['rdd_auto_delete_logs']) && $rd_downloads_options['rdd_auto_delete_logs'] != '1') {
+            if (isset($rd_downloads_options['rdd_auto_delete_logs']) && strval($rd_downloads_options['rdd_auto_delete_logs']) !== '1') {
                 // if setting is not to auto purge old logs.
                 return false;
             }
@@ -46,11 +47,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\Cron\\PurgeOld
                 $wpdb->prepare('DELETE FROM ' . $wpdb->prefix . 'rd_download_logs WHERE dl_date_gmt < DATE_SUB(%s, INTERVAL %d DAY)', $current_datetime_gmt, $days)
             );
 
-            if ($result !== false && $result > 0) {
+            if (false !== $result && $result > 0) {
                 $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
                 $RdDownloadLogs->writeLog('auto_purge_old_logs');
                 unset($RdDownloadLogs);
-            } elseif ($result === false) {
+            } elseif (false === $result) {
                 error_log(
                     sprintf(
                         /* translators: %1$s: The last query statement, %2$s: MySQL error message. */

@@ -13,6 +13,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings\\Xhr\\XhrCac
     {
 
 
+        /**
+         * Clear cache.
+         */
         public function clearCache()
         {
             $this->commonAccessCheck(['post'], ['rd-downloads-settings_ajax-settings-nonce', 'security']);

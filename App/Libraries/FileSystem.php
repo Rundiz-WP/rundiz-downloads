@@ -25,7 +25,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\FileSystem')) {
                 is_file($path) &&
                 wp_is_writable($path)
             ) {
-                return @unlink($path);
+                return wp_delete_file($path);
             }
 
             return false;
@@ -75,14 +75,14 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\FileSystem')) {
             if (is_dir($dir)) {
                 $objects = scandir($dir);
                 foreach ($objects as $object) {
-                    if ($dir . DIRECTORY_SEPARATOR . $object == $limited_dir) {
+                    if ($dir . DIRECTORY_SEPARATOR . $object === $limited_dir) {
                         return false;
-                    } elseif ($object != '.' && $object != '..') {
+                    } elseif ('.' !== $object && '..' !== $object) {
                         if (wp_is_writable($dir . DIRECTORY_SEPARATOR . $object)) {
                             if (is_dir($dir . DIRECTORY_SEPARATOR . $object)) {
                                 static::rrmDir($dir . DIRECTORY_SEPARATOR . $object, $limited_dir);
                             } else {
-                                unlink($dir . DIRECTORY_SEPARATOR . $object);
+                                wp_delete_file($dir . DIRECTORY_SEPARATOR . $object);
                             }
                         } else {
                             return false;
@@ -91,7 +91,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\FileSystem')) {
                 }
 
                 if ($dir !== $limited_dir) {
-                    rmdir($dir);
+                    rmdir($dir);// phpcs:ignore
                 }
             }
         }// rrmDir
@@ -113,7 +113,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\FileSystem')) {
                 throw new \InvalidArgumentException(
                     sprintf(
                         /* translators: %s Argument name. */
-                        __('The %s must be string.', 'rd-downloads')
+                        esc_html__('The %s must be string.', 'rd-downloads')
                         , '$path'
                     )
                 );
@@ -131,17 +131,17 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\FileSystem')) {
                 $chmod = 0666;
             }
 
-            if (file_exists($path) && $append === false) {
+            if (file_exists($path) && false === $append) {
                 // if file exists and append is false.
                 return false;
             } else {
-                if ($append === true) {
+                if (true === $append) {
                     $flag = FILE_APPEND;
                 } else {
                     $flag = 0;
                 }
-                file_put_contents($path, $content, $flag);
-                chmod($path, $chmod);
+                file_put_contents($path, $content, $flag);// phpcs:ignore
+                chmod($path, $chmod);// phpcs:ignore
 
                 unset($flag);
                 return true;

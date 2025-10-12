@@ -42,12 +42,12 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrDo
             $responseStatus = 200;
 
             $output['per_page'] = 10;
-            $output['current_page'] = (isset($_GET['page']) && !empty(trim($_GET['page'])) ? trim($_GET['page']) : 1);
+            $output['current_page'] = (isset($_GET['page']) && !empty(trim($_GET['page'])) ? floatval(wp_unslash($_GET['page'])) : 1);// phpcs:ignore
 
             $RdDownloads = new \RdDownloads\App\Models\RdDownloads();
             $options = [];
-            if (isset($_GET['search']) && !empty(trim($_GET['search']))) {
-                $options['*search'] = trim($_GET['search']);
+            if (isset($_GET['search']) && !empty(trim($_GET['search']))) {// phpcs:ignore
+                $options['*search'] = sanitize_text_field(wp_unslash($_GET['search']));
             }
             $options['*current_page'] = $output['current_page'];
             $options['*per_page'] = $output['per_page'];

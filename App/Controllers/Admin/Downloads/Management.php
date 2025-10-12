@@ -24,10 +24,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Management
          */
         public function addScreenOptions()
         {
-            add_screen_option('per_page', [
+            add_screen_option('per_page', 
+                [
                     'label' => __('Number of items per page:'),
                     'default' => 20,
-                    'option' => 'rddownloads_items_perpage'// require alpha-numeric, underscore (_). no dash (-) allowed.
+                    'option' => 'rddownloads_items_perpage',// require alpha-numeric, underscore (_). no dash (-) allowed.
                 ]
             );
         }// addScreenOptions
@@ -109,7 +110,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Management
          */
         public function filterScreenOption($status, $option, $value)
         {
-            if ($option === 'rddownloads_items_perpage') {
+            if ('rddownloads_items_perpage' === $option) {
                 $value = intval($value);
                 if ($value <= 0) {
                     $value = 20;
@@ -132,7 +133,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Management
         {
             // check permission.
             if (!current_user_can('edit_posts')) {
-                wp_die(__('You do not have permission to access this page.'), '', ['response' => 403]);
+                wp_die(esc_html__('You do not have permission to access this page.'), '', ['response' => 403]);
             }
 
             // preset output value to views.
@@ -141,23 +142,23 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Management
             // initialize list table model.
             $RdDownloadsListTable = new \RdDownloads\App\Models\RdDownloadsListTable();
             $options = [];
-            if (isset($_REQUEST['filter_user_id']) && trim($_REQUEST['filter_user_id']) != null) {
-                $options['user_id'] = intval($_REQUEST['filter_user_id']);
+            if (isset($_REQUEST['filter_user_id']) && trim($_REQUEST['filter_user_id']) !== '') {// phpcs:ignore
+                $options['user_id'] = intval(wp_unslash($_REQUEST['filter_user_id']));
             }
-            if (isset($_REQUEST['filter_download_type']) && trim($_REQUEST['filter_download_type']) != null) {
-                $options['download_type'] = trim($_REQUEST['filter_download_type']);
+            if (isset($_REQUEST['filter_download_type']) && trim($_REQUEST['filter_download_type']) !== '') {// phpcs:ignore
+                $options['download_type'] = sanitize_text_field(wp_unslash($_REQUEST['filter_download_type']));
             }
-            if (isset($_REQUEST['s']) && trim($_REQUEST['s']) != null) {
+            if (isset($_REQUEST['s']) && trim($_REQUEST['s']) !== '') {// phpcs:ignore
                 // the s is forced by WordPress.
-                $options['search'] = $_REQUEST['s'];
+                $options['search'] = sanitize_text_field(wp_unslash($_REQUEST['s']));
             }
             if (isset($_REQUEST['orderby'])) {
                 // the orderby is forced by WordPress.
-                $options['sort'] = $_REQUEST['orderby'];
+                $options['sort'] = sanitize_text_field(wp_unslash($_REQUEST['orderby']));
             }
             if (isset($_REQUEST['order'])) {
                 // the order is forced by WordPress.
-                $options['order'] = $_REQUEST['order'];
+                $options['order'] = sanitize_text_field(wp_unslash($_REQUEST['order']));
             }
             $RdDownloadsListTable->prepare_items($options);
             unset($options);
@@ -183,7 +184,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Management
             foreach ($current_query_names as $name) {
                 if (in_array($name, $unwanted_querystring)) {
                     unset($current_query_names);
-                    wp_redirect(remove_query_arg($unwanted_querystring));
+                    wp_safe_redirect(remove_query_arg($unwanted_querystring));
                     exit();
                 }
             }// endforeach;

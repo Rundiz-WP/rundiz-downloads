@@ -3,6 +3,7 @@
  * Bulk actions class.
  *
  * @package rd-downloads
+ * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
@@ -29,7 +30,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
 
             $bulkAction = filter_input(INPUT_POST, 'bulkAction');
             if (is_string($bulkAction)) {
-                $bulkAction = strip_tags($bulkAction);
+                $bulkAction = wp_strip_all_tags($bulkAction);
             }
             $download_ids = filter_input_array(INPUT_POST, [
                 'download_id' => [
@@ -125,14 +126,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
 
                 foreach ($results as $row) {
                     $found_download_ids[] = $row->download_id;
-                    if ($row->user_id != $current_user_id && !current_user_can('edit_others_posts')) {
+                    if (intval($row->user_id) !== $current_user_id && !current_user_can('edit_others_posts')) {
                         // this user is trying to editing/updating others download and don't have capability to do it.
                         // this condition is unable to delete the data.
                         $capability_limited_download_ids[] = $row->download_id;
                         $capability_limited_download_names[] = $row->download_name;
                     } else {
                         // this condition is able to delete the data.
-                        if ($row->download_type == '0' && stripos($row->download_related_path, 'rd-downloads/') !== false) {
+                        if (strval($row->download_type) === '0' && stripos($row->download_related_path, 'rd-downloads/') !== false) {
                             // if local file.
                             // check again that this file is NOT linked with other downloads data.
                             $sql = 'SELECT COUNT(`download_id`) AS `total`, `download_id`, `download_related_path` FROM `' . $wpdb->prefix . 'rd_downloads` WHERE `download_related_path` = %s AND `download_id` != %d';
@@ -160,7 +161,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                                 unset($wp_upload_dir);
                             }
                             unset($checkExists);
-                        } elseif ($row->download_type == '1') {
+                        } elseif (strval($row->download_type) === '1') {
                             // if github file.
                             // check that if there is no same github repo name on db.
                             $sql = 'SELECT COUNT(`download_id`) AS `total`, `download_id`, `download_github_name` FROM `' . $wpdb->prefix . 'rd_downloads` WHERE `download_github_name` = %s AND `download_id` != %d';
@@ -183,10 +184,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                             unset($checkExists);
                         }// endif download type.
 
-                        if (!isset($donot_delete) || (isset($donot_delete) && $donot_delete === false)) {
+                        if (!isset($donot_delete) || (isset($donot_delete) && false === $donot_delete)) {
                             // if it is able to delete, delete it in db.
                             $deleteResult = $wpdb->delete($wpdb->prefix . 'rd_downloads', ['download_id' => $row->download_id]);
-                            if ($deleteResult !== false) {
+                            if (false !== $deleteResult) {
                                 $deleted_download_ids[] = $row->download_id;
                                 $deleted_download_names[] = $row->download_name;
                                 $Dll = new \RdDownloads\App\Models\RdDownloadLogs();
@@ -195,7 +196,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                                 ]);
                                 unset($Dll);
 
-                                if (isset($removeWebhook) && $removeWebhook === true) {
+                                if (isset($removeWebhook) && true === $removeWebhook) {
                                     // if it was marked as remove webhook.
                                     $expNameOwner = explode('/', $row->download_github_name);
                                     $repoOwner = $expNameOwner[0];
@@ -205,7 +206,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
 
                                     $hook_id = $Github->apiGetWebhookId($apiHeader, $repoOwner, $repoName);
 
-                                    if ($hook_id !== false) {
+                                    if (false !== $hook_id) {
                                         $removeWebhookResult = $Github->apiRemoveWebhook($hook_id, $repoOwner, $repoName, $apiHeader);
                                         if (
                                             !isset($removeWebhookResult['header']['status-int']) ||
@@ -337,7 +338,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
 
                 foreach ($results as $row) {
                     $found_download_ids[] = $row->download_id;
-                    if ($row->user_id != $current_user_id && !current_user_can('edit_others_posts')) {
+                    if (intval($row->user_id) !== $current_user_id && !current_user_can('edit_others_posts')) {
                         // this user is trying to editing/updating others download and don't have capability to do it.
                         // this condition is unable to update the data.
                         $capability_limited_download_ids[] = $row->download_id;
@@ -366,7 +367,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                         $githubResult = $Github->apiGetLatestRepositoryData($row->download_url, $version_range);
                         unset($version_range);
 
-                        if ($githubResult !== false) {
+                        if (false !== $githubResult) {
                             // prepare update data.
                             $data = [];
                             $data['download_url'] = (isset($githubResult['url']) ? $githubResult['url'] : $row->download_url);
@@ -386,7 +387,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
 
                             $RdDownloads = new \RdDownloads\App\Models\RdDownloads();
                             $updateResult = $RdDownloads->update($data, ['download_id' => $row->download_id]);
-                            if ($updateResult !== false) {
+                            if (false !== $updateResult) {
                                 $updated_download_ids[] = $row->download_id;
                                 $updated_download_names[] = $row->download_name;
                                 $Dll = new \RdDownloads\App\Models\RdDownloadLogs();
@@ -513,7 +514,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
 
                 foreach ($results as $row) {
                     $found_download_ids[] = $row->download_id;
-                    if ($row->user_id != $current_user_id && !current_user_can('edit_others_posts')) {
+                    if (intval($row->user_id) !== $current_user_id && !current_user_can('edit_others_posts')) {
                         // this user is trying to editing/updating others download and don't have capability to do it.
                         // this condition is unable to update the data.
                         $capability_limited_download_ids[] = $row->download_id;
@@ -521,7 +522,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                     } else {
                         // this condition is able to update the data.
                         $remoteFileResult = $Url->getRemoteFileInfo($row->download_url);
-                        if ($remoteFileResult !== false) {
+                        if (false !== $remoteFileResult) {
                             // prepare update data.
                             $data = [];
                             $data['download_size'] = (isset($remoteFileResult['size']) && $remoteFileResult['size'] >= '0' ? $remoteFileResult['size'] : '0');
@@ -529,7 +530,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                             $data['download_update_gmt'] = current_time('mysql', true);
 
                             $updateResult = $wpdb->update($wpdb->prefix . 'rd_downloads', $data, ['download_id' => $row->download_id]);
-                            if ($updateResult !== false) {
+                            if (false !== $updateResult) {
                                 $updated_download_ids[] = $row->download_id;
                                 $updated_download_names[] = $row->download_name;
                             } else {

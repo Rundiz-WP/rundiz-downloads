@@ -36,12 +36,12 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\AntiBot')) {
          */
         public function getHoneypotName()
         {
-            if (session_id() === '') {
+            if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
 
             if (isset($_SESSION['honeypotName'])) {
-                return $_SESSION['honeypotName'];
+                return sanitize_text_field($_SESSION['honeypotName']);
             }
 
             return '';
@@ -73,7 +73,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\AntiBot')) {
                 }
             }
 
-            $output = $this->honeypotNames[mt_rand(0, (count($this->honeypotNames) - 1))] . '_' . mt_rand(0, 999);
+            $output = $this->honeypotNames[wp_rand(0, (count($this->honeypotNames) - 1))] . '_' . wp_rand(0, 999);
             $_SESSION['honeypotName'] = $output;
             return $output;
         }// setAndGetNames

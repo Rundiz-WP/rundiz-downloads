@@ -29,7 +29,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrLo
 
             $bulkAction = filter_input(INPUT_POST, 'bulkAction');
             if (is_string($bulkAction)) {
-                $bulkAction = strip_tags($bulkAction);
+                $bulkAction = wp_strip_all_tags($bulkAction);
             }
 
             switch ($bulkAction) {

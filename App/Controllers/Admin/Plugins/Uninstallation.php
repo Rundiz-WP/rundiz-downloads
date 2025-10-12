@@ -3,6 +3,7 @@
  * Uninstall or delete the plugin.
  *
  * @package rd-downloads
+ * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
@@ -23,7 +24,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
          */
         private static function getMainOptionName()
         {
-            $class = new self;
+            $class = new self();
             return $class->main_option_name;
         }// getMainOptionName
 
@@ -149,12 +150,12 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
             if (is_array($schemas) && !empty($schemas)) {
                 foreach ($schemas as $index => $item) {
                     if (isset($item['tablename'])) {
-                        if (isset($item['is_multisite']) && $item['is_multisite'] === true) {
+                        if (isset($item['is_multisite']) && true === $item['is_multisite']) {
                             // if set to multisite table then it will be use prefix_sitenumber_tablename.
                             $prefix = $wpdb->prefix;
                         } else {
                             // if set not to multisite then it will be use prefix_tablename.
-                            if ($mainsite === true) {
+                            if (true === $mainsite) {
                                 $prefix = $wpdb->base_prefix;
                             } else {
                                 $prefix = $wpdb->prefix;

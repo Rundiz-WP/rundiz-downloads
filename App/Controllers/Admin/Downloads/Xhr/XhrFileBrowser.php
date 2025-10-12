@@ -3,6 +3,7 @@
  * File browser (also working with delete and upload).
  *
  * @package rd-downloads
+ * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
@@ -85,7 +86,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
                             $files[$FileInfo->getFilename()]['relatedPath'] = ltrim($target . '/' . $FileInfo->getFilename(), '/');
                             if (
                                 stripos($target, '/rd-downloads') !== false &&
-                                $target . '/' . $FileInfo->getFilename() != '/rd-downloads/index.html' &&
+                                $target . '/' . $FileInfo->getFilename() !== '/rd-downloads/index.html' &&
                                 current_user_can('upload_files')
                             ) {
                                 $files[$FileInfo->getFilename()]['isDeletable'] = true;
@@ -120,14 +121,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
                     if (count($searchFilesResults) > 0 && (is_array($searchFilesResults) || is_object($searchFilesResults))) {
                         foreach ($searchFilesResults as $row) {
                             foreach ($files as $key => $item) {
-                                if (isset($item['isDeletable']) && $item['isDeletable'] === true) {
-                                    if (isset($item['url']) && $item['url'] == $row->download_url) {
+                                if (isset($item['isDeletable']) && true === $item['isDeletable']) {
+                                    if (isset($item['url']) && $item['url'] === $row->download_url) {
                                         $files[$key]['isDeletable'] = false;
                                         $files[$key]['isLinkedDownloadsData'] = true;
                                         if (
-                                            $row->user_id == get_current_user_id() ||
+                                            intval($row->user_id) === get_current_user_id() ||
                                             (
-                                                $row->user_id != get_current_user_id() &&
+                                                intval($row->user_id) !== get_current_user_id() &&
                                                 current_user_can('edit_others_posts')
                                             )
                                         ) {
@@ -192,7 +193,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
                 wp_send_json($output, 403);
             }
             $download_id = filter_input(INPUT_POST, 'download_id', FILTER_SANITIZE_NUMBER_INT);
-            if ($download_id == '0' || !is_numeric($download_id)) {
+            if ('0' === $download_id || !is_numeric($download_id)) {
                 $download_id = '';
             }
 
@@ -224,12 +225,12 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
                     !isset($disallowDelete) ||
                     (
                         isset($disallowDelete) &&
-                        $disallowDelete === false
+                        false === $disallowDelete
                     )
                 ) &&
                 (
-                    strtolower($target) == '/rd-downloads/index.html' ||
-                    strtolower($target) == 'rd-downloads/index.html'
+                    strtolower($target) === '/rd-downloads/index.html' ||
+                    strtolower($target) === 'rd-downloads/index.html'
                 )
             ) {
                 $responseStatus = 403;
@@ -238,7 +239,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
                 $disallowDelete = true;
             }
 
-            if (!isset($disallowDelete) || (isset($disallowDelete) && $disallowDelete === false)) {
+            if (!isset($disallowDelete) || (isset($disallowDelete) && false === $disallowDelete)) {
                 $wp_upload_dir = wp_upload_dir();
                 if (
                     is_array($wp_upload_dir) &&
@@ -382,15 +383,15 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
 
             $number = 0;
             $round = 0;
-            while(file_exists($dir . '/' . $name . $ext)) {
-                $newNumber = (int)$number + 1;
-                if ($newNumber == '1') {
+            while (file_exists($dir . '/' . $name . $ext)) {
+                $newNumber = intval($number) + 1;
+                if (1 === $newNumber) {
                     $name .= '-' . $newNumber;
                 } else {
                     $name = str_replace('-' . $number, '-' . $newNumber, $name);
                 }
                 $number = $newNumber;
-                $round++;
+                ++$round;
 
                 if ($round > 10000) {
                     $name .= uniqid().'-'.str_replace('.', '', microtime(true));
@@ -426,12 +427,12 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
             }
 
             $download_id = filter_input(INPUT_POST, 'download_id', FILTER_SANITIZE_NUMBER_INT);
-            if ($download_id == '0' || !is_numeric($download_id)) {
+            if ('0' === $download_id || !is_numeric($download_id)) {
                 $download_id = '';
             }
-            $upload_file = (isset($_FILES['upload_file']) ? $_FILES['upload_file'] : null);
+            $upload_file = (isset($_FILES['upload_file']) ? $_FILES['upload_file'] : null);// phpcs:ignore
 
-            $overrides['action'] = (isset($_POST['action']) ? $_POST['action'] : null);
+            $overrides['action'] = (isset($_POST['action']) ? sanitize_text_field(wp_unslash($_POST['action'])) : null);// phpcs:ignore
             add_filter('upload_dir', [$this, 'changeUploadDir']);
             add_filter('wp_unique_filename', [$this, 'safeWebFileName'], 10, 4);
             $uploadResult = wp_handle_upload($upload_file, $overrides);

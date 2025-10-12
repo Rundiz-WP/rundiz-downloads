@@ -24,13 +24,19 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Url')) {
         public function getDomain($url, $noSubdomain = true)
         {
             if (!is_scalar($url)) {
-                throw new \InvalidArgumentException(sprintf(__('The %s must be string.', 'rd-downloads'), '$url'));
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        /* translators: %s Argument name. */
+                        esc_html__('The %s must be string.', 'rd-downloads'), 
+                        '$url'
+                    )
+                );
             }
 
-            $urlParts = parse_url($url);
+            $urlParts = wp_parse_url($url);
 
             if (isset($urlParts['host'])) {
-                if ($noSubdomain === true) {
+                if (true === $noSubdomain) {
                     $hostExp = explode('.', $urlParts['host']);
                     if (count($hostExp) >= 2) {
                         $domainNoSub = $hostExp[count($hostExp) - 2] . '.' . $hostExp[count($hostExp) - 1];
@@ -86,10 +92,16 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Url')) {
         public function getRemoteFileInfo($url)
         {
             if (!is_scalar($url)) {
-                throw new \InvalidArgumentException(sprintf(__('The %s must be string.', 'rd-downloads'), '$url'));
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        /* translators: %s Argument name. */
+                        esc_html__('The %s must be string.', 'rd-downloads'), 
+                        '$url'
+                    )
+                );
             }
 
-            $urlParts = parse_url($url);
+            $urlParts = wp_parse_url($url);
 
             if (isset($urlParts['host'])) {
                 // if the URL is valid data.

@@ -3,6 +3,7 @@
  * Rundiz Downloads table (rd_downloads).
  * 
  * @package rd-downloads
+ * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
@@ -109,7 +110,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloads')) {
             $prepared = $wpdb->prepare($sql, $prepareValues);
             unset($prepareValues, $sql);
 
-            if (isset($options['*return_prepare']) && $options['*return_prepare'] === true) {
+            if (isset($options['*return_prepare']) && true === $options['*return_prepare']) {
                 return $prepared;
             }
 
@@ -143,7 +144,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloads')) {
                 '`' . $wpdb->users . '`.`display_name`',
             ];
 
-            if ($returnStatement === true) {
+            if (true === $returnStatement) {
                 $statement = '(';
                 // Get array keys
                 $arrayKeys = array_keys($fields);
@@ -186,7 +187,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloads')) {
                 '`' . $wpdb->users . '`.`display_name`',
             ];
 
-            if ($returnStatement === true) {
+            if (true === $returnStatement) {
                 return implode(', ', $fields);
             } else {
                 return $fields;
@@ -211,7 +212,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloads')) {
 
             unset($sql);
 
-            if ($updateResult !== false) {
+            if (false !== $updateResult) {
                 return true;
             }
             return false;
@@ -313,7 +314,8 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloads')) {
 
             $total_items = $wpdb->get_var(
                 $wpdb->prepare(
-                    str_replace(['%*%'], ['COUNT(' . $wpdb->prefix . 'rd_downloads' . '.download_id)'], $sql), 
+                    // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnsupportedPlaceholder, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+                    str_replace(['%*%'], ['COUNT(' . $wpdb->prefix . 'rd_downloads.download_id)'], $sql), 
                     $prepareValues
                 )
             );
@@ -323,15 +325,15 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloads')) {
             if (isset($options['*sort'])) {
                 $sort = $options['*sort'];
             }
-            if ($sort == 'user_id') {
+            if ('user_id' === $sort) {
                 $sort = $wpdb->users . '.display_name';
             }
 
             $order = 'DESC';
             if (isset($options['*order'])) {
-                if (strtolower($options['*order']) == 'asc') {
+                if (strtolower($options['*order']) === 'asc') {
                     $order = 'ASC';
-                }  elseif (strtolower($options['*order']) == 'desc') {
+                }  elseif (strtolower($options['*order']) === 'desc') {
                     $order = 'DESC';
                 }
             }
@@ -340,7 +342,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloads')) {
             $sql = str_replace('%*%', '*', $sql);
             // sort order
             $sql .= ' ORDER BY ' . $sort . ' ' . $order;
-            if (!isset($options['*unlimit']) || (isset($options['*unlimit']) && $options['*unlimit'] === false)) {
+            if (!isset($options['*unlimit']) || (isset($options['*unlimit']) && false === $options['*unlimit'])) {
                 // sliced per page
                 $current_page = 1;
                 if (isset($options['*current_page']) && is_numeric($options['*current_page'])) {

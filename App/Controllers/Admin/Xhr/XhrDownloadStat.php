@@ -3,6 +3,7 @@
  * XHR download stat for dashboard widget.
  *
  * @package rd-downloads
+ * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
@@ -46,7 +47,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
             $SimpleCache = new \RdDownloads\App\Libraries\Cache();
             $results = $SimpleCache->getInstance()->get($cacheKey);
 
-            if ($results === false) {
+            if (false === $results) {
                 // get total success and error downloads ---------------------------------------------------------
                 $sql = 'SELECT ' . $tableRdDownloadLogs . '.*,
                     COUNT(IF (`dl_status` = \'user_dl_success\', 1, NULL)) AS `dl_total_success`,
@@ -103,7 +104,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
                     $dateOnly = mysql2date('Y-m-d', $row->dl_date_gmt);
                     $dateKey = array_search($dateOnly, $output['part_date_gmt']);
 
-                    if ($dateKey !== false) {
+                    if (false !== $dateKey) {
                         if (isset($row->dl_total_success) && isset($output['part_total_success'][$dateKey])) {
                             $output['part_total_success'][$dateKey] = (isset($row->dl_total_success) ? $row->dl_total_success : 0);
                         }
@@ -157,7 +158,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
 
             $output = [];
             $scope = filter_input(INPUT_GET, 'scope', FILTER_SANITIZE_NUMBER_INT);
-            if ($scope != '0' && $scope != '1' && $scope != '7' && $scope != '30') {
+            $allowedScopes = ['0', '1', '7', '30'];
+            if (!in_array(strval($scope), $allowedScopes)) {
                 $scope = '0';
             }
 
@@ -165,7 +167,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
             $SimpleCache = new \RdDownloads\App\Libraries\Cache();
             $results = $SimpleCache->getInstance()->get($cacheKey);
 
-            if ($results === false) {
+            if (false === $results) {
                 $tableRdDownloads = '`' . $wpdb->prefix . 'rd_downloads`';
                 $tableRdDownloadLogs = '`' . $wpdb->prefix . 'rd_download_logs`';
 
