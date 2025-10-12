@@ -2,261 +2,265 @@
  * Management JS.
  *
  * IE not supported.
+ * 
+ * @package rd-downloads
  */
 
 
+/**
+ * Download management page JS class.
+ */
 class RdDownloadsManagement {
 
 
     /**
-     * Get bulk action value.
-     * @type type
+     * @type {String} Download management form ID name.
+     */
+    #managementFormId = 'rd-downloads-list-items-form';
+
+
+    /**
+     * Class constructor of download management page.
+     * 
+     * @since 1.0.14
+     */
+    constructor() {
+        this.#listenClickCopyShortcode();
+        this.#listenClickSearchCleanForm();
+        this.#listenClickSubmitBulkAction();
+    }// constructor
+
+
+    /**
+     * Getter bulk action value.
+     * 
+     * @type {String}
      */
     get bulkActionValue() {
-        var $ = jQuery.noConflict();
+        const topBulkAction = document.querySelector('#' + this.#managementFormId + ' #bulk-action-selector-top');
+        const bottomBulkAction = document.querySelector('#' + this.#managementFormId + ' #bulk-action-selector-bottom');
 
-        var topBulkActionValue = $('#rd-downloads-list-items-form #bulk-action-selector-top').val();
-        var bottomBulkActionValue = $('#rd-downloads-list-items-form #bulk-action-selector-bottom').val();
-        var bulkActionValue;
-        if (topBulkActionValue !== '-1') {
-            bulkActionValue = topBulkActionValue;
+        let value = '';
+        if (topBulkAction.value !== '-1') {
+            value = topBulkAction.value;
         } else {
-            bulkActionValue = bottomBulkActionValue;
+            value = bottomBulkAction.value;
         }
 
-        return bulkActionValue;
+        return value;
     }// bulkActionValue
 
 
     /**
-     * Enable or disable buttons, form controls.
-     *
-     * @param {boolean} enable Set to `true` to enable buttons, set to `false` to disable them. Default is `true`.
-     * @returns {undefined}
+     * Enable or disable form elements such as buttons.
+     * 
+     * @since 1.0.14 Moved from `enableDisableButtons()` with new code that did not use jQuery.
+     * @param {boolean} enable Set to `true` to enable elements, `false` to disable them.
      */
-    enableDisableButtons(enable = true) {
-        var $ = jQuery.noConflict();
-
-        if (typeof(enable) === 'undefined') {
+    #enableButtons(enable = true) {
+        if (typeof(enable) !== 'boolean') {
             enable = true;
         }
 
-        if (enable === true) {
-            $('#rd-downloads-list-items-form .button.action').prop('disabled', false);
-            $('#rd-downloads-list-items-form #search-submit').prop('disabled', false);
-        } else if (enable === false) {
-            $('#rd-downloads-list-items-form .button.action').prop('disabled', true);
-            $('#rd-downloads-list-items-form #search-submit').prop('disabled', true);
-        }
-    }// enableDisableButtons
-
-
-    /**
-     * Listen to search button click and then clean up checkbox, bulk actions select boxes.
-     *
-     * @returns {undefined}
-     */
-    eventSearchButtonCleanForm() {
-        var $ = jQuery.noConflict();
-
-        $('#rd-downloads-list-items-form #search-submit').off('click');
-        $('#rd-downloads-list-items-form #search-submit').on('click', function() {
-            // uncheck all checkboxes.
-            $('#rd-downloads-list-items-form input[type="checkbox"]').prop('checked', false);
-            // reset bulk actions select boxes.
-            $('#rd-downloads-list-items-form #bulk-action-selector-bottom, #rd-downloads-list-items-form #bulk-action-selector-top').val('-1');
+        const thisForm = document.getElementById(this.#managementFormId);
+        thisForm.querySelectorAll('button, input, select')?.forEach((item) => {
+            if (true === enable) {
+                item.disabled = false;
+            } else if (false === enable) {
+                item.disabled = true;
+            }
         });
-    }// eventSearchButtonCleanForm
+    }// #enableButtons
 
 
     /**
-     * Listen to short code click and copy.
-     *
-     * @link https://stackoverflow.com/a/15731900/128761 Fade out and then add hidden class.
-     * @link https://stackoverflow.com/a/20372695/128761 Remove inline style reference.
-     * @returns {undefined}
+     * Listen click and then copy shortcode.
+     * 
+     * This method was called from `constructor()`.
+     * 
+     * @since 1.0.14 Moved from `eventSelectAndCopyText()` with new code that did not use jQuery.
      */
-    eventSelectAndCopyText() {
-        var $ = jQuery.noConflict();
-        var thisClass = this;
+    #listenClickCopyShortcode() {
+        document.addEventListener('click', (event) => {
+            let thisTarget = event.target;
+            if (thisTarget.closest('#' + this.#managementFormId + ' .shortcode-text')) {
+                thisTarget = thisTarget.closest('#' + this.#managementFormId + ' .shortcode-text');
+                event.preventDefault();
+            } else {
+                return ;
+            }
 
-        $('#rd-downloads-list-items-form .shortcode-text').off('click');
-        $('#rd-downloads-list-items-form .shortcode-text').on('click', function() {
-            // select the whole shortcode.
-            thisClass.selectText($(this)[0]);
+            // select all
+            thisTarget.select();
 
-            // then copy it.
+            // copy
             try {
-                var successful = document.execCommand('copy');  // Security exception may be thrown by some browsers.
+                var successful = document.execCommand('copy'); // some browser may not supported
                 var msg = successful ? 'successful' : 'unsuccessful';
-                console.log('Copying text command was ' + msg);
+                console.debug('[rd-downloads]: Copying text command was ' + msg);
             } catch (ex) {
-                console.warn("Copy to clipboard failed.", ex);
+                console.warn('[rd-downloads]: Copy to clipboard failed.', ex);
             }
 
             // display that it was copied.
-            var copiedMsgElement = $(this).siblings('.copied-msg');
-            copiedMsgElement.removeClass('hidden');
+            const copiedMsgElement = thisTarget.parentElement.querySelector('.copied-msg');
+            copiedMsgElement.classList.remove('hidden');
             // delay and hide it again.
             setTimeout(function() {
-                copiedMsgElement.fadeOut('fast', function() {
-                    $(this).addClass('hidden').removeAttr('style');
-                });
+                copiedMsgElement.classList.add('hidden');
             }, 1500);
         });
-    }// eventSelectAndCopyText
+    }// #listenClickCopyShortcode
 
 
     /**
-     * Listen to select bulk action and set from bottom or top to be the same value.
-     *
-     * @returns {undefined}
+     * Listen click on search button and cleanup form.
+     * 
+     * This method was called from `constructor()`.
+     * 
+     * @since 1.0.14 Moved from `eventSearchButtonCleanForm()` with new code that did not use jQuery.
      */
-    eventSelectBulkActionBothSameValue() {
-        var $ = jQuery.noConflict();
-
-        $('#rd-downloads-list-items-form #bulk-action-selector-bottom, #rd-downloads-list-items-form #bulk-action-selector-top').off('change');
-        // change on the bottom action, set top to the same.
-        $('#rd-downloads-list-items-form #bulk-action-selector-bottom').on('change', function() {
-            $('#rd-downloads-list-items-form #bulk-action-selector-top').val($(this).val());
-        });
-        // change on the top action, set bottom to the same.
-        $('#rd-downloads-list-items-form #bulk-action-selector-top').on('change', function() {
-            $('#rd-downloads-list-items-form #bulk-action-selector-bottom').val($(this).val());
-        });
-    }// eventSelectBulkActionBothSameValue
-
-
-    /**
-     * Listen to form submit for bulk actions, prevent it and use ajax instead.
-     *
-     * @returns {undefined}
-     */
-    eventSubmitBulkActions() {
-        var $ = jQuery.noConflict();
-        var thisClass = this;
-
-        $('#rd-downloads-list-items-form #doaction, #rd-downloads-list-items-form #doaction2').off('click');
-        $('#rd-downloads-list-items-form #doaction, #rd-downloads-list-items-form #doaction2').on('click', function(e) {
-            e.preventDefault();
-
-            var bulkActionValue = thisClass.bulkActionValue;
-            if (bulkActionValue === 'delete') {
-                var confirmVal = confirm(RdDownloads.txtAreYouSureDelete);
-            } else if (bulkActionValue != '-1' && bulkActionValue != '') {
-                var confirmVal = true;
+    #listenClickSearchCleanForm() {
+        document.addEventListener('click', (event) => {
+            const thisTarget = event.target;
+            if (!thisTarget.closest('#' + this.#managementFormId + ' #search-submit')) {
+                return ;
             }
 
-            if (confirmVal === true) {
-                // clear result placeholder.
-                $('.rd-downloads-form-result-placeholder').html('');
-                // disable buttons.
-                thisClass.enableDisableButtons(false);
-                var formData = 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsBulkActions&bulkAction=' + encodeURIComponent(bulkActionValue) + '&' + $('#rd-downloads-list-items-form input[type="checkbox"]').serialize();
+            const thisForm = document.getElementById(this.#managementFormId);
+            // uncheck all checkboxes.
+            thisForm.querySelectorAll('input[type="checkbox"]:checked')?.forEach((item) => {
+                item.checked = false;
+            });
+            // reset bulk actions select boxes.
+            thisForm.querySelectorAll('[name="action"]')?.forEach((item) => {
+                item.value = '-1';
+            });
+            thisForm.querySelectorAll('[name="action2"]')?.forEach((item) => {
+                item.value = '-1';
+            });
+        });
+    }// #listenClickSearchCleanForm
 
-                $.ajax({
-                    'url': ajaxurl,
-                    'method': 'POST',
-                    'data': formData,
-                    'dataType': 'json'
-                })
-                .done(function(data, textStatus, jqXHR) {
-                    if (typeof(data) !== 'undefined' && typeof(data.responseJSON) !== 'undefined') {
-                        var response = data.responseJSON;
-                    } else {
-                        var response = data;
-                    }
-                    if (typeof(response) === 'undefined' || response === null || response === '') {
-                        response = {};
-                    }
 
-                    if (typeof(response) !== 'undefined' && typeof(response.additionalResults) !== 'undefined' && typeof(response.additionalResults.deleted_download_ids) !== 'undefined') {
-                        if (typeof(response.additionalResults.deleted_download_ids) === 'object') {
-                            $.each(response.additionalResults.deleted_download_ids, function(index, download_id) {
-                                $('.rd-downloads_download_id_' + download_id).remove();
-                            });
+    /**
+     * Listen click on submit bulk action.
+     * 
+     * This method was called from `constructor()`.
+     * 
+     * @since 1.0.14 Moved from `eventSubmitBulkActions()` with new code that did not use jQuery.
+     */
+    #listenClickSubmitBulkAction() {
+        document.addEventListener('click', (event) => {
+            if (event.target.closest('.action')) {
+                event.preventDefault();
+            } else {
+                return;
+            }
+
+            const thisForm = event.target.closest('#' + this.#managementFormId);
+            if (!thisForm) {
+                return;
+            }
+
+            const bulkActionValue = this.bulkActionValue;
+            let confirmVal = false;
+            if ('delete' === bulkActionValue) {
+                confirmVal = confirm(RdDownloads.txtAreYouSureDelete);
+            } else {
+                confirmVal = true;
+            }
+
+            if (false === confirmVal) {
+                return;
+            }
+
+            const formResultPlaceholder = document.querySelector('.rd-downloads-form-result-placeholder');
+            // clear result placeholder.
+            if (formResultPlaceholder) {
+                formResultPlaceholder.innerHTML = '';
+            }
+            // disable buttons.
+            this.#enableButtons(false);
+
+            const formData = new FormData();
+            formData.set('security', RdDownloads.nonce);
+            formData.set('action', 'RdDownloadsBulkActions');
+            formData.set('bulkAction', bulkActionValue);
+            thisForm.querySelectorAll('input[type="checkbox"][name="download_id[]"]')?.forEach((item) => {
+                if (true === item.checked) {
+                    formData.append('download_id[]', item.value);
+                }
+            });
+
+            fetch(ajaxurl, {
+                'method': 'POST',
+                'headers': {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                },
+                'body': new URLSearchParams(formData),
+            })
+            .then(async (rawResponse) => {
+                const contentType = rawResponse.headers.get('content-type');
+                let response;
+                if (contentType && contentType.includes('application/json')) {
+                    response = await rawResponse.json();
+                } else {
+                    let message = await rawResponse.text();
+                    if ('' === message) {
+                        if (400 === rawResponse.status) {
+                            message = 'Bad Request';
                         }
                     }
+                    console.warn('Response is not JSON:', message);
+                    throw new Error(message); // throw the error to make `.catch()` work due to response must be JSON only.
+                }
 
-                    response = undefined;
-                })
-                .always(function(data, textStatus, jqXHR) {
-                    if (typeof(data) !== 'undefined' && typeof(data.responseJSON) !== 'undefined') {
-                        var response = data.responseJSON;
-                    } else {
-                        var response = data;
+                return response;
+            })
+            .then((response) => {
+                if (
+                    typeof(response) !== 'undefined' && 
+                    typeof(response.additionalResults) !== 'undefined' && 
+                    typeof(response.additionalResults.deleted_download_ids) !== 'undefined'
+                ) {
+                    if (typeof(response.additionalResults.deleted_download_ids) === 'object') {
+                        for (const download_id of response.additionalResults.deleted_download_ids) {
+                            document.querySelector('.rd-downloads_download_id_' + download_id)?.remove();
+                        }
                     }
-                    if (typeof(response) === 'undefined' || response === null || response === '') {
-                        response = {};
-                    }
+                }
 
-                    if (typeof(response.form_result_class) !== 'undefined' && typeof(response.form_result_msg) !== 'undefined') {
-                        var form_result_html = rdDownloadsGetNoticeElement(response.form_result_class, response.form_result_msg);
+                return Promise.resolve(response);
+            })
+            .then((response) => {
+                if (typeof(response.form_result_class) !== 'undefined' && typeof(response.form_result_msg) !== 'undefined') {
+                    const formResultHTML = rdDownloadsGetNoticeElement(response.form_result_class, response.form_result_msg);
 
-                        $('.rd-downloads-form-result-placeholder').html(form_result_html);
-                        $('html, body').animate({
-                            scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
-                        },500);
+                    formResultPlaceholder.innerHTML = formResultHTML;
+                    formResultPlaceholder.scrollIntoView({'behavior': 'smooth'});
+                }
+                return Promise.resolve(response);
+            })
+            .catch((response) => {
+                const formResultHTML = rdDownloadsGetNoticeElement('notice-error', response);
 
-                        rdDownloadsReActiveDismissable();
-                    }
-
-                    // enable buttons
-                    thisClass.enableDisableButtons(true);
-
-                    response = undefined;
-                });
-            }
+                formResultPlaceholder.innerHTML = formResultHTML;
+                formResultPlaceholder.scrollIntoView({'behavior': 'smooth'});
+            })
+            .finally(() => {
+                // re-enable buttons.
+                this.#enableButtons();
+            })
+            ;
         });
-    }// eventSubmitBulkActions
-
-
-    /**
-     * Select all text in target element.
-     *
-     * @link https://stackoverflow.com/a/987376/128761 Code copied from here.
-     * @param {object} node The element object. Example: $('#target')[0];
-     * @returns {undefined}
-     */
-    selectText(node) {
-        if (node.nodeName === 'INPUT') {
-            // it is selecting text from `<input>` element.
-            node.setSelectionRange(0, node.value.length);
-        } else {
-            // it is selecting text from other element.
-            if (document.body.createTextRange) {
-                const range = document.body.createTextRange();
-                range.moveToElementText(node);
-                range.select();
-            } else if (window.getSelection) {
-                const selection = window.getSelection();
-                const range = document.createRange();
-                range.selectNodeContents(node);
-                selection.removeAllRanges();
-                selection.addRange(range);
-            } else {
-                console.warn("Could not select text in node: Unsupported browser.");
-            }
-        }
-    }// selectText
+    }// #listenClickSubmitBulkAction
 
 
 }
 
 
 // on dom ready --------------------------------------------------------------------------------------------------------
-(function ($) {
+document.addEventListener('DOMContentLoaded', () => {
     let RdDownloadsManagementClass = new RdDownloadsManagement();
-
-    // click and copy shortcode.
-    RdDownloadsManagementClass.eventSelectAndCopyText();
-
-    // click on search then clean up form.
-    RdDownloadsManagementClass.eventSearchButtonCleanForm();
-
-    // set both bulk action the same value.
-    RdDownloadsManagementClass.eventSelectBulkActionBothSameValue();
-
-    // bulk action submit using ajax.
-    RdDownloadsManagementClass.eventSubmitBulkActions();
-})(jQuery);
+});

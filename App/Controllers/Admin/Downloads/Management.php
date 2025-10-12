@@ -204,7 +204,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Management
                 return;
             }
 
-            wp_enqueue_script('rd-downloads-manage-form', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/admin/Downloads/Management/pageIndex.js', ['jquery', 'jquery-ui-core', 'rd-downloads-common-functions'], RDDOWNLOADS_VERSION, true);
+            wp_enqueue_script('rd-downloads-manage-form', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/admin/Downloads/Management/pageIndex.js', ['rd-downloads-common-functions'], RDDOWNLOADS_VERSION, true);
             wp_localize_script(
                 'rd-downloads-manage-form',
                 'RdDownloads',
