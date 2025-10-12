@@ -185,7 +185,8 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\RundizSettings')) {
                     $key_no_sqb = preg_replace('/\[.*?\]/', '', $key);
 
                     if (isset($_REQUEST) && is_array($_REQUEST) && isset($_REQUEST[$key_no_sqb])) {
-                        $output[$key] = sanitize_text_field(wp_unslash($_REQUEST[$key_no_sqb]));
+                        // receive form field below muse accept HTML.
+                        $output[$key] = wp_unslash($_REQUEST[$key_no_sqb]);// phpcs:ignore
                     } else {
                         $output[$key] = '';
                     }
