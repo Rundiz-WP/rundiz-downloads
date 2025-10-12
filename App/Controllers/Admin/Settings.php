@@ -17,6 +17,24 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
 
 
         /**
+         * @var string|false WordPress page's hook suffix that have got from function `add_[sub]menu_page()`.
+         */
+        protected $hook_suffix = false;
+
+
+        /**
+         * Allow code/WordPress to call hook `admin_enqueue_scripts` 
+         * then `wp_register_script()`, `wp_localize_script()`, `wp_enqueue_script()` functions will be working fine later.
+         * 
+         * @link https://wordpress.stackexchange.com/a/76420/41315 Original source code.
+         */
+        public function callEnqueueHook()
+        {
+            add_action('admin_enqueue_scripts', [$this, 'registerScripts']);
+        }// callEnqueueHook
+
+
+        /**
          * An example of how to access settings variable and its values.
          *
          * @global array $rd_downloads_options
@@ -41,8 +59,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
         public function pluginSettingsMenu()
         {
             $hook_suffix = add_submenu_page('rd-downloads', __('Downloads Settings', 'rd-downloads'), __('Settings', 'rd-downloads'), 'manage_options', 'rd-downloads_settings', [$this, 'pluginSettingsPage']);
-            add_action('admin_print_styles-' . $hook_suffix, [$this, 'registerScripts']);// no longer use load-$hook_suffix because it will not working with register scripts and styles.
-            add_action('admin_print_scripts-' . $hook_suffix, [$this, 'registerScripts']);// no longer use load-$hook_suffix because it will not working with register scripts and styles.
+            $this->hook_suffix = $hook_suffix;
+            if (is_string($hook_suffix)) {
+                add_action('load-' . $hook_suffix, [$this, 'callEnqueueHook']);
+            }
             unset($hook_suffix);
 
             //add_options_page(__('Plugin Template read settings value', 'rd-downloads'), __('Plugin Template read settings', 'rd-downloads'), 'manage_options', 'rd-downloads-read-settings', [$this, 'pluginReadSettingsPage']);
@@ -162,9 +182,15 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
 
         /**
          * Enqueue scripts and styles here.
+         * 
+         * @param string $hook_suffix The current admin page.
          */
-        public function registerScripts()
+        public function registerScripts($hook_suffix)
         {
+            if (!is_string($hook_suffix) || $this->hook_suffix !== $hook_suffix) {
+                return;
+            }
+
             wp_enqueue_style('rd-downloads-font-awesome5');
 
             wp_enqueue_style('rd-downloads-settings-tabs-css');

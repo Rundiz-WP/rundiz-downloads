@@ -61,28 +61,34 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')) {
         public function rdDownloadsMenu() {
             $Management = new Management();
             $hook_suffix = add_menu_page(__('Rundiz Downloads', 'rd-downloads'), __('Downloads', 'rd-downloads'), 'edit_posts', 'rd-downloads', [$Management, 'pageIndex'], 'dashicons-download', 26);
-            add_action('load-' . $hook_suffix, [$Management, 'redirectNiceUrl']);
-            add_action('load-' . $hook_suffix, [$Management, 'addScreenOptions']);
-            add_action('load-' . $hook_suffix, [$Management, 'adminHelpTab']);
-            add_action('admin_print_styles-' . $hook_suffix, [$Management, 'registerStyles']);// no longer use load-$hook_suffix because it will not working with register scripts and styles.
-            add_action('admin_print_scripts-' . $hook_suffix, [$Management, 'registerScripts']);// no longer use load-$hook_suffix because it will not working with register scripts and styles.
+            $Management->hook_suffix = $hook_suffix;
+            if (is_string($hook_suffix)) {
+                add_action('load-' . $hook_suffix, [$Management, 'redirectNiceUrl']);
+                add_action('load-' . $hook_suffix, [$Management, 'addScreenOptions']);
+                add_action('load-' . $hook_suffix, [$Management, 'adminHelpTab']);
+                add_action('load-' . $hook_suffix, [$Management, 'callEnqueueHook']);
+            }
             unset($hook_suffix, $Management);
 
             // editing pages ---------------------------------------------------------------------------------------------------
             // add page.
             $Editing = new Editing();
             $hook_suffix = add_submenu_page('rd-downloads', __('Add new download', 'rd-downloads'), __('Add New', 'rd-downloads'), 'upload_files', 'rd-downloads_add', [$Editing, 'pageAdd']);
-            add_action('load-' . $hook_suffix, [$Editing, 'adminHelpTab']);
-            add_action('admin_print_styles-' . $hook_suffix, [$Editing, 'registerStyles']);
-            add_action('admin_print_scripts-' . $hook_suffix, [$Editing, 'registerScripts']);
+            $Editing->hook_suffix = $hook_suffix;
+            if (is_string($hook_suffix)) {
+                add_action('load-' . $hook_suffix, [$Editing, 'adminHelpTab']);
+                add_action('load-' . $hook_suffix, [$Editing, 'callEnqueueHook']);
+            }
             unset($hook_suffix);
 
             // edit page.
             // set random name to parent slug argument to prevent it displaying in submenu. ( https://stackoverflow.com/a/11820396/128761 )
             $hook_suffix = add_submenu_page('rd-downloads_NOTEXISTS', __('Edit download', 'rd-downloads'), null, 'upload_files', 'rd-downloads_edit', [$Editing, 'pageEdit']);
-            add_action('load-' . $hook_suffix, [$Editing, 'adminHelpTab']);
-            add_action('admin_print_styles-' . $hook_suffix, [$Editing, 'registerStyles']);
-            add_action('admin_print_scripts-' . $hook_suffix, [$Editing, 'registerScripts']);
+            $Editing->hook_suffix = $hook_suffix;
+            if (is_string($hook_suffix)) {
+                add_action('load-' . $hook_suffix, [$Editing, 'adminHelpTab']);
+                add_action('load-' . $hook_suffix, [$Editing, 'callEnqueueHook']);
+            }
             unset($hook_suffix, $Editing);
             // end editing pages ----------------------------------------------------------------------------------------------
 

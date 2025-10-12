@@ -17,6 +17,12 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
 
 
         /**
+         * @var string|false WordPress page's hook suffix that have got from function `add_[sub]menu_page()`.
+         */
+        public $hook_suffix = false;
+
+
+        /**
          * Class constructor.
          */
         public function __construct()
@@ -66,6 +72,19 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
             }
             unset($Loader);
         }// adminHelpTab
+
+
+        /**
+         * Allow code/WordPress to call hook `admin_enqueue_scripts` 
+         * then `wp_register_script()`, `wp_localize_script()`, `wp_enqueue_script()` functions will be working fine later.
+         * 
+         * @link https://wordpress.stackexchange.com/a/76420/41315 Original source code.
+         */
+        public function callEnqueueHook()
+        {
+            add_action('admin_enqueue_scripts', [$this, 'registerStyles']);
+            add_action('admin_enqueue_scripts', [$this, 'registerScripts']);
+        }// callEnqueueHook
 
 
         /**
@@ -155,10 +174,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
 
         /**
          * Enqueue scripts here.
+         * 
+         * @param string $hook_suffix The current admin page.
          */
-        public function registerScripts()
+        public function registerScripts($hook_suffix)
         {
-            global $rd_downloads_options;
+            if (!is_string($hook_suffix) || $this->hook_suffix !== $hook_suffix) {
+                return;
+            }
 
             wp_enqueue_script('rd-downloads-edit-form', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/admin/Downloads/Management/pageEdit.js', ['jquery', 'wp-util', 'rd-downloads-common-functions'], RDDOWNLOADS_VERSION, true);
             wp_localize_script(
@@ -176,9 +199,15 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
 
         /**
          * Enqueue styles here.
+         * 
+         * @param string $hook_suffix The current admin page.
          */
-        public function registerStyles()
+        public function registerStyles($hook_suffix)
         {
+            if (!is_string($hook_suffix) || $this->hook_suffix !== $hook_suffix) {
+                return;
+            }
+
             wp_enqueue_style('rd-downloads-font-awesome5');
 
             wp_enqueue_style('rd-downloads-edit-form', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/css/admin/Downloads/Management/pageEdit.css', [], RDDOWNLOADS_VERSION);

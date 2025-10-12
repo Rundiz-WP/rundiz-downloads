@@ -14,6 +14,12 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Logs')) {
 
 
         /**
+         * @var string|false WordPress page's hook suffix that have got from function `add_[sub]menu_page()`.
+         */
+        protected $hook_suffix = false;
+
+
+        /**
          * Add the screen options for logs page.
          */
         public function addScreenOptions()
@@ -65,16 +71,30 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Logs')) {
 
 
         /**
+         * Allow code/WordPress to call hook `admin_enqueue_scripts` 
+         * then `wp_register_script()`, `wp_localize_script()`, `wp_enqueue_script()` functions will be working fine later.
+         * 
+         * @link https://wordpress.stackexchange.com/a/76420/41315 Original source code.
+         */
+        public function callEnqueueHook()
+        {
+            add_action('admin_enqueue_scripts', [$this, 'registerScripts']);
+        }// callEnqueueHook
+
+
+        /**
          * Display "Logs" sub-menu inside "Downloads" menu.
          */
         public function downloadLogsMenu()
         {
             $hook_suffix = add_submenu_page('rd-downloads', __('Download logs', 'rd-downloads'), __('Logs', 'rd-downloads'), 'upload_files', 'rd-downloads_logs', [$this, 'pageIndex']);
-            add_action('load-' . $hook_suffix, [$this, 'redirectNiceUrl']);
-            add_action('load-' . $hook_suffix, [$this, 'addScreenOptions']);
-            add_action('load-' . $hook_suffix, [$this, 'adminHelpTab']);
-            //add_action('admin_print_styles-' . $hook_suffix, [$this, 'registerStyles']);
-            add_action('admin_print_scripts-' . $hook_suffix, [$this, 'registerScripts']);
+            $this->hook_suffix = $hook_suffix;
+            if (is_string($hook_suffix)) {
+                add_action('load-' . $hook_suffix, [$this, 'redirectNiceUrl']);
+                add_action('load-' . $hook_suffix, [$this, 'addScreenOptions']);
+                add_action('load-' . $hook_suffix, [$this, 'adminHelpTab']);
+                add_action('load-' . $hook_suffix, [$this, 'callEnqueueHook']);
+            }
             unset($hook_suffix);
         }// downloadLogsMenu
 
@@ -185,9 +205,15 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Logs')) {
 
         /**
          * Enqueue scripts here.
+         * 
+         * @param string $hook_suffix The current admin page.
          */
-        public function registerScripts()
+        public function registerScripts($hook_suffix)
         {
+            if (!is_string($hook_suffix) || $this->hook_suffix !== $hook_suffix) {
+                return;
+            }
+
             wp_enqueue_script('rd-download-logs-list-items', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/admin/Downloads/Logs/pageIndex.js', ['jquery', 'jquery-ui-core', 'rd-downloads-common-functions'], RDDOWNLOADS_VERSION, true);
             wp_localize_script(
                 'rd-download-logs-list-items',
