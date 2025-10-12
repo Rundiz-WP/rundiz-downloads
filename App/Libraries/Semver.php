@@ -68,12 +68,12 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Semver')) {
         public function removePrefix($version, $prefix = 'v')
         {
             if (!is_string($version)) {
-                /* translators: %s: Argument name. */
+                /* translators: %s Argument name. */
                 throw new \InvalidArgumentException(sprintf(__('The %s must be string.', 'rd-downloads'), '$version'));
             }
 
             if (!is_string($prefix)) {
-                /* translators: %s: Argument name. */
+                /* translators: %s Argument name. */
                 throw new \InvalidArgumentException(sprintf(__('The %s must be string.', 'rd-downloads'), '$prefix'));
             }
 

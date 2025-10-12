@@ -94,7 +94,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
         {
             if (!is_scalar($hook_id) && $hook_id !== false && $hook_id !== '') {
                 // if $hook_id is not string, not false, not empty.
-                /* translators: %s: Argument name. */
+                /* translators: %s Argument name. */
                 throw new \InvalidArgumentException(sprintf(__('The %s must be string.', 'rd-downloads'), '$hook_id'));
             }
 
@@ -1153,7 +1153,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
         public function webhook(array $headers, $phpinput)
         {
             if (!is_scalar($phpinput)) {
-                /* translators: %s: Argument name. */
+                /* translators: %s Argument name. */
                 throw new \InvalidArgumentException(sprintf(__('The %s must be string.', 'rd-downloads'), '$phpinput'));
             }
 

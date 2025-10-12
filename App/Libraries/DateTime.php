@@ -26,8 +26,14 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\DateTime')) {
         static public function displayDateTime($datetime_gmt, $format = null)
         {
             if (!is_scalar($datetime_gmt)) {
-                /* translators: %s: Argument name. */
-                throw new \InvalidArgumentException(sprintf(__('The %s must be string.', 'rd-downloads'), '$datetime_gmt'));
+                /* translators: %s Argument name. */
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        /* translators: %s Argument name. */
+                        __('The %s must be string.', 'rd-downloads')
+                        , '$datetime_gmt'
+                    )
+                );
             }
 
             if (!is_scalar($format)) {

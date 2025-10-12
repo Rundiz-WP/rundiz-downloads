@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rundiz Downloads 0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rd-downloads\n"
-"POT-Creation-Date: 2025-09-02T14:23:59+07:00\n"
-"PO-Revision-Date: 2025-09-02 14:24+0700\n"
+"POT-Creation-Date: 2025-10-12T19:49:35+07:00\n"
+"PO-Revision-Date: 2025-10-12 19:50+0700\n"
 "Last-Translator: Vee W.\n"
 "Language-Team: \n"
 "Language: th_TH\n"
@@ -123,7 +123,7 @@ msgstr "Client ID"
 msgid "Client Secret"
 msgstr "Client Secret"
 
-#: App/config/rd_downloads.php:125 App/Controllers/Admin/Downloads/GithubOAuth.php:127
+#: App/config/rd_downloads.php:125 App/Controllers/Admin/Downloads/GithubOAuth.php:146
 #: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:5
 #: App/Views/admin/Downloads/GithubOAuth/subPageDisconnect_v.php:2
 msgid "GitHub OAuth"
@@ -358,108 +358,108 @@ msgstr "HTML ที่จะแสดงผล"
 msgid "Basic guide"
 msgstr "คำแนะนำพื้นฐาน"
 
-#: App/Controllers/Admin/Downloads/Editing.php:88 App/Controllers/Admin/Downloads/Menu.php:74
+#: App/Controllers/Admin/Downloads/Editing.php:101 App/Controllers/Admin/Downloads/Menu.php:76
 msgid "Add new download"
 msgstr "เพิ่มดาวน์โหลดใหม่"
 
-#: App/Controllers/Admin/Downloads/Editing.php:114 App/Controllers/Admin/Downloads/Menu.php:82
+#: App/Controllers/Admin/Downloads/Editing.php:127 App/Controllers/Admin/Downloads/Menu.php:85
 msgid "Edit download"
 msgstr "แก้ไขดาวน์โหลด"
 
-#: App/Controllers/Admin/Downloads/Editing.php:127 App/Controllers/Admin/Downloads/Xhr/XhrSave.php:365
+#: App/Controllers/Admin/Downloads/Editing.php:140 App/Controllers/Admin/Downloads/Xhr/XhrSave.php:365
 msgid "The editing item was not found."
 msgstr "ไม่พบรายการที่กำลังจะแก้ไข."
 
-#: App/Controllers/Admin/Downloads/Editing.php:130
+#: App/Controllers/Admin/Downloads/Editing.php:143
 msgid "You do not have permission to edit other's downloads data."
 msgstr "คุณไม่มีสิทธิที่จะแก้ไขข้อมูลดาวน์โหลดของผู้อื่น."
 
-#: App/Controllers/Admin/Downloads/Editing.php:170 App/Controllers/Admin/Downloads/GithubOAuth.php:348
-#: App/Controllers/Admin/Downloads/Logs.php:197 App/Controllers/Admin/Downloads/Management.php:188
+#: App/Controllers/Admin/Downloads/Editing.php:181 App/Controllers/Admin/Downloads/GithubOAuth.php:375
+#: App/Controllers/Admin/Downloads/Logs.php:223 App/Controllers/Admin/Downloads/Management.php:213
 msgid "Are you sure?"
 msgstr "คุณแน่ใจหรือ?"
 
-#: App/Controllers/Admin/Downloads/Editing.php:170
+#: App/Controllers/Admin/Downloads/Editing.php:181
 msgid "If the selected file had linked with other downloads then it will show the error message."
 msgstr "ถ้าไฟล์ที่เลือกถูกเชื่อมโยงกับดาวน์โหลดอื่นๆ มันจะแสดงข้อความผิดพลาด."
 
-#: App/Controllers/Admin/Downloads/Editing.php:170 App/Controllers/Admin/Downloads/Logs.php:197
-#: App/Controllers/Admin/Downloads/Management.php:188
+#: App/Controllers/Admin/Downloads/Editing.php:181 App/Controllers/Admin/Downloads/Logs.php:223
+#: App/Controllers/Admin/Downloads/Management.php:213
 msgid "This can not be un-done."
 msgstr "นี่จะไม่สามารถยกเลิกทำได้."
 
-#: App/Controllers/Admin/Downloads/Editing.php:171 App/Controllers/Admin/Plugins/Upgrader.php:224
+#: App/Controllers/Admin/Downloads/Editing.php:182 App/Controllers/Admin/Plugins/Upgrader.php:224
 msgid "Dismiss"
 msgstr "รับทราบ"
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:89 App/Controllers/Admin/Downloads/Logs.php:47
-#: App/Controllers/Admin/Downloads/Management.php:60
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:95 App/Controllers/Admin/Downloads/Logs.php:53
+#: App/Controllers/Admin/Downloads/Management.php:66
 msgid "Permissions"
 msgstr "การอนุญาต"
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:101
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:107
 msgid "GitHub Webhook"
 msgstr "GitHub Webhook"
 
 #. translators: %1$s: Open link, %2$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:282 App/Controllers/Admin/Downloads/GithubOAuth.php:292
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:303 App/Controllers/Admin/Downloads/GithubOAuth.php:313
 #, php-format
 msgid "Please %1$sgo back%2$s and try again."
 msgstr "โปรด%1$sย้อนกลับไป%2$sแล้วลองอีกครั้ง."
 
 #. translators: %1$s: Open link, %2$s: The link URL, %3$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:290
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:311
 #, php-format
 msgid "%1$s%2$s%3$s."
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:318
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:339
 #, php-format
 msgid "Please %1$sdisconnect from GitHub OAuth%2$s and try again."
 msgstr "โปรด%1$sเลิกเชื่อมต่อกับ GitHub OAuth%2$sแล้วลองอีกครั้ง."
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:348
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:375
 msgid "You have to sync the secret key with your GitHub repositories again to make the auto update works."
 msgstr "คุณจำเป็นต้องประสานข้อมูลกุญแจลับกับ repository ของ GitHub ของคุณทั้งหลายอีกครั้ง เพื่อให้อัปเดตอัตโนมัติทำงานได้."
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:349
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:376
 msgid "Exists"
 msgstr "มีอยู่"
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:350
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:377
 msgid "Not exists"
 msgstr "ไม่มี"
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:351
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:378
 msgid "Re-generating the secret key, please wait."
 msgstr "กำลังสร้างกุญแจลับใหม่, โปรดรอสักครู่."
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:352
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:379
 msgid "Synchronizing, please wait."
 msgstr "กำลังประสานข้อมูล, โปรดรอสักครู่."
 
-#: App/Controllers/Admin/Downloads/Logs.php:58 App/Controllers/Admin/Downloads/Management.php:71
+#: App/Controllers/Admin/Downloads/Logs.php:64 App/Controllers/Admin/Downloads/Management.php:77
 msgid "Admin help"
 msgstr "ช่วยเหลือผู้ดูแล"
 
-#: App/Controllers/Admin/Downloads/Logs.php:72 App/Views/admin/Downloads/Logs/pageIndex_v.php:11
+#: App/Controllers/Admin/Downloads/Logs.php:90 App/Views/admin/Downloads/Logs/pageIndex_v.php:11
 msgid "Download logs"
 msgstr "บันทึกดาวน์โหลด"
 
-#: App/Controllers/Admin/Downloads/Logs.php:72 App/Models/RdDownloadsListTable.php:376
+#: App/Controllers/Admin/Downloads/Logs.php:90 App/Models/RdDownloadsListTable.php:376
 msgid "Logs"
 msgstr "บันทึกประวัติ"
 
-#: App/Controllers/Admin/Downloads/Logs.php:197
+#: App/Controllers/Admin/Downloads/Logs.php:223
 msgid "All the logs will be cleared."
 msgstr "ล้างบันทึกทั้งหมดแล้ว."
 
-#: App/Controllers/Admin/Downloads/Management.php:49
+#: App/Controllers/Admin/Downloads/Management.php:55
 msgid "Shortcodes"
 msgstr "ช็อตโค้ด"
 
-#: App/Controllers/Admin/Downloads/Management.php:188
+#: App/Controllers/Admin/Downloads/Management.php:213
 msgid "The selected files will be deleted. GitHub and any remote files will be remain."
 msgstr "ไฟล์ที่เลือกจะถูกลบ. ไฟล์ที่ปลายทางบนเซิร์ฟเวอร์อื่นๆหรือ GitHub จะยังอยู่."
 
@@ -467,7 +467,7 @@ msgstr "ไฟล์ที่เลือกจะถูกลบ. ไฟล์�
 msgid "Downloads"
 msgstr "ดาวน์โหลด"
 
-#: App/Controllers/Admin/Downloads/Menu.php:74 App/Views/admin/Downloads/Management/pageIndex_v.php:13
+#: App/Controllers/Admin/Downloads/Menu.php:76 App/Views/admin/Downloads/Management/pageIndex_v.php:13
 msgid "Add New"
 msgstr "เพิ่มใหม่"
 
@@ -750,21 +750,21 @@ msgstr "เรียบร้อยแล้ว"
 msgid "Next"
 msgstr "ถัดไป"
 
-#: App/Controllers/Admin/Settings.php:43 App/Views/admin/settings_v.php:2
+#: App/Controllers/Admin/Settings.php:61 App/Views/admin/settings_v.php:2
 msgid "Downloads Settings"
 msgstr "ตั้งค่าดาวน์โหลด"
 
-#: App/Controllers/Admin/Settings.php:43
+#: App/Controllers/Admin/Settings.php:61
 msgid "Settings"
 msgstr "ตั้งค่า"
 
 #. translators: %1$s: Open link tag, %2$s: Close link tag.
-#: App/Controllers/Admin/Settings.php:67
+#: App/Controllers/Admin/Settings.php:87
 #, php-format
 msgid "The manual update is required, please %1$supdate first%2$s."
 msgstr "จำเป็นต้องดำเนินการอัปเดทด้วยตนเอง, โปรด %1$sทำการอัปเดทก่อน%2$s."
 
-#: App/Controllers/Admin/Settings.php:69
+#: App/Controllers/Admin/Settings.php:89
 msgid "The manual update is required, please tell administrator to update first."
 msgstr "จำเป็นต้องดำเนินการอัปเดทด้วยตนเอง, โปรดติดต่อผู้ดูแลเพื่อดำเนินการอัปเดทก่อน."
 
@@ -785,8 +785,8 @@ msgstr "ไม่อนุญาตให้ใช้เมธอดนี้."
 msgid "Please reload the page and try again."
 msgstr "โปรดโหลดหน้านี้ใหม่แล้วลองอีกครั้ง."
 
-#. translators: %s: Argument name.
-#: App/Libraries/DateTime.php:30 App/Libraries/FileSystem.php:113 App/Libraries/Github.php:98
+#. translators: %s Argument name.
+#: App/Libraries/DateTime.php:33 App/Libraries/FileSystem.php:116 App/Libraries/Github.php:98
 #: App/Libraries/Github.php:1157 App/Libraries/Semver.php:72 App/Libraries/Semver.php:77
 #: App/Libraries/Url.php:27 App/Libraries/Url.php:89
 #, php-format

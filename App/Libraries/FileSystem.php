@@ -110,7 +110,13 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\FileSystem')) {
         public function writeFile($path, $content, $append = true, $chmod = 0666)
         {
             if (!is_string($path)) {
-                throw new \InvalidArgumentException(sprintf(__('The %s must be string.', 'rd-downloads'), '$path'));
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        /* translators: %s Argument name. */
+                        __('The %s must be string.', 'rd-downloads')
+                        , '$path'
+                    )
+                );
             }
 
             if (!is_scalar($content)) {
