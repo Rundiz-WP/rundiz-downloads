@@ -1,4 +1,4 @@
-<div class="wrap">
+<div class="wrap rd-downloads-page-githuboauth rd-downloads-page-githuboauth-subpage-disconnect">
     <h1 class="wp-heading-inline"><?php _e('GitHub OAuth', 'rd-downloads'); ?></h1>
 
     <?php if (!isset($disconnected) || (isset($disconnected) && $disconnected === false)) { ?>

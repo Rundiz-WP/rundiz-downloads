@@ -3,15 +3,340 @@
  */
 
 
+/**
+ * GitHub connect (OAuth) JS class.
+ */
 class RdDownloadsGitHubOAuth {
+
+
+    /**
+     * Class constructor of GitHub OAuth.
+     * 
+     * @since 1.0.14
+     */
+    constructor() {
+        this.#listenClickShowHideSecret();
+        this.#listenClickRegenerateSecret();
+        this.#listenClickCheckRepoWebhook();
+        this.#listenClickForceSyncSecret();
+    }// constructor
+
+
+    /**
+     * Enable or disable form elements such as buttons.
+     * 
+     * @since 1.0.14 Moved from `enableDisableButtons()` with new code that did not use jQuery.
+     * @param {boolean} enable Set to `true` to enable elements, `false` to disable them. Default is `true`.
+     */
+    #enableButtons(enable = true) {
+        if (typeof(enable) !== 'boolean') {
+            enable = true;
+        }
+
+        const thisPage = document.querySelector('.rd-downloads-page-githuboauth');
+        thisPage.querySelectorAll('button, input, select')?.forEach((item) => {
+            if (true === enable) {
+                item.disabled = false;
+            } else if (false === enable) {
+                item.disabled = true;
+            }
+        });
+    }// #enableButtons
+
+
+    /**
+     * Listen click and check repository webhook that is it already added or not.
+     * 
+     * This method was called from `constructor()`.
+     * 
+     * @since 1.0.14 Moved from `checkRepoWebhook()` with new code that did not use jQuery.
+     */
+    #listenClickCheckRepoWebhook() {
+        const checkButton = document.querySelector('.rddownloads_githubrepo_webhook_check');
+        if (!checkButton) {
+            console.error('[rd-downloads]: Check repo web hook button is not exists.');
+            return;
+        }
+
+        document.addEventListener('click', (event) => {
+            let thisTarget;
+            if (event.target.closest('.rddownloads_githubrepo_webhook_check')) {
+                thisTarget = event.target.closest('.rddownloads_githubrepo_webhook_check');
+                event.preventDefault();
+            } else {
+                return;
+            }
+
+            const thisTr = thisTarget.closest('tr');
+            const statusIcon = thisTarget.querySelector('.rddownloads_icon-webhook-status');
+            statusIcon.className = '';
+            statusIcon.classList.add('rddownloads_icon-webhook-status', 'fas', 'fa-solid', 'fa-spinner', 'fa-pulse', 'fontawesome-icon');
+            const formResultPlaceholder = document.querySelector('.rd-downloads-form-result-placeholder');
+            formResultPlaceholder.innerHTML = '';
+
+            const formData = new FormData();
+            formData.set('security', RdDownloads.nonce);
+            formData.set('action', 'RdDownloadsCheckGitHubWebhook');
+            formData.set('namewithowner', thisTr.dataset.namewithowner);
+            let queryString = '?';
+            queryString += new URLSearchParams(formData).toString();
+
+            fetch(ajaxurl + queryString, {
+                'method': 'GET',
+                'headers': {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                },
+            })
+            .then(async (rawResponse) => {
+                const contentType = rawResponse.headers.get('content-type');
+                let response;
+                if (contentType && contentType.includes('application/json')) {
+                    response = await rawResponse.json();
+                } else {
+                    let message = await rawResponse.text();
+                    if ('' === message) {
+                        if (400 === rawResponse.status) {
+                            message = 'Bad Request';
+                        }
+                    }
+                    console.warn('[rd-downloads]: Response is not JSON:', message);
+                    throw new Error(message); // throw the error to make `.catch()` work due to response must be JSON only.
+                }
+
+                return response;
+            })
+            .then((response) => {
+                if (typeof(response) === 'object') {
+                    if (typeof(response.foundWebhook) !== 'undefined' && response.foundWebhook === true) {
+                        thisTarget.innerHTML = '<i class="rddownloads_icon-webhook-status fas fa-check"></i> ' + RdDownloads.txtExists;
+                    } else {
+                        thisTarget.innerHTML = '<i class="rddownloads_icon-webhook-status fas fa-times"></i> ' + RdDownloads.txtNotExists;
+                    }
+                }
+
+                return Promise.resolve(response);
+            })
+            .catch((response) => {
+                const formResultHTML = rdDownloadsGetNoticeElement('notice-error', response);
+
+                formResultPlaceholder.innerHTML = formResultHTML;
+                formResultPlaceholder.scrollIntoView({'behavior': 'smooth'});
+
+                statusIcon.className = '';
+                statusIcon.classList.add('rddownloads_icon-webhook-status', 'fas', 'fa-solid', 'fa-question', 'fontawesome-icon');
+            })
+            ;
+        });
+    }// #listenClickCheckRepoWebhook
+
+
+    /**
+     * Listen click and force synchronize secret with user's repositories.
+     * 
+     * @since 1.0.14 Moved from `forceSyncSecret()` with new code that did not use jQuery.
+     */
+    #listenClickForceSyncSecret() {
+        const forceSyncButton = document.getElementById('rddownloads_forcesync_github_secret');
+        if (!forceSyncButton) {
+            console.error('[rd-downloads]: Force sync secret button is not exists.');
+            return;
+        }
+
+        forceSyncButton.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            this.#enableButtons(false);
+
+            const formResultPlaceholder = document.querySelector('.rd-downloads-form-result-placeholder');
+            let formResultWorking = rdDownloadsGetNoticeElement('notice-warning', RdDownloads.txtSyncing);
+            formResultPlaceholder.innerHTML = formResultWorking;
+            formResultPlaceholder.scrollIntoView({'behavior': 'smooth'});
+
+            const formData = new FormData();
+            formData.set('security', RdDownloads.nonce);
+            formData.set('action', 'RdDownloadsSyncGitHubSecretToAll');
+
+            fetch(ajaxurl, {
+                'method': 'POST',
+                'headers': {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                },
+                'body': new URLSearchParams(formData),
+            })
+            .then(async (rawResponse) => {
+                const contentType = rawResponse.headers.get('content-type');
+                let response;
+                if (contentType && contentType.includes('application/json')) {
+                    response = await rawResponse.json();
+                } else {
+                    let message = await rawResponse.text();
+                    if ('' === message) {
+                        if (400 === rawResponse.status) {
+                            message = 'Bad Request';
+                        }
+                    }
+                    console.warn('[rd-downloads]: Response is not JSON:', message);
+                    throw new Error(message); // throw the error to make `.catch()` work due to response must be JSON only.
+                }
+
+                return response;
+            })
+            .then((response) => {
+                if (typeof(response.form_result_class) !== 'undefined' && typeof(response.form_result_msg) !== 'undefined') {
+                    const formResultHTML = rdDownloadsGetNoticeElement(response.form_result_class, response.form_result_msg);
+
+                    formResultPlaceholder.innerHTML = formResultHTML;
+                    formResultPlaceholder.scrollIntoView({'behavior': 'smooth'});
+                }
+                return Promise.resolve(response);
+            })
+            .catch((response) => {
+                const formResultHTML = rdDownloadsGetNoticeElement('notice-error', response);
+
+                formResultPlaceholder.innerHTML = formResultHTML;
+                formResultPlaceholder.scrollIntoView({'behavior': 'smooth'});
+            })
+            .finally(() => {
+                this.#enableButtons();
+            })
+            ;
+        });
+    }// #listenClickForceSyncSecret
+
+
+    /**
+     * Re-generate secret and ajax save.
+     * 
+     * @since 1.0.14 Moved from `regenerateSecret()` with new code that did not use jQuery.
+     */
+    #listenClickRegenerateSecret() {
+        const regenerateButton = document.getElementById('rddownloads_regenerate_secret');
+        if (!regenerateButton) {
+            console.error('[rd-downloads]: The re-generate button is not exists.');
+            return;
+        }
+
+        regenerateButton.addEventListener('click', (event) => {
+            const confirmVal = confirm(RdDownloads.txtAreYouSureRegenerateSecret);
+            if (!confirmVal) {
+                return;
+            }
+
+            const newSecret = RdDownloads.currentUserId + '_' + this.#randomString();
+            const secretField = document.getElementById('rddownloads_githubwebhook_secret');
+            if (!secretField) {
+                console.error('[rd-downloads]: There is no secret field.');
+                return;
+            }
+            secretField.value = newSecret;
+            secretField.setAttribute('type', 'text');
+            this.#enableButtons(false);
+
+            // display re-generating message.
+            const formResultWorking = rdDownloadsGetNoticeElement('notice-warning', RdDownloads.txtRegenerating);
+            const formResultPlaceholder = document.querySelector('.rd-downloads-form-result-placeholder');
+            formResultPlaceholder.innerHTML = formResultWorking;
+            formResultPlaceholder.scrollIntoView({'behavior': 'smooth'});
+
+            const formData = new FormData();
+            formData.set('security', RdDownloads.nonce);
+            formData.set('action', 'RdDownloadsNewGitHubSecret');
+            formData.set('rddownloads_githubwebhook_secret', newSecret);
+
+            fetch(ajaxurl, {
+                'method': 'POST',
+                'headers': {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                },
+                'body': new URLSearchParams(formData),
+            })
+            .then(async (rawResponse) => {
+                const contentType = rawResponse.headers.get('content-type');
+                let response;
+                if (contentType && contentType.includes('application/json')) {
+                    response = await rawResponse.json();
+                } else {
+                    let message = await rawResponse.text();
+                    if ('' === message) {
+                        if (400 === rawResponse.status) {
+                            message = 'Bad Request';
+                        }
+                    }
+                    console.warn('[rd-downloads]: Response is not JSON:', message);
+                    throw new Error(message); // throw the error to make `.catch()` work due to response must be JSON only.
+                }
+
+                return response;
+            })
+            .then((response) => {
+                if (typeof(response) === 'object') {
+                    if (typeof(response.githubSecret) !== 'undefined') {
+                        if (response.githubSecret !== newSecret) {
+                            console.log('[rd-downloads]: JS generated secret: ' + newSecret + ', php generated secret: ' + response.githubSecret);
+                        }
+                        secretField.value = response.githubSecret;
+                        secretField.setAttribute('type', 'text');
+                    }
+                }
+
+                return Promise.resolve(response);
+            })
+            .then((response) => {
+                if (typeof(response.form_result_class) !== 'undefined' && typeof(response.form_result_msg) !== 'undefined') {
+                    const formResultHTML = rdDownloadsGetNoticeElement(response.form_result_class, response.form_result_msg);
+
+                    formResultPlaceholder.innerHTML = formResultHTML;
+                    formResultPlaceholder.scrollIntoView({'behavior': 'smooth'});
+                }
+                return Promise.resolve(response);
+            })
+            .catch((response) => {
+                const formResultHTML = rdDownloadsGetNoticeElement('notice-error', response);
+
+                formResultPlaceholder.innerHTML = formResultHTML;
+                formResultPlaceholder.scrollIntoView({'behavior': 'smooth'});
+            })
+            .finally(() => {
+                this.#enableButtons();
+            })
+            ;
+        });// end addEventListener;
+    }// #listenClickRegenerateSecret
+
+
+    /**
+     * Listen click to show/Hide secret field.
+     * 
+     * This method was called from `constructor()`.
+     *
+     * @since 1.0.14 Moved from `showHideSecret()` with new code that did not use jQuery.
+     * @returns {undefined}
+     */
+    #listenClickShowHideSecret() {
+        const showHideButton = document.getElementById('rddownloads_showhide_secret');
+        const secretField = document.getElementById('rddownloads_githubwebhook_secret');
+        if (!showHideButton || !secretField) {
+            console.error('[rd-downloads]: There is no show/hide secret button or no secret field.');
+            return;
+        }
+
+        showHideButton.addEventListener('click', (event) => {
+            if (secretField.getAttribute('type') === 'password') {
+                secretField.setAttribute('type', 'text');
+            } else {
+                secretField.setAttribute('type', 'password');
+            }
+        });
+    }// #listenClickShowHideSecret
 
 
     /**
      * Generate random string.
      *
+     * @since 1.0.14 Renamed from `_randomString()`.
      * @returns {String}
      */
-    _randomString() {
+    #randomString() {
         let text = "";
         let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         let totalChars = 20;
@@ -21,274 +346,13 @@ class RdDownloadsGitHubOAuth {
         }
 
         return text;
-    }// _randomString
-
-
-    /**
-     * Check repository webhook that is it already added or not.
-     *
-     * @returns {undefined}
-     */
-    checkRepoWebhook() {
-        let $ = jQuery.noConflict();
-
-        $('.rddownloads_githubrepo_webhook_check').off('click');
-        $('.rddownloads_githubrepo_webhook_check').on('click', function(e) {
-            e.preventDefault();
-            let thisTr = $(this).closest('tr');
-            let thisLink = $(this);
-
-            $(this).find('.rddownloads_icon-webhook-status').attr('class', 'rddownloads_icon-webhook-status').addClass('fas fa-spinner fa-pulse');
-
-            $.ajax({
-                'url': ajaxurl,
-                'method': 'GET',
-                'data': 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsCheckGitHubWebhook&namewithowner=' + encodeURIComponent(thisTr.data('namewithowner')),
-                'dataType': 'json'
-            })
-            .done(function(data, textStatus, jqXHR) {
-                if (typeof(data) !== 'undefined' && typeof(data.responseJSON) !== 'undefined') {
-                    var response = data.responseJSON;
-                } else {
-                    var response = data;
-                }
-                if (typeof(response) === 'undefined' || response === '' || response === null) {
-                    response = {};
-                }
-
-                if (typeof(response) === 'object') {
-                    if (typeof(response.foundWebhook) !== 'undefined' && response.foundWebhook === true) {
-                        thisLink.html('<i class="rddownloads_icon-webhook-status fas fa-check"></i> ' + RdDownloads.txtExists);
-                    } else {
-                        thisLink.html('<i class="rddownloads_icon-webhook-status fas fa-times"></i> ' + RdDownloads.txtNotExists);
-                    }
-                }
-
-                response = undefined;
-            })
-            .fail(function(jqXHR, textStatus, errorThrown) {
-                thisLink.find('.rddownloads_icon-webhook-status').attr('class', 'rddownloads_icon-webhook-status').addClass('fas fa-question');
-            })
-            .always(function(data, textStatus, jqXHR) {
-                if (typeof(data) !== 'undefined' && typeof(data.responseJSON) !== 'undefined') {
-                    var response = data.responseJSON;
-                } else {
-                    var response = data;
-                }
-                if (typeof(response) === 'undefined' || response === '' || response === null) {
-                    response = {};
-                }
-
-                if (typeof(response.form_result_class) !== 'undefined' && typeof(response.form_result_msg) !== 'undefined') {
-                    var form_result_html = rdDownloadsGetNoticeElement(response.form_result_class, response.form_result_msg);
-
-                    $('.rd-downloads-form-result-placeholder').html(form_result_html);
-                    $('html, body').animate({
-                        scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
-                    }, 500);
-                }
-            });
-        })
-    }// checkRepoWebhook
-
-
-    /**
-     * Enable or disable buttons.
-     *
-     * @param {boolean} isDisable Set to true to disable (default), set to false to enable.
-     * @returns {undefined}
-     */
-    enableDisableButtons(isDisable = true) {
-        let $ = jQuery.noConflict();
-
-        if (isDisable !== true) {
-            isDisable = false;
-        }
-
-        if (isDisable === true) {
-            $('#rddownloads_regenerate_secret').prop('disabled', true);
-            $('#rddownloads_forcesync_github_secret').prop('disabled', true);
-        } else {
-            $('#rddownloads_regenerate_secret').prop('disabled', false);
-            $('#rddownloads_forcesync_github_secret').prop('disabled', false);
-        }
-    }// enableDisableButtons
-
-
-    /**
-     * Force synchronize secret with user's repositories.
-     *
-     * @returns {undefined}
-     */
-    forceSyncSecret() {
-        let $ = jQuery.noConflict();
-        let thisClass = this;
-
-        $('#rddownloads_forcesync_github_secret').off('click');
-        $('#rddownloads_forcesync_github_secret').on('click', function(e) {
-            e.preventDefault();
-
-            thisClass.enableDisableButtons();
-
-            // display synchronizing message.
-            let form_result_working = rdDownloadsGetNoticeElement('notice-warning', RdDownloads.txtSyncing);
-            $('.rd-downloads-form-result-placeholder').html(form_result_working);
-            $('html, body').animate({
-                scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
-            }, 500);
-
-            $.ajax({
-                'url': ajaxurl,
-                'method': 'POST',
-                'data': 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsSyncGitHubSecretToAll',
-                'dataType': 'json'
-            })
-            .always(function(data, textStatus, jqXHR) {
-                if (typeof(data) !== 'undefined' && typeof(data.responseJSON) !== 'undefined') {
-                    var response = data.responseJSON;
-                } else {
-                    var response = data;
-                }
-                if (typeof(response) === 'undefined' || response === '' || response === null) {
-                    response = {};
-                }
-
-                // clear result placeholder before do next.
-                $('.rd-downloads-form-result-placeholder').html('');
-
-                if (typeof(response.form_result_class) !== 'undefined' && typeof(response.form_result_msg) !== 'undefined') {
-                    var form_result_html = rdDownloadsGetNoticeElement(response.form_result_class, response.form_result_msg);
-
-                    $('.rd-downloads-form-result-placeholder').html(form_result_html);
-                    $('html, body').animate({
-                        scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
-                    }, 500);
-                }
-
-                thisClass.enableDisableButtons(false);
-            });
-        })
-    }// forceSyncSecret
-
-
-    /**
-     * Re-generate secret and ajax save.
-     *
-     * @returns {undefined}
-     */
-    regenerateSecret() {
-        let $ = jQuery.noConflict();
-        let thisClass = this;
-
-        $('#rddownloads_regenerate_secret').off('click');
-        $('#rddownloads_regenerate_secret').on('click', function(e) {
-            e.preventDefault();
-
-            let confirmVal = confirm(RdDownloads.txtAreYouSureRegenerateSecret);
-
-            if (confirmVal === true) {
-                let newSecret = RdDownloads.currentUserId + '_' + thisClass._randomString();
-                $('#rddownloads_githubwebhook_secret').val(newSecret).attr('type', 'text');
-                thisClass.enableDisableButtons();
-
-                // display re-generating message.
-                let form_result_working = rdDownloadsGetNoticeElement('notice-warning', RdDownloads.txtRegenerating);
-                $('.rd-downloads-form-result-placeholder').html(form_result_working);
-                $('html, body').animate({
-                    scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
-                }, 500);
-
-                $.ajax({
-                    'url': ajaxurl,
-                    'method': 'POST',
-                    'data': 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsNewGitHubSecret&rddownloads_githubwebhook_secret=' + encodeURIComponent(newSecret),
-                    'dataType': 'json'
-                })
-                .done(function(data, textStatus, jqXHR) {
-                    if (typeof(data) !== 'undefined' && typeof(data.responseJSON) !== 'undefined') {
-                        var response = data.responseJSON;
-                    } else {
-                        var response = data;
-                    }
-                    if (typeof(response) === 'undefined' || response === '' || response === null) {
-                        response = {};
-                    }
-
-                    if (typeof(response) === 'object') {
-                        if (typeof(response.githubSecret) !== 'undefined') {
-                            if (response.githubSecret != newSecret) {
-                                console.log('js generated secret: ' + newSecret + ', php generated secret: ' + response.githubSecret);
-                            }
-                            $('#rddownloads_githubwebhook_secret').val(response.githubSecret).attr('type', 'text');
-                        }
-                    }
-
-                    response = undefined;
-                })
-                .always(function(data, textStatus, jqXHR) {
-                    if (typeof(data) !== 'undefined' && typeof(data.responseJSON) !== 'undefined') {
-                        var response = data.responseJSON;
-                    } else {
-                        var response = data;
-                    }
-                    if (typeof(response) === 'undefined' || response === '' || response === null) {
-                        response = {};
-                    }
-
-                    if (typeof(response.form_result_class) !== 'undefined' && typeof(response.form_result_msg) !== 'undefined') {
-                        var form_result_html = rdDownloadsGetNoticeElement(response.form_result_class, response.form_result_msg);
-
-                        $('.rd-downloads-form-result-placeholder').html(form_result_html);
-                        $('html, body').animate({
-                            scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
-                        }, 500);
-                    }
-
-                    thisClass.enableDisableButtons(false);
-                });
-            }
-        })
-    }// regenerateSecret
-
-
-    /**
-     * Show/Hide secret field.
-     *
-     * @returns {undefined}
-     */
-    showHideSecret() {
-        let $ = jQuery.noConflict();
-
-        $('#rddownloads_showhide_secret').off('click');
-        $('#rddownloads_showhide_secret').on('click', function(e) {
-            e.preventDefault();
-
-            let secretField = $('#rddownloads_githubwebhook_secret');
-            if (secretField.attr('type') === 'password') {
-                secretField.attr('type', 'text');
-            } else {
-                secretField.attr('type', 'password');
-            }
-        });
-    }// showHideSecret
+    }// #randomString
 
 
 }
 
 
 // on dom ready --------------------------------------------------------------------------------------------------------
-(function ($) {
+document.addEventListener('DOMContentLoaded', () => {
     let RdDownloadsGitHubOAuthClass = new RdDownloadsGitHubOAuth();
-
-    // listen on click show/hide secret.
-    RdDownloadsGitHubOAuthClass.showHideSecret();
-
-    // listen on click re-generate secret.
-    RdDownloadsGitHubOAuthClass.regenerateSecret();
-
-    // listen on click force sync secret.
-    RdDownloadsGitHubOAuthClass.forceSyncSecret();
-
-    // listen on click to check webhook from each repository.
-    RdDownloadsGitHubOAuthClass.checkRepoWebhook();
-})(jQuery);
+});

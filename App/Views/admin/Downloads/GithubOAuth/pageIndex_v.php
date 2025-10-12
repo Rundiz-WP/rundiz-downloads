@@ -1,7 +1,7 @@
 <?php
 /* @var $GitHubOAuthListTable \RdDownloads\App\Models\GitHubOAuthListTable */
 ?>
-<div class="wrap">
+<div class="wrap rd-downloads-page-githuboauth">
     <h1 class="wp-heading-inline"><?php _e('GitHub OAuth', 'rd-downloads'); ?></h1>
 
     <?php if (isset($form_result_class) && isset($form_result_msg)) { ?>
