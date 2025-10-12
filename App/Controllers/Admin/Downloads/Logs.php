@@ -214,7 +214,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Logs')) {
                 return;
             }
 
-            wp_enqueue_script('rd-download-logs-list-items', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/admin/Downloads/Logs/pageIndex.js', ['jquery', 'jquery-ui-core', 'rd-downloads-common-functions'], RDDOWNLOADS_VERSION, true);
+            wp_enqueue_script('rd-download-logs-list-items', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/admin/Downloads/Logs/pageIndex.js', ['rd-downloads-common-functions'], RDDOWNLOADS_VERSION, true);
             wp_localize_script(
                 'rd-download-logs-list-items',
                 'RdDownloads',

@@ -4,152 +4,166 @@ class RdDownloadLogs {
 
 
     /**
-     * Get bulk action value.
-     * @type type
+     * @type {String} Download logs form ID name.
+     */
+    #managementFormId = 'rd-download-logs-list-items-form';
+
+
+    /**
+     * Class constructor of download management logs.
+     * 
+     * @since 1.0.14
+     */
+    constructor() {
+        this.#listenClickSubmitBulkAction();
+    }// constructor
+
+
+    /**
+     * Getter bulk action value.
+     * 
+     * @type {String}
      */
     get bulkActionValue() {
-        var $ = jQuery.noConflict();
+        const topBulkAction = document.querySelector('#' + this.#managementFormId + ' #bulk-action-selector-top');
+        const bottomBulkAction = document.querySelector('#' + this.#managementFormId + ' #bulk-action-selector-bottom');
 
-        var topBulkActionValue = $('#rd-download-logs-list-items-form #bulk-action-selector-top').val();
-        var bottomBulkActionValue = $('#rd-download-logs-list-items-form #bulk-action-selector-bottom').val();
-        var bulkActionValue;
-        if (topBulkActionValue !== '-1') {
-            bulkActionValue = topBulkActionValue;
+        let value = '';
+        if (topBulkAction.value !== '-1') {
+            value = topBulkAction.value;
         } else {
-            bulkActionValue = bottomBulkActionValue;
+            value = bottomBulkAction.value;
         }
 
-        return bulkActionValue;
+        return value;
     }// bulkActionValue
 
 
     /**
-     * Enable or disable buttons, form controls.
-     *
-     * @param {boolean} enable Set to `true` to enable buttons, set to `false` to disable them. Default is `true`.
-     * @returns {undefined}
+     * Enable or disable form elements such as buttons.
+     * 
+     * @since 1.0.14 Moved from `enableDisableButtons()` with new code that did not use jQuery.
+     * @param {boolean} enable Set to `true` to enable elements, `false` to disable them.
      */
-    enableDisableButtons(enable = true) {
-        var $ = jQuery.noConflict();
-
-        if (typeof(enable) === 'undefined') {
+    #enableButtons(enable = true) {
+        if (typeof(enable) !== 'boolean') {
             enable = true;
         }
 
-        if (enable === true) {
-            $('#rd-download-logs-list-items-form .button.action').prop('disabled', false);
-            $('#rd-download-logs-list-items-form #search-submit').prop('disabled', false);
-        } else if (enable === false) {
-            $('#rd-download-logs-list-items-form .button.action').prop('disabled', true);
-            $('#rd-download-logs-list-items-form #search-submit').prop('disabled', true);
-        }
-    }// enableDisableButtons
+        const thisForm = document.getElementById(this.#managementFormId);
+        thisForm.querySelectorAll('button, input, select')?.forEach((item) => {
+            if (true === enable) {
+                item.disabled = false;
+            } else if (false === enable) {
+                item.disabled = true;
+            }
+        });
+    }// #enableButtons
 
 
     /**
-     * Listen to select bulk action and set from bottom or top to be the same value.
-     *
-     * @returns {undefined}
+     * Listen click on submit bulk action.
+     * 
+     * This method was called from `constructor()`.
+     * 
+     * @since 1.0.14 Moved from `eventSubmitBulkActions()` with new code that did not use jQuery.
      */
-    eventSelectBulkActionBothSameValue() {
-        var $ = jQuery.noConflict();
-
-        $('#rd-download-logs-list-items-form #bulk-action-selector-bottom, #rd-download-logs-list-items-form #bulk-action-selector-top').off('change');
-        // change on the bottom action, set top to the same.
-        $('#rd-download-logs-list-items-form #bulk-action-selector-bottom').on('change', function() {
-            $('#rd-download-logs-list-items-form #bulk-action-selector-top').val($(this).val());
-        });
-        // change on the top action, set bottom to the same.
-        $('#rd-download-logs-list-items-form #bulk-action-selector-top').on('change', function() {
-            $('#rd-download-logs-list-items-form #bulk-action-selector-bottom').val($(this).val());
-        });
-    }// eventSelectBulkActionBothSameValue
-
-
-    /**
-     * Listen to form submit for bulk actions, prevent it and use ajax instead.
-     *
-     * @returns {undefined}
-     */
-    eventSubmitBulkActions() {
-        var $ = jQuery.noConflict();
-        var thisClass = this;
-
-        $('#rd-download-logs-list-items-form #doaction, #rd-download-logs-list-items-form #doaction2').off('click');
-        $('#rd-download-logs-list-items-form #doaction, #rd-download-logs-list-items-form #doaction2').on('click', function(e) {
-            e.preventDefault();
-
-            var bulkActionValue = thisClass.bulkActionValue;
-            if (bulkActionValue === 'clearlogs') {
-                var confirmVal = confirm(RdDownloads.txtAreYouSureDelete);
-            } else if (bulkActionValue != '-1' && bulkActionValue != '') {
-                var confirmVal = true;
+    #listenClickSubmitBulkAction() {
+        document.addEventListener('click', (event) => {
+            if (event.target.closest('.action')) {
+                event.preventDefault();
+            } else {
+                return;
             }
 
-            if (confirmVal === true) {
-                // clear result placeholder.
-                $('.rd-downloads-form-result-placeholder').html('');
-                // disable buttons.
-                thisClass.enableDisableButtons(false);
-                var formData = 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsLogsBulkActions&bulkAction=' + encodeURIComponent(bulkActionValue);
-
-                $.ajax({
-                    'url': ajaxurl,
-                    'method': 'POST',
-                    'data': formData,
-                    'dataType': 'json'
-                })
-                .done(function(data, textStatus, jqXHR) {
-                    if (typeof(data) !== 'undefined' && typeof(data.responseJSON) !== 'undefined') {
-                        var response = data.responseJSON;
-                    } else {
-                        var response = data;
-                    }
-                    if (typeof(response) === 'undefined') {
-                        response = {};
-                    }
-
-                    response = undefined;
-                })
-                .always(function(data, textStatus, jqXHR) {
-                    if (typeof(data) !== 'undefined' && typeof(data.responseJSON) !== 'undefined') {
-                        var response = data.responseJSON;
-                    } else {
-                        var response = data;
-                    }
-                    if (typeof(response) === 'undefined') {
-                        response = {};
-                    }
-
-                    if (typeof(response.form_result_class) !== 'undefined' && typeof(response.form_result_msg) !== 'undefined') {
-                        var form_result_html = rdDownloadsGetNoticeElement(response.form_result_class, response.form_result_msg);
-
-                        $('.rd-downloads-form-result-placeholder').html(form_result_html);
-                        $('html, body').animate({
-                            scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
-                        },500);
-                    }
-
-                    // enable buttons
-                    thisClass.enableDisableButtons(true);
-
-                    response = undefined;
-                });
+            const thisForm = event.target.closest('#' + this.#managementFormId);
+            if (!thisForm) {
+                return;
             }
+
+            const bulkActionValue = this.bulkActionValue;
+            let confirmVal = false;
+            if ('clearlogs' === bulkActionValue) {
+                confirmVal = confirm(RdDownloads.txtAreYouSureDelete);
+            } else {
+                confirmVal = true;
+            }
+
+            if (false === confirmVal) {
+                return;
+            }
+
+            const formResultPlaceholder = document.querySelector('.rd-downloads-form-result-placeholder');
+            // clear result placeholder.
+            if (formResultPlaceholder) {
+                formResultPlaceholder.innerHTML = '';
+            }
+            // disable buttons.
+            this.#enableButtons(false);
+
+            const formData = new FormData();
+            formData.set('security', RdDownloads.nonce);
+            formData.set('action', 'RdDownloadsLogsBulkActions');
+            formData.set('bulkAction', bulkActionValue);
+
+            fetch(ajaxurl, {
+                'method': 'POST',
+                'headers': {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                },
+                'body': new URLSearchParams(formData),
+            })
+            .then(async (rawResponse) => {
+                const contentType = rawResponse.headers.get('content-type');
+                let response;
+                if (contentType && contentType.includes('application/json')) {
+                    response = await rawResponse.json();
+                } else {
+                    let message = await rawResponse.text();
+                    if ('' === message) {
+                        if (400 === rawResponse.status) {
+                            message = 'Bad Request';
+                        }
+                    }
+                    console.warn('Response is not JSON:', message);
+                    throw new Error(message); // throw the error to make `.catch()` work due to response must be JSON only.
+                }
+
+                return response;
+            })
+            .then((response) => {
+                const logsTbody = document.querySelector('.downloads_page_rd-downloads_logs tbody');
+                logsTbody.innerHTML = '';
+                return Promise.resolve(response);
+            })
+            .then((response) => {
+                if (typeof(response.form_result_class) !== 'undefined' && typeof(response.form_result_msg) !== 'undefined') {
+                    const formResultHTML = rdDownloadsGetNoticeElement(response.form_result_class, response.form_result_msg);
+
+                    formResultPlaceholder.innerHTML = formResultHTML;
+                    formResultPlaceholder.scrollIntoView({'behavior': 'smooth'});
+                }
+                return Promise.resolve(response);
+            })
+            .catch((response) => {
+                const formResultHTML = rdDownloadsGetNoticeElement('notice-error', response);
+
+                formResultPlaceholder.innerHTML = formResultHTML;
+                formResultPlaceholder.scrollIntoView({'behavior': 'smooth'});
+            })
+            .finally(() => {
+                // re-enable buttons.
+                this.#enableButtons();
+            })
+            ;
         });
-    }// eventSubmitBulkActions
+    }// #listenClickSubmitBulkAction
 
 
 }
 
 
 // on dom ready --------------------------------------------------------------------------------------------------------
-(function ($) {
+document.addEventListener('DOMContentLoaded', () => {
     var RdDownloadLogsClass = new RdDownloadLogs();
-
-    // set both bulk action the same value.
-    RdDownloadLogsClass.eventSelectBulkActionBothSameValue();
-
-    // bulk action submit using ajax.
-    RdDownloadLogsClass.eventSubmitBulkActions();
-})(jQuery);
+});
