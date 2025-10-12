@@ -28,7 +28,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\StylesAndScripts')) {
             // you can remove some or all of the line below if you don't use it. ---------
             // ace editor (code editor)
             wp_register_style('rd-downloads-settings-ace-editor-css', plugin_dir_url(RDDOWNLOADS_FILE).'assets/css/rd-settings-ace-editor.css', [], RDDOWNLOADS_VERSION);
-            wp_register_script('rd-downloads-ace-editor-js', plugin_dir_url(RDDOWNLOADS_FILE).'assets/js/ace/ace.js', ['jquery'], '1.2.3-minnoconflict', false);
+            wp_register_script('rd-downloads-ace-editor-js', plugin_dir_url(RDDOWNLOADS_FILE).'assets/js/ace/ace.js', [], '1.2.3-minnoconflict', false);
             wp_register_script('rd-downloads-settings-ace-editor-js', plugin_dir_url(RDDOWNLOADS_FILE).'assets/js/rd-settings-ace-editor.js', ['rd-downloads-ace-editor-js'], RDDOWNLOADS_VERSION, true);
             // end removeable scripts/styles. ------------------------------------------------
 
