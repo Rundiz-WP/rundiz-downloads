@@ -5,7 +5,7 @@ Tested up to: 6.9
 Stable tag: 1.0.14
 License: MIT
 License URI: https://opensource.org/licenses/MIT
-Requires at least: 4.6.0
+Requires at least: 4.7.0
 Requires PHP: 5.5
 
 Download manager for WordPress that support GitHub auto update.
