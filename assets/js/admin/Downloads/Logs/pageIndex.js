@@ -125,7 +125,7 @@ class RdDownloadLogs {
                             message = 'Bad Request';
                         }
                     }
-                    console.warn('Response is not JSON:', message);
+                    console.warn('[rd-downloads]: Response is not JSON:', message);
                     throw new Error(message); // throw the error to make `.catch()` work due to response must be JSON only.
                 }
 
