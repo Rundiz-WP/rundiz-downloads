@@ -33,7 +33,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\StylesAndScripts')) {
             // end removeable scripts/styles. ------------------------------------------------
 
             // common use js.
-            wp_register_script('rd-downloads-common-functions', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/common-functions.js', ['jquery'], RDDOWNLOADS_VERSION, true);
+            wp_register_script('rd-downloads-common-functions', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/common-functions.js', [], RDDOWNLOADS_VERSION, true);
         }// registerAdminStylesAndScripts
 
 
