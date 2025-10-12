@@ -74,7 +74,6 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')) {
             // add page.
             $Editing = new Editing();
             $hook_suffix = add_submenu_page('rd-downloads', __('Add new download', 'rd-downloads'), __('Add New', 'rd-downloads'), 'upload_files', 'rd-downloads_add', [$Editing, 'pageAdd']);
-            $Editing->hook_suffix = $hook_suffix;
             if (is_string($hook_suffix)) {
                 add_action('load-' . $hook_suffix, [$Editing, 'adminHelpTab']);
                 add_action('load-' . $hook_suffix, [$Editing, 'callEnqueueHook']);
@@ -84,7 +83,6 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')) {
             // edit page.
             // set random name to parent slug argument to prevent it displaying in submenu. ( https://stackoverflow.com/a/11820396/128761 )
             $hook_suffix = add_submenu_page('rd-downloads_NOTEXISTS', __('Edit download', 'rd-downloads'), null, 'upload_files', 'rd-downloads_edit', [$Editing, 'pageEdit']);
-            $Editing->hook_suffix = $hook_suffix;
             if (is_string($hook_suffix)) {
                 add_action('load-' . $hook_suffix, [$Editing, 'adminHelpTab']);
                 add_action('load-' . $hook_suffix, [$Editing, 'callEnqueueHook']);
