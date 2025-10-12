@@ -2,7 +2,7 @@
 Contributors: okvee
 Tags: downloads, download, download manager, file hosting, GitHub
 Tested up to: 6.9
-Stable tag: 1.0.13
+Stable tag: 1.0.14
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 4.6.0
@@ -66,6 +66,18 @@ Yes, the plugin's tables will be dropped on uninstall.
 12. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
+= 1.0.14 =
+2025-10-13
+
+* Update proper way to enqueue scripts/styles.
+* Update management JS, remove usage of jQuery.
+* Update download logs JS, remove usage of jQuery.
+* Update settings JS to remove usage of jQuery.
+* Update GitHubOAuth JS to remove usage of jQuery.
+* Update translation.
+* Update Ace editor usage to not depend on jQuery.
+* Remove unused Ace JS files.
+
 = 1.0.13 =
 2025-03-18
 
