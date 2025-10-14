@@ -283,7 +283,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                     // if download type is NOT local.
                     // it is not possible or not good to use force download. just redirect.
                     // not set status header here because it is already in redirect function.
-                    wp_safe_redirect($downloadRow->download_url);
+                    // phpcs:ignore
+                    wp_redirect($downloadRow->download_url);
                     exit();
                 } else {
                     // if download type is local.
@@ -376,7 +377,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                     // if not redirected.
                     // set cookie and redirect to page with ?redir-set-cookie=1.
                     \RdDownloads\App\Libraries\Cookies::setCookie($cookieName, 'true', time()+60*60*24*1);
-                    wp_safe_redirect(add_query_arg(['redir-set-cookie' => 1]));
+                    // phpcs:ignore
+                    wp_redirect(add_query_arg(['redir-set-cookie' => 1]));
                     exit();
                 }
             } else {
