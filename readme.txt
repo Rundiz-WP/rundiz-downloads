@@ -1,8 +1,8 @@
 === Rundiz Downloads ===
 Contributors: okvee
 Tags: downloads, download, download manager, file hosting, GitHub
-Tested up to: 6.9
-Stable tag: 1.0.15
+Tested up to: 7.0
+Stable tag: 1.0.16
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 4.7.0
@@ -35,6 +35,8 @@ You can change your setting to accept how often of auto update. Every releases a
  * Automatically delete logs older than specific number of days.
  * Localisation support
 
+Tested up to PHP 8.5.
+
 == Installation ==
 1. Upload "rd-downloads" folder to the "/wp-content/plugins/" directory.
 2. Activate the plugin through the "Plugins" menu in WordPress.
@@ -66,6 +68,13 @@ Yes, the plugin's tables will be dropped on uninstall.
 12. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
+= 1.0.16 =
+2025-12-18
+
+* Improve security for default or starter template.
+* Add display none CSS for hide honeypot field.
+* Add HTTP referrer (referer) field to log table.
+
 = 1.0.15 =
 2025-10-14
 
