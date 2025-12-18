@@ -2,23 +2,23 @@
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rundiz Downloads 1.0.14dev-20251012\n"
+"Project-Id-Version: Rundiz Downloads 1.0.16\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rd-downloads\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-10-12T21:17:44+07:00\n"
+"POT-Creation-Date: 2025-12-18T21:44:36+07:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: rd-downloads\n"
 
 #. Plugin Name of the plugin
 #: rd-downloads.php
-#: App/Controllers/Admin/Downloads/Menu.php:63
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:137
-#: App/Controllers/Front/Hooks/Query/GithubAutoUpdatePage/GithubAutoUpdatePage.php:55
+#: App/Controllers/Admin/Downloads/Menu.php:64
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:141
+#: App/Controllers/Front/Hooks/Query/GithubAutoUpdatePage/GithubAutoUpdatePage.php:58
 #: App/Views/admin/Hooks/DashboardWidgets/DownloadStat/displayDownloadStat_v.php:15
 msgid "Rundiz Downloads"
 msgstr ""
@@ -118,8 +118,8 @@ msgid "Client Secret"
 msgstr ""
 
 #: App/config/rd_downloads.php:125
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:146
-#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:5
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:149
+#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:8
 #: App/Views/admin/Downloads/GithubOAuth/subPageDisconnect_v.php:2
 msgid "GitHub OAuth"
 msgstr ""
@@ -344,12 +344,12 @@ msgid "Basic guide"
 msgstr ""
 
 #: App/Controllers/Admin/Downloads/Editing.php:101
-#: App/Controllers/Admin/Downloads/Menu.php:76
+#: App/Controllers/Admin/Downloads/Menu.php:77
 msgid "Add new download"
 msgstr ""
 
 #: App/Controllers/Admin/Downloads/Editing.php:127
-#: App/Controllers/Admin/Downloads/Menu.php:85
+#: App/Controllers/Admin/Downloads/Menu.php:86
 msgid "Edit download"
 msgstr ""
 
@@ -358,115 +358,115 @@ msgstr ""
 msgid "The editing item was not found."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Editing.php:143
+#: App/Controllers/Admin/Downloads/Editing.php:147
 msgid "You do not have permission to edit other's downloads data."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Editing.php:181
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:375
-#: App/Controllers/Admin/Downloads/Logs.php:223
-#: App/Controllers/Admin/Downloads/Management.php:213
+#: App/Controllers/Admin/Downloads/Editing.php:185
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:378
+#: App/Controllers/Admin/Downloads/Logs.php:224
+#: App/Controllers/Admin/Downloads/Management.php:214
 msgid "Are you sure?"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Editing.php:181
+#: App/Controllers/Admin/Downloads/Editing.php:185
 msgid "If the selected file had linked with other downloads then it will show the error message."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Editing.php:181
-#: App/Controllers/Admin/Downloads/Logs.php:223
-#: App/Controllers/Admin/Downloads/Management.php:213
+#: App/Controllers/Admin/Downloads/Editing.php:185
+#: App/Controllers/Admin/Downloads/Logs.php:224
+#: App/Controllers/Admin/Downloads/Management.php:214
 msgid "This can not be un-done."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Editing.php:182
+#: App/Controllers/Admin/Downloads/Editing.php:186
 #: App/Controllers/Admin/Plugins/Upgrader.php:224
 msgid "Dismiss"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:95
-#: App/Controllers/Admin/Downloads/Logs.php:53
-#: App/Controllers/Admin/Downloads/Management.php:66
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:98
+#: App/Controllers/Admin/Downloads/Logs.php:54
+#: App/Controllers/Admin/Downloads/Management.php:67
 msgid "Permissions"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:107
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:110
 msgid "GitHub Webhook"
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:303
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:313
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:306
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:316
 #, php-format
 msgid "Please %1$sgo back%2$s and try again."
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: The link URL, %3$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:311
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:314
 #, php-format
 msgid "%1$s%2$s%3$s."
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:339
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:342
 #, php-format
 msgid "Please %1$sdisconnect from GitHub OAuth%2$s and try again."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:375
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:378
 msgid "You have to sync the secret key with your GitHub repositories again to make the auto update works."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:376
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:379
 msgid "Exists"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:377
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:380
 msgid "Not exists"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:378
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:381
 msgid "Re-generating the secret key, please wait."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:379
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:382
 msgid "Synchronizing, please wait."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Logs.php:64
-#: App/Controllers/Admin/Downloads/Management.php:77
+#: App/Controllers/Admin/Downloads/Logs.php:65
+#: App/Controllers/Admin/Downloads/Management.php:78
 msgid "Admin help"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Logs.php:90
-#: App/Views/admin/Downloads/Logs/pageIndex_v.php:11
+#: App/Controllers/Admin/Downloads/Logs.php:91
+#: App/Views/admin/Downloads/Logs/pageIndex_v.php:13
 msgid "Download logs"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Logs.php:90
+#: App/Controllers/Admin/Downloads/Logs.php:91
 #: App/Models/RdDownloadsListTable.php:377
 msgid "Logs"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Logs.php:223
+#: App/Controllers/Admin/Downloads/Logs.php:224
 msgid "All the logs will be cleared."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Management.php:55
+#: App/Controllers/Admin/Downloads/Management.php:56
 msgid "Shortcodes"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Management.php:213
+#: App/Controllers/Admin/Downloads/Management.php:214
 msgid "The selected files will be deleted. GitHub and any remote files will be remain."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Menu.php:63
-#: App/Views/admin/Downloads/Management/pageIndex_v.php:11
+#: App/Controllers/Admin/Downloads/Menu.php:64
+#: App/Views/admin/Downloads/Management/pageIndex_v.php:13
 msgid "Downloads"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Menu.php:76
-#: App/Views/admin/Downloads/Management/pageIndex_v.php:13
+#: App/Controllers/Admin/Downloads/Menu.php:77
+#: App/Views/admin/Downloads/Management/pageIndex_v.php:15
 msgid "Add New"
 msgstr ""
 
@@ -597,16 +597,16 @@ msgid "Unable to process your request, please reload the page and try again."
 msgstr ""
 
 #. translators: %s: Example GitHub repository URL.
-#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:97
+#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:100
 #, php-format
 msgid "Invalid GitHub repository URL. The correct format should be %s."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:273
+#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:276
 msgid "Unable to update secret key, please reload the page and try again."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:281
+#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:284
 msgid "The secret key was updated successfully."
 msgstr ""
 
@@ -697,22 +697,22 @@ msgid "Donate"
 msgstr ""
 
 #. translators: %1$s: Current PHP version, %2$s: Required PHP version.
-#: App/Controllers/Admin/Plugins/Activation.php:45
+#: App/Controllers/Admin/Plugins/Activation.php:47
 #, php-format
 msgid "You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or contact plugin author for this help.<br><br>Minimum requirement:<br>PHP %2$s"
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Activation.php:49
+#: App/Controllers/Admin/Plugins/Activation.php:51
 msgid "Minimum requirement of PHP version does not meet."
 msgstr ""
 
 #. translators: %1$s: Current WordPress version, %2$s: Required WordPress version.
-#: App/Controllers/Admin/Plugins/Activation.php:57
+#: App/Controllers/Admin/Plugins/Activation.php:59
 #, php-format
 msgid "Your WordPress version does not meet the requirement. (%1$s < %2$s)."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Activation.php:67
+#: App/Controllers/Admin/Plugins/Activation.php:69
 msgid "Unable to network activate, please activate from each site that have to use it only."
 msgstr ""
 
@@ -774,12 +774,12 @@ msgstr ""
 msgid "The manual update is required, please tell administrator to update first."
 msgstr ""
 
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:368
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:394
 msgid "You are not authorized to download the file. Failed to set required cookie."
 msgstr ""
 
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:410
-#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:435
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:437
+#: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:462
 msgid "You are not authorized to download the file. Failed to validate human."
 msgstr ""
 
@@ -794,12 +794,12 @@ msgstr ""
 #. translators: %s Argument name.
 #: App/Libraries/DateTime.php:33
 #: App/Libraries/FileSystem.php:116
-#: App/Libraries/Github.php:99
-#: App/Libraries/Github.php:1158
+#: App/Libraries/Github.php:102
+#: App/Libraries/Github.php:1161
 #: App/Libraries/Semver.php:72
 #: App/Libraries/Semver.php:77
-#: App/Libraries/Url.php:27
-#: App/Libraries/Url.php:89
+#: App/Libraries/Url.php:30
+#: App/Libraries/Url.php:98
 #, php-format
 msgid "The %s must be string."
 msgstr ""
@@ -813,7 +813,7 @@ msgstr ""
 #: App/Models/RdDownloadsListTable.php:231
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:19
 #: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:19
-#: templates/RdDownloadsPage/subUseAntibot_v.php:31
+#: templates/RdDownloadsPage/subUseAntibot_v.php:33
 msgid "Downloads name"
 msgstr ""
 
@@ -828,12 +828,12 @@ msgid "Size"
 msgstr ""
 
 #: App/Libraries/ElementPlaceholders.php:61
-#: templates/RdDownloadsPage/subUseAntibot_v.php:43
+#: templates/RdDownloadsPage/subUseAntibot_v.php:45
 msgid "File name"
 msgstr ""
 
 #: App/Libraries/ElementPlaceholders.php:62
-#: templates/RdDownloadsPage/subUseAntibot_v.php:37
+#: templates/RdDownloadsPage/subUseAntibot_v.php:39
 msgid "File size"
 msgstr ""
 
@@ -856,22 +856,22 @@ msgid "Version"
 msgstr ""
 
 #. translators: %s: Template path.
-#: App/Libraries/Loader.php:198
+#: App/Libraries/Loader.php:201
 #, php-format
 msgid "The template file was not found. (%s)"
 msgstr ""
 
 #. translators: %s: Path to template file to show in error.
-#: App/Libraries/Loader.php:250
+#: App/Libraries/Loader.php:251
 #, php-format
 msgid "The views file was not found (%s)."
 msgstr ""
 
-#: App/Libraries/RundizSettings.php:658
+#: App/Libraries/RundizSettings.php:659
 msgid "Upload"
 msgstr ""
 
-#: App/Libraries/RundizSettings.php:659
+#: App/Libraries/RundizSettings.php:660
 msgid "Remove"
 msgstr ""
 
@@ -931,15 +931,15 @@ msgstr ""
 msgid "Check this."
 msgstr ""
 
-#: App/Models/GitHubOAuthListTable.php:80
+#: App/Models/GitHubOAuthListTable.php:81
 msgid "Repository name"
 msgstr ""
 
-#: App/Models/GitHubOAuthListTable.php:81
+#: App/Models/GitHubOAuthListTable.php:82
 msgid "Archived"
 msgstr ""
 
-#: App/Models/GitHubOAuthListTable.php:82
+#: App/Models/GitHubOAuthListTable.php:83
 msgid "Webhook"
 msgstr ""
 
@@ -1012,42 +1012,46 @@ msgid "User agent"
 msgstr ""
 
 #: App/Models/RdDownloadLogsListTable.php:161
+msgid "Referrer"
+msgstr ""
+
+#: App/Models/RdDownloadLogsListTable.php:162
 #: App/Models/RdDownloadsListTable.php:239
 msgid "Date"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:217
+#: App/Models/RdDownloadLogsListTable.php:219
 #: App/Models/RdDownloadsListTable.php:293
 msgid "All"
 msgstr ""
 
 #. translators: %s: Link to edit user.
-#: App/Models/RdDownloadLogsListTable.php:226
+#: App/Models/RdDownloadLogsListTable.php:228
 #: App/Models/RdDownloadsListTable.php:323
 #, php-format
 msgid "Filtered user: %s"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:229
+#: App/Models/RdDownloadLogsListTable.php:231
 #: App/Models/RdDownloadsListTable.php:326
 msgid "Reset filtered user"
 msgstr ""
 
 #. translators: %s: Link to edit download.
-#: App/Models/RdDownloadLogsListTable.php:237
+#: App/Models/RdDownloadLogsListTable.php:239
 #, php-format
 msgid "Filtered download: %s"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:240
+#: App/Models/RdDownloadLogsListTable.php:242
 msgid "Reset filtered download"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:263
+#: App/Models/RdDownloadLogsListTable.php:265
 msgid "Filter download"
 msgstr ""
 
-#: App/Models/RdDownloadLogsListTable.php:270
+#: App/Models/RdDownloadLogsListTable.php:272
 #: App/Models/RdDownloadsListTable.php:370
 msgid "Filter user"
 msgstr ""
@@ -1276,14 +1280,14 @@ msgstr ""
 
 #. translators: %s: upload_files capability.
 #: App/Views/admin/Downloads/GithubOAuth/helpTab/permission_v.php:7
-#: App/Views/admin/Downloads/Management/helpTab/permission_v.php:8
+#: App/Views/admin/Downloads/Management/helpTab/permission_v.php:13
 #, php-format
 msgid "To manage downloads (including add or edit downloads), user require %s capability."
 msgstr ""
 
 #. translators: %1$s: Open link tag, %2$s: Close link tag.
 #: App/Views/admin/Downloads/GithubOAuth/helpTab/permission_v.php:12
-#: App/Views/admin/Downloads/Management/helpTab/permission_v.php:24
+#: App/Views/admin/Downloads/Management/helpTab/permission_v.php:29
 #, php-format
 msgid "For more information about these capabilities, please continue reading on %1$sWordPress%2$s website."
 msgstr ""
@@ -1304,45 +1308,45 @@ msgstr ""
 msgid "To disable it, you have to go to your repository setting on GitHub and change this setting or use %1$s filter and change value to %2$s (string) and then sync again."
 msgstr ""
 
-#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:23
+#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:26
 msgid "You are not connected with GitHub. To make auto update, auto correct repository URL works you have to connect to GitHub."
 msgstr ""
 
-#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:26
+#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:29
 msgid "Connect with GitHub"
 msgstr ""
 
 #. translators: %s: Link to GitHub user profile page and display GitHub logged in name.
-#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:32
+#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:35
 #, php-format
 msgid "You had connected to GitHub as %s."
 msgstr ""
 
-#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:40
+#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:43
 msgid "Disconnect from GitHub"
 msgstr ""
 
-#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:50
+#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:53
 msgid "Your secret key to use with GitHub auto update"
 msgstr ""
 
-#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:52
+#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:55
 msgid "Show/Hide"
 msgstr ""
 
-#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:53
+#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:56
 msgid "Re-generate secret"
 msgstr ""
 
-#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:54
+#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:57
 msgid "This will be force synchronize secret with your GitHub repositories."
 msgstr ""
 
-#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:54
+#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:57
 msgid "Force sync secret on GitHub."
 msgstr ""
 
-#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:67
+#: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:70
 msgid "The list above was cached. To retreive the latest list, please clear the cache."
 msgstr ""
 
@@ -1398,8 +1402,8 @@ msgstr ""
 msgid "You have to be an %1$s or have %2$s capability to clear the logs."
 msgstr ""
 
-#: App/Views/admin/Downloads/Logs/pageIndex_v.php:34
-#: App/Views/admin/Downloads/Management/pageIndex_v.php:38
+#: App/Views/admin/Downloads/Logs/pageIndex_v.php:45
+#: App/Views/admin/Downloads/Management/pageIndex_v.php:49
 #: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:3
 msgid "Search"
 msgstr ""
@@ -1411,24 +1415,24 @@ msgid "You can filter user's download items by adding the %s query string as nam
 msgstr ""
 
 #. translators: %s: edit_posts capability.
-#: App/Views/admin/Downloads/Management/helpTab/permission_v.php:4
+#: App/Views/admin/Downloads/Management/helpTab/permission_v.php:9
 #, php-format
 msgid "To view downloads, user require %s capability."
 msgstr ""
 
 #. translators: %s: upload_files capability.
-#: App/Views/admin/Downloads/Management/helpTab/permission_v.php:12
+#: App/Views/admin/Downloads/Management/helpTab/permission_v.php:17
 #, php-format
 msgid "To delete an uploaded file, user require %s capability."
 msgstr ""
 
 #. translators: %s: edit_others_posts capability.
-#: App/Views/admin/Downloads/Management/helpTab/permission_v.php:17
+#: App/Views/admin/Downloads/Management/helpTab/permission_v.php:22
 #, php-format
 msgid "Users cannot edit other's download if they don't have %s capability."
 msgstr ""
 
-#: App/Views/admin/Downloads/Management/helpTab/permission_v.php:20
+#: App/Views/admin/Downloads/Management/helpTab/permission_v.php:25
 msgid "Users cannot use bulk action to update GitHub if they don't connect to GitHub OAuth."
 msgstr ""
 
@@ -1508,50 +1512,50 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
-#: templates/RdDownloadsPage/subCheckBannedUA_v.php:18
+#: templates/RdDownloadsPage/subCheckBannedUA_v.php:20
 msgid "Forbidden"
 msgstr ""
 
-#: templates/RdDownloadsPage/subCheckBannedUA_v.php:19
+#: templates/RdDownloadsPage/subCheckBannedUA_v.php:21
 msgid "Your user agent has been blocked by the administrator. Please contact an administrator for your help."
 msgstr ""
 
 #. translators: %s: Current user agent.
-#: templates/RdDownloadsPage/subCheckBannedUA_v.php:23
+#: templates/RdDownloadsPage/subCheckBannedUA_v.php:25
 #, php-format
 msgid "Your user agent: %s."
 msgstr ""
 
 #. translators: %s: Match banned user agent.
-#: templates/RdDownloadsPage/subCheckBannedUA_v.php:29
+#: templates/RdDownloadsPage/subCheckBannedUA_v.php:31
 #, php-format
 msgid "Match banned user agent: %s."
 msgstr ""
 
-#: templates/RdDownloadsPage/subDownloadNotFound_v.php:17
+#: templates/RdDownloadsPage/subDownloadNotFound_v.php:19
 msgid "Not found"
 msgstr ""
 
-#: templates/RdDownloadsPage/subDownloadNotFound_v.php:18
+#: templates/RdDownloadsPage/subDownloadNotFound_v.php:20
 msgid "The download you have requested could not be found, please verify your link again."
 msgstr ""
 
-#: templates/RdDownloadsPage/subUseAntibot_v.php:17
+#: templates/RdDownloadsPage/subUseAntibot_v.php:19
 msgid "Human verification"
 msgstr ""
 
-#: templates/RdDownloadsPage/subUseAntibot_v.php:26
+#: templates/RdDownloadsPage/subUseAntibot_v.php:28
 msgid "Please enter the form below. Sorry for the inconvenient."
 msgstr ""
 
-#: templates/RdDownloadsPage/subUseAntibot_v.php:55
+#: templates/RdDownloadsPage/subUseAntibot_v.php:57
 msgid "Please skip this field."
 msgstr ""
 
-#: templates/RdDownloadsPage/subUseAntibot_v.php:60
+#: templates/RdDownloadsPage/subUseAntibot_v.php:62
 msgid "I'm human."
 msgstr ""
 
-#: templates/RdDownloadsPage/subUseAntibot_v.php:62
+#: templates/RdDownloadsPage/subUseAntibot_v.php:64
 msgid "Continue to download"
 msgstr ""
