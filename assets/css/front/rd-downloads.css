@@ -21,6 +21,11 @@
 }
 
 
+.rd-downloads-d-none {
+    display: none !important;
+}
+
+
 .rd-downloads-button {
     background-color: #FF860B;
     color: #333;
