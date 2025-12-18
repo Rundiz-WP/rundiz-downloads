@@ -56,7 +56,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\AntiBot')) {
          */
         public function setAndGetHoneypotName(array $allowedNames = [])
         {
-            if (session_id() === '') {
+            if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
 
@@ -97,7 +97,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\AntiBot')) {
          */
         public function unsetHoneypotName()
         {
-            if (session_id() === '') {
+            if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
 

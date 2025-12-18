@@ -76,6 +76,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\PluginDbStructure')) {
               dl_status varchar(20) DEFAULT NULL COMMENT 'Download status such as ''success'', ''error'', ''banned''.',
               dl_ip varchar(50) DEFAULT NULL COMMENT 'Downloader IP address.',
               dl_user_agent varchar(255) DEFAULT NULL COMMENT 'Downloader user agent.',
+              dl_referrer text DEFAULT NULL COMMENT 'HTTP referrer.',
               dl_date datetime DEFAULT NULL COMMENT 'Download date/time.',
               dl_date_gmt datetime DEFAULT NULL COMMENT 'Download date/time in GMT.',
               PRIMARY KEY (dl_id),

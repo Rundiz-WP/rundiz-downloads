@@ -37,7 +37,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
             $this->getOptions();
 
             if (session_status() === PHP_SESSION_NONE) {
-                // if no session ID.
+                // if no session.
                 // start the session.
                 session_start();
             }
@@ -149,6 +149,20 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                 return ;
             }
             unset($result);
+
+            if (!isset($_GET['rddownloads_http_referrer']) && isset($_SERVER['HTTP_REFERER'])) {
+                wp_safe_redirect(
+                    add_query_arg(
+                        [
+                            'rddownloads_http_referrer' => rawurlencode(
+                                rawurldecode(
+                                    sanitize_url(wp_unslash($_SERVER['HTTP_REFERER']))
+                                )
+                            ),
+                        ]
+                    )
+                );
+            }// endif; http referrer
 
             if (isset($rd_downloads_options['rdd_use_antibotfield']) && !empty($rd_downloads_options['rdd_use_antibotfield'])) {
                 // if setting was set to use anti bot form field.
@@ -359,14 +373,19 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
          */
         protected function subUseAntibot($download_id)
         {
-            session_start();
+            if (session_status() === PHP_SESSION_NONE) {
+                // if no session.
+                // start the session.
+                session_start();
+            }
+
             $cookieName = 'rddownloads_antibotcookietest';
             $output = [];
 
             // cookie test.
             $validatedCookieTest = false;
             if (!isset($_COOKIE[$cookieName]) || 'true' !== $_COOKIE[$cookieName]) {
-                if (isset($_GET['redir-set-cookie'])) {
+                if (isset($_GET['rddownloads_redir_set_cookie'])) {
                     // if redirected but still not found cookie.
                     // just display banned message.
                     status_header(400);
@@ -375,10 +394,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                     $output['form_result_msg'] = __('You are not authorized to download the file. Failed to set required cookie.', 'rd-downloads');
                 } else {
                     // if not redirected.
-                    // set cookie and redirect to page with ?redir-set-cookie=1.
+                    // set cookie and redirect to page with ?rddownloads_redir_set_cookie=1.
                     \RdDownloads\App\Libraries\Cookies::setCookie($cookieName, 'true', time()+60*60*24*1);
                     // phpcs:ignore
-                    wp_redirect(add_query_arg(['redir-set-cookie' => 1]));
+                    wp_safe_redirect(add_query_arg(['rddownloads_redir_set_cookie' => 1]));
                     exit();
                 }
             } else {

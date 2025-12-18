@@ -46,6 +46,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
         {
             $vars[] = 'rddownloads_subpage';
             $vars[] = 'download_id';
+            $vars[] = 'rddownloads_redir_set_cookie';
+            $vars[] = 'rddownloads_http_referrer';
 
             return $vars;
         }// queryVars

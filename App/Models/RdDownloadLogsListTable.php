@@ -158,6 +158,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
                 'dl_status' => __('Status', 'rd-downloads'),
                 'dl_ip' => __('IP Address', 'rd-downloads'),
                 'dl_user_agent' => __('User agent', 'rd-downloads'),
+                'dl_referrer' => __('Referrer', 'rd-downloads'),
                 'dl_date_gmt' => __('Date', 'rd-downloads'),
             ];
 
@@ -176,6 +177,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
                 'user_id' => ['user_id', false],
                 'dl_ip' => ['dl_ip', false],
                 'dl_user_agent' => ['dl_user_agent', false],
+                'dl_referrer' => ['dl_referrer', false],
                 'dl_date_gmt' => ['dl_date_gmt', false],
             ];
 

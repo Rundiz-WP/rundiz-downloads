@@ -478,6 +478,10 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
                 }
             }
 
+            if (!isset($data['dl_referrer']) && isset($_GET['rddownloads_http_referrer'])) {
+                $data['dl_referrer'] = sanitize_url(wp_unslash($_GET['rddownloads_http_referrer']));
+            }
+
             $prepareData = [];
             $prepareData['user_id'] = get_current_user_id();
             if (strval($prepareData['user_id']) === '0' || empty($prepareData['user_id'])) {

@@ -20,7 +20,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
         /**
          * Get `main_option_name` property from trait which is non-static from any static method.
          *
-         * @return string
+         * @return string Return main option name of this plugin. See `main_option_name` property for more info.
          */
         private static function getMainOptionName()
         {
@@ -34,11 +34,15 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
          */
         public function registerHooks()
         {
+            global $wp_version;
+
             // register uninstall hook. MUST be static method or function.
             register_uninstall_hook(RDDOWNLOADS_FILE, ['\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallation', 'uninstall']);
 
-            if (is_multisite()) {
-                // hook on deleted site. This is required for when plugin was deactivated but not uninstall and site will be delete, it can clean up tables that created on certain sites.
+            if (version_compare($wp_version, '5.1', '>=')) {
+                add_action('wp_delete_site', [$this, 'uninstallDeleteSite']);
+            } else {
+                // Deprecated since 5.1
                 add_action('deleted_blog', [$this, 'uninstallDeleteSite'], 10, 2);
             }
         }// registerHooks
@@ -58,7 +62,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
             // delete options.
             if (is_multisite()) {
                 // this is multi site, delete options in all sites.
-                $blog_ids = $wpdb->get_col('SELECT blog_id FROM '.$wpdb->blogs);
+                $blog_ids = $wpdb->get_col('SELECT blog_id FROM ' . $wpdb->blogs);
                 $original_blog_id = get_current_blog_id();
                 if ($blog_ids) {
                     foreach ($blog_ids as $blog_id) {
@@ -97,13 +101,29 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
          *
          *  This method was called from hook, it must be public and do not call this directly.
          *
-         * @link https://developer.wordpress.org/reference/hooks/deleted_blog/ Reference.
-         * @param integer $blog_id
-         * @param boolean $drop
+         * @link https://developer.wordpress.org/reference/hooks/deleted_blog/ Reference of hook `deleted_blog` which is deprecated in WP 5.1.
+         * @link https://developer.wordpress.org/reference/hooks/wp_delete_site/ Reference of hook `wp_delete_site` for replacement.
+         * @param int|\WP_Site $site_id The site ID or deleted site object on WP 5.1+.
+         * @param bool $drop True if site’s tables should be dropped. Default false.
          */
-        public function uninstallDeleteSite($blog_id, $drop)
+        public function uninstallDeleteSite($site_id, $drop = false)
         {
-            switch_to_blog($blog_id);
+            global $wp_version;
+            if (is_a($site_id,'\WP_Site')) {
+                $site_id_value = $site_id->blog_id;
+                $site_id = -1;
+                $site_id = $site_id_value;
+                unset($site_id_value);
+            }
+
+            switch_to_blog($site_id);
+
+            if (version_compare($wp_version, '5.1', '>=')) {
+                // if WordPress version is 5.1 or newer.
+                // since the certain version is deprecated hook `deleted_blog`. so, the argument `$drop` will be missing on new hook.  
+                // the `$drop` should always be `true` on new version of WP.
+                $drop = true;
+            }
 
             if ($drop) {
                 static::uninstallDropTables(false);
@@ -114,7 +134,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
 
 
         /**
-         * Delete user options values.
+         * Delete user's meta where it contain meta key created by this plugin.
          *
          * This including screen options, user options such as GitHub connect.
          *
@@ -136,7 +156,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
          * Only tables that was created in `RdDownloads\App\Models\PluginDbStructure->get()` method will be drop here.
          *
          * @global \wpdb $wpdb
-         * @param boolean $mainsite Set to true to drop table of this plugin that created for main site. Otherwise it will be drop table with `prefix_sitenumber_` for switched to sub site only (in case multisite enabled).
+         * @param bool $mainsite Set to `true` to drop table of this plugin that created for main site. Otherwise it will be drop table with `prefix_sitenumber_` for switched to sub site only (in case multi-site enabled).
          */
         private static function uninstallDropTables($mainsite = true)
         {

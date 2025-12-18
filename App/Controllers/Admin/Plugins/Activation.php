@@ -19,8 +19,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')
         /**
          * Activate the plugin by admin on WP plugin page.
          * 
-         * @global \wpdb $wpdb WordPress db class.
-         * @param boolean $network_wide for multisite network activate check.
+         * @link https://developer.wordpress.org/reference/functions/register_activation_hook/ The function `register_activation_hook()` reference.
+         * @link https://developer.wordpress.org/reference/hooks/activate_plugin/ The reference about what will be pass to callback of function `register_activation_hook()`.
+         * @global \wpdb $wpdb WordPress DB class.
+         * @param bool $network_wide Whether to enable the plugin for all sites in the network or just the current site. Multisite only. Default false.
          */
         public function activate($network_wide)
         {
@@ -65,32 +67,17 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')
 
             if (is_multisite() && $network_wide) {
                 wp_die(esc_html__('Unable to network activate, please activate from each site that have to use it only.', 'rd-downloads'));
-                exit;
+                exit(1);
             }
 
-            // get wpdb global var.
+            // Get `$wpdb` global var.
             global $wpdb;
             $wpdb->show_errors();
 
-            // add option to site or multisite -----------------------------
-            if (is_multisite()) {
-                // this site is multisite. add/update options, create/alter tables on all sites.
-                $blog_ids = $wpdb->get_col('SELECT blog_id FROM '.$wpdb->blogs);// phpcs:ignore
-                $original_blog_id = get_current_blog_id();
-                if ($blog_ids) {
-                    foreach ($blog_ids as $blog_id) {
-                        switch_to_blog($blog_id);
-                        $this->activateCreateAlterTables();
-                        $this->activateAddUpdateOption();
-                    }
-                }
-                switch_to_blog($original_blog_id);
-                unset($blog_id, $blog_ids, $original_blog_id);
-            } else {
-                // this site is single site. add/update options, create/alter tables on current site.
-                $this->activateCreateAlterTables();
-                $this->activateAddUpdateOption();
-            }
+            // Add option to site or multisite -----------------------------
+            // Due to this plugin did not allowed network wide activate, any activation process must go on per-site only.
+            $this->activateCreateAlterTables();
+            $this->activateAddUpdateOption();
 
             // create folder in upload folder.
             $wp_upload_dir = wp_upload_dir();
@@ -133,35 +120,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')
 
 
         /**
-         * Add/update options and create/alter tables on new site created.
+         * If there is at least one or more table from `RdDownloads\App\Models\PluginDbStructure->get()` method then create or alter using WordPress's `dbDelta()`.
          * 
-         * This method was called from hook, it must be public and do not call this directly.
-         * On site created, it will be add or update options and create or alter tables even this plugin is not activated on the new site or not network activate.
-         * This will be fine because on delete site or plugin, these options and tables will be removed via `Uninstallation` class.
-         * 
-         * @link https://codex.wordpress.org/Plugin_API/Action_Reference/wpmu_new_blog Reference.
-         * @param integer $blog_id
-         * @param integer $user_id
-         * @param string $domain
-         * @param string $path
-         * @param integer $site_id
-         * @param array $meta
-         */
-        public function activateNewSite($blog_id, $user_id, $domain, $path, $site_id, $meta)
-        {
-            switch_to_blog($blog_id);
-
-            $this->activateCreateAlterTables();
-            $this->activateAddUpdateOption();
-
-            restore_current_blog();
-        }// activateNewSite
-
-
-        /**
-         * If there is at least one or more table from `RdDownloads\App\Models\PluginDbStructure->get()` method then create or alter using WP db delta.
-         * 
-         * @global \wpdb $wpdb WordPress db class.
+         * @global \wpdb $wpdb WordPress DB class.
          */
         private function activateCreateAlterTables()
         {
@@ -191,7 +152,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')
                         unset($sql);
 
                         if (function_exists('maybe_convert_table_to_utf8mb4')) {
-                            maybe_convert_table_to_utf8mb4($prefix . $item['tablename']);
+                            //maybe_convert_table_to_utf8mb4($prefix . $item['tablename']);
+                            $this->tempFixMaybeConvertTableToUtf8mb4($prefix . $item['tablename']);
                         }
                         unset($prefix);
                     }
@@ -210,12 +172,71 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')
         {
             // register activate hook
             register_activation_hook(RDDOWNLOADS_FILE, [$this, 'activate']);
-
-            //if (is_multisite()) {
-                // hook on create new site (for multisite installation).
-                //add_action('wpmu_new_blog', [$this, 'activateNewSite'], 10, 6);// comment this line because we don't want it to create table on create new site. just create table on activate plugin on certain site only.
-            //}
         }// registerHooks
+
+
+        /**
+         * Temporary fix of function `maybe_convert_table_to_utf8mb4()`.
+         * 
+         * phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+         * phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching
+         * 
+         * @see maybe_convert_table_to_utf8mb4()
+         * @link https://core.trac.wordpress.org/ticket/60002 Bug tracker
+         * @since 1.0.16
+         * @global \wpdb $wpdb
+         * @param string $table The DB table to fix.
+         * @return bool Return `true` on success, `false` for otherwise.
+         */
+        private function tempFixMaybeConvertTableToUtf8mb4($table)
+        {
+            if (!is_string($table)) {
+                return false;
+            }
+
+            global $wpdb;
+
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+            $results = $wpdb->get_results("SHOW FULL COLUMNS FROM `$table`");
+            if (!$results) {
+                return false;
+            }
+
+            foreach ($results as $column) {
+                if ($column->Collation) {
+                    list( $charset ) = explode('_', $column->Collation);
+                    $charset = strtolower($charset);
+                    if ('utf8' !== $charset && 'utf8mb3' !== $charset && 'utf8mb4' !== $charset) {
+                        // Don't upgrade tables that have non-utf8 columns.
+                        return false;
+                    }
+                }
+            }
+
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+            $table_details = $wpdb->get_row("SHOW TABLE STATUS LIKE '$table'");
+            if (!$table_details) {
+                return false;
+            }
+
+            list( $table_charset ) = explode('_', $table_details->Collation);
+            $table_charset = strtolower($table_charset);
+            if ('utf8mb4' === $table_charset) {
+                return true;
+            }
+
+            // custom code that upgrade to best collate. ---------------------------------
+            $table_charset = 'utf8mb4';
+            $collate = 'utf8mb4_unicode_ci';
+            $charset_collate = $wpdb->determine_charset($table_charset, $collate);
+            $table_charset = $charset_collate['charset'];
+            $collate = $charset_collate['collate'];
+            unset($charset_collate);
+            // end custom code that upgrade to best collate. ---------------------------------
+
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.DirectDatabaseQuery.DirectQuery
+            return $wpdb->query("ALTER TABLE $table CONVERT TO CHARACTER SET $table_charset COLLATE $collate");
+        }// tempFixMaybeConvertTableToUtf8mb4
 
 
     }
