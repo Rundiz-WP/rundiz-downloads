@@ -22,7 +22,7 @@ get_header();
     <?php }// endif; ?> 
 </div><!--#main-column-->
 
-<!-- You can copy this template file from <?php echo __FILE__; ?> and put it in your theme to design it yours. For more information please read the readme file at <?php esc_html_e(plugin_dir_path(RDDOWNLOADS_FILE)) . 'templates'; ?> -->
+<!-- You can copy this template file from this plugin folder's templates/RdDownloadsPage and put it in your theme to design it yours. For more information please read the readme file in certain folder. -->
 <?php
 get_footer();
 ?>

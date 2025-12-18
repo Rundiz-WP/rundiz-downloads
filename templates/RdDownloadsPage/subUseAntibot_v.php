@@ -53,7 +53,7 @@ get_header();
             }
             ?> 
         </fieldset>
-        <div class="d-none" aria-hidden="true">
+        <div class="rd-downloads-d-none d-none" aria-hidden="true">
             <label for="<?php esc_attr_e($honeypotName); ?>"><?php esc_html_e('Please skip this field.', 'rd-downloads'); ?></label>
             <input id="<?php esc_attr_e($honeypotName); ?>" type="text" name="<?php esc_attr_e($honeypotName); ?>">
         </div>
@@ -66,7 +66,7 @@ get_header();
     <?php } ?>
 </div><!--#main-column-->
 
-<!-- You can copy this template file from <?php echo __FILE__; ?> and put it in your theme to design it yours. For more information please read the readme file at <?php esc_html_e(plugin_dir_path(RDDOWNLOADS_FILE)) . 'templates'; ?> -->
+<!-- You can copy this template file from this plugin folder's templates/RdDownloadsPage and put it in your theme to design it yours. For more information please read the readme file in certain folder -->
 <?php
 get_footer();
 ?>
