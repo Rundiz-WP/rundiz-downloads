@@ -36,12 +36,16 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Loader')) {
                     $this_file_classname = '\\RdDownloads' . str_replace([$this_plugin_dir, '.php', '/'], ['', '', '\\'], $file);
                     if (class_exists($this_file_classname)) {
                         $TestClass = new \ReflectionClass($this_file_classname);
-                        if (!$TestClass->isAbstract() && !$TestClass->isTrait()) {
-                            $ControllerClass = new $this_file_classname();
-                            if (method_exists($ControllerClass, 'registerHooks')) {
+                        if (
+                            !$TestClass->isAbstract() && 
+                            !$TestClass->isTrait() && 
+                            $TestClass->implementsInterface('\\RdDownloads\\App\\Controllers\\ControllerInterface')
+                        ) {
+                            if ($TestClass->hasMethod('registerHooks')) {
+                                $ControllerClass = new $this_file_classname();
                                 $ControllerClass->registerHooks();
+                                unset($ControllerClass);
                             }
-                            unset($ControllerClass);
                         }
                         unset($TestClass);
                     }
