@@ -1,45 +1,35 @@
 <?php
 /**
- * Plugin Name: Rundiz Downloads
- * Plugin URI: https://rundiz.com/?p=319
- * Description: Download manager for WordPress that support GitHub auto update.
- * Version: 1.0.18dev-20260325
- * Requires at least: 4.7.0
- * Requires PHP: 5.5
- * Author: Vee Winch
- * Author URI: https://rundiz.com
- * License: MIT
- * License URI: https://opensource.org/licenses/MIT
- * Text Domain: rundiz-downloads
- * Domain Path: /App/languages/
- *
- * @package rundiz-downloads
+ * Backwards compatibility loader for rundiz-downloads.
+ * This file is only for users upgrading from the old main file name.
+ * It will run once and then never again.
+ * 
+ * @todo[rundiz] delete this file after v1.2+
  */
 
 
-// define this plugin main file path.
-if (!defined('RUNDIZDOWNLOADS_FILE')) {
-    define('RUNDIZDOWNLOADS_FILE', __FILE__);
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
 }
 
 
-if (!defined('RUNDIZDOWNLOADS_VERSION')) {
-    $rundiz_downloads_pluginData = (function_exists('get_file_data') ? get_file_data(__FILE__, ['Version' => 'Version']) : null);
-    // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-    $rundiz_downloads_pluginVersion = (isset($rundiz_downloads_pluginData['Version']) ? $rundiz_downloads_pluginData['Version'] : date('Ym'));
-    unset($rundiz_downloads_pluginData);
+$rundiz_downloads_old_file = 'rd-downloads.php';
+$rundiz_downloads_new_file = 'rundiz-downloads.php';
 
-    define('RUNDIZDOWNLOADS_VERSION', $rundiz_downloads_pluginVersion);
+// Update active_plugins option so WP uses the new file going forward.
+$rundiz_downloads_active_plugins = (array) get_option( 'active_plugins', array() );
 
-    unset($rundiz_downloads_pluginVersion);
+$rundiz_downloads_old_path = plugin_basename( __DIR__ . '/' . $rundiz_downloads_old_file );
+$rundiz_downloads_active_plugins = array_diff( $rundiz_downloads_active_plugins, array( $rundiz_downloads_old_path ) );
+
+$rundiz_downloads_new_path = plugin_basename( __DIR__ . '/' . $rundiz_downloads_new_file );
+if ( ! in_array( $rundiz_downloads_new_path, $rundiz_downloads_active_plugins ) ) {
+    $rundiz_downloads_active_plugins[] = $rundiz_downloads_new_path;
+    // Load the real plugin immediately so there's no gap.
+    include_once __DIR__ . '/' . $rundiz_downloads_new_file;
 }
 
+update_option( 'active_plugins', $rundiz_downloads_active_plugins );
 
-// include this plugin's autoload.
-require __DIR__ . '/autoload.php';
-
-
-// initialize plugin app main class.
-$rundiz_downloads_App = new \RundizDownloads\App\App();
-$rundiz_downloads_App->run();
-unset($rundiz_downloads_App);
+unset($rundiz_downloads_active_plugins, $rundiz_downloads_new_file, $rundiz_downloads_new_path);
+unset($rundiz_downloads_old_file, $rundiz_downloads_old_path);
