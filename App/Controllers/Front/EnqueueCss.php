@@ -19,7 +19,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\EnqueueCss')) {
         public function enqueueStyles()
         {
             wp_enqueue_style('rundiz-downloads-font-awesome5');
-            wp_enqueue_style('rundiz-downloads-front-css', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/front/rd-downloads.min.css', [], RUNDIZDOWNLOADS_VERSION);
+            wp_enqueue_style('rundiz-downloads-front-css', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/front/rundiz-downloads.min.css', [], RUNDIZDOWNLOADS_VERSION);
         }// enqueueStyles
 
 
