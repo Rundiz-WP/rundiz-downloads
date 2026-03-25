@@ -210,7 +210,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Manage
                 'rundiz-downloads-manage-form-js',
                 'RdDownloads',
                 [
-                    'nonce' => wp_create_nonce('rd-downloads_ajax-manage-nonce'),
+                    'nonce' => wp_create_nonce('rundiz-downloads_ajax-manage-nonce'),
                     'txtAreYouSureDelete' => __('Are you sure?', 'rundiz-downloads') . "\n" . __('The selected files will be deleted. GitHub and any remote files will be remain.', 'rundiz-downloads') . "\n" . __('This can not be un-done.', 'rundiz-downloads'),
                 ]
             );

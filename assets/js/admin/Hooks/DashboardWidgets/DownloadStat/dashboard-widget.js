@@ -200,7 +200,7 @@ class RdDownloadsDashboardWidget {
 
         $.when(this.ajaxGetTopDownloads())
         .then(function(response) {
-            let listTemplate = wp.template('rd-downloads-list-top-item');
+            let listTemplate = wp.template('rundiz-downloads-list-top-item');
 
             if (typeof(response) !== 'undefined' && typeof(response.total) !== 'undefined' && response.total <= 0) {
                 $('#rundiz-downloads_dashboard-widget_top-results-text').html(RdDownloads.txtNoTopDownload);

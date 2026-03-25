@@ -227,7 +227,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Logs')
                 'RdDownloads',
                 [
                     'menuSlug' => self::MENU_SLUG,
-                    'nonce' => wp_create_nonce('rd-downloads_ajax-manage-nonce'),
+                    'nonce' => wp_create_nonce('rundiz-downloads_ajax-manage-nonce'),
                     'txtAreYouSureDelete' => __('Are you sure?', 'rundiz-downloads') . "\n" . __('All the logs will be cleared.', 'rundiz-downloads') . "\n" . __('This can not be un-done.', 'rundiz-downloads'),
                 ]
             );

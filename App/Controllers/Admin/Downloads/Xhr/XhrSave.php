@@ -241,7 +241,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
          */
         public function saveData()
         {
-            $this->commonAccessCheck(['post'], ['rd-downloads-ajax-saving-nonce', 'security']);
+            $this->commonAccessCheck(['post'], ['rundiz-downloads-ajax-saving-nonce', 'security']);
 
             if (!current_user_can('upload_files')) {
                 $output['form_result_class'] = 'notice-error';

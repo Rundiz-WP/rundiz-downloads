@@ -87,7 +87,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
                     'rundiz-downloads-tinymce-ajax',
                     'RdDownloads',
                     [
-                        'nonce' => wp_create_nonce('rd-downloads_editor-ajax-nonce'),
+                        'nonce' => wp_create_nonce('rundiz-downloads_editor-ajax-nonce'),
                         'customDialogContent' => $dialogContent,
                         'txtAddADownload' => __('Add a download', 'rundiz-downloads'),
                         'txtAnyRemoteFile' => __('Any remote file', 'rundiz-downloads'),

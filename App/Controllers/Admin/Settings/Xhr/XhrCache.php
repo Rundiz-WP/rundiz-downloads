@@ -18,7 +18,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings\\Xhr\\Xh
          */
         public function clearCache()
         {
-            $this->commonAccessCheck(['post'], ['rd-downloads-settings_ajax-settings-nonce', 'security']);
+            $this->commonAccessCheck(['post'], ['rundiz-downloads-settings_ajax-settings-nonce', 'security']);
 
             $SimpleCache = new \RundizDownloads\App\Libraries\Cache();
             $result = $SimpleCache->getInstance()->clear();

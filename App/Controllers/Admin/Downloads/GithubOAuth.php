@@ -62,7 +62,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Github
         /**
          * @var string WordPress nonce action name. Do not change this if possible.
          */
-        protected $nonceAction = 'rd-downloads_github-api-nonce';
+        protected $nonceAction = 'rundiz-downloads_github-api-nonce';
 
 
         /**

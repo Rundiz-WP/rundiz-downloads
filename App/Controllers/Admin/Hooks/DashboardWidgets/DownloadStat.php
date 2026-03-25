@@ -32,7 +32,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\DashboardW
                 'rundiz-downloads-dashboard-widget-js',
                 'RdDownloads',
                 [
-                    'nonce' => wp_create_nonce('rd-downloads_dashboard-widget_nonce'),
+                    'nonce' => wp_create_nonce('rundiz-downloads_dashboard-widget-nonce'),
                     'txtGettingData' => __('Getting data, please wait.', 'rundiz-downloads'),
                     'txtNoTopDownload' => __('There are no data.', 'rundiz-downloads'),
                     'txtTotalDownload' => __('Total downloads', 'rundiz-downloads'),

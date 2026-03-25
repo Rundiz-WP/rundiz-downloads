@@ -35,7 +35,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
          */
         public function checkGitHubWebhook()
         {
-            $this->commonAccessCheck(['get'], ['rd-downloads_github-api-nonce', 'security']);
+            $this->commonAccessCheck(['get'], ['rundiz-downloads_github-api-nonce', 'security']);
 
             $output = [];
             $responseStatus = 200;
@@ -73,7 +73,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
          */
         public function getGithubFileData()
         {
-            $this->commonAccessCheck(['get'], ['rd-downloads_ajax-file-browser-nonce', 'security']);
+            $this->commonAccessCheck(['get'], ['rundiz-downloads_ajax-file-browser-nonce', 'security']);
 
             $output = [];
             $responseStatus = 200;
@@ -137,7 +137,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
          */
         public function syncGitHubSecretToAllDownloads()
         {
-            $this->commonAccessCheck(['post'], ['rd-downloads_github-api-nonce', 'security']);
+            $this->commonAccessCheck(['post'], ['rundiz-downloads_github-api-nonce', 'security']);
 
             $output = [];
             $responseStatus = 200;
@@ -249,7 +249,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
          */
         public function updateGitHubSecret()
         {
-            $this->commonAccessCheck(['post'], ['rd-downloads_github-api-nonce', 'security']);
+            $this->commonAccessCheck(['post'], ['rundiz-downloads_github-api-nonce', 'security']);
 
             $output = [];
             $responseStatus = 200;

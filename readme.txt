@@ -76,6 +76,9 @@ Yes, the plugin's tables will be dropped on uninstall.
     So, this plugin have to rename to match its slug or w.org.
 * Rename enqueue handles. Fix incorrect prefix (rd-download).
 * Rename admin menu/sub menu slugs.
+* Rename HTML class, ID. Rename JS console prefix.
+* Rename cache prefix in PHP.
+* Rename nonce, template ID.
 
 = 1.0.17 =
 2025-12-21

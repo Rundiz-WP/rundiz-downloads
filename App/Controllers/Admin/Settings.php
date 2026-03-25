@@ -71,7 +71,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
             }
             unset($hook_suffix);
 
-            //add_options_page(__('Plugin Template read settings value', 'rundiz-downloads'), __('Plugin Template read settings', 'rundiz-downloads'), 'manage_options', 'rd-downloads-read-settings', [$this, 'pluginReadSettingsPage']);
+            //add_options_page(__('Plugin Template read settings value', 'rundiz-downloads'), __('Plugin Template read settings', 'rundiz-downloads'), 'manage_options', 'rundiz-downloads-read-settings', [$this, 'pluginReadSettingsPage']);
         }// pluginSettingsMenu
 
 
@@ -214,7 +214,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
                 'rundiz-downloads-settings-ajax-js',
                 'RdDownloadsSettings',
                 [
-                    'nonce' => wp_create_nonce('rd-downloads-settings_ajax-settings-nonce'),
+                    'nonce' => wp_create_nonce('rundiz-downloads-settings_ajax-settings-nonce'),
                 ]
             );
 

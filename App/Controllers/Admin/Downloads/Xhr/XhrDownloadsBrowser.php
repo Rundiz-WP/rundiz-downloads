@@ -30,7 +30,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
         public function searchDownloads()
         {
             // this was called from classic editor, so it is required at lease "edit_posts" capability.
-            $this->commonAccessCheck(['get'], ['rd-downloads_editor-ajax-nonce', 'security'], 'edit_posts');
+            $this->commonAccessCheck(['get'], ['rundiz-downloads_editor-ajax-nonce', 'security'], 'edit_posts');
 
             if (!current_user_can('edit_posts')) {
                 $output['form_result_class'] = 'notice-error';

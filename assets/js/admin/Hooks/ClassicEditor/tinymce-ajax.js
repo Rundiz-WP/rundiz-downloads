@@ -43,13 +43,13 @@ function rdDownloadsAjaxSearch(searchValue, page = 1) {
             typeof(response.current_page) !== 'undefined' &&
             typeof(response.total_pages) !== 'undefined'
         ) {
-            var Template = wp.template('rd-downloads-search-table-result');
+            var Template = wp.template('rundiz-downloads-search-table-result');
             response.previous_page = ((parseInt(response.current_page) - 1) >= 1 ? (parseInt(response.current_page) - 1) : 1);
             response.next_page = ((parseInt(response.current_page) + 1) <= response.total_pages ? (parseInt(response.current_page) + 1) : response.total_pages);
             console.log(parseInt(response.current_page) + 1);
             $('#rundiz-downloads-search-result').html(Template(response));
 
-            var TemplateResultItem = wp.template('rd-downloads-search-list-item');
+            var TemplateResultItem = wp.template('rundiz-downloads-search-list-item');
             $.each(response.results, function(index, item) {
                 item.size = rdDownloadsHumanFileSize(item.download_size, true);
                 if (item.download_type == '0') {

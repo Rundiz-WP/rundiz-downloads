@@ -23,7 +23,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadS
          */
         public function allDownloadsDailyStat()
         {
-            $this->commonAccessCheck(['get'], ['rd-downloads_dashboard-widget_nonce', 'security']);
+            $this->commonAccessCheck(['get'], ['rundiz-downloads_dashboard-widget-nonce', 'security']);
 
             global $wpdb;
 
@@ -152,7 +152,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadS
          */
         public function topDownloads()
         {
-            $this->commonAccessCheck(['get'], ['rd-downloads_dashboard-widget_nonce', 'security']);
+            $this->commonAccessCheck(['get'], ['rundiz-downloads_dashboard-widget-nonce', 'security']);
 
             global $wpdb;
 

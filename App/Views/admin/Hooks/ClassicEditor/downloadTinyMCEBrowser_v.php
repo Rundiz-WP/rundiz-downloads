@@ -10,7 +10,7 @@
 <div id="rundiz-downloads-search-result"></div>
 
 
-<script type="text/html" id="tmpl-rd-downloads-search-table-result">
+<script type="text/html" id="tmpl-rundiz-downloads-search-table-result">
     <?php esc_html_e('Found total', 'rundiz-downloads'); ?>: {{data.total}}
     <div class="rundiz-downloads-table-responsive">
         <table class="striped rundiz-downloads-search-result-table">
@@ -48,7 +48,7 @@
 </script>
 
 
-<script type="text/html" id="tmpl-rd-downloads-search-list-item">
+<script type="text/html" id="tmpl-rundiz-downloads-search-list-item">
     <tr>
         <td>
             {{data.download_name}}

@@ -28,7 +28,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
          */
         public function browseFiles()
         {
-            $this->commonAccessCheck(['get'], ['rd-downloads_ajax-file-browser-nonce', 'security']);
+            $this->commonAccessCheck(['get'], ['rundiz-downloads_ajax-file-browser-nonce', 'security']);
 
             $output = [];
             $responseStatus = 200;
@@ -180,7 +180,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
          */
         public function deleteFile()
         {
-            $this->commonAccessCheck(['post'], ['rd-downloads_ajax-file-browser-nonce', 'security']);
+            $this->commonAccessCheck(['post'], ['rundiz-downloads_ajax-file-browser-nonce', 'security']);
 
             $output = [];
             $responseStatus = 200;
@@ -316,7 +316,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
          */
         public function getRemoteFileData()
         {
-            $this->commonAccessCheck(['get'], ['rd-downloads_ajax-file-browser-nonce', 'security']);
+            $this->commonAccessCheck(['get'], ['rundiz-downloads_ajax-file-browser-nonce', 'security']);
 
             $output = [];
             $responseStatus = 200;
@@ -415,7 +415,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
          */
         public function uploadFile()
         {
-            $this->commonAccessCheck(['post'], ['rd-downloads_ajax-file-browser-nonce', 'security']);
+            $this->commonAccessCheck(['post'], ['rundiz-downloads_ajax-file-browser-nonce', 'security']);
 
             $output = [];
             $responseStatus = 200;

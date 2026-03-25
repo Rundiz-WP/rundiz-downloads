@@ -180,8 +180,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Editin
                 'rundiz-downloads-edit-form-js',
                 'RdDownloads',
                 [
-                    'nonce' => wp_create_nonce('rd-downloads_ajax-file-browser-nonce'),
-                    'savenonce' => wp_create_nonce('rd-downloads-ajax-saving-nonce'),
+                    'nonce' => wp_create_nonce('rundiz-downloads_ajax-file-browser-nonce'),
+                    'savenonce' => wp_create_nonce('rundiz-downloads-ajax-saving-nonce'),
                     'txtAreYouSureDeleteFileUndone' => __('Are you sure?', 'rundiz-downloads') . "\n" . __('If the selected file had linked with other downloads then it will show the error message.', 'rundiz-downloads') . "\n" . __('This can not be un-done.', 'rundiz-downloads'),
                     'txtDismiss' => __('Dismiss', 'rundiz-downloads'),
                 ]

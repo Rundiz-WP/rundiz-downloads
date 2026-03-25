@@ -18,7 +18,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
          */
         public function bulkActions()
         {
-            $this->commonAccessCheck(['post'], ['rd-downloads_ajax-manage-nonce', 'security']);
+            $this->commonAccessCheck(['post'], ['rundiz-downloads_ajax-manage-nonce', 'security']);
 
             // check the most basic capability (permission).
             if (!current_user_can('upload_files')) {
