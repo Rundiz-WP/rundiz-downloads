@@ -9,14 +9,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-25T21:41:54+07:00\n"
+"POT-Creation-Date: 2026-03-25T23:33:39+07:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: rundiz-downloads\n"
 
 #. Plugin Name of the plugin
-#: rd-downloads.php
-#: App/Controllers/Admin/Downloads/Menu.php:70
+#: rundiz-downloads.php
+#: App/Controllers/Admin/Downloads/Menu.php:82
 #: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:141
 #: App/Controllers/Front/Hooks/Query/GithubAutoUpdatePage/GithubAutoUpdatePage.php:58
 #: App/Views/admin/Hooks/DashboardWidgets/DownloadStat/displayDownloadStat_v.php:15
@@ -24,22 +24,22 @@ msgid "Rundiz Downloads"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: rd-downloads.php
+#: rundiz-downloads.php
 msgid "https://rundiz.com/?p=319"
 msgstr ""
 
 #. Description of the plugin
-#: rd-downloads.php
+#: rundiz-downloads.php
 msgid "Download manager for WordPress that support GitHub auto update."
 msgstr ""
 
 #. Author of the plugin
-#: rd-downloads.php
+#: rundiz-downloads.php
 msgid "Vee Winch"
 msgstr ""
 
 #. Author URI of the plugin
-#: rd-downloads.php
+#: rundiz-downloads.php
 msgid "https://rundiz.com"
 msgstr ""
 
@@ -118,7 +118,7 @@ msgid "Client Secret"
 msgstr ""
 
 #: App/config/rd_downloads.php:125
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:149
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:155
 #: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:8
 #: App/Views/admin/Downloads/GithubOAuth/subPageDisconnect_v.php:2
 msgid "GitHub OAuth"
@@ -344,12 +344,12 @@ msgid "Basic guide"
 msgstr ""
 
 #: App/Controllers/Admin/Downloads/Editing.php:101
-#: App/Controllers/Admin/Downloads/Menu.php:83
+#: App/Controllers/Admin/Downloads/Menu.php:95
 msgid "Add new download"
 msgstr ""
 
 #: App/Controllers/Admin/Downloads/Editing.php:127
-#: App/Controllers/Admin/Downloads/Menu.php:92
+#: App/Controllers/Admin/Downloads/Menu.php:104
 msgid "Edit download"
 msgstr ""
 
@@ -363,8 +363,8 @@ msgid "You do not have permission to edit other's downloads data."
 msgstr ""
 
 #: App/Controllers/Admin/Downloads/Editing.php:185
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:378
-#: App/Controllers/Admin/Downloads/Logs.php:224
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:384
+#: App/Controllers/Admin/Downloads/Logs.php:231
 #: App/Controllers/Admin/Downloads/Management.php:214
 msgid "Are you sure?"
 msgstr ""
@@ -374,81 +374,81 @@ msgid "If the selected file had linked with other downloads then it will show th
 msgstr ""
 
 #: App/Controllers/Admin/Downloads/Editing.php:185
-#: App/Controllers/Admin/Downloads/Logs.php:224
+#: App/Controllers/Admin/Downloads/Logs.php:231
 #: App/Controllers/Admin/Downloads/Management.php:214
 msgid "This can not be un-done."
 msgstr ""
 
 #: App/Controllers/Admin/Downloads/Editing.php:186
-#: App/Controllers/Admin/Plugins/Upgrader.php:224
+#: App/Controllers/Admin/Plugins/Upgrader.php:230
 msgid "Dismiss"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:98
-#: App/Controllers/Admin/Downloads/Logs.php:54
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:104
+#: App/Controllers/Admin/Downloads/Logs.php:60
 #: App/Controllers/Admin/Downloads/Management.php:67
 msgid "Permissions"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:110
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:116
 msgid "GitHub Webhook"
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:306
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:316
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:312
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:322
 #, php-format
 msgid "Please %1$sgo back%2$s and try again."
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: The link URL, %3$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:314
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:320
 #, php-format
 msgid "%1$s%2$s%3$s."
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:342
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:348
 #, php-format
 msgid "Please %1$sdisconnect from GitHub OAuth%2$s and try again."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:378
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:384
 msgid "You have to sync the secret key with your GitHub repositories again to make the auto update works."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:379
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:385
 msgid "Exists"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:380
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:386
 msgid "Not exists"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:381
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:387
 msgid "Re-generating the secret key, please wait."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:382
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:388
 msgid "Synchronizing, please wait."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Logs.php:65
+#: App/Controllers/Admin/Downloads/Logs.php:71
 #: App/Controllers/Admin/Downloads/Management.php:78
 msgid "Admin help"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Logs.php:91
+#: App/Controllers/Admin/Downloads/Logs.php:97
 #: App/Views/admin/Downloads/Logs/pageIndex_v.php:13
 msgid "Download logs"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Logs.php:91
+#: App/Controllers/Admin/Downloads/Logs.php:97
 #: App/Models/RdDownloadsListTable.php:377
 msgid "Logs"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Logs.php:224
+#: App/Controllers/Admin/Downloads/Logs.php:231
 msgid "All the logs will be cleared."
 msgstr ""
 
@@ -460,12 +460,12 @@ msgstr ""
 msgid "The selected files will be deleted. GitHub and any remote files will be remain."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Menu.php:70
+#: App/Controllers/Admin/Downloads/Menu.php:82
 #: App/Views/admin/Downloads/Management/pageIndex_v.php:13
 msgid "Downloads"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Menu.php:83
+#: App/Controllers/Admin/Downloads/Menu.php:95
 #: App/Views/admin/Downloads/Management/pageIndex_v.php:15
 msgid "Add New"
 msgstr ""
@@ -716,61 +716,61 @@ msgstr ""
 msgid "Unable to network activate, please activate from each site that have to use it only."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:32
+#: App/Controllers/Admin/Plugins/Upgrader.php:38
 msgid "Please reload this page and try again."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:57
+#: App/Controllers/Admin/Plugins/Upgrader.php:63
 msgid "An error has been occur, cannot continue manual update. Please contact plugin author."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:74
+#: App/Controllers/Admin/Plugins/Upgrader.php:80
 msgid "Success, please click next to continue update."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:77
+#: App/Controllers/Admin/Plugins/Upgrader.php:83
 msgid "All manual update completed successfully. This page will be no longer available until there is next manual update."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:96
+#: App/Controllers/Admin/Plugins/Upgrader.php:102
 msgid "Unable to run update, there is no update classes to run."
 msgstr ""
 
 #. translators: %1$s: Open link tag, %2$s: Close link tag.
-#: App/Controllers/Admin/Plugins/Upgrader.php:130
+#: App/Controllers/Admin/Plugins/Upgrader.php:136
 #, php-format
 msgid "The Rundiz Downloads is just upgraded and need to be manually update. Please continue to the %1$splugin update page%2$s."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:171
+#: App/Controllers/Admin/Plugins/Upgrader.php:177
 msgid "Rundiz Downloads update"
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:223
+#: App/Controllers/Admin/Plugins/Upgrader.php:229
 msgid "Completed"
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:225
+#: App/Controllers/Admin/Plugins/Upgrader.php:231
 #: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:45
 msgid "Next"
 msgstr ""
 
-#: App/Controllers/Admin/Settings.php:61
+#: App/Controllers/Admin/Settings.php:67
 #: App/Views/admin/settings_v.php:2
 msgid "Downloads Settings"
 msgstr ""
 
-#: App/Controllers/Admin/Settings.php:61
+#: App/Controllers/Admin/Settings.php:67
 msgid "Settings"
 msgstr ""
 
 #. translators: %1$s: Open link tag, %2$s: Close link tag.
-#: App/Controllers/Admin/Settings.php:89
+#: App/Controllers/Admin/Settings.php:95
 #, php-format
 msgid "The manual update is required, please %1$supdate first%2$s."
 msgstr ""
 
-#: App/Controllers/Admin/Settings.php:95
+#: App/Controllers/Admin/Settings.php:101
 msgid "The manual update is required, please tell administrator to update first."
 msgstr ""
 
