@@ -6,7 +6,7 @@ class RdDownloadLogs {
     /**
      * @type {String} Download logs form ID name.
      */
-    #managementFormId = 'rd-download-logs-list-items-form';
+    #managementFormId = 'rundiz-downloads-logs-list-items-form';
 
 
     /**

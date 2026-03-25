@@ -30,7 +30,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
         {
             $WpScripts = wp_scripts();
             if (isset($WpScripts->registered['wp-tinymce'])) {
-                array_push($WpScripts->registered['wp-tinymce']->deps, 'rd-downloads-tinymce-ajax');
+                array_push($WpScripts->registered['wp-tinymce']->deps, 'rundiz-downloads-tinymce-ajax');
             }
         }// modifyTinymceDependencies
 
@@ -82,9 +82,9 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
                 $dialogContent = ob_get_contents();
                 ob_end_clean();
 
-                wp_enqueue_script('rd-downloads-tinymce-ajax', plugins_url('/assets/js/admin/Hooks/ClassicEditor/tinymce-ajax.js', RUNDIZDOWNLOADS_FILE), ['jquery', 'rd-downloads-common-functions', 'wp-util'], RUNDIZDOWNLOADS_VERSION, true);
+                wp_enqueue_script('rundiz-downloads-tinymce-ajax', plugins_url('/assets/js/admin/Hooks/ClassicEditor/tinymce-ajax.js', RUNDIZDOWNLOADS_FILE), ['jquery', 'rundiz-downloads-common-functions-js', 'wp-util'], RUNDIZDOWNLOADS_VERSION, true);
                 wp_localize_script(
-                    'rd-downloads-tinymce-ajax',
+                    'rundiz-downloads-tinymce-ajax',
                     'RdDownloads',
                     [
                         'nonce' => wp_create_nonce('rd-downloads_editor-ajax-nonce'),
@@ -109,14 +109,14 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
         public function registerStyles($hook)
         {
             if ('post.php' === $hook || 'post-new.php' === $hook) {
-                if (!wp_script_is('rd-downloads-font-awesome5', 'registered')) {
+                if (!wp_script_is('rundiz-downloads-font-awesome5', 'registered')) {
                     $StylesScripts = new \RundizDownloads\App\Libraries\StylesAndScripts();
                     $StylesScripts->registerStylesAndScripts();
                     unset($StylesScripts);
                 }
-                wp_enqueue_style('rd-downloads-font-awesome5');
-                wp_enqueue_style('rd-downloads-tinymce-font-awesome5', plugin_dir_url(RUNDIZDOWNLOADS_FILE).'assets/css/admin/Hooks/ClassicEditor/tinymce-font-awesome5.css', [], RUNDIZDOWNLOADS_VERSION);
-                wp_enqueue_style('rd-downloads-tinymce-custom-dialog', plugin_dir_url(RUNDIZDOWNLOADS_FILE).'assets/css/admin/Hooks/ClassicEditor/tinymce-custom-dialog.css', [], RUNDIZDOWNLOADS_VERSION);
+                wp_enqueue_style('rundiz-downloads-font-awesome5');
+                wp_enqueue_style('rundiz-downloads-tinymce-font-awesome5', plugin_dir_url(RUNDIZDOWNLOADS_FILE).'assets/css/admin/Hooks/ClassicEditor/tinymce-font-awesome5.css', [], RUNDIZDOWNLOADS_VERSION);
+                wp_enqueue_style('rundiz-downloads-tinymce-custom-dialog', plugin_dir_url(RUNDIZDOWNLOADS_FILE).'assets/css/admin/Hooks/ClassicEditor/tinymce-custom-dialog.css', [], RUNDIZDOWNLOADS_VERSION);
             }
         }// registerStyles
 

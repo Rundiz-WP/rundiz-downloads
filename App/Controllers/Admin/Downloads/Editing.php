@@ -43,7 +43,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Editin
             $content = ob_get_contents();
             unset($output);
             $screen->add_help_tab([
-                'id' => 'rd-downloads-editing-helptab-1',
+                'id' => 'rundiz-downloads-editing-helptab-1',
                 'title' => __('Basic guide', 'rundiz-downloads'),
                 'content' => $content,
             ]);
@@ -55,7 +55,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Editin
             $Loader->loadView('admin/Downloads/Editing/helpTab/tab2_v', $output);
             $content = ob_get_contents();
             $screen->add_help_tab([
-                'id' => 'rd-downloads-editing-helptab-2',
+                'id' => 'rundiz-downloads-editing-helptab-2',
                 'title' => __('Force download', 'rundiz-downloads'),
                 'content' => $content,
             ]);
@@ -175,9 +175,9 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Editin
          */
         public function registerScripts()
         {
-            wp_enqueue_script('rd-downloads-edit-form', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/admin/Downloads/Management/pageEdit.js', ['jquery', 'wp-util', 'rd-downloads-common-functions'], RUNDIZDOWNLOADS_VERSION, true);
+            wp_enqueue_script('rundiz-downloads-edit-form-js', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/admin/Downloads/Management/pageEdit.js', ['jquery', 'wp-util', 'rundiz-downloads-common-functions-js'], RUNDIZDOWNLOADS_VERSION, true);
             wp_localize_script(
-                'rd-downloads-edit-form',
+                'rundiz-downloads-edit-form-js',
                 'RdDownloads',
                 [
                     'nonce' => wp_create_nonce('rd-downloads_ajax-file-browser-nonce'),
@@ -194,9 +194,9 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Editin
          */
         public function registerStyles()
         {
-            wp_enqueue_style('rd-downloads-font-awesome5');
+            wp_enqueue_style('rundiz-downloads-font-awesome5');
 
-            wp_enqueue_style('rd-downloads-edit-form', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/admin/Downloads/Management/pageEdit.css', [], RUNDIZDOWNLOADS_VERSION);
+            wp_enqueue_style('rundiz-downloads-edit-form-css', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/admin/Downloads/Management/pageEdit.css', [], RUNDIZDOWNLOADS_VERSION);
         }// registerStyles
 
 

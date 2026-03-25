@@ -24,12 +24,12 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\DashboardW
                 [$this, 'displayDownloadStat']
             );
 
-            wp_enqueue_style('rd-downloads-dashboard-widget', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/admin/Hooks/DashboardWidgets/DownloadStat/dashboard-widget.css', ['rd-downloads-font-awesome5'], RUNDIZDOWNLOADS_VERSION);
+            wp_enqueue_style('rundiz-downloads-dashboard-widget-css', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/admin/Hooks/DashboardWidgets/DownloadStat/dashboard-widget.css', ['rundiz-downloads-font-awesome5'], RUNDIZDOWNLOADS_VERSION);
 
-            wp_enqueue_script('rd-downloads-chartjs', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/vendor/Chart.bundle.min.js', [], '2.7.3', true);
-            wp_enqueue_script('rd-downloads-dashboard-widget', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/admin/Hooks/DashboardWidgets/DownloadStat/dashboard-widget.js', ['jquery', 'rd-downloads-chartjs', 'wp-util'], RUNDIZDOWNLOADS_VERSION, true);
+            wp_enqueue_script('rundiz-downloads-chart-js', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/vendor/Chart.bundle.min.js', [], '2.7.3', true);
+            wp_enqueue_script('rundiz-downloads-dashboard-widget-js', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/admin/Hooks/DashboardWidgets/DownloadStat/dashboard-widget.js', ['jquery', 'rundiz-downloads-chart-js', 'wp-util'], RUNDIZDOWNLOADS_VERSION, true);
             wp_localize_script(
-                'rd-downloads-dashboard-widget',
+                'rundiz-downloads-dashboard-widget-js',
                 'RdDownloads',
                 [
                     'nonce' => wp_create_nonce('rd-downloads_dashboard-widget_nonce'),

@@ -340,7 +340,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
          */
         public function single_row($item)
         {
-            echo '<tr class="rd-download-logs_dl_id_' . esc_attr($item->dl_id) . '">';
+            echo '<tr class="rundiz-downloads-logs_dl_id_' . esc_attr($item->dl_id) . '">';
             $this->single_row_columns($item);
             echo '</tr>';
         }// single_row

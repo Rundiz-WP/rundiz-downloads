@@ -27,7 +27,7 @@
         $RdDownloadLogsListTable->views();
     }
     ?> 
-    <form id="rd-download-logs-list-items-form" class="rd-downloads-list-items-form" method="get">
+    <form id="rundiz-downloads-logs-list-items-form" class="rd-downloads-list-items-form" method="get">
         <input type="hidden" name="page" value="<?php echo (isset($_REQUEST['page']) ? esc_attr(sanitize_text_field(wp_unslash($_REQUEST['page']))) : ''); ?>">
         <?php 
         if (isset($_REQUEST['filter_user_id']) && !empty(trim($_REQUEST['filter_user_id']))) {// phpcs:ignore 

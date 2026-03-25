@@ -197,15 +197,15 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
                 return;
             }
 
-            wp_enqueue_style('rd-downloads-font-awesome5');
+            wp_enqueue_style('rundiz-downloads-font-awesome5');
 
-            wp_enqueue_style('rd-downloads-settings-tabs-css');
-            wp_enqueue_script('rd-downloads-settings-tabs-js');
+            wp_enqueue_style('rundiz-downloads-settings-tabs-css');
+            wp_enqueue_script('rundiz-downloads-settings-tabs-js');
 
             // custom ajax for settings page.
-            wp_enqueue_script('rd-downloads-settings-ajax', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/admin/settings/settings-ajax.js', [], RUNDIZDOWNLOADS_VERSION, true);
+            wp_enqueue_script('rundiz-downloads-settings-ajax-js', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/admin/settings/settings-ajax.js', [], RUNDIZDOWNLOADS_VERSION, true);
             wp_localize_script(
-                'rd-downloads-settings-ajax',
+                'rundiz-downloads-settings-ajax-js',
                 'RdDownloadsSettings',
                 [
                     'nonce' => wp_create_nonce('rd-downloads-settings_ajax-settings-nonce'),
@@ -214,9 +214,9 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
 
             // you can remove some or all of the line below if you don't use it. ---------
             // css & js for code editor.
-            wp_enqueue_style('rd-downloads-settings-ace-editor-css');
-            wp_enqueue_script('rd-downloads-ace-editor-js');
-            wp_enqueue_script('rd-downloads-settings-ace-editor-js');
+            wp_enqueue_style('rundiz-downloads-settings-ace-editor-css');
+            wp_enqueue_script('rundiz-downloads-ace-editor-js');
+            wp_enqueue_script('rundiz-downloads-settings-ace-editor-js');
         }// registerScripts
 
 

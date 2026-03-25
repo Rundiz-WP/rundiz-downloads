@@ -214,7 +214,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
         public function registerScripts()
         {
             wp_localize_script(
-                'rd-downloads-settings-manual-update',
+                'rundiz-downloads-settings-manual-update-js',
                 'RdSettingsManualUpdate',
                 [
                     'alreadyRunUpdateKey' => '',
@@ -227,7 +227,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                 ]
             );
 
-            wp_enqueue_script('rd-downloads-settings-manual-update');
+            wp_enqueue_script('rundiz-downloads-settings-manual-update-js');
         }// registerScripts
 
 
@@ -236,7 +236,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
          */
         public function registerStyles()
         {
-            wp_enqueue_style('rd-downloads-font-awesome5');
+            wp_enqueue_style('rundiz-downloads-font-awesome5');
         }// registerStyles
 
 

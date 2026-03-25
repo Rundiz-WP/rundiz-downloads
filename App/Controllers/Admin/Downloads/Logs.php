@@ -215,9 +215,9 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Logs')
                 return;
             }
 
-            wp_enqueue_script('rd-download-logs-list-items', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/admin/Downloads/Logs/pageIndex.js', ['rd-downloads-common-functions'], RUNDIZDOWNLOADS_VERSION, true);
+            wp_enqueue_script('rundiz-downloads-logs-list-items-js', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/admin/Downloads/Logs/pageIndex.js', ['rundiz-downloads-common-functions-js'], RUNDIZDOWNLOADS_VERSION, true);
             wp_localize_script(
-                'rd-download-logs-list-items',
+                'rundiz-downloads-logs-list-items-js',
                 'RdDownloads',
                 [
                     'nonce' => wp_create_nonce('rd-downloads_ajax-manage-nonce'),
