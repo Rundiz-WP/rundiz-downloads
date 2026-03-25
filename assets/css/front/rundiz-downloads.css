@@ -26,6 +26,7 @@
 }
 
 
+.rd-downloads-button,/* for backward compatibility. */
 .rundiz-downloads-button {
     background-color: #FF860B;
     color: #333;
@@ -33,6 +34,11 @@
     text-decoration: none;
     transition: box-shadow .15s ease-in-out;
 }
+.rd-downloads-button:active,
+.rd-downloads-button:focus,
+.rd-downloads-button:hover,
+.rd-downloads-button:visited,
+/* for backward compatibility. */
 .rundiz-downloads-button:active,
 .rundiz-downloads-button:focus,
 .rundiz-downloads-button:hover,
@@ -41,10 +47,15 @@
     color: #333;
     text-decoration: none;
 }
+.rd-downloads-button:active,
+.rd-downloads-button:hover,
+/* for backward compatibility. */
 .rundiz-downloads-button:active,
 .rundiz-downloads-button:hover {
     background-color: #ed7c0b;
 }
+.rd-downloads-button:focus,
+/* for backward compatibility. */
 .rundiz-downloads-button:focus {
     box-shadow: 0 0 0 0.2rem rgba(255, 134, 11, 0.5);
 }
