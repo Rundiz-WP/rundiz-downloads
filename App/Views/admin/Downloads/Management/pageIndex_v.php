@@ -12,7 +12,7 @@
 <div class="wrap">
     <h1 class="wp-heading-inline"><?php esc_html_e('Downloads', 'rundiz-downloads'); ?> 
         <?php if (current_user_can('upload_files')) { ?>
-        <a class="page-title-action" href="<?php echo admin_url('admin.php?page=rd-downloads_add');// phpcs:ignore ?>"><?php esc_html_e('Add New', 'rundiz-downloads'); ?></a>
+        <a class="page-title-action" href="<?php echo admin_url('admin.php?page=' . RundizDownloads\App\Controllers\Admin\Downloads\Menu::SUB_MENU_SLUG_ADD);// phpcs:ignore ?>"><?php esc_html_e('Add New', 'rundiz-downloads'); ?></a>
         <?php }// endif; ?>
     </h1>
 

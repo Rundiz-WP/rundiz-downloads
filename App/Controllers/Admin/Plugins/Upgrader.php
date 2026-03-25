@@ -16,6 +16,12 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
 
 
         /**
+         * @var string The upgrader menu slug. This constant must be public.
+         */
+        const MENU_SLUG = 'rundiz-downloads-manual-update';
+
+
+        /**
          * Ajax manual update.
          */
         public function ajaxManualUpdate()
@@ -122,13 +128,13 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                     // display link or redirect to manual update page. (display link is preferred to prevent bad user experience.)
                     // -------------------------------------------------------------------------------------
                     // display link to manual update page.
-                    if (!isset($_REQUEST['page']) || (isset($_REQUEST['page']) && 'rd-downloads-manual-update' !== $_REQUEST['page'])) {
+                    if (!isset($_REQUEST['page']) || (isset($_REQUEST['page']) && self::MENU_SLUG !== $_REQUEST['page'])) {
                         $manualUpdateNotice = '<div class="notice notice-warning is-dismissible">
                             <p>' . 
                                 sprintf(
                                     /* translators: %1$s: Open link tag, %2$s: Close link tag. */
                                     __('The Rundiz Downloads is just upgraded and need to be manually update. Please continue to the %1$splugin update page%2$s.', 'rundiz-downloads'), 
-                                    '<a href="' . esc_attr(network_admin_url('index.php?page=rd-downloads-manual-update')) . '">', // this link will be auto convert to admin_url if not in multisite installed.
+                                    '<a href="' . esc_attr(network_admin_url('index.php?page=' . self::MENU_SLUG)) . '">', // this link will be auto convert to admin_url if not in multisite installed.
                                     '</a>'
                                 ) . 
                             '</p>
@@ -168,7 +174,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
          */
         public function displayManualUpdateMenu()
         {
-            $hook_suffix = add_dashboard_page(__('Rundiz Downloads update', 'rundiz-downloads'), __('Rundiz Downloads update', 'rundiz-downloads'), 'update_plugins', 'rd-downloads-manual-update', [$this, 'displayManualUpdatePage']);
+            $hook_suffix = add_dashboard_page(__('Rundiz Downloads update', 'rundiz-downloads'), __('Rundiz Downloads update', 'rundiz-downloads'), 'update_plugins', self::MENU_SLUG, [$this, 'displayManualUpdatePage']);
             add_action('admin_print_styles-' . $hook_suffix, [$this, 'registerStyles']);
             add_action('admin_print_scripts-' . $hook_suffix, [$this, 'registerScripts']);
             unset($hook_suffix);

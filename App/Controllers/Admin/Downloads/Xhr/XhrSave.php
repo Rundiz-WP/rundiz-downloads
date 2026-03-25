@@ -308,7 +308,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                 if (false !== $output['insertResult']) {
                     $output['download_id'] = $wpdb->insert_id;
                     $output['saved'] = true;
-                    $output['editUrl'] = admin_url('admin.php?page=rd-downloads_edit&download_id=' . $output['download_id']);
+                    $output['editUrl'] = admin_url('admin.php?page=' . \RundizDownloads\App\Controllers\Admin\Downloads\Menu::SUB_MENU_SLUG_EDIT . '&download_id=' . $output['download_id']);
                     $output['form_result_class'] = 'notice-success';
                     $output['form_result_msg'] = __('Your download was saved successfully.', 'rundiz-downloads');
 

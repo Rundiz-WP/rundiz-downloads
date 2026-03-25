@@ -144,7 +144,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadsListTable')) {
             $output = '<strong>';
 
             if ($this->checkPermissionEdit($item)) {
-                $output .= '<a class="row-title" href="' . esc_url(admin_url('admin.php?page=rd-downloads_edit&amp;download_id=' . $item->download_id)) . '" title="' . esc_attr($item->download_name) . '">';
+                $output .= '<a class="row-title" href="' . esc_url(admin_url('admin.php?page=' . \RundizDownloads\App\Controllers\Admin\Downloads\Menu::SUB_MENU_SLUG_EDIT . '&amp;download_id=' . $item->download_id)) . '" title="' . esc_attr($item->download_name) . '">';
             }
 
             $output .= esc_html(mb_strimwidth($item->download_name, 0, 47, '...'));
@@ -345,7 +345,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadsListTable')) {
             if ($this->checkPermissionEdit($item)) {
                 $actions['edit'] = sprintf(
                     '<a href="%s">%s</a>',
-                    esc_url(admin_url('admin.php?page=rd-downloads_edit&amp;download_id=' . $item->download_id)),
+                    esc_url(admin_url('admin.php?page=' . \RundizDownloads\App\Controllers\Admin\Downloads\Menu::SUB_MENU_SLUG_EDIT . '&amp;download_id=' . $item->download_id)),
                     __('Edit')
                 );
             }
@@ -373,7 +373,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadsListTable')) {
             if (current_user_can('upload_files')) {
                 $actions['viewLogs'] = sprintf(
                     '<a href="%s">%s</a>',
-                    esc_url(admin_url('admin.php?page=rd-downloads_logs&filter_download_id=' . $item->download_id)),
+                    esc_url(admin_url('admin.php?page=' . \RundizDownloads\App\Controllers\Admin\Downloads\Logs::MENU_SLUG . '&filter_download_id=' . $item->download_id)),
                     __('Logs', 'rundiz-downloads')
                 );
             }

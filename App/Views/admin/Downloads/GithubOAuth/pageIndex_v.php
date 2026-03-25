@@ -40,7 +40,7 @@
         <div class="col">
             <?php
             if (isset($responseBody->data->viewer->login)) {
-                echo '<div class="text-right-sm"><a class="button" href="' . esc_url(admin_url('admin.php?page=rd-downloads_github_connect&subpage=disconnect')) . '"><i class="fas fa-sign-out-alt"></i> ' . esc_html__('Disconnect from GitHub', 'rundiz-downloads') . '</a></div>' . PHP_EOL;
+                echo '<div class="text-right-sm"><a class="button" href="' . esc_url(admin_url('admin.php?page=' . \RundizDownloads\App\Controllers\Admin\Downloads\GithubOAuth::MENU_SLUG . '&subpage=disconnect')) . '"><i class="fas fa-sign-out-alt"></i> ' . esc_html__('Disconnect from GitHub', 'rundiz-downloads') . '</a></div>' . PHP_EOL;
             }
             ?>
         </div>

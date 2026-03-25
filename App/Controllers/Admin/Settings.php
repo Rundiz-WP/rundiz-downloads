@@ -17,6 +17,12 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
 
 
         /**
+         * @var string This menu slug. This constant must be public.
+         */
+        const MENU_SLUG = 'rundiz-downloads_settings';
+
+
+        /**
          * @var string|false WordPress page's hook suffix that have got from function `add_[sub]menu_page()`.
          */
         protected $hook_suffix = false;
@@ -58,7 +64,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
          */
         public function pluginSettingsMenu()
         {
-            $hook_suffix = add_submenu_page(Downloads\Menu::MENU_SLUG, __('Downloads Settings', 'rundiz-downloads'), __('Settings', 'rundiz-downloads'), 'manage_options', 'rd-downloads_settings', [$this, 'pluginSettingsPage']);
+            $hook_suffix = add_submenu_page(Downloads\Menu::MENU_SLUG, __('Downloads Settings', 'rundiz-downloads'), __('Settings', 'rundiz-downloads'), 'manage_options', self::MENU_SLUG, [$this, 'pluginSettingsPage']);
             $this->hook_suffix = $hook_suffix;
             if (is_string($hook_suffix)) {
                 add_action('load-' . $hook_suffix, [$this, 'callEnqueueHook']);
@@ -87,7 +93,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
                         sprintf(
                             /* translators: %1$s: Open link tag, %2$s: Close link tag. */
                             esc_html__('The manual update is required, please %1$supdate first%2$s.', 'rundiz-downloads'), 
-                            '<a href="' . esc_attr(network_admin_url('index.php?page=rd-downloads-manual-update')) . '">', 
+                            '<a href="' . esc_attr(network_admin_url('index.php?page=' . Plugins\Upgrader::MENU_SLUG)) . '">', 
                             '</a>'
                         )
                     );

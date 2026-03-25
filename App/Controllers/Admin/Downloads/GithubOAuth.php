@@ -22,6 +22,12 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Github
 
 
         /**
+         * @var This menu slug (sub menu). This constant must be public.
+         */
+        const MENU_SLUG = 'rundiz-downloads_github_connect';
+
+
+        /**
          * @var string|object Contain string of access token, contain object if error, empty string if it was not set.
          * @see \RundizDownloads\App\Libraries\Github::oauthGetAccessToken()
          */
@@ -146,7 +152,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Github
                 !empty($rd_downloads_options['rdd_github_client_id']) &&
                 !empty($rd_downloads_options['rdd_github_client_secret'])
             ) {
-                $hook_suffix = add_submenu_page(Menu::MENU_SLUG, __('GitHub OAuth', 'rundiz-downloads'), __('GitHub OAuth', 'rundiz-downloads'), 'upload_files', 'rd-downloads_github_connect', [$this, 'pageIndex']);
+                $hook_suffix = add_submenu_page(Menu::MENU_SLUG, __('GitHub OAuth', 'rundiz-downloads'), __('GitHub OAuth', 'rundiz-downloads'), 'upload_files', self::MENU_SLUG, [$this, 'pageIndex']);
                 $this->hook_suffix = $hook_suffix;
                 if (is_string($hook_suffix)) {
                     add_action('load-' . $hook_suffix, [$this, 'headerWorks']);
@@ -191,7 +197,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Github
                 wp_die(esc_html__('You do not have permission to access this page.'), '', ['response' => 403]);
             }
 
-            $this->thisPageUrl = admin_url('admin.php?page=rd-downloads_github_connect');
+            $this->thisPageUrl = admin_url('admin.php?page=' . self::MENU_SLUG);
             $this->currentUserId = get_current_user_id();
 
             $subpage = filter_input(INPUT_GET, 'subpage');
@@ -339,7 +345,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Github
                         $output['form_result_class'] = 'notice-error';
                         $output['form_result_msg'] = $prepareResult['responseBody']->message;
                         /* translators: %1$s: Open link, %2$s: Close link. */
-                        $output['form_result_msg'] .= '<br><br>' . sprintf(__('Please %1$sdisconnect from GitHub OAuth%2$s and try again.', 'rundiz-downloads'), '<a href="' . esc_url(admin_url('admin.php?page=rd-downloads_github_connect&subpage=disconnect')) . '">', '</a>');
+                        $output['form_result_msg'] .= '<br><br>' . sprintf(__('Please %1$sdisconnect from GitHub OAuth%2$s and try again.', 'rundiz-downloads'), '<a href="' . esc_url(admin_url('admin.php?page=' . self::MENU_SLUG . '&subpage=disconnect')) . '">', '</a>');
                     }
                 } else {
                     if (is_array($prepareResult)) {

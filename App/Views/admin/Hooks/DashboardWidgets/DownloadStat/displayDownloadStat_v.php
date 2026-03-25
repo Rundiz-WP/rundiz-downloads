@@ -19,7 +19,7 @@
 
 <script type="text/html" id="tmpl-rd-downloads-list-top-item">
     <li>
-        <a href="<?php echo esc_url(admin_url('admin.php?page=rd-downloads_edit&download_id=')); ?>{{{data.download_id}}}">{{{data.download_name}}}</a>
+        <a href="<?php echo esc_url(admin_url('admin.php?page=' . RundizDownloads\App\Controllers\Admin\Downloads\Menu::SUB_MENU_SLUG_EDIT . '&download_id=')); ?>{{{data.download_id}}}">{{{data.download_name}}}</a>
         <span class="rd-downloads_total-downloads">{{{data.download_count}}}</span>
     </li>
 </script>

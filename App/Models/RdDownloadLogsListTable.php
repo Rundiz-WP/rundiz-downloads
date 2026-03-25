@@ -35,7 +35,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
                 case 'download_name':
                     $output = '';
                     if (intval($item->user_id) === get_current_user_id() || (intval($item->user_id) !== get_current_user_id() && current_user_can('edit_others_posts'))) {
-                        $output .= '<a href="' . admin_url('admin.php?page=rd-downloads_edit&download_id=' . $item->download_id) . '">';
+                        $output .= '<a href="' . admin_url('admin.php?page=' . \RundizDownloads\App\Controllers\Admin\Downloads\Menu::SUB_MENU_SLUG_EDIT . '&download_id=' . $item->download_id) . '">';
                     }
                     if (!empty($item->{$column_name})) {
                         $output .= $item->{$column_name};
@@ -236,7 +236,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
                 $options['download_id'] = $filter_download_id;
                 $sqlFiltered = $RdDownloadLogs->get($options);
                 /* translators: %s: Link to edit download. */
-                $views['filtered_download'] = '<strong>' . sprintf(__('Filtered download: %s', 'rundiz-downloads'), '<a href="' . esc_url(admin_url('admin.php?page=rd-downloads_edit&download_id=' . $filter_download_id)) . '" target="editDownloads"> <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>') . '</strong>';
+                $views['filtered_download'] = '<strong>' . sprintf(__('Filtered download: %s', 'rundiz-downloads'), '<a href="' . esc_url(admin_url('admin.php?page=' . \RundizDownloads\App\Controllers\Admin\Downloads\Menu::SUB_MENU_SLUG_EDIT . '&download_id=' . $filter_download_id)) . '" target="editDownloads"> <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>') . '</strong>';
                 unset($class, $options['user_id'], $sqlFiltered, $User);
 
                 $views['reset_filtered_download'] = '<a href="' . esc_url(remove_query_arg('filter_user_id')) . '">' . __('Reset filtered download', 'rundiz-downloads') . '</a>';

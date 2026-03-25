@@ -14,6 +14,12 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Logs')
 
 
         /**
+         * @var string This menu slug. This constant must be public.
+         */
+        const MENU_SLUG = 'rundiz-downloads_logs';
+
+
+        /**
          * @var string|false WordPress page's hook suffix that have got from function `add_[sub]menu_page()`.
          */
         protected $hook_suffix = false;
@@ -88,7 +94,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Logs')
          */
         public function downloadLogsMenu()
         {
-            $hook_suffix = add_submenu_page(Menu::MENU_SLUG, __('Download logs', 'rundiz-downloads'), __('Logs', 'rundiz-downloads'), 'upload_files', 'rd-downloads_logs', [$this, 'pageIndex']);
+            $hook_suffix = add_submenu_page(Menu::MENU_SLUG, __('Download logs', 'rundiz-downloads'), __('Logs', 'rundiz-downloads'), 'upload_files', self::MENU_SLUG, [$this, 'pageIndex']);
             $this->hook_suffix = $hook_suffix;
             if (is_string($hook_suffix)) {
                 add_action('load-' . $hook_suffix, [$this, 'redirectNiceUrl']);

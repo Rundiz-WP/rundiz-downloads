@@ -132,7 +132,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                                                 current_user_can('edit_others_posts')
                                             )
                                         ) {
-                                            $files[$key]['editUrl'] = admin_url('admin.php?page=rd-downloads_edit&download_id=' . $row->download_id);
+                                            $files[$key]['editUrl'] = admin_url('admin.php?page=' . \RundizDownloads\App\Controllers\Admin\Downloads\Menu::SUB_MENU_SLUG_EDIT . '&download_id=' . $row->download_id);
                                         }
                                     }
                                 }
@@ -271,7 +271,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                         $output['form_result_msg'] = sprintf(
                             /* translators: %1$s: Open link tag, %2$s Close link tag. */
                             __('Unable to delete the selected file. The file is already in use. Please %1$sedit%2$s this downloads instead..', 'rundiz-downloads'),
-                            '<a href="' . admin_url('admin.php?page=rd-downloads_edit&download_id=' . $itemRow->download_id) . '">',
+                            '<a href="' . admin_url('admin.php?page=' . \RundizDownloads\App\Controllers\Admin\Downloads\Menu::SUB_MENU_SLUG_EDIT . '&download_id=' . $itemRow->download_id) . '">',
                             '</a>'
                         );
                     } else {

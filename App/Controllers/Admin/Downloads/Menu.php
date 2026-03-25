@@ -16,7 +16,19 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')
         /**
          * @var string Rundiz downloads main page slug. This constant must be public.
          */
-        const MENU_SLUG = 'rd-downloads';
+        const MENU_SLUG = 'rundiz-downloads';
+
+
+        /**
+         * @var string Sub menu (add page) slug. This constant must be public.
+         */
+        const SUB_MENU_SLUG_ADD = 'rundiz-downloads_add';
+
+
+        /**
+         * @var string Sub menu (edit page) slug. This constant must be public.
+         */
+        const SUB_MENU_SLUG_EDIT = 'rundiz-downloads_edit';
 
 
         /**
@@ -33,9 +45,9 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')
         {
             global $plugin_page;
 
-            if ('rd-downloads_edit' === $plugin_page) {
+            if (self::SUB_MENU_SLUG_EDIT === $plugin_page) {
                 // if in rundiz downloads/edit page.
-                // modify $plugin_page as parent menu ('rd-downloads');
+                // modify $plugin_page as parent menu ('rundiz-downloads');
                 // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
                 $plugin_page = self::MENU_SLUG;
             }
@@ -80,7 +92,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')
             // editing pages ---------------------------------------------------------------------------------------------------
             // add page.
             $Editing = new Editing();
-            $hook_suffix = add_submenu_page(self::MENU_SLUG, __('Add new download', 'rundiz-downloads'), __('Add New', 'rundiz-downloads'), 'upload_files', 'rd-downloads_add', [$Editing, 'pageAdd']);
+            $hook_suffix = add_submenu_page(self::MENU_SLUG, __('Add new download', 'rundiz-downloads'), __('Add New', 'rundiz-downloads'), 'upload_files', self::SUB_MENU_SLUG_ADD, [$Editing, 'pageAdd']);
             if (is_string($hook_suffix)) {
                 add_action('load-' . $hook_suffix, [$Editing, 'adminHelpTab']);
                 add_action('load-' . $hook_suffix, [$Editing, 'callEnqueueHook']);
@@ -88,8 +100,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')
             unset($hook_suffix);
 
             // edit page.
-            // set random name to parent slug argument to prevent it displaying in submenu. ( https://stackoverflow.com/a/11820396/128761 )
-            $hook_suffix = add_submenu_page('rd-downloads_NOTEXISTS', __('Edit download', 'rundiz-downloads'), null, 'upload_files', 'rd-downloads_edit', [$Editing, 'pageEdit']);
+            // set random name to `$parent_slug` argument to prevent it displaying in submenu. ( https://stackoverflow.com/a/11820396/128761 )
+            $hook_suffix = add_submenu_page('rundiz-downloads_NOTEXISTS', __('Edit download', 'rundiz-downloads'), null, 'upload_files', self::SUB_MENU_SLUG_EDIT, [$Editing, 'pageEdit']);
             if (is_string($hook_suffix)) {
                 add_action('load-' . $hook_suffix, [$Editing, 'adminHelpTab']);
                 add_action('load-' . $hook_suffix, [$Editing, 'callEnqueueHook']);

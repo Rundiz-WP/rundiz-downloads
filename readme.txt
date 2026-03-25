@@ -74,6 +74,8 @@ Yes, the plugin's tables will be dropped on uninstall.
 * Rename namespace, constants, text domain to match plugin slug.  
     The name `rd-downloads` was used from the beginning of this plugin but wordpress.org plugin system renamed it to `rundiz-downloads` on submit.  
     So, this plugin have to rename to match its slug or w.org.
+* Rename enqueue handles. Fix incorrect prefix (rd-download).
+* Rename admin menu/sub menu slugs.
 
 = 1.0.17 =
 2025-12-21

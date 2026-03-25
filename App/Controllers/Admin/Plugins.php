@@ -33,7 +33,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins')) {
             
             if ($plugin === $plugin_file) {
                 $link = [];
-                $link['settings'] = '<a href="'.  esc_url(get_admin_url(null, 'admin.php?page=rd-downloads_settings')).'">'.__('Settings').'</a>';
+                $link['settings'] = '<a href="'.  esc_url(get_admin_url(null, 'admin.php?page=' . Settings::MENU_SLUG)).'">'.__('Settings').'</a>';
                 $actions = array_merge($link, $actions);
                 unset($link);
             }
