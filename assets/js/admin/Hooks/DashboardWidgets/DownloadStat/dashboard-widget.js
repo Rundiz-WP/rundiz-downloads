@@ -59,10 +59,10 @@ class RdDownloadsDashboardWidget {
     ajaxGetTopDownloads() {
         let $ = jQuery.noConflict();
 
-        let filterScope = $('#rd-downloads_dashboard-widget_top-results-filter-select').val();
+        let filterScope = $('#rundiz-downloads_dashboard-widget_top-results-filter-select').val();
         let formData = 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsDashboardWidgetTopDownloads&scope=' + encodeURIComponent(filterScope);
 
-        $('#rd-downloads_dashboard-widget_top-results-filter-select').prop('disabled', true);
+        $('#rundiz-downloads_dashboard-widget_top-results-filter-select').prop('disabled', true);
 
         return $.ajax({
             'url': ajaxurl,
@@ -94,7 +94,7 @@ class RdDownloadsDashboardWidget {
                 response = {};
             }
 
-            $('#rd-downloads_dashboard-widget_top-results-filter-select').prop('disabled', false);
+            $('#rundiz-downloads_dashboard-widget_top-results-filter-select').prop('disabled', false);
 
             response = undefined;
         });
@@ -114,7 +114,7 @@ class RdDownloadsDashboardWidget {
 
         $.when(this.ajaxGetAllDownloadsDailyStat())
         .then(function(response) {
-            let chartContext = $('#rd-downloads_dashboard-widget_all-downloads-daily-stat')[0].getContext('2d');
+            let chartContext = $('#rundiz-downloads_dashboard-widget_all-downloads-daily-stat')[0].getContext('2d');
 
             let allDlChart = new Chart(chartContext, {
                 type: 'line',
@@ -181,9 +181,9 @@ class RdDownloadsDashboardWidget {
     displayTextGettingDataTopDownloads() {
         let $ = jQuery.noConflict();
 
-        $('.rd-downloads_dashboard-widget_top-results-list').addClass('hide hidden');
+        $('.rundiz-downloads_dashboard-widget_top-results-list').addClass('hide hidden');
 
-        let topDownloadResultsText = $('#rd-downloads_dashboard-widget_top-results-text');
+        let topDownloadResultsText = $('#rundiz-downloads_dashboard-widget_top-results-text');
         topDownloadResultsText.removeClass('hide hidden');
         topDownloadResultsText.html('<i class="fas fa-spinner fa-pulse fontawesome-icon icon-loading"></i> ' + RdDownloads.txtGettingData);
     }// displayTextGettingDataTopDownloads
@@ -203,14 +203,14 @@ class RdDownloadsDashboardWidget {
             let listTemplate = wp.template('rd-downloads-list-top-item');
 
             if (typeof(response) !== 'undefined' && typeof(response.total) !== 'undefined' && response.total <= 0) {
-                $('#rd-downloads_dashboard-widget_top-results-text').html(RdDownloads.txtNoTopDownload);
+                $('#rundiz-downloads_dashboard-widget_top-results-text').html(RdDownloads.txtNoTopDownload);
             } else if (typeof(response) !== 'undefined' && typeof(response.results) !== 'undefined') {
-                $('#rd-downloads_dashboard-widget_top-results-text').html('');
-                $('#rd-downloads_dashboard-widget_top-results-text').addClass('hide hidden');
-                $('#rd-downloads_dashboard-widget_top-results-list').html('');
-                $('#rd-downloads_dashboard-widget_top-results-list').removeClass('hide hidden');
+                $('#rundiz-downloads_dashboard-widget_top-results-text').html('');
+                $('#rundiz-downloads_dashboard-widget_top-results-text').addClass('hide hidden');
+                $('#rundiz-downloads_dashboard-widget_top-results-list').html('');
+                $('#rundiz-downloads_dashboard-widget_top-results-list').removeClass('hide hidden');
                 $.each(response.results, function(index, item) {
-                    $('#rd-downloads_dashboard-widget_top-results-list').append(listTemplate(item));
+                    $('#rundiz-downloads_dashboard-widget_top-results-list').append(listTemplate(item));
                 });
             }
 
@@ -231,8 +231,8 @@ class RdDownloadsDashboardWidget {
         let deferred = $.Deferred();
         let thisClass = this;
 
-        $('#rd-downloads_dashboard-widget_top-results-filter-select').off('change');
-        $('#rd-downloads_dashboard-widget_top-results-filter-select').on('change', function(e) {
+        $('#rundiz-downloads_dashboard-widget_top-results-filter-select').off('change');
+        $('#rundiz-downloads_dashboard-widget_top-results-filter-select').on('change', function(e) {
             e.preventDefault();
 
             console.log('on change filter scope. getting new data.');

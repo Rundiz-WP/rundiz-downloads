@@ -93,7 +93,7 @@ class RdDownloadLogs {
                 return;
             }
 
-            const formResultPlaceholder = document.querySelector('.rd-downloads-form-result-placeholder');
+            const formResultPlaceholder = document.querySelector('.rundiz-downloads-form-result-placeholder');
             // clear result placeholder.
             if (formResultPlaceholder) {
                 formResultPlaceholder.innerHTML = '';
@@ -125,14 +125,14 @@ class RdDownloadLogs {
                             message = 'Bad Request';
                         }
                     }
-                    console.warn('[rd-downloads]: Response is not JSON:', message);
+                    console.warn('[rundiz-downloads]: Response is not JSON:', message);
                     throw new Error(message); // throw the error to make `.catch()` work due to response must be JSON only.
                 }
 
                 return response;
             })
             .then((response) => {
-                const logsTbody = document.querySelector('.downloads_page_rd-downloads_logs tbody');
+                const logsTbody = document.querySelector('.downloads_page_' + RdDownloads.menuSlug + ' tbody');
                 logsTbody.innerHTML = '';
                 return Promise.resolve(response);
             })

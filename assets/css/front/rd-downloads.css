@@ -3,13 +3,13 @@
  */
 
 
-.rd-downloads-block {
+.rundiz-downloads-block {
     background-color: rgba(0, 0, 0, 0.03);
     overflow: hidden;
     padding: 0.5rem;
     position: relative;
 }
-.rd-downloads-block::before {
+.rundiz-downloads-block::before {
     color: rgba(0, 0, 0, 0.05);
     content: '\f358';
     font-family: "Font Awesome 5 Free";
@@ -21,30 +21,30 @@
 }
 
 
-.rd-downloads-d-none {
+.rundiz-downloads-d-none {
     display: none !important;
 }
 
 
-.rd-downloads-button {
+.rundiz-downloads-button {
     background-color: #FF860B;
     color: #333;
     padding: 0.3rem 0.7rem;
     text-decoration: none;
     transition: box-shadow .15s ease-in-out;
 }
-.rd-downloads-button:active,
-.rd-downloads-button:focus,
-.rd-downloads-button:hover,
-.rd-downloads-button:visited {
+.rundiz-downloads-button:active,
+.rundiz-downloads-button:focus,
+.rundiz-downloads-button:hover,
+.rundiz-downloads-button:visited {
     background-color: #FF860B;
     color: #333;
     text-decoration: none;
 }
-.rd-downloads-button:active,
-.rd-downloads-button:hover {
+.rundiz-downloads-button:active,
+.rundiz-downloads-button:hover {
     background-color: #ed7c0b;
 }
-.rd-downloads-button:focus {
+.rundiz-downloads-button:focus {
     box-shadow: 0 0 0 0.2rem rgba(255, 134, 11, 0.5);
 }

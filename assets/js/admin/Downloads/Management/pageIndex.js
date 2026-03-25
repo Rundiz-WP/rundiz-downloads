@@ -16,7 +16,7 @@ class RdDownloadsManagement {
     /**
      * @type {String} Download management form ID name.
      */
-    #managementFormId = 'rd-downloads-list-items-form';
+    #managementFormId = 'rundiz-downloads-list-items-form';
 
 
     /**
@@ -97,9 +97,9 @@ class RdDownloadsManagement {
             try {
                 var successful = document.execCommand('copy'); // some browser may not supported
                 var msg = successful ? 'successful' : 'unsuccessful';
-                console.debug('[rd-downloads]: Copying text command was ' + msg);
+                console.debug('[rundiz-downloads]: Copying text command was ' + msg);
             } catch (ex) {
-                console.warn('[rd-downloads]: Copy to clipboard failed.', ex);
+                console.warn('[rundiz-downloads]: Copy to clipboard failed.', ex);
             }
 
             // display that it was copied.
@@ -175,7 +175,7 @@ class RdDownloadsManagement {
                 return;
             }
 
-            const formResultPlaceholder = document.querySelector('.rd-downloads-form-result-placeholder');
+            const formResultPlaceholder = document.querySelector('.rundiz-downloads-form-result-placeholder');
             // clear result placeholder.
             if (formResultPlaceholder) {
                 formResultPlaceholder.innerHTML = '';
@@ -212,7 +212,7 @@ class RdDownloadsManagement {
                             message = 'Bad Request';
                         }
                     }
-                    console.warn('[rd-downloads]: Response is not JSON:', message);
+                    console.warn('[rundiz-downloads]: Response is not JSON:', message);
                     throw new Error(message); // throw the error to make `.catch()` work due to response must be JSON only.
                 }
 
@@ -226,7 +226,7 @@ class RdDownloadsManagement {
                 ) {
                     if (typeof(response.additionalResults.deleted_download_ids) === 'object') {
                         for (const download_id of response.additionalResults.deleted_download_ids) {
-                            document.querySelector('.rd-downloads_download_id_' + download_id)?.remove();
+                            document.querySelector('.rundiz-downloads_download_id_' + download_id)?.remove();
                         }
                     }
                 }

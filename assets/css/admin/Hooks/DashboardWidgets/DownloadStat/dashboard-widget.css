@@ -3,61 +3,61 @@
  */
 
 
-.rd-downloads_dashboard-widget .hidden {
+.rundiz-downloads_dashboard-widget .hidden {
     display: none;
 }
 
 
-.rd-downloads_dashboard-widget_-top-results {
+.rundiz-downloads_dashboard-widget_-top-results {
     background-color: rgba(0, 0, 0, 0.026);
     margin: 0 -12px;
 }
 
 
-.rd-downloads_dashboard-widget_top-results-filter {
+.rundiz-downloads_dashboard-widget_top-results-filter {
     display: flex;
     padding-top: 12px;
     text-align: left;
 }
-.rd-downloads_dashboard-widget_top-results-filter::after {
+.rundiz-downloads_dashboard-widget_top-results-filter::after {
     clear: both;
     content: '';
     display: table;
 }
-.rd-downloads_dashboard-widget_top-results-filter .rd-downloads_dashboard-widget_credit {
+.rundiz-downloads_dashboard-widget_top-results-filter .rundiz-downloads_dashboard-widget_credit {
     align-self: flex-end;
     font-size: 0.85em;
     margin-left: auto;
 }
 
 
-.rd-downloads_dashboard-widget_top-results-list {
+.rundiz-downloads_dashboard-widget_top-results-list {
     list-style-position: inside;
 }
-.rd-downloads_dashboard-widget_top-results-list li {
+.rundiz-downloads_dashboard-widget_top-results-list li {
     border-bottom: 1px solid #eee;
     margin-bottom: 0;
     margin-top: 0;
     padding: 0.3em 1.2em;
     position: relative;
 }
-.rd-downloads_dashboard-widget_top-results-list li::after {
+.rundiz-downloads_dashboard-widget_top-results-list li::after {
     clear: both;
 }
-.rd-downloads_dashboard-widget_top-results-list li:first-child {
+.rundiz-downloads_dashboard-widget_top-results-list li:first-child {
     border-top: 1px solid #eee;
 }
-.rd-downloads_dashboard-widget_top-results-list li .rd-downloads_total-downloads {
+.rundiz-downloads_dashboard-widget_top-results-list li .rundiz-downloads_total-downloads {
     float: right;
 }
 
 
-.rd-downloads_dashboard-widget_top-results-text {
+.rundiz-downloads_dashboard-widget_top-results-text {
     border-bottom: 1px solid #eee;
     border-top: 1px solid #eee;
     padding: 12px;
     position: relative;
 }
-.rd-downloads_dashboard-widget_top-results-text .icon-loading {
+.rundiz-downloads_dashboard-widget_top-results-text .icon-loading {
     font-size: 1.13em;
 }

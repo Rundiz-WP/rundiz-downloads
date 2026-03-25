@@ -26,7 +26,7 @@ get_header();
 
     <?php if (!isset($disableAntibotForm) || (isset($disableAntibotForm) && false === $disableAntibotForm)) { ?>
     <p><?php esc_html_e('Please enter the form below. Sorry for the inconvenient.', 'rundiz-downloads'); ?></p>
-    <form id="rd-downloads-antibot-form" method="post">
+    <form id="rundiz-downloads-antibot-form" method="post">
         <fieldset class="border rounded p-2">
             <?php if (isset($downloadRow)) { ?> 
             <div class="mb-2 row">
@@ -53,7 +53,7 @@ get_header();
             }
             ?> 
         </fieldset>
-        <div class="rd-downloads-d-none d-none" aria-hidden="true">
+        <div class="rundiz-downloads-d-none d-none" aria-hidden="true">
             <label for="<?php esc_attr_e($honeypotName); ?>"><?php esc_html_e('Please skip this field.', 'rundiz-downloads'); ?></label>
             <input id="<?php esc_attr_e($honeypotName); ?>" type="text" name="<?php esc_attr_e($honeypotName); ?>">
         </div>
@@ -62,7 +62,7 @@ get_header();
             <label class="form-check-label" for="iamhuman"><?php esc_html_e('I\'m human.', 'rundiz-downloads'); ?></label>
         </div>
         <button type="submit" class="btn btn-primary"><i class="fontawesome-icon icon-download fas fa-download"></i> <?php esc_html_e('Continue to download', 'rundiz-downloads'); ?></button>
-    </form><!--#rd-downloads-antibot-form-->
+    </form><!--#rundiz-downloads-antibot-form-->
     <?php } ?>
 </div><!--#main-column-->
 

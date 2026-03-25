@@ -100,7 +100,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Github
             $content = ob_get_contents();
             ob_end_clean();
             $screen->add_help_tab([
-                'id' => 'rd-downloads-logs-helptab-permission',
+                'id' => 'rundiz-downloads-github-oauth-helptab-permission',
                 'title' => __('Permissions', 'rundiz-downloads'),
                 'content' => $content,
             ]);
@@ -112,7 +112,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Github
                 $content = ob_get_contents();
                 ob_end_clean();
                 $screen->add_help_tab([
-                    'id' => 'rd-downloads-logs-helptab-webhook',
+                    'id' => 'rundiz-downloads-logs-helptab-webhook',
                     'title' => __('GitHub Webhook', 'rundiz-downloads'),
                     'content' => $content,
                 ]);

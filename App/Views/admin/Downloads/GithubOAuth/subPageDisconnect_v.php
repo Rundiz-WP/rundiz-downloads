@@ -1,4 +1,4 @@
-<div class="wrap rd-downloads-page-githuboauth rd-downloads-page-githuboauth-subpage-disconnect">
+<div class="wrap rundiz-downloads-page-githuboauth rundiz-downloads-page-githuboauth-subpage-disconnect">
     <h1 class="wp-heading-inline"><?php esc_html_e('GitHub OAuth', 'rundiz-downloads'); ?></h1>
 
     <?php if (!isset($disconnected) || (isset($disconnected) && false === $disconnected)) { ?>

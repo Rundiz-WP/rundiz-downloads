@@ -33,7 +33,7 @@ class RdDownloadsGitHubOAuth {
             enable = true;
         }
 
-        const thisPage = document.querySelector('.rd-downloads-page-githuboauth');
+        const thisPage = document.querySelector('.rundiz-downloads-page-githuboauth');
         thisPage.querySelectorAll('button, input, select')?.forEach((item) => {
             if (true === enable) {
                 item.disabled = false;
@@ -54,7 +54,7 @@ class RdDownloadsGitHubOAuth {
     #listenClickCheckRepoWebhook() {
         const checkButton = document.querySelector('.rddownloads_githubrepo_webhook_check');
         if (!checkButton) {
-            console.error('[rd-downloads]: Check repo web hook button is not exists.');
+            console.error('[rundiz-downloads]: Check repo web hook button is not exists.');
             return;
         }
 
@@ -71,7 +71,7 @@ class RdDownloadsGitHubOAuth {
             const statusIcon = thisTarget.querySelector('.rddownloads_icon-webhook-status');
             statusIcon.className = '';
             statusIcon.classList.add('rddownloads_icon-webhook-status', 'fas', 'fa-solid', 'fa-spinner', 'fa-pulse', 'fontawesome-icon');
-            const formResultPlaceholder = document.querySelector('.rd-downloads-form-result-placeholder');
+            const formResultPlaceholder = document.querySelector('.rundiz-downloads-form-result-placeholder');
             formResultPlaceholder.innerHTML = '';
 
             const formData = new FormData();
@@ -99,7 +99,7 @@ class RdDownloadsGitHubOAuth {
                             message = 'Bad Request';
                         }
                     }
-                    console.warn('[rd-downloads]: Response is not JSON:', message);
+                    console.warn('[rundiz-downloads]: Response is not JSON:', message);
                     throw new Error(message); // throw the error to make `.catch()` work due to response must be JSON only.
                 }
 
@@ -138,7 +138,7 @@ class RdDownloadsGitHubOAuth {
     #listenClickForceSyncSecret() {
         const forceSyncButton = document.getElementById('rddownloads_forcesync_github_secret');
         if (!forceSyncButton) {
-            console.error('[rd-downloads]: Force sync secret button is not exists.');
+            console.error('[rundiz-downloads]: Force sync secret button is not exists.');
             return;
         }
 
@@ -147,7 +147,7 @@ class RdDownloadsGitHubOAuth {
 
             this.#enableButtons(false);
 
-            const formResultPlaceholder = document.querySelector('.rd-downloads-form-result-placeholder');
+            const formResultPlaceholder = document.querySelector('.rundiz-downloads-form-result-placeholder');
             let formResultWorking = rdDownloadsGetNoticeElement('notice-warning', RdDownloads.txtSyncing);
             formResultPlaceholder.innerHTML = formResultWorking;
             formResultPlaceholder.scrollIntoView({'behavior': 'smooth'});
@@ -175,7 +175,7 @@ class RdDownloadsGitHubOAuth {
                             message = 'Bad Request';
                         }
                     }
-                    console.warn('[rd-downloads]: Response is not JSON:', message);
+                    console.warn('[rundiz-downloads]: Response is not JSON:', message);
                     throw new Error(message); // throw the error to make `.catch()` work due to response must be JSON only.
                 }
 
@@ -212,7 +212,7 @@ class RdDownloadsGitHubOAuth {
     #listenClickRegenerateSecret() {
         const regenerateButton = document.getElementById('rddownloads_regenerate_secret');
         if (!regenerateButton) {
-            console.error('[rd-downloads]: The re-generate button is not exists.');
+            console.error('[rundiz-downloads]: The re-generate button is not exists.');
             return;
         }
 
@@ -225,7 +225,7 @@ class RdDownloadsGitHubOAuth {
             const newSecret = RdDownloads.currentUserId + '_' + this.#randomString();
             const secretField = document.getElementById('rddownloads_githubwebhook_secret');
             if (!secretField) {
-                console.error('[rd-downloads]: There is no secret field.');
+                console.error('[rundiz-downloads]: There is no secret field.');
                 return;
             }
             secretField.value = newSecret;
@@ -234,7 +234,7 @@ class RdDownloadsGitHubOAuth {
 
             // display re-generating message.
             const formResultWorking = rdDownloadsGetNoticeElement('notice-warning', RdDownloads.txtRegenerating);
-            const formResultPlaceholder = document.querySelector('.rd-downloads-form-result-placeholder');
+            const formResultPlaceholder = document.querySelector('.rundiz-downloads-form-result-placeholder');
             formResultPlaceholder.innerHTML = formResultWorking;
             formResultPlaceholder.scrollIntoView({'behavior': 'smooth'});
 
@@ -262,7 +262,7 @@ class RdDownloadsGitHubOAuth {
                             message = 'Bad Request';
                         }
                     }
-                    console.warn('[rd-downloads]: Response is not JSON:', message);
+                    console.warn('[rundiz-downloads]: Response is not JSON:', message);
                     throw new Error(message); // throw the error to make `.catch()` work due to response must be JSON only.
                 }
 
@@ -272,7 +272,7 @@ class RdDownloadsGitHubOAuth {
                 if (typeof(response) === 'object') {
                     if (typeof(response.githubSecret) !== 'undefined') {
                         if (response.githubSecret !== newSecret) {
-                            console.log('[rd-downloads]: JS generated secret: ' + newSecret + ', php generated secret: ' + response.githubSecret);
+                            console.log('[rundiz-downloads]: JS generated secret: ' + newSecret + ', php generated secret: ' + response.githubSecret);
                         }
                         secretField.value = response.githubSecret;
                         secretField.setAttribute('type', 'text');
@@ -316,7 +316,7 @@ class RdDownloadsGitHubOAuth {
         const showHideButton = document.getElementById('rddownloads_showhide_secret');
         const secretField = document.getElementById('rddownloads_githubwebhook_secret');
         if (!showHideButton || !secretField) {
-            console.error('[rd-downloads]: There is no show/hide secret button or no secret field.');
+            console.error('[rundiz-downloads]: There is no show/hide secret button or no secret field.');
             return;
         }
 

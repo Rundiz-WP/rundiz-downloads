@@ -2,18 +2,18 @@
     <tr>
         <th><?php esc_html_e('Search', 'rundiz-downloads'); ?></th>
         <td>
-            <input id="rd-downloads-search-input" class="rd-downloads-input-full" type="text" name="search" autofocus="">
-            <span class="rd-downloads-inside-input-icon fas fa-spinner fa-pulse hidden"></span>
+            <input id="rundiz-downloads-search-input" class="rundiz-downloads-input-full" type="text" name="search" autofocus="">
+            <span class="rundiz-downloads-inside-input-icon fas fa-spinner fa-pulse hidden"></span>
         </td>
     </tr>
 </table>
-<div id="rd-downloads-search-result"></div>
+<div id="rundiz-downloads-search-result"></div>
 
 
 <script type="text/html" id="tmpl-rd-downloads-search-table-result">
     <?php esc_html_e('Found total', 'rundiz-downloads'); ?>: {{data.total}}
-    <div class="rd-downloads-table-responsive">
-        <table class="striped rd-downloads-search-result-table">
+    <div class="rundiz-downloads-table-responsive">
+        <table class="striped rundiz-downloads-search-result-table">
             <thead>
                 <tr>
                     <th class="download_name"><?php esc_html_e('Downloads name', 'rundiz-downloads'); ?></th>
@@ -26,9 +26,9 @@
             <tbody>
             </tbody>
         </table>
-    </div><!--.rd-downloads-table-responsive-->
-    <div class="rd-downloads-ajax-search-paging-buttons">
-        <span class="rd-downloads-current-paging-status">
+    </div><!--.rundiz-downloads-table-responsive-->
+    <div class="rundiz-downloads-ajax-search-paging-buttons">
+        <span class="rundiz-downloads-current-paging-status">
             <?php 
             printf(
                 /* translators: %1$s: Current page, %2$s: Total pages. */
@@ -37,14 +37,14 @@
                 '<span class="total-pages">{{data.total_pages}}</span>'
             ); 
             ?>
-        </span><!--.rd-downloads-current-paging-status-->
+        </span><!--.rundiz-downloads-current-paging-status-->
         <# if (data.current_page > 1) { #>
-        <button class="button rd-downloads-ajax-search-paging-button" onclick="return rdDownloadsAjaxSearch(jQuery('#rd-downloads-search-input').val(), {{data.previous_page}});"><?php esc_html_e('Previous', 'rundiz-downloads'); ?></button>
+        <button class="button rundiz-downloads-ajax-search-paging-button" onclick="return rdDownloadsAjaxSearch(jQuery('#rundiz-downloads-search-input').val(), {{data.previous_page}});"><?php esc_html_e('Previous', 'rundiz-downloads'); ?></button>
         <# } #>
         <#if (data.current_page < data.total_pages) { #>
-        <button class="button rd-downloads-ajax-search-paging-button" onclick="return rdDownloadsAjaxSearch(jQuery('#rd-downloads-search-input').val(), {{data.next_page}});"><?php esc_html_e('Next', 'rundiz-downloads'); ?></button>
+        <button class="button rundiz-downloads-ajax-search-paging-button" onclick="return rdDownloadsAjaxSearch(jQuery('#rundiz-downloads-search-input').val(), {{data.next_page}});"><?php esc_html_e('Next', 'rundiz-downloads'); ?></button>
         <# } #>
-    </div><!--.rd-downloads-ajax-search-paging-buttons-->
+    </div><!--.rundiz-downloads-ajax-search-paging-buttons-->
 </script>
 
 
@@ -52,11 +52,11 @@
     <tr>
         <td>
             {{data.download_name}}
-            <div class="rd-downloads-admin-comment">{{{data.download_admin_comment}}}</div>
+            <div class="rundiz-downloads-admin-comment">{{{data.download_admin_comment}}}</div>
         </td>
         <td>{{data.type}}</td>
         <td>{{data.download_file_name}}</td>
         <td>{{data.size}}</td>
-        <td><button class="button rd-downloads-insert-shortcode-button" data-download_id="{{data.download_id}}" onclick="return rdDownloadsInsertShortCodeButton(this);"><?php esc_html_e('Insert', 'rundiz-downloads'); ?></button></td>
+        <td><button class="button rundiz-downloads-insert-shortcode-button" data-download_id="{{data.download_id}}" onclick="return rdDownloadsInsertShortCodeButton(this);"><?php esc_html_e('Insert', 'rundiz-downloads'); ?></button></td>
     </tr>
 </script>

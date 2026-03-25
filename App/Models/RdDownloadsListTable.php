@@ -163,7 +163,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadsListTable')) {
                     !empty($download_options['opt_download_version'])
                 ) {
                     /* translators: %s: version number. */
-                    $output .= ' <i class="rd-downloads-version" title="' . sprintf(esc_attr__('Version %s', 'rundiz-downloads'), $download_options['opt_download_version']) . '">(' . esc_html($download_options['opt_download_version']) . ')</i>';
+                    $output .= ' <i class="rundiz-downloads-version" title="' . sprintf(esc_attr__('Version %s', 'rundiz-downloads'), $download_options['opt_download_version']) . '">(' . esc_html($download_options['opt_download_version']) . ')</i>';
                 }
                 unset($download_options);
             }
@@ -446,7 +446,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadsListTable')) {
          */
         public function single_row($item)
         {
-            echo '<tr class="rd-downloads_download_id_' . esc_attr($item->download_id) . '">';
+            echo '<tr class="rundiz-downloads_download_id_' . esc_attr($item->download_id) . '">';
             $this->single_row_columns($item);
             echo '</tr>';
         }// single_row

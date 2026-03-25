@@ -52,7 +52,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Manage
             $content = ob_get_contents();
             ob_end_clean();
             $screen->add_help_tab([
-                'id' => 'rd-downloads-listing-helptab-shortcodes',
+                'id' => 'rundiz-downloads-listing-helptab-shortcodes',
                 'title' => __('Shortcodes', 'rundiz-downloads'),
                 'content' => $content,
             ]);
@@ -63,7 +63,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Manage
             $content = ob_get_contents();
             ob_end_clean();
             $screen->add_help_tab([
-                'id' => 'rd-downloads-listing-helptab-permission',
+                'id' => 'rundiz-downloads-listing-helptab-permission',
                 'title' => __('Permissions', 'rundiz-downloads'),
                 'content' => $content,
             ]);
@@ -74,7 +74,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Manage
             $content = ob_get_contents();
             ob_end_clean();
             $screen->add_help_tab([
-                'id' => 'rd-downloads-listing-helptab-adminhelp',
+                'id' => 'rundiz-downloads-listing-helptab-adminhelp',
                 'title' => __('Admin help', 'rundiz-downloads'),
                 'content' => $content,
             ]);

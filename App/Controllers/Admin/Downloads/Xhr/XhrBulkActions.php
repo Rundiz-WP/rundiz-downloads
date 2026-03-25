@@ -248,7 +248,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
 
                     $output['form_result_class'] = 'notice-warning';
                     $output['form_result_msg'] = '<p><strong>' . __('Warning! There are some problem about delete the items, here are the results.', 'rundiz-downloads') . '</strong></p>' .
-                        '<ul class="rd-downloads-ul">' .
+                        '<ul class="rundiz-downloads-ul">' .
                             (count($deleted_download_names) > 0 ? '<li><strong>' . _n('Deleted item', 'Deleted items', count($deleted_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $deleted_download_names) . '</li>' : '') .
                             (count($failed_delete_download_names) > 0 ? '<li><strong>' . _n('Failed to delete item', 'Failed to delete items', count($failed_delete_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $failed_delete_download_names) . '</li>' : '') .
                             (count($failed_remove_githubwebhook) > 0 ? '<li><strong>' . _n('Failed to remove webhook on GitHub', 'Failed to remove webhooks on GitHub', count($failed_remove_githubwebhook), 'rundiz-downloads') . ':</strong> ' . implode(', ', $failed_remove_githubwebhook) . '</li>' : '') .
@@ -421,7 +421,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
 
                     $output['form_result_class'] = 'notice-warning';
                     $output['form_result_msg'] = '<p><strong>' . __('Warning! There are some problem about update the items, here are the results.', 'rundiz-downloads') . '</strong></p>' .
-                        '<ul class="rd-downloads-ul">' .
+                        '<ul class="rundiz-downloads-ul">' .
                             (count($updated_download_names) > 0 ? '<li><strong>' . _n('Updated item', 'Updated items', count($updated_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $updated_download_names) . '</li>' : '') .
                             (count($failed_update_download_names) > 0 ? '<li><strong>' . _n('Failed to update item', 'Failed to update items', count($failed_update_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $failed_update_download_names) . '</li>' : '') .
                             (count($capability_limited_download_names) > 0 ? '<li><strong>' . _n('Capability limited item', 'Capability limited items', count($capability_limited_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $capability_limited_download_names) . '</li>' : '') .
@@ -556,7 +556,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
 
                     $output['form_result_class'] = 'notice-warning';
                     $output['form_result_msg'] = '<p><strong>' . __('Warning! There are some problem about update the items, here are the results.', 'rundiz-downloads') . '</strong></p>' .
-                        '<ul class="rd-downloads-ul">' .
+                        '<ul class="rundiz-downloads-ul">' .
                             (count($updated_download_names) > 0 ? '<li><strong>' . _n('Updated item', 'Updated items', count($updated_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $updated_download_names) . '</li>' : '') .
                             (count($failed_update_download_names) > 0 ? '<li><strong>' . _n('Failed to update item', 'Failed to update items', count($failed_update_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $failed_update_download_names) . '</li>' : '') .
                             (count($capability_limited_download_names) > 0 ? '<li><strong>' . _n('Capability limited item', 'Capability limited items', count($capability_limited_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $capability_limited_download_names) . '</li>' : '') .

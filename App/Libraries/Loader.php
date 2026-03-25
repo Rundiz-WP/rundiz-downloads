@@ -174,8 +174,8 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
          * Load the template by looking at the theme first, if not found then load it from the plugin itself.
          * 
          * Example: If the <code>$view_name</code> is <code>mydir/mypage</code>.<br>
-         * It will look up in <code>wp-content/themes/%your theme%/rd-downloads/templates/mydir/mypage.php</code> first.<br>
-         * If not found then it will look up in <code>wp-content/plugins/rd-downloads/templates/mydir/mypage.php</code>.<br>
+         * It will look up in <code>wp-content/themes/%your theme%/rundiz-downloads/templates/mydir/mypage.php</code> first.<br>
+         * If not found then it will look up in <code>wp-content/plugins/rundiz-downloads/templates/mydir/mypage.php</code>.<br>
          * If it is still not found then the error will be thrown.
          * 
          * @link https://codex.wordpress.org/Function_Reference/locate_template Reference.
@@ -189,7 +189,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
         {
             global $wp_query;
 
-            $template_path = locate_template('rd-downloads/templates/' . $view_name . '.php');
+            $template_path = locate_template(dirname(plugin_basename(RUNDIZDOWNLOADS_FILE)) . '/templates/' . $view_name . '.php');
             if ($template_path) {
                 // if template found in the theme location.
             } else {

@@ -20,7 +20,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Shortcodes\\RdDownloads'
          */
         public function convertShortcode($atts)
         {
-            $cacheKey = 'rd-downloads.shortcode.rddownloads.blog-id-' . get_current_blog_id() . '_atts-' . md5(wp_json_encode($atts));
+            $cacheKey = 'rundiz-downloads.shortcode.rddownloads.blog-id-' . get_current_blog_id() . '_atts-' . md5(wp_json_encode($atts));
             $SimpleCache = new \RundizDownloads\App\Libraries\Cache();
             $rendered = $SimpleCache->getInstance()->get($cacheKey);
 

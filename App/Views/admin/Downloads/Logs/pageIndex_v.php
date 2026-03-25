@@ -20,14 +20,14 @@
         <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e('Dismiss this notice.'); ?></span></button>
     </div>
     <?php } ?> 
-    <div class="rd-downloads-form-result-placeholder"></div>
+    <div class="rundiz-downloads-form-result-placeholder"></div>
 
     <?php
     if (isset($RdDownloadLogsListTable) && is_object($RdDownloadLogsListTable)) {
         $RdDownloadLogsListTable->views();
     }
     ?> 
-    <form id="rundiz-downloads-logs-list-items-form" class="rd-downloads-list-items-form" method="get">
+    <form id="rundiz-downloads-logs-list-items-form" class="rundiz-downloads-list-items-form" method="get">
         <input type="hidden" name="page" value="<?php echo (isset($_REQUEST['page']) ? esc_attr(sanitize_text_field(wp_unslash($_REQUEST['page']))) : ''); ?>">
         <?php 
         if (isset($_REQUEST['filter_user_id']) && !empty(trim($_REQUEST['filter_user_id']))) {// phpcs:ignore 

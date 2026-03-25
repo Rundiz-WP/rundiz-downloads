@@ -12,8 +12,8 @@
 function rdDownloadsAjaxSearch(searchValue, page = 1) {
     var $ = jQuery.noConflict();
 
-    $('.rd-downloads-inside-input-icon').removeClass('hidden');
-    $('#rd-downloads-search-result').html('');// clear previous results.
+    $('.rundiz-downloads-inside-input-icon').removeClass('hidden');
+    $('#rundiz-downloads-search-result').html('');// clear previous results.
 
     if (isNaN(page)) {
         console.log('isnan:'+page);
@@ -47,7 +47,7 @@ function rdDownloadsAjaxSearch(searchValue, page = 1) {
             response.previous_page = ((parseInt(response.current_page) - 1) >= 1 ? (parseInt(response.current_page) - 1) : 1);
             response.next_page = ((parseInt(response.current_page) + 1) <= response.total_pages ? (parseInt(response.current_page) + 1) : response.total_pages);
             console.log(parseInt(response.current_page) + 1);
-            $('#rd-downloads-search-result').html(Template(response));
+            $('#rundiz-downloads-search-result').html(Template(response));
 
             var TemplateResultItem = wp.template('rd-downloads-search-list-item');
             $.each(response.results, function(index, item) {
@@ -61,7 +61,7 @@ function rdDownloadsAjaxSearch(searchValue, page = 1) {
                 } else {
                     item.type = RdDownloads.txtUnknow;
                 }
-                $('#rd-downloads-search-result table tbody').append(TemplateResultItem(item));
+                $('#rundiz-downloads-search-result table tbody').append(TemplateResultItem(item));
             });
         }
 
@@ -81,7 +81,7 @@ function rdDownloadsAjaxSearch(searchValue, page = 1) {
             tinymce.activeEditor.windowManager.alert(response.form_result_msg);
         }
 
-        $('.rd-downloads-inside-input-icon').addClass('hidden');
+        $('.rundiz-downloads-inside-input-icon').addClass('hidden');
     });
 
     return false;
@@ -111,8 +111,8 @@ function rdDownloadsListenSearchInput() {
     var doneTypingInterval = 800; // delay in seconds (1 second is 1000, the value is 1000).
     console.log('rdDownloadsListenSearchInput called');
 
-    $('#rd-downloads-search-input').off('keyup keydown');
-    $('#rd-downloads-search-input').on('keyup', function(e) {
+    $('#rundiz-downloads-search-input').off('keyup keydown');
+    $('#rundiz-downloads-search-input').on('keyup', function(e) {
         clearTimeout(typingTimer);
         console.log('search keyup event.');
 
@@ -123,7 +123,7 @@ function rdDownloadsListenSearchInput() {
         }, doneTypingInterval);
     });
 
-    $('#rd-downloads-search-input').on('keydown', function() {
+    $('#rundiz-downloads-search-input').on('keydown', function() {
         clearTimeout(typingTimer);
     });
 }// rdDownloadsListenSearchInput

@@ -56,7 +56,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Logs')
             ob_end_clean();
             unset($output);
             $screen->add_help_tab([
-                'id' => 'rd-downloads-logs-helptab-permission',
+                'id' => 'rundiz-downloads-logs-helptab-permission',
                 'title' => __('Permissions', 'rundiz-downloads'),
                 'content' => $content,
             ]);
@@ -67,7 +67,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Logs')
             $content = ob_get_contents();
             ob_end_clean();
             $screen->add_help_tab([
-                'id' => 'rd-downloads-logs-helptab-adminhelp',
+                'id' => 'rundiz-downloads-logs-helptab-adminhelp',
                 'title' => __('Admin help', 'rundiz-downloads'),
                 'content' => $content,
             ]);
@@ -226,6 +226,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Logs')
                 'rundiz-downloads-logs-list-items-js',
                 'RdDownloads',
                 [
+                    'menuSlug' => self::MENU_SLUG,
                     'nonce' => wp_create_nonce('rd-downloads_ajax-manage-nonce'),
                     'txtAreYouSureDelete' => __('Are you sure?', 'rundiz-downloads') . "\n" . __('All the logs will be cleared.', 'rundiz-downloads') . "\n" . __('This can not be un-done.', 'rundiz-downloads'),
                 ]

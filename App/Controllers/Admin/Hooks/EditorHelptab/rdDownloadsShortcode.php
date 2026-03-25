@@ -32,7 +32,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\EditorHelp
                 ob_end_clean();
                 // add the help tab content to the last.
                 $screen->add_help_tab([
-                    'id' => 'rd-downloads-listing-helptab-shortcodes',
+                    'id' => 'rundiz-downloads-listing-helptab-shortcodes',
                     'title' => __('Rundiz Downloads shortcodes', 'rundiz-downloads'),
                     'content' => $content,
                 ]);

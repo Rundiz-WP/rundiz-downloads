@@ -43,7 +43,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadS
             unset($Date, $i);
             sort($output['part_date_gmt'], SORT_NATURAL);
 
-            $cacheKey = 'rd-downloads.dashboard-widget.all-downloads-daily-stat.blog-id-' . get_current_blog_id();
+            $cacheKey = 'rundiz-downloads.dashboard-widget.all-downloads-daily-stat.blog-id-' . get_current_blog_id();
             $SimpleCache = new \RundizDownloads\App\Libraries\Cache();
             $results = $SimpleCache->getInstance()->get($cacheKey);
 
@@ -163,7 +163,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadS
                 $scope = '0';
             }
 
-            $cacheKey = 'rd-downloads.dashboard-widget.top-results-list.blog-id-' . get_current_blog_id() . '_scope-' . $scope;
+            $cacheKey = 'rundiz-downloads.dashboard-widget.top-results-list.blog-id-' . get_current_blog_id() . '_scope-' . $scope;
             $SimpleCache = new \RundizDownloads\App\Libraries\Cache();
             $results = $SimpleCache->getInstance()->get($cacheKey);
 

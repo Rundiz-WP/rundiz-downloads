@@ -17,10 +17,10 @@ class RdDownloadsEditing {
         let $ = jQuery.noConflict();
         let thisClass = this;
 
-        $('#rd-downloads-edit-form').off('submit');
-        $('#rd-downloads-edit-form').on('submit', function(e) {
+        $('#rundiz-downloads-edit-form').off('submit');
+        $('#rundiz-downloads-edit-form').on('submit', function(e) {
             e.preventDefault();
-            if ($('.rd-downloads-save-form-button').is(':disabled')) {
+            if ($('.rundiz-downloads-save-form-button').is(':disabled')) {
                 return false;
             }
 
@@ -43,14 +43,14 @@ class RdDownloadsEditing {
         let $ = jQuery.noConflict();
 
         // clear result placeholder.
-        $('.rd-downloads-form-result-placeholder').html('');
+        $('.rundiz-downloads-form-result-placeholder').html('');
         // disable buttons.
         rdDownloadsEnableDisableButtons(false);
 
         $.ajax({
             'url': ajaxurl,
             'method': 'POST',
-            'data': $('#rd-downloads-edit-form').serialize() + '&security=' + encodeURIComponent(RdDownloads.savenonce) + '&action=RdDownloadsSaveData',
+            'data': $('#rundiz-downloads-edit-form').serialize() + '&security=' + encodeURIComponent(RdDownloads.savenonce) + '&action=RdDownloadsSaveData',
             'dataType': 'json'
         })
         .done(function(data, textStatus, jqXHR) {
@@ -75,7 +75,7 @@ class RdDownloadsEditing {
                 } else if (typeof(response.updateResult) !== 'undefined' && typeof(response.last_update) !== 'undefined') {
                     // if using update and success.
                     rdDownloadsEnableDisableButtons();
-                    $('#rd-downloads-edit-form .last-update').html(response.last_update);
+                    $('#rundiz-downloads-edit-form .last-update').html(response.last_update);
                 } else {
                     rdDownloadsEnableDisableButtons();
                 }
@@ -99,9 +99,9 @@ class RdDownloadsEditing {
             if (typeof(response.form_result_class) !== 'undefined' && typeof(response.form_result_msg) !== 'undefined') {
                 var form_result_html = rdDownloadsGetNoticeElement(response.form_result_class, response.form_result_msg);
 
-                $('.rd-downloads-form-result-placeholder').html(form_result_html);
+                $('.rundiz-downloads-form-result-placeholder').html(form_result_html);
                 $('html, body').animate({
-                    scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
+                    scrollTop: ($('.rundiz-downloads-form-result-placeholder').first().offset().top - 50)
                 }, 500);
             }
         });
@@ -120,7 +120,7 @@ class RdDownloadsEditing {
         let uploadFilePending = [];
 
         // detect input file on selected then start upload.
-        $('.rd-downloads-file-upload-button input[type="file"]').on('change', function(e) {
+        $('.rundiz-downloads-file-upload-button input[type="file"]').on('change', function(e) {
             // put any selected files into array variable.
             for (var i = 0; i < 1; ++i) {
                 var file = e.target.files[i];
@@ -132,7 +132,7 @@ class RdDownloadsEditing {
         });
 
         // detect drag drop upload.
-        $('.rd-downloads-form-type-local-file-browser.rd-downloads-dropzone').on('drag dragstart dragend dragover dragenter dragleave drop', function(e) {
+        $('.rundiz-downloads-form-type-local-file-browser.rundiz-downloads-dropzone').on('drag dragstart dragend dragover dragenter dragleave drop', function(e) {
             e.stopPropagation();
             e.preventDefault();
         })
@@ -160,16 +160,16 @@ class RdDownloadsEditing {
          */
         function doUpload() {
             // clear result placeholder.
-            $('.rd-downloads-form-result-placeholder').html('');
+            $('.rundiz-downloads-form-result-placeholder').html('');
             // disable buttons.
             rdDownloadsEnableDisableButtons(false);
             // add uploading animate icon.
-            $('<i class="fas fa-spinner fa-pulse icon-uploading"></i>').insertAfter('.rd-downloads-file-upload-button .icon-upload');
+            $('<i class="fas fa-spinner fa-pulse icon-uploading"></i>').insertAfter('.rundiz-downloads-file-upload-button .icon-upload');
 
             let formData = new FormData();
             formData.append('security', RdDownloads.nonce);
             formData.append('action', 'RdDownloadsUploadFile');
-            formData.append('download_id', $('#rd-downloads-edit-form #download_id').val());
+            formData.append('download_id', $('#rundiz-downloads-edit-form #download_id').val());
             // set selected file from variable.
             $.each(uploadFilePending, function(index, file) {
                 formData.append('upload_file', file, file.name);
@@ -196,22 +196,22 @@ class RdDownloadsEditing {
                 }
 
                 if (typeof(response.insert) !== 'undefined' && response.insert === true && typeof(response.download_id) !== 'undefined') {
-                    $('#rd-downloads-edit-form #download_id').val(response.download_id);
+                    $('#rundiz-downloads-edit-form #download_id').val(response.download_id);
                 }
 
                 if (typeof(response.uploadSuccess) !== 'undefined' && response.uploadSuccess === true) {
                     // set download url value.
                     if (typeof(response.download_url) !== 'undefined') {
-                        $('#rd-downloads-edit-form #download_type').val(0);
-                        $('#rd-downloads-edit-form #download_type').trigger('change');
-                        $('#rd-downloads-edit-form #download_url').val(response.download_url);
+                        $('#rundiz-downloads-edit-form #download_type').val(0);
+                        $('#rundiz-downloads-edit-form #download_type').trigger('change');
+                        $('#rundiz-downloads-edit-form #download_url').val(response.download_url);
                     }
 
                     // display download file size and its link preview.
                     if (typeof(response.download_size) !== 'undefined' && typeof(response.download_url) !== 'undefined') {
-                        $('#rd-downloads-edit-form #download_size').val(response.download_size);
+                        $('#rundiz-downloads-edit-form #download_size').val(response.download_size);
                         var Template = wp.template('selected-download-file-size');
-                        $('#rd-downloads-edit-form .download-size-and-preview').html(Template({
+                        $('#rundiz-downloads-edit-form .download-size-and-preview').html(Template({
                             'size': rdDownloadsHumanFileSize(response.download_size, true),
                             'url': response.download_url
                         }));
@@ -219,7 +219,7 @@ class RdDownloadsEditing {
 
                     // set hidden related path value.
                     if (typeof(response.relatedPath) !== 'undefined') {
-                        $('#rd-downloads-edit-form #download_related_path').val(response.relatedPath);
+                        $('#rundiz-downloads-edit-form #download_related_path').val(response.relatedPath);
                     }
 
                     // ajax reload its folder if exists.
@@ -252,16 +252,16 @@ class RdDownloadsEditing {
                 if (typeof(response.form_result_class) !== 'undefined' && typeof(response.form_result_msg) !== 'undefined') {
                     var form_result_html = rdDownloadsGetNoticeElement(response.form_result_class, response.form_result_msg);
 
-                    $('.rd-downloads-form-result-placeholder').html(form_result_html);
+                    $('.rundiz-downloads-form-result-placeholder').html(form_result_html);
                     $('html, body').animate({
-                        scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
+                        scrollTop: ($('.rundiz-downloads-form-result-placeholder').first().offset().top - 50)
                     },500);
                 }
 
                 // enable buttons.
                 rdDownloadsEnableDisableButtons();
                 // remove uploading animate icon.
-                $('.rd-downloads-file-upload-button .icon-uploading').remove();
+                $('.rundiz-downloads-file-upload-button .icon-uploading').remove();
 
                 response = undefined;
             });
@@ -269,7 +269,7 @@ class RdDownloadsEditing {
             formData = undefined;
 
             // reset input file.
-            resetInputFile($('#rd-downloads-local-input-file'));
+            resetInputFile($('#rundiz-downloads-local-input-file'));
         }// doUpload
 
 
@@ -303,8 +303,8 @@ class RdDownloadsEditing {
         let doneTypingInterval = 800; // delay in seconds (1 second is 1000, the value is 1000).
         let thisClass = this;
 
-        $('#rd-downloads-edit-form #download_url').off('keyup keydown change');
-        $('#rd-downloads-edit-form #download_url').on('keyup change', function(e) {
+        $('#rundiz-downloads-edit-form #download_url').off('keyup keydown change');
+        $('#rundiz-downloads-edit-form #download_url').on('keyup change', function(e) {
             clearTimeout(typingTimer);
 
             let inputValue = $(this).val();
@@ -312,26 +312,26 @@ class RdDownloadsEditing {
 
             if (rdDownloadsExtractRootDomain(inputValue).toLowerCase() == 'github.com') {
                 // if found github.com link.
-                $('#rd-downloads-edit-form #download_type').val(1);
-                $('#rd-downloads-edit-form #download_type').trigger('change');
-                $('#rd-downloads-edit-form #download_related_path').val('');
-                $('#rd-downloads-edit-form #download_size').val('');
+                $('#rundiz-downloads-edit-form #download_type').val(1);
+                $('#rundiz-downloads-edit-form #download_type').trigger('change');
+                $('#rundiz-downloads-edit-form #download_related_path').val('');
+                $('#rundiz-downloads-edit-form #download_size').val('');
                 typingTimer = setTimeout(function() {
                     thisClass._getRemoteFileDataGitHub(inputValue);
                 }, doneTypingInterval);
             } else if (rdDownloadsExtractRootDomain(inputValue) != rdDownloadsExtractRootDomain(currentUrl)) {
                 // if input domain is not current domain.
-                $('#rd-downloads-edit-form #download_type').val(2);
-                $('#rd-downloads-edit-form #download_type').trigger('change');
-                $('#rd-downloads-edit-form #download_related_path').val('');
-                $('#rd-downloads-edit-form #download_size').val('');
+                $('#rundiz-downloads-edit-form #download_type').val(2);
+                $('#rundiz-downloads-edit-form #download_type').trigger('change');
+                $('#rundiz-downloads-edit-form #download_related_path').val('');
+                $('#rundiz-downloads-edit-form #download_size').val('');
                 typingTimer = setTimeout(function() {
                     thisClass._getRemoteFileDataAnyRemote(inputValue);
                 }, doneTypingInterval);
             }
         });
 
-        $('#rd-downloads-edit-form #download_url').on('keydown', function() {
+        $('#rundiz-downloads-edit-form #download_url').on('keydown', function() {
             clearTimeout(typingTimer);
         });
     }// getRemoteFileData
@@ -346,9 +346,9 @@ class RdDownloadsEditing {
         let $ = jQuery.noConflict();
 
         // clear result placeholder.
-        $('.rd-downloads-form-result-placeholder').html('');
+        $('.rundiz-downloads-form-result-placeholder').html('');
         // add loading icon.
-        $('#rd-downloads-edit-form .download-size-and-preview').html('<i class="fas fa-spinner fa-pulse icon-loading"></i>');
+        $('#rundiz-downloads-edit-form .download-size-and-preview').html('<i class="fas fa-spinner fa-pulse icon-loading"></i>');
         // disable buttons.
         rdDownloadsEnableDisableButtons(false);
 
@@ -371,20 +371,20 @@ class RdDownloadsEditing {
             console.log('Success get remote size');
 
             if (typeof(response.size) !== 'undefined' && response.size >= 0) {
-                $('#rd-downloads-edit-form #download_size').val(response.size);
+                $('#rundiz-downloads-edit-form #download_size').val(response.size);
                 var Template = wp.template('selected-download-file-size');
-                $('#rd-downloads-edit-form .download-size-and-preview').html(Template({
+                $('#rundiz-downloads-edit-form .download-size-and-preview').html(Template({
                     'size': rdDownloadsHumanFileSize(response.size, true),
                     'url': url
                 }));
             } else {
-                $('#rd-downloads-edit-form .download-size-and-preview').html('');
+                $('#rundiz-downloads-edit-form .download-size-and-preview').html('');
             }
 
             response = undefined;
         })
         .fail(function(jqXHR, textStatus, data) {
-            $('#rd-downloads-edit-form .download-size-and-preview').html('');
+            $('#rundiz-downloads-edit-form .download-size-and-preview').html('');
         })
         .always(function(data, textStatus, jqXHR) {
             if (typeof(data) !== 'undefined' && typeof(data.responseJSON) !== 'undefined') {
@@ -399,9 +399,9 @@ class RdDownloadsEditing {
             if (typeof(response.form_result_class) !== 'undefined' && typeof(response.form_result_msg) !== 'undefined') {
                 var form_result_html = rdDownloadsGetNoticeElement(response.form_result_class, response.form_result_msg);
 
-                $('.rd-downloads-form-result-placeholder').html(form_result_html);
+                $('.rundiz-downloads-form-result-placeholder').html(form_result_html);
                 $('html, body').animate({
-                    scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
+                    scrollTop: ($('.rundiz-downloads-form-result-placeholder').first().offset().top - 50)
                 }, 500);
             }
 
@@ -419,16 +419,16 @@ class RdDownloadsEditing {
         let $ = jQuery.noConflict();
 
         // clear result placeholder.
-        $('.rd-downloads-form-result-placeholder').html('');
+        $('.rundiz-downloads-form-result-placeholder').html('');
         // add loading icon.
-        $('#rd-downloads-edit-form .download-size-and-preview').html('<i class="fas fa-spinner fa-pulse icon-loading"></i>');
+        $('#rundiz-downloads-edit-form .download-size-and-preview').html('<i class="fas fa-spinner fa-pulse icon-loading"></i>');
         // disable buttons.
         rdDownloadsEnableDisableButtons(false);
 
         $.ajax({
             'url': ajaxurl,
             'method': 'GET',
-            'data': 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsGetGithubFileData&remote_file=' + encodeURIComponent(url) + '&current_version=' + encodeURIComponent($('#rd-downloads-edit-form #opt_download_version').val()) + '&version_range=' + encodeURIComponent($('#rd-downloads-edit-form #opt_download_version_range').val()),
+            'data': 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsGetGithubFileData&remote_file=' + encodeURIComponent(url) + '&current_version=' + encodeURIComponent($('#rundiz-downloads-edit-form #opt_download_version').val()) + '&version_range=' + encodeURIComponent($('#rundiz-downloads-edit-form #opt_download_version_range').val()),
             'dataType': 'json'
         })
         .done(function(data, textStatus, jqXHR) {
@@ -444,27 +444,27 @@ class RdDownloadsEditing {
             console.log('Success get github data');
 
             if (typeof(response.url) !== 'undefined' && typeof(response.size) !== 'undefined' && response.size >= 0) {
-                $('#rd-downloads-edit-form #download_size').val(response.size);
+                $('#rundiz-downloads-edit-form #download_size').val(response.size);
                 var Template = wp.template('selected-download-file-size');
-                $('#rd-downloads-edit-form .download-size-and-preview').html(Template({
+                $('#rundiz-downloads-edit-form .download-size-and-preview').html(Template({
                     'size': rdDownloadsHumanFileSize(response.size, true),
                     'url': (typeof(response.url) !== 'undefined' ? response.url : url)
                 }));
             } else {
-                $('#rd-downloads-edit-form .download-size-and-preview').html('');
+                $('#rundiz-downloads-edit-form .download-size-and-preview').html('');
             }
 
             if (typeof(response.url) !== 'undefined') {
-                $('#rd-downloads-edit-form #download_url').val(response.url);
+                $('#rundiz-downloads-edit-form #download_url').val(response.url);
             }
             if (typeof(response.version) !== 'undefined') {
-                $('#rd-downloads-edit-form #opt_download_version').val(response.version);
+                $('#rundiz-downloads-edit-form #opt_download_version').val(response.version);
             }
 
             response = undefined;
         })
         .fail(function(jqXHR, textStatus, data) {
-            $('#rd-downloads-edit-form .download-size-and-preview').html('');
+            $('#rundiz-downloads-edit-form .download-size-and-preview').html('');
         })
         .always(function(data, textStatus, jqXHR) {
             if (typeof(data) !== 'undefined' && typeof(data.responseJSON) !== 'undefined') {
@@ -479,9 +479,9 @@ class RdDownloadsEditing {
             if (typeof(response.form_result_class) !== 'undefined' && typeof(response.form_result_msg) !== 'undefined') {
                 var form_result_html = rdDownloadsGetNoticeElement(response.form_result_class, response.form_result_msg);
 
-                $('.rd-downloads-form-result-placeholder').html(form_result_html);
+                $('.rundiz-downloads-form-result-placeholder').html(form_result_html);
                 $('html, body').animate({
-                    scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
+                    scrollTop: ($('.rundiz-downloads-form-result-placeholder').first().offset().top - 50)
                 }, 500);
             }
 
@@ -498,9 +498,9 @@ class RdDownloadsEditing {
     listenVersionRange() {
         let $ = jQuery.noConflict();
 
-        $('#rd-downloads-edit-form #opt_download_version_range').off('change keyup keydown');
-        $('#rd-downloads-edit-form #opt_download_version_range').on('keyup change', function(e) {
-            $('#rd-downloads-edit-form #download_url').trigger('keyup');
+        $('#rundiz-downloads-edit-form #opt_download_version_range').off('change keyup keydown');
+        $('#rundiz-downloads-edit-form #opt_download_version_range').on('keyup change', function(e) {
+            $('#rundiz-downloads-edit-form #download_url').trigger('keyup');
         });
     }// listenVersionRange
 
@@ -514,7 +514,7 @@ class RdDownloadsEditing {
         let $ = jQuery.noConflict();
 
         $('html, body').on('drag dragstart dragend dragover dragenter dragleave drop', function(e) {
-            if (!$(this).hasClass('rd-downloads-dropzone')) {
+            if (!$(this).hasClass('rundiz-downloads-dropzone')) {
                 e.stopPropagation();
                 e.preventDefault();
             }
@@ -530,25 +530,25 @@ class RdDownloadsEditing {
     showHideFormOnDownloadType() {
         let $ = jQuery.noConflict();
 
-        $('#rd-downloads-edit-form #download_type').off('change');
-        $('#rd-downloads-edit-form #download_type').on('change', function() {
+        $('#rundiz-downloads-edit-form #download_type').off('change');
+        $('#rundiz-downloads-edit-form #download_type').on('change', function() {
             let download_type = $(this).val();
 
             if (download_type == '1') {
                 // if GitHub
                 // hide option force download.
-                $('#rd-downloads-edit-form .rd-downloads-opt_force_download').addClass('hidden');
-                $('#rd-downloads-edit-form .rd-downloads-opt_download_version_range').removeClass('hidden');
+                $('#rundiz-downloads-edit-form .rundiz-downloads-opt_force_download').addClass('hidden');
+                $('#rundiz-downloads-edit-form .rundiz-downloads-opt_download_version_range').removeClass('hidden');
             } else if (download_type == '2') {
                 // if any remote file
                 // hide option force download.
-                $('#rd-downloads-edit-form .rd-downloads-opt_force_download').addClass('hidden');
-                $('#rd-downloads-edit-form .rd-downloads-opt_download_version_range').addClass('hidden');
+                $('#rundiz-downloads-edit-form .rundiz-downloads-opt_force_download').addClass('hidden');
+                $('#rundiz-downloads-edit-form .rundiz-downloads-opt_download_version_range').addClass('hidden');
             } else {
                 // if local file
                 // show option force download because this user use upload.
-                $('#rd-downloads-edit-form .rd-downloads-opt_force_download').removeClass('hidden');
-                $('#rd-downloads-edit-form .rd-downloads-opt_download_version_range').addClass('hidden');
+                $('#rundiz-downloads-edit-form .rundiz-downloads-opt_force_download').removeClass('hidden');
+                $('#rundiz-downloads-edit-form .rundiz-downloads-opt_download_version_range').addClass('hidden');
             }
         });
     }// showHideFormOnDownloadType
@@ -564,7 +564,7 @@ class RdDownloadsEditing {
     triggerEventsOnLoad() {
         let $ = jQuery.noConflict();
 
-        $('#rd-downloads-edit-form #download_type').trigger('change');
+        $('#rundiz-downloads-edit-form #download_type').trigger('change');
     }// triggerEventsOnLoad
 
 
@@ -586,12 +586,12 @@ function rdDownloadsAjaxDeleteFile(target, previousId) {
 
     if (confirmVal === true) {
         // clear result placeholder.
-        $('.rd-downloads-form-result-placeholder').html('');
+        $('.rundiz-downloads-form-result-placeholder').html('');
         // disable buttons.
         rdDownloadsEnableDisableButtons(false);
 
         target = rdDownloadsUnEscapeHtml(target);
-        var formData = 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsDeleteFile&download_id=' + encodeURIComponent($('#rd-downloads-edit-form #download_id').val()) + '&target=' + encodeURIComponent(target);
+        var formData = 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsDeleteFile&download_id=' + encodeURIComponent($('#rundiz-downloads-edit-form #download_id').val()) + '&target=' + encodeURIComponent(target);
 
         $.ajax({
             'url': ajaxurl,
@@ -613,11 +613,11 @@ function rdDownloadsAjaxDeleteFile(target, previousId) {
                 $('#' + previousId).remove();
             }
 
-            if (typeof(response.deleteUrl) !== 'undefined' && response.deleteUrl === $('#rd-downloads-edit-form #download_url').val()) {
-                $('#rd-downloads-edit-form #download_url').val('');
-                $('#rd-downloads-edit-form #download_related_path').val('');
-                $('#rd-downloads-edit-form #download_size').val('');
-                $('#rd-downloads-edit-form .download-size-and-preview').html('');
+            if (typeof(response.deleteUrl) !== 'undefined' && response.deleteUrl === $('#rundiz-downloads-edit-form #download_url').val()) {
+                $('#rundiz-downloads-edit-form #download_url').val('');
+                $('#rundiz-downloads-edit-form #download_related_path').val('');
+                $('#rundiz-downloads-edit-form #download_size').val('');
+                $('#rundiz-downloads-edit-form .download-size-and-preview').html('');
             }
 
             response = undefined;
@@ -635,9 +635,9 @@ function rdDownloadsAjaxDeleteFile(target, previousId) {
             if (typeof(response.form_result_class) !== 'undefined' && typeof(response.form_result_msg) !== 'undefined') {
                 var form_result_html = rdDownloadsGetNoticeElement(response.form_result_class, response.form_result_msg);
 
-                $('.rd-downloads-form-result-placeholder').html(form_result_html);
+                $('.rundiz-downloads-form-result-placeholder').html(form_result_html);
                 $('html, body').animate({
-                    scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
+                    scrollTop: ($('.rundiz-downloads-form-result-placeholder').first().offset().top - 50)
                 },500);
             }
 
@@ -670,7 +670,7 @@ function rdDownloadsAjaxFileBrowser(target, previousId) {
     }
 
     // clear result placeholder.
-    $('.rd-downloads-form-result-placeholder').html('');
+    $('.rundiz-downloads-form-result-placeholder').html('');
 
     target = rdDownloadsUnEscapeHtml(target);
     var formData = 'security=' + encodeURIComponent(RdDownloads.nonce) + '&action=RdDownloadsBrowseFiles&target=' + encodeURIComponent(target);
@@ -684,7 +684,7 @@ function rdDownloadsAjaxFileBrowser(target, previousId) {
         return false;
     }
 
-    $('.rd-downloads-reload-button .icon-reload').addClass('fa-spin');
+    $('.rundiz-downloads-reload-button .icon-reload').addClass('fa-spin');
 
     $.ajax({
         'url': ajaxurl,
@@ -704,7 +704,7 @@ function rdDownloadsAjaxFileBrowser(target, previousId) {
 
         if (typeof(response.list) !== 'undefined') {
             if (target === '') {
-                $('.rd-downloads-form-type-local-file-browser').html('<ul class="main-folder"></ul>');
+                $('.rundiz-downloads-form-type-local-file-browser').html('<ul class="main-folder"></ul>');
             } else {
                 if (previousId !== '') {
                     if ($('#' + previousId + ' ul').length == 0) {
@@ -732,7 +732,7 @@ function rdDownloadsAjaxFileBrowser(target, previousId) {
 
                 var parsedHtml = Template(item);
                 if (target === '') {
-                    $('.rd-downloads-form-type-local-file-browser .main-folder').append(parsedHtml);
+                    $('.rundiz-downloads-form-type-local-file-browser .main-folder').append(parsedHtml);
                 } else {
                     if (previousId !== '') {
                         $('#' + previousId + ' ul').append(parsedHtml);
@@ -757,13 +757,13 @@ function rdDownloadsAjaxFileBrowser(target, previousId) {
         if (typeof(response.form_result_class) !== 'undefined' && typeof(response.form_result_msg) !== 'undefined') {
             var form_result_html = rdDownloadsGetNoticeElement(response.form_result_class, response.form_result_msg);
 
-            $('.rd-downloads-form-result-placeholder').html(form_result_html);
+            $('.rundiz-downloads-form-result-placeholder').html(form_result_html);
             $('html, body').animate({
-                scrollTop: ($('.rd-downloads-form-result-placeholder').first().offset().top - 50)
+                scrollTop: ($('.rundiz-downloads-form-result-placeholder').first().offset().top - 50)
             },500);
         }
 
-        $('.rd-downloads-reload-button .icon-reload').removeClass('fa-spin');
+        $('.rundiz-downloads-reload-button .icon-reload').removeClass('fa-spin');
 
         response = undefined;
     });
@@ -789,16 +789,16 @@ function rdDownloadsEnableDisableButtons(enable) {
 
     if (enable === true) {
         // enable upload button.
-        $('.rd-downloads-file-upload-button').removeClass('disabled');
-        $('.rd-downloads-file-upload-button input[type="file"]').prop('disabled', false);
+        $('.rundiz-downloads-file-upload-button').removeClass('disabled');
+        $('.rundiz-downloads-file-upload-button input[type="file"]').prop('disabled', false);
         // enable save button.
-        $('.rd-downloads-save-form-button').prop('disabled', false);
+        $('.rundiz-downloads-save-form-button').prop('disabled', false);
     } else if (enable === false) {
         // disable upload button.
-        $('.rd-downloads-file-upload-button').addClass('disabled');
-        $('.rd-downloads-file-upload-button input[type="file"]').prop('disabled', true);
+        $('.rundiz-downloads-file-upload-button').addClass('disabled');
+        $('.rundiz-downloads-file-upload-button input[type="file"]').prop('disabled', true);
         // disable save button.
-        $('.rd-downloads-save-form-button').prop('disabled', true);
+        $('.rundiz-downloads-save-form-button').prop('disabled', true);
     }
 }// rdDownloadsEnableDisableButtons
 
@@ -818,14 +818,14 @@ function rdDownloadsSelectLocalFile(thisObj) {
 
     console.log('Select local file.');
 
-    $('#rd-downloads-edit-form #download_type').val(0);
-    $('#rd-downloads-edit-form #download_type').trigger('change');
-    $('#rd-downloads-edit-form #download_url').val(selectedURLDecode);
-    $('#rd-downloads-edit-form #download_url').trigger('change');// require to prevent onchange inside get remote data.
-    $('#rd-downloads-edit-form #download_related_path').val(thisObj.dataset.relatedpath);
-    $('#rd-downloads-edit-form #download_size').val(thisObj.dataset.size);
+    $('#rundiz-downloads-edit-form #download_type').val(0);
+    $('#rundiz-downloads-edit-form #download_type').trigger('change');
+    $('#rundiz-downloads-edit-form #download_url').val(selectedURLDecode);
+    $('#rundiz-downloads-edit-form #download_url').trigger('change');// require to prevent onchange inside get remote data.
+    $('#rundiz-downloads-edit-form #download_related_path').val(thisObj.dataset.relatedpath);
+    $('#rundiz-downloads-edit-form #download_size').val(thisObj.dataset.size);
     // display download file size.
-    $('#rd-downloads-edit-form .download-size-and-preview').html(Template({
+    $('#rundiz-downloads-edit-form .download-size-and-preview').html(Template({
         'size': thisObj.dataset.size,
         'url': decodeURIComponent(thisObj.dataset.url)
     }));
@@ -837,7 +837,7 @@ function rdDownloadsSelectLocalFile(thisObj) {
 // on dom ready --------------------------------------------------------------------------------------------------------
 (function ($) {
     // always reset the form to its beginning to prevent Firefox form cached when reload.
-    $('#rd-downloads-edit-form')[0].reset();
+    $('#rundiz-downloads-edit-form')[0].reset();
 
     let rdDownloadsEditing = new RdDownloadsEditing();
 
@@ -866,7 +866,7 @@ function rdDownloadsSelectLocalFile(thisObj) {
     // activate ajax file browser.
     rdDownloadsAjaxFileBrowser();
 
-    if ($('#rd-downloads-edit-form #download_id').val() == '') {
-        $('.rd-downloads-publish-data').addClass('hidden');
+    if ($('#rundiz-downloads-edit-form #download_id').val() == '') {
+        $('.rundiz-downloads-publish-data').addClass('hidden');
     }
 })(jQuery);

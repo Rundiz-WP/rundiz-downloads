@@ -99,7 +99,7 @@ $designHelp .= '<p>' . PHP_EOL;
 $designHelp .= __('More advance example:', 'rundiz-downloads') . PHP_EOL;
 $designHelp .= '</p>' . PHP_EOL;
 $designHelp .= '<pre class="rd-settings-preformat-code">' . PHP_EOL;
-$designHelp .= esc_html('<div class="rd-downloads-block">');
+$designHelp .= esc_html('<div class="rundiz-downloads-block">');
 $designHelp .= esc_html($designDefaultValue);
 $designHelp .= esc_html('
 {if display_download_count} ({{txt_total_download}}: {{download_count}}){endif}
@@ -177,7 +177,7 @@ return [
                     'type' => 'checkbox',
                 ],
                 [
-                    'content' => '<button id="rd-downloads-settings-clear-cache" class="button" type="button">' . __('Clear cache', 'rundiz-downloads') . '</button><br>' .
+                    'content' => '<button id="rundiz-downloads-settings-clear-cache" class="button" type="button">' . __('Clear cache', 'rundiz-downloads') . '</button><br>' .
                         __('If something seems not up-to-date, please try to clear the cache first. This will be clear all plugin\'s cache.', 'rundiz-downloads'),
                     'title' => __('Cache', 'rundiz-downloads'),
                     'type' => 'html',

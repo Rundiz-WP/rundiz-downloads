@@ -9,13 +9,13 @@
         <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e('Dismiss this notice.'); ?></span></button>
     </div>
     <?php } ?> 
-    <div class="rd-downloads-form-result-placeholder"></div>
+    <div class="rundiz-downloads-form-result-placeholder"></div>
 
-    <form id="rd-downloads-edit-form" class="rd-downloads-edit-form" method="post" enctype="multipart/form-data">
+    <form id="rundiz-downloads-edit-form" class="rundiz-downloads-edit-form" method="post" enctype="multipart/form-data">
         <?php wp_nonce_field(); ?> 
         <input id="download_id" type="hidden" name="download_id" value="<?php if (isset($download_id)) {echo esc_attr($download_id);} ?>">
 
-        <div id="titlediv" class="rd-downloads-title-div">
+        <div id="titlediv" class="rundiz-downloads-title-div">
             <input id="title" type="text" name="download_name" value="<?php if (isset($download_name)) {echo esc_attr($download_name);} ?>" maxlength="200" placeholder="<?php esc_attr_e('Downloads name', 'rundiz-downloads'); ?>">
         </div>
         <table class="form-table">
@@ -24,7 +24,7 @@
                     <th><label for="download_url"><?php esc_html_e('Download URL', 'rundiz-downloads'); ?></label></th>
                     <td>
                         <input id="download_type" type="hidden" name="download_type" value="<?php if (isset($download_type)) {echo esc_attr($download_type);} ?>">
-                        <input id="download_url" class="rd-downloads-input-full" type="url" name="download_url" value="<?php if (isset($download_url)) {echo esc_attr($download_url);} ?>" maxlength="300" required="">
+                        <input id="download_url" class="rundiz-downloads-input-full" type="url" name="download_url" value="<?php if (isset($download_url)) {echo esc_attr($download_url);} ?>" maxlength="300" required="">
                         <input id="download_related_path" type="hidden" name="download_related_path" value="<?php if (isset($download_related_path)) {echo esc_attr($download_related_path);} ?>">
                         <input id="download_size" type="hidden" name="download_size" value="<?php if (isset($download_size)) {echo esc_attr($download_size);} ?>">
                         <div id="download-size-and-preview" class="download-size-and-preview"><?php 
@@ -33,26 +33,26 @@
                         }
                         if (isset($download_url)) {
                             echo ' ';
-                            echo '<a href="' . esc_attr($download_url) . '" target="preview-file" title="' . esc_attr__('Preview', 'rundiz-downloads') . '"><i class="fas fa-eye fa-fw rd-downloads-icon-preview"></i> <span class="sr-only">' . esc_html__('Preview', 'rundiz-downloads') . '</span></a>';
+                            echo '<a href="' . esc_attr($download_url) . '" target="preview-file" title="' . esc_attr__('Preview', 'rundiz-downloads') . '"><i class="fas fa-eye fa-fw rundiz-downloads-icon-preview"></i> <span class="sr-only">' . esc_html__('Preview', 'rundiz-downloads') . '</span></a>';
                         }
                         ?></div>
                         <p class="description"><?php esc_html_e('Please open the help tab to see help message.', 'rundiz-downloads'); ?></p>
                         <hr>
-                        <div class="rd-downloads-form-type-local-file-browser rd-downloads-dropzone"></div>
-                        <div class="rd-downloads-local-buttons">
-                            <div class="rd-downloads-file-upload-button button">
+                        <div class="rundiz-downloads-form-type-local-file-browser rundiz-downloads-dropzone"></div>
+                        <div class="rundiz-downloads-local-buttons">
+                            <div class="rundiz-downloads-file-upload-button button">
                                 <span><i class="fas fa-upload icon-upload"></i> <?php esc_html_e('Upload new file', 'rundiz-downloads'); ?></span>
-                                <input id="rd-downloads-local-input-file" type="file">
+                                <input id="rundiz-downloads-local-input-file" type="file">
                             </div>
-                            <button class="rd-downloads-reload-button button" type="button" onclick="rdDownloadsAjaxFileBrowser();"><i class="fas fa-sync-alt icon-reload"></i> <?php esc_html_e('Reload', 'rundiz-downloads'); ?></button>
-                        </div><!--.rd-downloads-local-buttons-->
+                            <button class="rundiz-downloads-reload-button button" type="button" onclick="rdDownloadsAjaxFileBrowser();"><i class="fas fa-sync-alt icon-reload"></i> <?php esc_html_e('Reload', 'rundiz-downloads'); ?></button>
+                        </div><!--.rundiz-downloads-local-buttons-->
                         <p class="description"><?php 
                         /* translators: %s: Max upload size. */
                         printf(esc_html__('Maximum upload file size: %s.', 'rundiz-downloads'), size_format(wp_max_upload_size())); // phpcs:ignore
                         ?></p>
                     </td>
                 </tr>
-                <tr class="rd-downloads-opt_download_version">
+                <tr class="rundiz-downloads-opt_download_version">
                     <th><label for="opt_download_version"><?php esc_html_e('Version', 'rundiz-downloads'); ?></label></th>
                     <td>
                         <input id="opt_download_version" class="regular-text" type="text" name="opt_download_version" value="<?php if (isset($opt_download_version)) {echo esc_attr($opt_download_version);} ?>" maxlength="50">
@@ -67,7 +67,7 @@
                         </p>
                     </td>
                 </tr>
-                <tr class="rd-downloads-opt_download_version_range<?php if (isset($download_type) && strval($download_type) !== '1') {echo ' hidden';} ?>">
+                <tr class="rundiz-downloads-opt_download_version_range<?php if (isset($download_type) && strval($download_type) !== '1') {echo ' hidden';} ?>">
                     <th><label for="opt_download_version_range"><?php esc_html_e('Version range', 'rundiz-downloads'); ?></label></th>
                     <td>
                         <input id="opt_download_version_range" class="regular-text" type="text" name="opt_download_version_range" value="<?php if (isset($opt_download_version_range)) {echo esc_attr($opt_download_version_range);} ?>" maxlength="50">
@@ -103,7 +103,7 @@
                         <p class="description"><?php esc_html_e('The number of times this file has been downloaded.', 'rundiz-downloads'); ?></p>
                     </td>
                 </tr>
-                <tr class="rd-downloads-opt_force_download<?php if (isset($download_type) && strval($download_type) !== '0') {echo ' hidden';} ?>">
+                <tr class="rundiz-downloads-opt_force_download<?php if (isset($download_type) && strval($download_type) !== '0') {echo ' hidden';} ?>">
                     <th><label for="opt_force_download"><?php esc_html_e('Force download', 'rundiz-downloads'); ?></label></th>
                     <td>
                         <label><input type="radio" name="opt_force_download" value="1"<?php if (isset($opt_force_download) && strval($opt_force_download) === '1') {echo ' checked="checked"';} ?>><?php esc_html_e('Yes', 'rundiz-downloads'); ?></label> &nbsp;
@@ -128,7 +128,7 @@
                         </p>
                     </td>
                 </tr>
-                <tr class="rd-downloads-publish-data">
+                <tr class="rundiz-downloads-publish-data">
                     <th><label><?php esc_html_e('Publish data', 'rundiz-downloads'); ?></label></th>
                     <td>
                         <p><i class="fas fa-user"></i> <?php esc_html_e('Created by', 'rundiz-downloads'); ?>: <span class="create-by"><?php 
@@ -158,12 +158,12 @@
         </table>
 
         <p class="submit">
-            <button id="submit" class="button button-primary rd-downloads-save-form-button" type="submit" name="submit" value="save"><?php esc_html_e('Save', 'rundiz-downloads'); ?></button>
+            <button id="submit" class="button button-primary rundiz-downloads-save-form-button" type="submit" name="submit" value="save"><?php esc_html_e('Save', 'rundiz-downloads'); ?></button>
         </p>
-    </form><!--#rd-downloads-edit-form-->
+    </form><!--#rundiz-downloads-edit-form-->
 
     <template id="tmpl-selected-download-file-size">
-        {{{data.size}}} <a href="{{data.url}}" target="preview-file" title="<?php esc_attr_e('Preview', 'rundiz-downloads'); ?>"><i class="fas fa-eye fa-fw rd-downloads-icon-preview"></i> <span class="sr-only"><?php esc_html_e('Preview', 'rundiz-downloads'); ?></span></a>
+        {{{data.size}}} <a href="{{data.url}}" target="preview-file" title="<?php esc_attr_e('Preview', 'rundiz-downloads'); ?>"><i class="fas fa-eye fa-fw rundiz-downloads-icon-preview"></i> <span class="sr-only"><?php esc_html_e('Preview', 'rundiz-downloads'); ?></span></a>
     </template>
     
     <script type="text/html" id="tmpl-file-browser-list-item">

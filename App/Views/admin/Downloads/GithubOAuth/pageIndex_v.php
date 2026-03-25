@@ -4,7 +4,7 @@
  */
 /* @var $GitHubOAuthListTable \RundizDownloads\App\Models\GitHubOAuthListTable */
 ?>
-<div class="wrap rd-downloads-page-githuboauth">
+<div class="wrap rundiz-downloads-page-githuboauth">
     <h1 class="wp-heading-inline"><?php esc_html_e('GitHub OAuth', 'rundiz-downloads'); ?></h1>
 
     <?php if (isset($form_result_class) && isset($form_result_msg)) { ?>
@@ -15,7 +15,7 @@
         <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e('Dismiss this notice.'); ?></span></button>
     </div>
     <?php } ?>
-    <div class="rd-downloads-form-result-placeholder"></div>
+    <div class="rundiz-downloads-form-result-placeholder"></div>
 
     <div class="rddownloads-row">
         <div class="col">

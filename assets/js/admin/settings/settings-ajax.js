@@ -6,9 +6,9 @@
  * @returns {undefined}
  */
 function rdDownloadsSettingsAjaxClearCache() {
-    const clearCacheButton = document.querySelector('#rd-downloads-settings-clear-cache');
+    const clearCacheButton = document.querySelector('#rundiz-downloads-settings-clear-cache');
     if (!clearCacheButton) {
-        console.error('[rd-downloads]: The clear cache button does not exists on this page.');
+        console.error('[rundiz-downloads]: The clear cache button does not exists on this page.');
         return;
     }
 
@@ -42,7 +42,7 @@ function rdDownloadsSettingsAjaxClearCache() {
                         message = 'Bad Request';
                     }
                 }
-                console.warn('[rd-downloads]: Response is not JSON:', message);
+                console.warn('[rundiz-downloads]: Response is not JSON:', message);
                 throw new Error(message); // throw the error to make `.catch()` work due to response must be JSON only.
             }
 

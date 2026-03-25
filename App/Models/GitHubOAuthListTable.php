@@ -162,7 +162,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\GitHubOAuthListTable')) {
                 'query' => str_replace(['%after%', '%before%'], '', $graphQLAllRepos),
             ];
 
-            $cacheKey = 'rd-downloads.github-connect.github-repositories.blog-id-' . get_current_blog_id()
+            $cacheKey = 'rundiz-downloads.github-connect.github-repositories.blog-id-' . get_current_blog_id()
                 . '.user-id-' . (isset($options['userId']) ? $options['userId'] : get_current_user_id())
                 . '.apiheadersbody-'
                 . md5(

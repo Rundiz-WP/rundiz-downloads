@@ -42,7 +42,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\ElementPlaceholders')) {
          */
         public function defaultDownloadHtml()
         {
-            return '<a class="rd-downloads-button" href="{{download_url}}"><i class="fontawesome-icon fas fa-download"></i> {{txt_download}}</a>';
+            return '<a class="rundiz-downloads-button" href="{{download_url}}"><i class="fontawesome-icon fas fa-download"></i> {{txt_download}}</a>';
         }// defaultDownloadHtml
 
 
