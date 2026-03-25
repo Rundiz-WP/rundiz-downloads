@@ -79,6 +79,7 @@ Yes, the plugin's tables will be dropped on uninstall.
 * Rename HTML class, ID. Rename JS console prefix.
 * Rename cache prefix in PHP.
 * Rename nonce, template ID.
+* Rename rd-downloads.css to rundiz-downloads.css.
 
 = 1.0.17 =
 2025-12-21
