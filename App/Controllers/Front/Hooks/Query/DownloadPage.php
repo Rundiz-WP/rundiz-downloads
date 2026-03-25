@@ -8,9 +8,19 @@
 
 namespace RundizDownloads\App\Controllers\Front\Hooks\Query;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\DownloadPage')) {
+    /**
+     * DownloadPage class.
+     */
     class DownloadPage implements \RundizDownloads\App\Controllers\ControllerInterface
     {
+
+
+        /**
+         * @var string Download query string name. This constant must be public.
+         */
+        const DOWNLOAD_QUERY_VAR = 'rddownloads_page';
 
 
         /**
@@ -21,7 +31,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
          */
         public function goToRdDownloadsPage()
         {
-            if (get_query_var('pagename') === 'rddownloads_page') {
+            if (get_query_var('pagename') === self::DOWNLOAD_QUERY_VAR) {
                 $subpage = get_query_var('rddownloads_subpage');
                 switch ($subpage) {
                     default:
@@ -65,5 +75,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
         }// registerHooks
 
 
-    }
+    }// DownloadPage
 }

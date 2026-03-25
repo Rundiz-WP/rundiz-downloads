@@ -58,8 +58,8 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Url')) {
         /**
          * Get download page URL.
          *
-         * Example: `[rddownloads id="x"]` short code will convert to `<a href="http://domain.tld/wordpress-install-path/?pagename=rddownloads_page&download_id=x">Download</a>`.<br>
-         * The URI /wordpress-install-path/rd-downloads is download page.<br>
+         * Example: `[rddownloads id="x"]` short code will convert to `<a href="http://domain.tld/wordpress-install-path/?pagename=DDD&download_id=x">Download</a>`.<br>
+         * The URI /wordpress-install-path/?pagename=DDD is download page.<br>
          * This page will process the download step.
          *
          * @global array $rd_downloads_options
@@ -70,7 +70,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Url')) {
         {
             $querystring = [];
             $url = false;
-            $querystring['pagename'] = 'rddownloads_page';
+            $querystring['pagename'] = \RundizDownloads\App\Controllers\Front\Hooks\Query\DownloadPage::DOWNLOAD_QUERY_VAR;
 
             if (!empty($download_id)) {
                 $querystring['download_id'] = $download_id;
