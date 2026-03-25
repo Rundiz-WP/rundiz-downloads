@@ -2,18 +2,18 @@
 /**
  * Activate the plugin action.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Plugins;
+namespace RundizDownloads\App\Controllers\Admin\Plugins;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')) {
-    class Activation implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')) {
+    class Activation implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
-        use \RdDownloads\App\AppTrait;
+        use \RundizDownloads\App\AppTrait;
 
 
         /**
@@ -44,11 +44,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')
                 wp_die(
                     sprintf(
                         /* translators: %1$s: Current PHP version, %2$s: Required PHP version. */
-                        __('You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or contact plugin author for this help.<br><br>Minimum requirement:<br>PHP %2$s', 'rd-downloads'),// phpcs:ignore 
+                        __('You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or contact plugin author for this help.<br><br>Minimum requirement:<br>PHP %2$s', 'rundiz-downloads'),// phpcs:ignore 
                         $phpversion,// phpcs:ignore 
                         $phpversion_required// phpcs:ignore
                     ), 
-                    esc_html__('Minimum requirement of PHP version does not meet.', 'rd-downloads')
+                    esc_html__('Minimum requirement of PHP version does not meet.', 'rundiz-downloads')
                 );
                 exit;
             }
@@ -56,7 +56,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')
                 wp_die(
                     sprintf(
                         /* translators: %1$s: Current WordPress version, %2$s: Required WordPress version. */
-                        esc_html__('Your WordPress version does not meet the requirement. (%1$s < %2$s).', 'rd-downloads'), 
+                        esc_html__('Your WordPress version does not meet the requirement. (%1$s < %2$s).', 'rundiz-downloads'), 
                         get_bloginfo('version'),// phpcs:ignore 
                         $wordpress_required_version// phpcs:ignore
                     )
@@ -66,7 +66,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')
             unset($phpversion, $phpversion_required, $wordpress_required_version);
 
             if (is_multisite() && $network_wide) {
-                wp_die(esc_html__('Unable to network activate, please activate from each site that have to use it only.', 'rd-downloads'));
+                wp_die(esc_html__('Unable to network activate, please activate from each site that have to use it only.', 'rundiz-downloads'));
                 exit(1);
             }
 
@@ -83,7 +83,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')
             $wp_upload_dir = wp_upload_dir();
             if (is_array($wp_upload_dir) && array_key_exists('basedir', $wp_upload_dir)) {
                 wp_mkdir_p(realpath($wp_upload_dir['basedir']) . DIRECTORY_SEPARATOR . 'rd-downloads');
-                $FileSystem = new \RdDownloads\App\Libraries\FileSystem();
+                $FileSystem = new \RundizDownloads\App\Libraries\FileSystem();
                 $FileSystem->writeFile(realpath($wp_upload_dir['basedir']) . DIRECTORY_SEPARATOR . 'rd-downloads' . DIRECTORY_SEPARATOR . 'index.html', 'Access denied!', false);
                 unset($FileSystem);
             }
@@ -120,13 +120,13 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')
 
 
         /**
-         * If there is at least one or more table from `RdDownloads\App\Models\PluginDbStructure->get()` method then create or alter using WordPress's `dbDelta()`.
+         * If there is at least one or more table from `RundizDownloads\App\Models\PluginDbStructure->get()` method then create or alter using WordPress's `dbDelta()`.
          * 
          * @global \wpdb $wpdb WordPress DB class.
          */
         private function activateCreateAlterTables()
         {
-            $PluginDbStructure = new \RdDownloads\App\Models\PluginDbStructure();
+            $PluginDbStructure = new \RundizDownloads\App\Models\PluginDbStructure();
             $schemas = $PluginDbStructure->get();
             unset($PluginDbStructure);
 
@@ -171,7 +171,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')
         public function registerHooks()
         {
             // register activate hook
-            register_activation_hook(RDDOWNLOADS_FILE, [$this, 'activate']);
+            register_activation_hook(RUNDIZDOWNLOADS_FILE, [$this, 'activate']);
         }// registerHooks
 
 

@@ -2,13 +2,13 @@
 /**
  * Logger
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Libraries;
+namespace RundizDownloads\App\Libraries;
 
-if (!class_exists('\\RdDownloads\\App\\Libraries\\Logger')) {
+if (!class_exists('\\RundizDownloads\\App\\Libraries\\Logger')) {
     /**
      * Logger class.
      */
@@ -29,23 +29,23 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Logger')) {
         public function debugLog($content, $fileName = '')
         {
             if (defined('WP_DEBUG') && WP_DEBUG === true) {
-                if (file_exists(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug') && !is_dir(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug')) {
-                    error_log('Unable to create folder: ' . plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug');
+                if (file_exists(plugin_dir_path(RUNDIZDOWNLOADS_FILE) . '/_logdebug') && !is_dir(plugin_dir_path(RUNDIZDOWNLOADS_FILE) . '/_logdebug')) {
+                    error_log('Unable to create folder: ' . plugin_dir_path(RUNDIZDOWNLOADS_FILE) . '/_logdebug');
                     return false;
                 }
 
-                if (is_dir(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug') && !wp_is_writable(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug')) {
-                    error_log('The folder ' . plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug is unable to create files, please set the write permission.');
+                if (is_dir(plugin_dir_path(RUNDIZDOWNLOADS_FILE) . '/_logdebug') && !wp_is_writable(plugin_dir_path(RUNDIZDOWNLOADS_FILE) . '/_logdebug')) {
+                    error_log('The folder ' . plugin_dir_path(RUNDIZDOWNLOADS_FILE) . '/_logdebug is unable to create files, please set the write permission.');
                     return false;
                 }
 
-                if (!file_exists(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug') && wp_is_writable(plugin_dir_path(RDDOWNLOADS_FILE))) {
-                    wp_mkdir_p(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug');
+                if (!file_exists(plugin_dir_path(RUNDIZDOWNLOADS_FILE) . '/_logdebug') && wp_is_writable(plugin_dir_path(RUNDIZDOWNLOADS_FILE))) {
+                    wp_mkdir_p(plugin_dir_path(RUNDIZDOWNLOADS_FILE) . '/_logdebug');
                 }
 
-                if (!is_file(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug/index.html')) {
+                if (!is_file(plugin_dir_path(RUNDIZDOWNLOADS_FILE) . '/_logdebug/index.html')) {
                     // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
-                    file_put_contents(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug/index.html', '');
+                    file_put_contents(plugin_dir_path(RUNDIZDOWNLOADS_FILE) . '/_logdebug/index.html', '');
                 }
 
                 // sanitize file section.
@@ -57,7 +57,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Logger')) {
                 $fileName .= '.txt';
 
                 // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
-                $myfile = fopen(plugin_dir_path(RDDOWNLOADS_FILE) . '/_logdebug/' . $fileName, 'a');
+                $myfile = fopen(plugin_dir_path(RUNDIZDOWNLOADS_FILE) . '/_logdebug/' . $fileName, 'a');
                 unset($fileName);
 
                 if (false === $myfile) {
@@ -103,7 +103,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Logger')) {
          * 
          * This will be working only `WP_DEBUG` constant is set to `true`.
          * 
-         * @see RdDownloads\App\Libraries\Logger::debugLog()
+         * @see RundizDownloads\App\Libraries\Logger::debugLog()
          * @param mixed $content The content to write to log file.
          *                                      Leave empty will write all server variables and super global data such as $_GET, $_POST to the file. 
          *                                      Non scalar content will be convert to string automatically.

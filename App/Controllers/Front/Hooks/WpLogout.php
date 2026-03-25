@@ -2,14 +2,14 @@
 /**
  * Hook into logout page.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Front\Hooks;
+namespace RundizDownloads\App\Controllers\Front\Hooks;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\WpLogout')) {
-    class WpLogout implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\WpLogout')) {
+    class WpLogout implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
@@ -18,7 +18,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\WpLogout')) {
          */
         public function disconnectGitHubOAuth()
         {
-            $Github = new \RdDownloads\App\Libraries\Github();
+            $Github = new \RundizDownloads\App\Libraries\Github();
             $Github->oauthDisconnect();
             unset($Github);
         }// disconnectGitHubOAuth

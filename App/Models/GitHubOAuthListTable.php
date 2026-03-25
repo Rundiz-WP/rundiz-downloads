@@ -2,13 +2,13 @@
 /**
  * List GitHub repositories in WordPress list table class.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Models;
+namespace RundizDownloads\App\Models;
 
-if (!class_exists('\\RdDownloads\\App\\Models\\GitHubOAuthListTable')) {
+if (!class_exists('\\RundizDownloads\\App\\Models\\GitHubOAuthListTable')) {
     /**
      * List data into table.
      * Warning! Do not modify method name because they are extended from WP_List_Table class of WordPress. Changing the method name may cause program error.
@@ -52,15 +52,15 @@ if (!class_exists('\\RdDownloads\\App\\Models\\GitHubOAuthListTable')) {
             switch ($column_name) {
                 case 'archived':
                     if (isset($item->node->isArchived) && false === $item->node->isArchived) {
-                        return '<i class="fas fa-times"></i> ' . __('No', 'rd-downloads');
+                        return '<i class="fas fa-times"></i> ' . __('No', 'rundiz-downloads');
                     } else {
-                        return '<i class="fas fa-check"></i> ' . __('Yes', 'rd-downloads');
+                        return '<i class="fas fa-check"></i> ' . __('Yes', 'rundiz-downloads');
                     }
                 case 'namewithowner':
                     return '<a href="' . $item->node->url . '" target="github_repository">' . esc_html($item->node->nameWithOwner) . '</a>';
                 case 'webhook':
                     if (isset($item->node->isArchived) && false === $item->node->isArchived) {
-                        return '<a class="rddownloads_githubrepo_webhook_check"><i class="rddownloads_icon-webhook-status fas fa-question"></i> ' . __('Check this.', 'rd-downloads') . '</a>';
+                        return '<a class="rddownloads_githubrepo_webhook_check"><i class="rddownloads_icon-webhook-status fas fa-question"></i> ' . __('Check this.', 'rundiz-downloads') . '</a>';
                     }
                     // not in condition above, go to default.
                 default:
@@ -78,9 +78,9 @@ if (!class_exists('\\RdDownloads\\App\\Models\\GitHubOAuthListTable')) {
         public function get_columns()
         {
             return [
-                'namewithowner' => __('Repository name', 'rd-downloads'),
-                'archived' => __('Archived', 'rd-downloads'),
-                'webhook' => __('Webhook', 'rd-downloads'),
+                'namewithowner' => __('Repository name', 'rundiz-downloads'),
+                'archived' => __('Archived', 'rundiz-downloads'),
+                'webhook' => __('Webhook', 'rundiz-downloads'),
             ];
         }// get_columns
 
@@ -129,7 +129,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\GitHubOAuthListTable')) {
         /**
          * {@inheritDoc}
          *
-         * @param array $options Accepted array keys: Github (\RdDownloads\App\Libraries\Github class), accessToken, userId
+         * @param array $options Accepted array keys: Github (\RundizDownloads\App\Libraries\Github class), accessToken, userId
          * @return array Return empty array if failed to get repository, return array with responseHeader, responseBody keys if success get repositories.
          */
         public function prepare_items(array $options = [])
@@ -137,7 +137,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\GitHubOAuthListTable')) {
             if (isset($options['Github'])) {
                 $Github = $options['Github'];
             } else {
-                $Github = new \RdDownloads\App\Libraries\Github();
+                $Github = new \RundizDownloads\App\Libraries\Github();
             }
 
             if (
@@ -169,7 +169,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\GitHubOAuthListTable')) {
                     maybe_serialize($headers)
                     . wp_json_encode($postBody)
                 );
-            $SimpleCache = new \RdDownloads\App\Libraries\Cache();
+            $SimpleCache = new \RundizDownloads\App\Libraries\Cache();
             $cacheResult = $SimpleCache->getInstance()->get($cacheKey);
 
             $output = [];

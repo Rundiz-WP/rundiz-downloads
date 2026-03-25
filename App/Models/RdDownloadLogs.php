@@ -2,19 +2,19 @@
 /**
  * Download logs.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
-namespace RdDownloads\App\Models;
+namespace RundizDownloads\App\Models;
 
-if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogs')) {
+if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogs')) {
     class RdDownloadLogs
     {
 
 
-        use \RdDownloads\App\AppTrait;
+        use \RundizDownloads\App\AppTrait;
 
 
         /**

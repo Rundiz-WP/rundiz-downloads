@@ -2,18 +2,18 @@
 /**
  * GitHub auto update.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Front\Hooks\Query;
+namespace RundizDownloads\App\Controllers\Front\Hooks\Query;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubAutoUpdatePage')) {
-    class GithubAutoUpdatePage implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubAutoUpdatePage')) {
+    class GithubAutoUpdatePage implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
-        use \RdDownloads\App\AppTrait;
+        use \RundizDownloads\App\AppTrait;
 
 
         /**
@@ -27,7 +27,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
                 return false;
             }
 
-            $Github = new \RdDownloads\App\Libraries\Github();
+            $Github = new \RundizDownloads\App\Libraries\Github();
             if ($Github->isSettingToAutoUpdate() !== true) {
                 return false;
             }

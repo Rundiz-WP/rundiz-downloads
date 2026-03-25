@@ -2,13 +2,13 @@
 /**
  * Date/Time library.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Libraries;
+namespace RundizDownloads\App\Libraries;
 
-if (!class_exists('\\RdDownloads\\App\\Libraries\\DateTime')) {
+if (!class_exists('\\RundizDownloads\\App\\Libraries\\DateTime')) {
     class DateTime
     {
 
@@ -30,7 +30,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\DateTime')) {
                 throw new \InvalidArgumentException(
                     sprintf(
                         /* translators: %s Argument name. */
-                        esc_html__('The %s must be string.', 'rd-downloads')
+                        esc_html__('The %s must be string.', 'rundiz-downloads')
                         , '$datetime_gmt'
                     )
                 );

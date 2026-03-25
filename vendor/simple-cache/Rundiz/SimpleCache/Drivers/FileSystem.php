@@ -8,9 +8,9 @@
  */
 
 
-namespace RdDownloads\Rundiz\SimpleCache\Drivers;
+namespace RundizDownloads\Rundiz\SimpleCache\Drivers;
 
-use RdDownloads\Rundiz\SimpleCache\SimpleCacheInterface;
+use RundizDownloads\Rundiz\SimpleCache\SimpleCacheInterface;
 
 /**
  * File system driver class. For to create, read, update, delete the cache data in file system.

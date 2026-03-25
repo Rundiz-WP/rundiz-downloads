@@ -2,13 +2,13 @@
 /**
  * The plugin database structure for use on activation.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Models;
+namespace RundizDownloads\App\Models;
 
-if (!class_exists('\\RdDownloads\\App\\Models\\PluginDbStructure')) {
+if (!class_exists('\\RundizDownloads\\App\\Models\\PluginDbStructure')) {
     class PluginDbStructure
     {
 
@@ -18,7 +18,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\PluginDbStructure')) {
          * 
          * The db schema will be use by WordPress Db Delta.
          * If you do not want to create any tables for this plugin then set this method to return empty array.
-         * Please read more about db version at \RdDownloads\App\AppTrait->db_version property.
+         * Please read more about db version at \RundizDownloads\App\AppTrait->db_version property.
          * 
          * Limitation:
          * - DO NOT use back tick (`) anywhere because it will be thrown the error.

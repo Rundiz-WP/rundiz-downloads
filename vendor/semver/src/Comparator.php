@@ -9,9 +9,9 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace RdDownloads\Composer\Semver;
+namespace RundizDownloads\Composer\Semver;
 
-use RdDownloads\Composer\Semver\Constraint\Constraint;
+use RundizDownloads\Composer\Semver\Constraint\Constraint;
 
 class Comparator
 {

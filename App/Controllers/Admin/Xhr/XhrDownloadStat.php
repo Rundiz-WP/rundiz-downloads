@@ -2,16 +2,16 @@
 /**
  * XHR download stat for dashboard widget.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Xhr;
+namespace RundizDownloads\App\Controllers\Admin\Xhr;
 
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat')) {
-    class XhrDownloadStat extends \RdDownloads\App\Controllers\XhrBased implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat')) {
+    class XhrDownloadStat extends \RundizDownloads\App\Controllers\XhrBased implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
@@ -44,7 +44,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
             sort($output['part_date_gmt'], SORT_NATURAL);
 
             $cacheKey = 'rd-downloads.dashboard-widget.all-downloads-daily-stat.blog-id-' . get_current_blog_id();
-            $SimpleCache = new \RdDownloads\App\Libraries\Cache();
+            $SimpleCache = new \RundizDownloads\App\Libraries\Cache();
             $results = $SimpleCache->getInstance()->get($cacheKey);
 
             if (false === $results) {
@@ -164,7 +164,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat'
             }
 
             $cacheKey = 'rd-downloads.dashboard-widget.top-results-list.blog-id-' . get_current_blog_id() . '_scope-' . $scope;
-            $SimpleCache = new \RdDownloads\App\Libraries\Cache();
+            $SimpleCache = new \RundizDownloads\App\Libraries\Cache();
             $results = $SimpleCache->getInstance()->get($cacheKey);
 
             if (false === $results) {

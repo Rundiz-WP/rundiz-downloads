@@ -2,14 +2,14 @@
 /**
  * Settings > Cache
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Settings\Xhr;
+namespace RundizDownloads\App\Controllers\Admin\Settings\Xhr;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings\\Xhr\\XhrCache')) {
-    class XhrCache extends \RdDownloads\App\Controllers\XhrBased implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings\\Xhr\\XhrCache')) {
+    class XhrCache extends \RundizDownloads\App\Controllers\XhrBased implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
@@ -20,7 +20,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings\\Xhr\\XhrCac
         {
             $this->commonAccessCheck(['post'], ['rd-downloads-settings_ajax-settings-nonce', 'security']);
 
-            $SimpleCache = new \RdDownloads\App\Libraries\Cache();
+            $SimpleCache = new \RundizDownloads\App\Libraries\Cache();
             $result = $SimpleCache->getInstance()->clear();
             unset($SimpleCache);
 

@@ -2,18 +2,18 @@
 /**
  * Loader class. This class will load anything for example: views, template, configuration file.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Libraries;
+namespace RundizDownloads\App\Libraries;
 
-if (!class_exists('\\RdDownloads\\App\\Libraries\\Loader')) {
+if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
     class Loader
     {
 
 
-        use \RdDownloads\App\AppTrait;
+        use \RundizDownloads\App\AppTrait;
 
 
         /**
@@ -24,22 +24,22 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Loader')) {
 
         /**
          * Automatic look into those controllers and register to the main App class to make it works.<br>
-         * The controllers that will be register must implement RdDownloads\App\Controllers\ControllerInterface to have registerHooks() method in it, otherwise it will be skipped.
+         * The controllers that will be register must implement RundizDownloads\App\Controllers\ControllerInterface to have registerHooks() method in it, otherwise it will be skipped.
          */
         public function autoRegisterControllers()
         {
-            $this_plugin_dir = dirname(RDDOWNLOADS_FILE);
+            $this_plugin_dir = dirname(RUNDIZDOWNLOADS_FILE);
             $file_list = $this->getClassFileList($this_plugin_dir . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR . 'Controllers');
 
             if (is_array($file_list)) {
                 foreach ($file_list as $file) {
-                    $this_file_classname = '\\RdDownloads' . str_replace([$this_plugin_dir, '.php', '/'], ['', '', '\\'], $file);
+                    $this_file_classname = '\\RundizDownloads' . str_replace([$this_plugin_dir, '.php', '/'], ['', '', '\\'], $file);
                     if (class_exists($this_file_classname)) {
                         $TestClass = new \ReflectionClass($this_file_classname);
                         if (
                             !$TestClass->isAbstract() && 
                             !$TestClass->isTrait() && 
-                            $TestClass->implementsInterface('\\RdDownloads\\App\\Controllers\\ControllerInterface')
+                            $TestClass->implementsInterface('\\RundizDownloads\\App\\Controllers\\ControllerInterface')
                         ) {
                             if ($TestClass->hasMethod('registerHooks')) {
                                 $ControllerClass = new $this_file_classname();
@@ -109,12 +109,12 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Loader')) {
             }
             unset($config_values);
 
-            $this_plugin_dir = dirname(RDDOWNLOADS_FILE);
+            $this_plugin_dir = dirname(RUNDIZDOWNLOADS_FILE);
             $file_list = $this->getClassFileList($this_plugin_dir . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR . 'Update' . DIRECTORY_SEPARATOR . 'Manual');
 
             if (is_array($file_list) && !empty($file_list)) {
                 foreach ($file_list as $file) {
-                    $this_file_classname = '\\RdDownloads' . str_replace([$this_plugin_dir, '.php', '/'], ['', '', '\\'], $file);
+                    $this_file_classname = '\RundizDownloads' . str_replace([$this_plugin_dir, '.php', '/'], ['', '', '\\'], $file);
                     if (class_exists($this_file_classname)) {
                         $TestClass = new \ReflectionClass($this_file_classname);
                         if (!$TestClass->isAbstract() && !$TestClass->isTrait()) {
@@ -194,7 +194,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Loader')) {
                 // if template found in the theme location.
             } else {
                 // if template was not found in theme location.
-                $template_path = plugin_dir_path(RDDOWNLOADS_FILE) . 'templates/' . $view_name . '.php';
+                $template_path = plugin_dir_path(RUNDIZDOWNLOADS_FILE) . 'templates/' . $view_name . '.php';
                 if (!is_file($template_path)) {
                     // if not found the template file in plugin itself.
                     // throw the error to notice the developers.
@@ -202,7 +202,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Loader')) {
                     throw new \Exception(
                         sprintf(
                             /* translators: %s: Template path. */
-                            esc_html__('The template file was not found. (%s)', 'rd-downloads'), 
+                            esc_html__('The template file was not found. (%s)', 'rundiz-downloads'), 
                             $template_path// phpcs:ignore
                         )
                     );
@@ -252,7 +252,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Loader')) {
                 trigger_error(
                     sprintf(
                         /* translators: %s: Path to template file to show in error. */
-                        esc_html__('The views file was not found (%s).', 'rd-downloads'), 
+                        esc_html__('The views file was not found (%s).', 'rundiz-downloads'), 
                         str_replace(['\\', '/'], '/', $templateFile)// phpcs:ignore
                     ),
                     E_USER_WARNING

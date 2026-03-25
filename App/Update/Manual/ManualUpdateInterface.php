@@ -2,13 +2,13 @@
 /**
  * The manual update for running new version of code.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Update\Manual;
+namespace RundizDownloads\App\Update\Manual;
 
-if (!interface_exists('\\RdDownloads\\App\\Update\\Manual\\ManualUpdateInterface')) {
+if (!interface_exists('\\RundizDownloads\\App\\Update\\Manual\\ManualUpdateInterface')) {
     interface ManualUpdateInterface
     {
 

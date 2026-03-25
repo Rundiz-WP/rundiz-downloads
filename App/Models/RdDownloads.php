@@ -2,14 +2,14 @@
 /**
  * Rundiz Downloads table (rd_downloads).
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
-namespace RdDownloads\App\Models;
+namespace RundizDownloads\App\Models;
 
-if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloads')) {
+if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
     class RdDownloads
     {
 
@@ -402,7 +402,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloads')) {
             global $wpdb;
 
             if (isset($data['download_url']) && !isset($data['download_file_name'])) {
-                $FileSystem = new \RdDownloads\App\Libraries\FileSystem();
+                $FileSystem = new \RundizDownloads\App\Libraries\FileSystem();
                 $fileParts = $FileSystem->getFilePart($data['download_url']);
                 if (isset($fileParts['nameext'])) {
                     $data['download_file_name'] = $fileParts['nameext'];

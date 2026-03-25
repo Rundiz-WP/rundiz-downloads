@@ -1,5 +1,5 @@
 <div class="wrap">
-    <h1><?php esc_html_e('Downloads Settings', 'rd-downloads'); ?></h1>
+    <h1><?php esc_html_e('Downloads Settings', 'rundiz-downloads'); ?></h1>
 
     <?php if (isset($form_result_class) && isset($form_result_msg)) { ?> 
     <div class="<?php esc_attr_e($form_result_class); ?> notice is-dismissible">

@@ -4,19 +4,19 @@
  *
  * This file will be working on GitHub send push event to this site.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Front\Hooks\Query\GithubAutoUpdatePage;
+namespace RundizDownloads\App\Controllers\Front\Hooks\Query\GithubAutoUpdatePage;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubAutoUpdatePage\\GithubAutoUpdatePage')) {
-    class GithubAutoUpdatePage extends \RdDownloads\App\Controllers\Front\ControllerBased
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubAutoUpdatePage\\GithubAutoUpdatePage')) {
+    class GithubAutoUpdatePage extends \RundizDownloads\App\Controllers\Front\ControllerBased
     {
 
 
         /**
-         * @var \RdDownloads\App\Libraries\Github
+         * @var \RundizDownloads\App\Libraries\Github
          */
         protected $Github;
 
@@ -28,12 +28,12 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
 
 
         /**
-         * @var \RdDownloads\App\Models\RdDownloads The `RdDownloads` model.
+         * @var \RundizDownloads\App\Models\RdDownloads The `RdDownloads` model.
          */
         protected $RdDownloads;
 
 
-        use \RdDownloads\App\AppTrait;
+        use \RundizDownloads\App\AppTrait;
 
 
         /**
@@ -43,7 +43,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
         {
             $this->getOptions();
 
-            $this->Github = new \RdDownloads\App\Libraries\Github();
+            $this->Github = new \RundizDownloads\App\Libraries\Github();
             $this->payloadObject = null;
             $this->RdDownloads = null;
         }// __construct
@@ -55,7 +55,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
         public function pageIndex()
         {
             // set page title.
-            $this->setTitle(__('Rundiz Downloads', 'rd-downloads'));
+            $this->setTitle(__('Rundiz Downloads', 'rundiz-downloads'));
 
             $phpinput = file_get_contents('php://input');
             $this->Github->webhook(getallheaders(), $phpinput);
@@ -165,7 +165,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
          *
          * @global \wpdb $wpdb
          * @param array $results The query results from DB where it contain matched `download_github_name` field.
-         * @param array $latestData The latest data from `\RdDownloads\App\Libraries\GitHub::apiGetLatestRepositoryData()` method.
+         * @param array $latestData The latest data from `\RundizDownloads\App\Libraries\GitHub::apiGetLatestRepositoryData()` method.
          * @return array Return array with "responseStatus" and other keys.
          */
         private function subGithubPushDoUpdateData(array $results, array $latestData)
@@ -192,7 +192,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
 
                     if (false !== $updateResult) {
                         // if update success.
-                        $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
+                        $RdDownloadLogs = new \RundizDownloads\App\Models\RdDownloadLogs();
                         $RdDownloadLogs->writeLog('github_autoupdate', [
                             'download_id' => $downloadRow->download_id,
                         ]);
@@ -229,7 +229,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
          *
          * This method was called from `subGithubPushDoUpdateData()` method.
          *
-         * @param array $latestData The latest data from `\RdDownloads\App\Libraries\GitHub::apiGetLatestRepositoryData()` method.
+         * @param array $latestData The latest data from `\RundizDownloads\App\Libraries\GitHub::apiGetLatestRepositoryData()` method.
          * @param string $version_range The version range.
          * @param array $download_options Download options in DB.
          * @return array Return the associate array where table field is key.
@@ -260,11 +260,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
                     break;
                 } else {
                     // if version range was set
-                    if (isset($item['version']) && \RdDownloads\Composer\Semver\Semver::satisfies($item['version'], $version_range)) {
+                    if (isset($item['version']) && \RundizDownloads\Composer\Semver\Semver::satisfies($item['version'], $version_range)) {
                         // if matched version range.
                         if (
                             isset($download_options['opt_download_version']) &&
-                            \RdDownloads\Composer\Semver\Semver::satisfies($item['version'], '=' . $download_options['opt_download_version'])
+                            \RundizDownloads\Composer\Semver\Semver::satisfies($item['version'], '=' . $download_options['opt_download_version'])
                         ) {
                             // if got version from GitHub as same as the version on DB.
                             // skip it.
@@ -317,7 +317,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
                     empty($download_options['opt_download_version_range']) &&
                     !empty($download_options['opt_download_version'])
                 ) {
-                    $Semver = new \RdDownloads\App\Libraries\Semver();
+                    $Semver = new \RundizDownloads\App\Libraries\Semver();
                     $version_range = $Semver->getDefaultVersionConstraint($download_options['opt_download_version']);
                     unset($Semver);
                 } else {
@@ -341,12 +341,12 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubA
             $responseStatus = 200;
             $output = [];
 
-            \RdDownloads\App\Libraries\Logger::staticDebugLog($this->payloadObject, 'github-payload-' . current_time('Ymd-Hi'));
+            \RundizDownloads\App\Libraries\Logger::staticDebugLog($this->payloadObject, 'github-payload-' . current_time('Ymd-Hi'));
 
             if (isset($this->payloadObject->repository->url) && isset($this->payloadObject->repository->full_name)) {
                 // if payload object contain url, owner name with repository name (owner/reponame).
                 // get the data in db to check.
-                $this->RdDownloads = new \RdDownloads\App\Models\RdDownloads();
+                $this->RdDownloads = new \RundizDownloads\App\Models\RdDownloads();
                 $options = [];
                 $options['download_github_name'] = $this->payloadObject->repository->full_name;
                 $results = $this->RdDownloads->listItems($options);

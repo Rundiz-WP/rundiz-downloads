@@ -2,14 +2,14 @@
 /**
  * Bulk actions for logs.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Downloads\Xhr;
+namespace RundizDownloads\App\Controllers\Admin\Downloads\Xhr;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrLogsBulkActions')) {
-    class XhrLogsBulkActions extends \RdDownloads\App\Controllers\XhrBased implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrLogsBulkActions')) {
+    class XhrLogsBulkActions extends \RundizDownloads\App\Controllers\XhrBased implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
@@ -39,7 +39,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrLo
             unset($bulkAction);
 
             $output['form_result_class'] = 'notice-error';
-            $output['form_result_msg'] = __('Invalid form action, please try again.', 'rd-downloads');
+            $output['form_result_msg'] = __('Invalid form action, please try again.', 'rundiz-downloads');
             wp_send_json($output, 400);
         }// bulkActions
 
@@ -61,7 +61,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrLo
             $responseStatus = 200;
             $output = [];
 
-            $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
+            $RdDownloadLogs = new \RundizDownloads\App\Models\RdDownloadLogs();
             $clearResult = $RdDownloadLogs->clearLogs();
             unset($RdDownloadLogs);
 
@@ -70,7 +70,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrLo
                 $output['form_result_msg'] = $clearResult['delete_error'];
             } else {
                 $output['form_result_class'] = 'notice-success';
-                $output['form_result_msg'] = __('All logs were cleared.', 'rd-downloads');
+                $output['form_result_msg'] = __('All logs were cleared.', 'rundiz-downloads');
             }
 
             wp_send_json($output, $responseStatus);

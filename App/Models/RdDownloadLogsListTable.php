@@ -2,14 +2,14 @@
 /**
  * Rundiz Download Logs list table.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
-namespace RdDownloads\App\Models;
+namespace RundizDownloads\App\Models;
 
-if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
+if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
     /**
      * List data into table.
      * Warning! Do not modify method name because they are extended from WP_List_Table class of WordPress. Changing the method name may cause program error.
@@ -23,7 +23,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
     {
 
 
-        use \RdDownloads\App\AppTrait;
+        use \RundizDownloads\App\AppTrait;
 
 
         /**
@@ -40,7 +40,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
                     if (!empty($item->{$column_name})) {
                         $output .= $item->{$column_name};
                     } else {
-                        $output .= __('Unknow', 'rd-downloads');
+                        $output .= __('Unknow', 'rundiz-downloads');
                     }
                     if (intval($item->user_id) === get_current_user_id() || (intval($item->user_id) !== get_current_user_id() && current_user_can('edit_others_posts'))) {
                         $output .= '</a>';
@@ -85,37 +85,37 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
 
             switch ($item->dl_status) {
                 case 'admin_insert':
-                    $output .= __('Admin add new item', 'rd-downloads');
+                    $output .= __('Admin add new item', 'rundiz-downloads');
                     break;
                 case 'admin_update':
-                    $output .= __('Admin update an item', 'rd-downloads');
+                    $output .= __('Admin update an item', 'rundiz-downloads');
                     break;
                 case 'admin_delete':
-                    $output .= __('Admin delete an item', 'rd-downloads');
+                    $output .= __('Admin delete an item', 'rundiz-downloads');
                     break;
                 case 'admin_clear_logs':
-                    $output .= __('Admin clear logs', 'rd-downloads');
+                    $output .= __('Admin clear logs', 'rundiz-downloads');
                     break;
                 case 'auto_purge_old_logs':
-                    $output .= __('Auto purge old logs', 'rd-downloads');
+                    $output .= __('Auto purge old logs', 'rundiz-downloads');
                     break;
                 case 'github_autoupdate':
-                    $output .= __('GitHub auto update', 'rd-downloads');
+                    $output .= __('GitHub auto update', 'rundiz-downloads');
                     break;
                 case 'user_dl_success':
-                    $output .= __('User download success', 'rd-downloads');
+                    $output .= __('User download success', 'rundiz-downloads');
                     break;
                 case 'user_dl_error':
-                    $output .= __('User download failed', 'rd-downloads');
+                    $output .= __('User download failed', 'rundiz-downloads');
                     break;
                 case 'user_dl_banned':
-                    $output .= __('User download banned', 'rd-downloads');
+                    $output .= __('User download banned', 'rundiz-downloads');
                     break;
                 case 'user_dl_wr_captcha':// from previous version, keep it here.
-                    $output .= __('User enter wrong captcha code', 'rd-downloads');
+                    $output .= __('User enter wrong captcha code', 'rundiz-downloads');
                     break;
                 case 'user_dl_antbotfailed':
-                    $output .= __('User has failed to verify antibot', 'rd-downloads');
+                    $output .= __('User has failed to verify antibot', 'rundiz-downloads');
                     break;
                 default:
                     $output .= $item->dl_status;
@@ -141,7 +141,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
             global $rd_downloads_options;
 
             $actions = [];
-            $actions['clearlogs'] = __('Clear', 'rd-downloads');
+            $actions['clearlogs'] = __('Clear', 'rundiz-downloads');
 
             return $actions;
         }// get_bulk_actions
@@ -153,13 +153,13 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
         public function get_columns()
         {
             $columns = [
-                'download_name' => __('Downloads name', 'rd-downloads'),
-                'user_id' => __('User', 'rd-downloads'),
-                'dl_status' => __('Status', 'rd-downloads'),
-                'dl_ip' => __('IP Address', 'rd-downloads'),
-                'dl_user_agent' => __('User agent', 'rd-downloads'),
-                'dl_referrer' => __('Referrer', 'rd-downloads'),
-                'dl_date_gmt' => __('Date', 'rd-downloads'),
+                'download_name' => __('Downloads name', 'rundiz-downloads'),
+                'user_id' => __('User', 'rundiz-downloads'),
+                'dl_status' => __('Status', 'rundiz-downloads'),
+                'dl_ip' => __('IP Address', 'rundiz-downloads'),
+                'dl_user_agent' => __('User agent', 'rundiz-downloads'),
+                'dl_referrer' => __('Referrer', 'rundiz-downloads'),
+                'dl_date_gmt' => __('Date', 'rundiz-downloads'),
             ];
 
             return $columns;
@@ -216,7 +216,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
 
             // all items
             $class = (is_null($filter_download_id) && is_null($filter_user_id) ? ' class="current"' : '');
-            $views['all'] = '<a' . $class . ' href="' . esc_url(remove_query_arg(['filter_download_id', 'filter_user_id'])) . '">' . __('All', 'rd-downloads') . ' <span class="count">(' . $wpdb->get_var($sql) . ')</span></a>';
+            $views['all'] = '<a' . $class . ' href="' . esc_url(remove_query_arg(['filter_download_id', 'filter_user_id'])) . '">' . __('All', 'rundiz-downloads') . ' <span class="count">(' . $wpdb->get_var($sql) . ')</span></a>';
             unset($class);
 
             // filtered user
@@ -225,10 +225,10 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
                 $options['user_id'] = $filter_user_id;
                 $sqlFiltered = $RdDownloadLogs->get($options);
                 /* translators: %s: Link to edit user. */
-                $views['filtered_user'] = '<strong>' . sprintf(__('Filtered user: %s', 'rd-downloads'), '<a href="' . esc_url(get_edit_user_link($filter_user_id)) . '" target="editUser">' . $User->display_name . ' <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>') . '</strong>';
+                $views['filtered_user'] = '<strong>' . sprintf(__('Filtered user: %s', 'rundiz-downloads'), '<a href="' . esc_url(get_edit_user_link($filter_user_id)) . '" target="editUser">' . $User->display_name . ' <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>') . '</strong>';
                 unset($class, $options['user_id'], $sqlFiltered, $User);
 
-                $views['reset_filtered_user'] = '<a href="' . esc_url(remove_query_arg('filter_user_id')) . '">' . __('Reset filtered user', 'rd-downloads') . '</a>';
+                $views['reset_filtered_user'] = '<a href="' . esc_url(remove_query_arg('filter_user_id')) . '">' . __('Reset filtered user', 'rundiz-downloads') . '</a>';
             }
 
             // filtered download_id
@@ -236,10 +236,10 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
                 $options['download_id'] = $filter_download_id;
                 $sqlFiltered = $RdDownloadLogs->get($options);
                 /* translators: %s: Link to edit download. */
-                $views['filtered_download'] = '<strong>' . sprintf(__('Filtered download: %s', 'rd-downloads'), '<a href="' . esc_url(admin_url('admin.php?page=rd-downloads_edit&download_id=' . $filter_download_id)) . '" target="editDownloads"> <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>') . '</strong>';
+                $views['filtered_download'] = '<strong>' . sprintf(__('Filtered download: %s', 'rundiz-downloads'), '<a href="' . esc_url(admin_url('admin.php?page=rd-downloads_edit&download_id=' . $filter_download_id)) . '" target="editDownloads"> <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>') . '</strong>';
                 unset($class, $options['user_id'], $sqlFiltered, $User);
 
-                $views['reset_filtered_download'] = '<a href="' . esc_url(remove_query_arg('filter_user_id')) . '">' . __('Reset filtered download', 'rd-downloads') . '</a>';
+                $views['reset_filtered_download'] = '<a href="' . esc_url(remove_query_arg('filter_user_id')) . '">' . __('Reset filtered download', 'rundiz-downloads') . '</a>';
             }
 
             unset($filter_download_id, $filter_user_id, $options, $RdDownloadLogs);
@@ -262,14 +262,14 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadLogsListTable')) {
                 $actions['filter_download'] = sprintf(
                     '<a href="%s">%s</a>',
                     esc_url(add_query_arg('filter_download_id', $item->download_id)),
-                    __('Filter download', 'rd-downloads')
+                    __('Filter download', 'rundiz-downloads')
                 );
             }
 
             $actions['filter_user'] = sprintf(
                 '<a href="%s">%s</a>',
                 esc_url(add_query_arg('filter_user_id', $item->user_id)),
-                __('Filter user', 'rd-downloads')
+                __('Filter user', 'rundiz-downloads')
             );
 
             return $this->row_actions($actions);

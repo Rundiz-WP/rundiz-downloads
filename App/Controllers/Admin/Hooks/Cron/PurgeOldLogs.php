@@ -2,19 +2,19 @@
 /**
  * Purge old logs
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Hooks\Cron;
+namespace RundizDownloads\App\Controllers\Admin\Hooks\Cron;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\Cron\\PurgeOldLogs')) {
-    class PurgeOldLogs implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\Cron\\PurgeOldLogs')) {
+    class PurgeOldLogs implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
-        use \RdDownloads\App\AppTrait;
+        use \RundizDownloads\App\AppTrait;
 
 
         /**
@@ -48,7 +48,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\Cron\\PurgeOld
             );
 
             if (false !== $result && $result > 0) {
-                $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
+                $RdDownloadLogs = new \RundizDownloads\App\Models\RdDownloadLogs();
                 $RdDownloadLogs->writeLog('auto_purge_old_logs');
                 unset($RdDownloadLogs);
             } elseif (false === $result) {

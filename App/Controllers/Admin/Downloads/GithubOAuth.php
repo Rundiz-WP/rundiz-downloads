@@ -2,13 +2,13 @@
 /**
  * Use GitHub OAuth to connect with this site.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Downloads;
+namespace RundizDownloads\App\Controllers\Admin\Downloads;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAuth')) {
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAuth')) {
     /**
      * Use GitHub OAuth to connect with this site.
      *
@@ -18,12 +18,12 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
     {
 
 
-        use \RdDownloads\App\AppTrait;
+        use \RundizDownloads\App\AppTrait;
 
 
         /**
          * @var string|object Contain string of access token, contain object if error, empty string if it was not set.
-         * @see \RdDownloads\App\Libraries\Github::oauthGetAccessToken()
+         * @see \RundizDownloads\App\Libraries\Github::oauthGetAccessToken()
          */
         protected $accessToken;
 
@@ -42,7 +42,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
 
 
         /**
-         * @var \RdDownloads\App\Libraries\Github GitHub class.
+         * @var \RundizDownloads\App\Libraries\Github GitHub class.
          */
         protected $Github;
 
@@ -77,7 +77,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
          */
         public function __construct()
         {
-            $this->Github = new \RdDownloads\App\Libraries\Github();
+            $this->Github = new \RundizDownloads\App\Libraries\Github();
         }// __construct
 
 
@@ -87,7 +87,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
         public function adminHelpTab()
         {
             $screen = get_current_screen();
-            $Loader = new \RdDownloads\App\Libraries\Loader();
+            $Loader = new \RundizDownloads\App\Libraries\Loader();
 
             ob_start();
             $Loader->loadView('admin/Downloads/GithubOAuth/helpTab/permission_v');
@@ -95,7 +95,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
             ob_end_clean();
             $screen->add_help_tab([
                 'id' => 'rd-downloads-logs-helptab-permission',
-                'title' => __('Permissions', 'rd-downloads'),
+                'title' => __('Permissions', 'rundiz-downloads'),
                 'content' => $content,
             ]);
             unset($content);
@@ -107,7 +107,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
                 ob_end_clean();
                 $screen->add_help_tab([
                     'id' => 'rd-downloads-logs-helptab-webhook',
-                    'title' => __('GitHub Webhook', 'rd-downloads'),
+                    'title' => __('GitHub Webhook', 'rundiz-downloads'),
                     'content' => $content,
                 ]);
                 unset($content);
@@ -146,7 +146,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
                 !empty($rd_downloads_options['rdd_github_client_id']) &&
                 !empty($rd_downloads_options['rdd_github_client_secret'])
             ) {
-                $hook_suffix = add_submenu_page('rd-downloads', __('GitHub OAuth', 'rd-downloads'), __('GitHub OAuth', 'rd-downloads'), 'upload_files', 'rd-downloads_github_connect', [$this, 'pageIndex']);
+                $hook_suffix = add_submenu_page(Menu::MENU_SLUG, __('GitHub OAuth', 'rundiz-downloads'), __('GitHub OAuth', 'rundiz-downloads'), 'upload_files', 'rd-downloads_github_connect', [$this, 'pageIndex']);
                 $this->hook_suffix = $hook_suffix;
                 if (is_string($hook_suffix)) {
                     add_action('load-' . $hook_suffix, [$this, 'headerWorks']);
@@ -258,7 +258,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
                         }
                         unset($userGitHubSecret);
 
-                        \RdDownloads\App\Libraries\Cookies::setCookie($this->Github->getOAuthAccessTokenName(), $this->accessToken);
+                        \RundizDownloads\App\Libraries\Cookies::setCookie($this->Github->getOAuthAccessTokenName(), $this->accessToken);
                         unset($accessTokenCookie, $githubReturnCode, $githubReturnState);
 
                         wp_safe_redirect($this->thisPageUrl);
@@ -303,7 +303,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
                     // if failed to verify nonce.
                     $output['form_result_class'] = 'notice-error';
                     /* translators: %1$s: Open link, %2$s: Close link. */
-                    $output['form_result_msg'] = sprintf(__('Please %1$sgo back%2$s and try again.', 'rd-downloads'), '<a href="' . esc_url($output['thisPageUrl']) . '">', '</a>');
+                    $output['form_result_msg'] = sprintf(__('Please %1$sgo back%2$s and try again.', 'rundiz-downloads'), '<a href="' . esc_url($output['thisPageUrl']) . '">', '</a>');
                 } else {
                     // if success verify nonce.
                     if (is_object($this->accessToken) && isset($this->accessToken->error_description) && isset($this->accessToken->error_uri)) {
@@ -311,14 +311,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
                         $output['form_result_class'] = 'notice-error';
                         $output['form_result_msg'] = $this->accessToken->error_description;
                         /* translators: %1$s: Open link, %2$s: The link URL, %3$s: Close link. */
-                        $output['form_result_msg'] .= '<br>' . sprintf(__('%1$s%2$s%3$s.', 'rd-downloads'), '<a href="' . $this->accessToken->error_uri . '" target="github_accesstoken_error">', $this->accessToken->error_uri, '</a>');
+                        $output['form_result_msg'] .= '<br>' . sprintf(__('%1$s%2$s%3$s.', 'rundiz-downloads'), '<a href="' . $this->accessToken->error_uri . '" target="github_accesstoken_error">', $this->accessToken->error_uri, '</a>');
                         /* translators: %1$s: Open link, %2$s: Close link. */
-                        $output['form_result_msg'] .= '<br><br>' . sprintf(__('Please %1$sgo back%2$s and try again.', 'rd-downloads'), '<a href="' . esc_url($output['thisPageUrl']) . '">', '</a>');
+                        $output['form_result_msg'] .= '<br><br>' . sprintf(__('Please %1$sgo back%2$s and try again.', 'rundiz-downloads'), '<a href="' . esc_url($output['thisPageUrl']) . '">', '</a>');
                     }
                 }
             } elseif (3 === $this->connectStep) {
                 // if 3rd step, list user's repositories.
-                $GitHubOAuthListTable = new \RdDownloads\App\Models\GitHubOAuthListTable();
+                $GitHubOAuthListTable = new \RundizDownloads\App\Models\GitHubOAuthListTable();
                 $prepareResult = $GitHubOAuthListTable->prepare_items([
                     'Github' => $this->Github,
                     'accessToken' => $this->accessToken,
@@ -339,7 +339,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
                         $output['form_result_class'] = 'notice-error';
                         $output['form_result_msg'] = $prepareResult['responseBody']->message;
                         /* translators: %1$s: Open link, %2$s: Close link. */
-                        $output['form_result_msg'] .= '<br><br>' . sprintf(__('Please %1$sdisconnect from GitHub OAuth%2$s and try again.', 'rd-downloads'), '<a href="' . esc_url(admin_url('admin.php?page=rd-downloads_github_connect&subpage=disconnect')) . '">', '</a>');
+                        $output['form_result_msg'] .= '<br><br>' . sprintf(__('Please %1$sdisconnect from GitHub OAuth%2$s and try again.', 'rundiz-downloads'), '<a href="' . esc_url(admin_url('admin.php?page=rd-downloads_github_connect&subpage=disconnect')) . '">', '</a>');
                     }
                 } else {
                     if (is_array($prepareResult)) {
@@ -351,7 +351,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
                 unset($prepareResult);
             }// endif; check what is current step.
 
-            $Loader = new \RdDownloads\App\Libraries\Loader();
+            $Loader = new \RundizDownloads\App\Libraries\Loader();
             $Loader->loadView('admin/Downloads/GithubOAuth/pageIndex_v', $output);
             unset($Loader);
         }// pageIndex
@@ -368,18 +368,18 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
                 return;
             }
 
-            wp_enqueue_script('rd-downloads-github-connect-page-index', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/admin/Downloads/GithubOAuth/pageIndex.js', ['jquery', 'rd-downloads-common-functions'], RDDOWNLOADS_VERSION, true);
+            wp_enqueue_script('rd-downloads-github-connect-page-index', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/admin/Downloads/GithubOAuth/pageIndex.js', ['jquery', 'rd-downloads-common-functions'], RUNDIZDOWNLOADS_VERSION, true);
             wp_localize_script(
                 'rd-downloads-github-connect-page-index',
                 'RdDownloads',
                 [
                     'currentUserId' => $this->currentUserId,
                     'nonce' => wp_create_nonce($this->nonceAction),
-                    'txtAreYouSureRegenerateSecret' => __('Are you sure?', 'rd-downloads') . "\n\n" . __('You have to sync the secret key with your GitHub repositories again to make the auto update works.', 'rd-downloads'),
-                    'txtExists' => __('Exists', 'rd-downloads'),
-                    'txtNotExists' => __('Not exists', 'rd-downloads'),
-                    'txtRegenerating' => __('Re-generating the secret key, please wait.', 'rd-downloads'),
-                    'txtSyncing' => __('Synchronizing, please wait.', 'rd-downloads'),
+                    'txtAreYouSureRegenerateSecret' => __('Are you sure?', 'rundiz-downloads') . "\n\n" . __('You have to sync the secret key with your GitHub repositories again to make the auto update works.', 'rundiz-downloads'),
+                    'txtExists' => __('Exists', 'rundiz-downloads'),
+                    'txtNotExists' => __('Not exists', 'rundiz-downloads'),
+                    'txtRegenerating' => __('Re-generating the secret key, please wait.', 'rundiz-downloads'),
+                    'txtSyncing' => __('Synchronizing, please wait.', 'rundiz-downloads'),
                 ]
             );
         }// registerScripts
@@ -397,7 +397,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
             }
 
             wp_enqueue_style('rd-downloads-font-awesome5');
-            wp_enqueue_style('rd-downloads-github-connect-page-index', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/css/admin/Downloads/GithubOAuth/pageIndex.css', [], RDDOWNLOADS_VERSION);
+            wp_enqueue_style('rd-downloads-github-connect-page-index', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/admin/Downloads/GithubOAuth/pageIndex.css', [], RUNDIZDOWNLOADS_VERSION);
         }// registerStyles
 
 
@@ -416,7 +416,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAut
 
             $output['thisPageUrl'] = $this->thisPageUrl;
 
-            $Loader = new \RdDownloads\App\Libraries\Loader();
+            $Loader = new \RundizDownloads\App\Libraries\Loader();
             $Loader->loadView('admin/Downloads/GithubOAuth/subPageDisconnect_v', $output);
             unset($Loader, $output);
         }// subPageDisconnect

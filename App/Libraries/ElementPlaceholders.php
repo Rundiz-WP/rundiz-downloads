@@ -2,12 +2,12 @@
 /**
  * Element placeholders.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
-namespace RdDownloads\App\Libraries;
+namespace RundizDownloads\App\Libraries;
 
-if (!class_exists('\\RdDownloads\\App\\Libraries\\ElementPlaceholders')) {
+if (!class_exists('\\RundizDownloads\\App\\Libraries\\ElementPlaceholders')) {
     class ElementPlaceholders
     {
 
@@ -54,16 +54,16 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\ElementPlaceholders')) {
         public function textPlaceholders()
         {
             return [
-                'txt_download' => __('Download', 'rd-downloads'),
-                'txt_download_name' => __('Downloads name', 'rd-downloads'),
-                'txt_github_name' => __('GitHub repository name', 'rd-downloads'),
-                'txt_size' => __('Size', 'rd-downloads'),
-                'txt_file_name' => __('File name', 'rd-downloads'),
-                'txt_file_size' => __('File size', 'rd-downloads'),
-                'txt_create_on' => __('Create on', 'rd-downloads'),
-                'txt_last_update' => __('Last update', 'rd-downloads'),
-                'txt_total_download' => __('Total download', 'rd-downloads'),
-                'txt_version' => __('Version', 'rd-downloads'),
+                'txt_download' => __('Download', 'rundiz-downloads'),
+                'txt_download_name' => __('Downloads name', 'rundiz-downloads'),
+                'txt_github_name' => __('GitHub repository name', 'rundiz-downloads'),
+                'txt_size' => __('Size', 'rundiz-downloads'),
+                'txt_file_name' => __('File name', 'rundiz-downloads'),
+                'txt_file_size' => __('File size', 'rundiz-downloads'),
+                'txt_create_on' => __('Create on', 'rundiz-downloads'),
+                'txt_last_update' => __('Last update', 'rundiz-downloads'),
+                'txt_total_download' => __('Total download', 'rundiz-downloads'),
+                'txt_version' => __('Version', 'rundiz-downloads'),
             ];
         }// textPlaceholders
 

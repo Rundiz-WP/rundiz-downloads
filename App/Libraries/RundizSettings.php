@@ -6,12 +6,12 @@
  */
 
 
-namespace RdDownloads\App\Libraries;
+namespace RundizDownloads\App\Libraries;
 
 /**
  * Rundiz Settings class for render pre-setup values. This will render tabs, form fields and content in each tabs.
  */
-if (!class_exists('\\RdDownloads\\App\\Libraries\\RundizSettings')) {
+if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
     class RundizSettings
     {
 
@@ -36,7 +36,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\RundizSettings')) {
                 wp_die('Settings configuration file was not set.');
             }
 
-            $loader = new \RdDownloads\App\Libraries\Loader();
+            $loader = new \RundizDownloads\App\Libraries\Loader();
             return $loader->loadConfig($setting_file);
         }// getConfigFile
 
@@ -656,8 +656,8 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\RundizSettings')) {
                 }
                 $output .= '</div>'."\n";
             }
-            $output .= '<input type="button" class="button-secondary upload-media-button" value="'.__('Upload', 'rd-downloads').'" data-input_target="'.$field_name.'">'."\n";
-            $output .= '<input type="button" class="button-secondary remove-media-button" value="'.__('Remove', 'rd-downloads').'" data-input_target="'.$field_name.'">'."\n";
+            $output .= '<input type="button" class="button-secondary upload-media-button" value="'.__('Upload', 'rundiz-downloads').'" data-input_target="'.$field_name.'">'."\n";
+            $output .= '<input type="button" class="button-secondary remove-media-button" value="'.__('Remove', 'rundiz-downloads').'" data-input_target="'.$field_name.'">'."\n";
 
             unset($field_name, $field_values, $preview_mode);
             return $output;

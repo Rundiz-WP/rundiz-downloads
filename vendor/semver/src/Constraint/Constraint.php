@@ -9,7 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace RdDownloads\Composer\Semver\Constraint;
+namespace RundizDownloads\Composer\Semver\Constraint;
 
 /**
  * Defines a constraint.

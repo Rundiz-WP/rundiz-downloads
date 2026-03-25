@@ -9,7 +9,7 @@
  */
 
 
-namespace RdDownloads\Rundiz\SimpleCache;
+namespace RundizDownloads\Rundiz\SimpleCache;
 
 /**
  * Interface for cache drivers.

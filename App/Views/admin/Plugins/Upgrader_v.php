@@ -1,5 +1,5 @@
 <div class="wrap">
-    <h1><?php esc_html_e('Manual update', 'rd-downloads'); ?></h1>
+    <h1><?php esc_html_e('Manual update', 'rundiz-downloads'); ?></h1>
 
     <?php if (isset($form_result_class) && isset($form_result_msg)) { ?> 
     <div class="<?php esc_attr_e($form_result_class); ?> notice is-dismissible">
@@ -15,13 +15,13 @@
         <?php wp_nonce_field(); ?> 
         <p><?php 
         /* translators: %d: Number of total manual update actions. */
-        printf(esc_html__('There are total %d actions for this manual update, please continue step by step.', 'rd-downloads'), count($manualUpdateClasses)); 
+        printf(esc_html__('There are total %d actions for this manual update, please continue step by step.', 'rundiz-downloads'), count($manualUpdateClasses)); 
         ?></p>
         <p><?php 
         /* translators: %1$s: Number with span wrapped of already action, %2$d: Number of total manual update actions. */
-        printf(esc_html__('You are running %1$s of %2$d.', 'rd-downloads'), '<span class="already-run-total-action">0</span>', count($manualUpdateClasses)); 
+        printf(esc_html__('You are running %1$s of %2$d.', 'rundiz-downloads'), '<span class="already-run-total-action">0</span>', count($manualUpdateClasses)); 
         ?></p>
-        <button class="button button-primary manual-update-action-button" type="button"><?php esc_html_e('Start', 'rd-downloads'); ?></button> <span class="manual-update-action-placeholder"></span>
+        <button class="button button-primary manual-update-action-button" type="button"><?php esc_html_e('Start', 'rundiz-downloads'); ?></button> <span class="manual-update-action-placeholder"></span>
     </form>
 </div>
 

@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the Rundiz Downloads plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rundiz Downloads 0.1\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rd-downloads\n"
-"POT-Creation-Date: 2025-12-18T21:44:36+07:00\n"
-"PO-Revision-Date: 2025-12-18 21:45+0700\n"
+"Project-Id-Version: Rundiz Downloads\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rundiz-downloads\n"
+"POT-Creation-Date: 2026-03-25T21:41:54+07:00\n"
+"PO-Revision-Date: 2026-03-25 21:43+0700\n"
 "Last-Translator: Vee W.\n"
 "Language-Team: \n"
 "Language: th_TH\n"
@@ -13,14 +13,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.8\n"
-"X-Domain: rd-downloads\n"
+"X-Generator: Poedit 3.9\n"
+"X-Domain: rundiz-downloads\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #. Plugin Name of the plugin
-#: rd-downloads.php App/Controllers/Admin/Downloads/Menu.php:64
+#: rd-downloads.php App/Controllers/Admin/Downloads/Menu.php:70
 #: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:141
 #: App/Controllers/Front/Hooks/Query/GithubAutoUpdatePage/GithubAutoUpdatePage.php:58
 #: App/Views/admin/Hooks/DashboardWidgets/DownloadStat/displayDownloadStat_v.php:15
@@ -47,7 +47,7 @@ msgstr ""
 msgid "https://rundiz.com"
 msgstr ""
 
-#: App/AppTrait.php:134
+#: App/AppTrait.php:140
 msgid "Settings configuration file was not set."
 msgstr "ไม่ได้กำหนดไฟล์ตั้งค่า."
 
@@ -357,11 +357,11 @@ msgstr "HTML ที่จะแสดงผล"
 msgid "Basic guide"
 msgstr "คำแนะนำพื้นฐาน"
 
-#: App/Controllers/Admin/Downloads/Editing.php:101 App/Controllers/Admin/Downloads/Menu.php:77
+#: App/Controllers/Admin/Downloads/Editing.php:101 App/Controllers/Admin/Downloads/Menu.php:83
 msgid "Add new download"
 msgstr "เพิ่มดาวน์โหลดใหม่"
 
-#: App/Controllers/Admin/Downloads/Editing.php:127 App/Controllers/Admin/Downloads/Menu.php:86
+#: App/Controllers/Admin/Downloads/Editing.php:127 App/Controllers/Admin/Downloads/Menu.php:92
 msgid "Edit download"
 msgstr "แก้ไขดาวน์โหลด"
 
@@ -462,11 +462,11 @@ msgstr "ช็อตโค้ด"
 msgid "The selected files will be deleted. GitHub and any remote files will be remain."
 msgstr "ไฟล์ที่เลือกจะถูกลบ. ไฟล์ที่ปลายทางบนเซิร์ฟเวอร์อื่นๆหรือ GitHub จะยังอยู่."
 
-#: App/Controllers/Admin/Downloads/Menu.php:64 App/Views/admin/Downloads/Management/pageIndex_v.php:13
+#: App/Controllers/Admin/Downloads/Menu.php:70 App/Views/admin/Downloads/Management/pageIndex_v.php:13
 msgid "Downloads"
 msgstr "ดาวน์โหลด"
 
-#: App/Controllers/Admin/Downloads/Menu.php:77 App/Views/admin/Downloads/Management/pageIndex_v.php:15
+#: App/Controllers/Admin/Downloads/Menu.php:83 App/Views/admin/Downloads/Management/pageIndex_v.php:15
 msgid "Add New"
 msgstr "เพิ่มใหม่"
 
@@ -836,13 +836,13 @@ msgid "Version"
 msgstr "รุ่น"
 
 #. translators: %s: Template path.
-#: App/Libraries/Loader.php:201
+#: App/Libraries/Loader.php:205
 #, php-format
 msgid "The template file was not found. (%s)"
 msgstr "ไม่พบไฟล์เทมเพลท. (%s)"
 
 #. translators: %s: Path to template file to show in error.
-#: App/Libraries/Loader.php:251
+#: App/Libraries/Loader.php:255
 #, php-format
 msgid "The views file was not found (%s)."
 msgstr "ไม่พบไฟล์ views  (%s)."

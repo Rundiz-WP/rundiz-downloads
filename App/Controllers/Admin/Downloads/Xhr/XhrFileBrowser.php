@@ -2,15 +2,15 @@
 /**
  * File browser (also working with delete and upload).
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Downloads\Xhr;
+namespace RundizDownloads\App\Controllers\Admin\Downloads\Xhr;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFileBrowser')) {
-    class XhrFileBrowser extends \RdDownloads\App\Controllers\XhrBased implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFileBrowser')) {
+    class XhrFileBrowser extends \RundizDownloads\App\Controllers\XhrBased implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
@@ -37,7 +37,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
             if (stripos($target, '..') !== false) {
                 $target = '';
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('Hacking attempt!', 'rd-downloads');
+                $output['form_result_msg'] = __('Hacking attempt!', 'rundiz-downloads');
                 wp_send_json($output, 403);
             }
 
@@ -189,7 +189,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
             if (stripos($target, '..') !== false) {
                 $target = '';
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('Hacking attempt!', 'rd-downloads');
+                $output['form_result_msg'] = __('Hacking attempt!', 'rundiz-downloads');
                 wp_send_json($output, 403);
             }
             $download_id = filter_input(INPUT_POST, 'download_id', FILTER_SANITIZE_NUMBER_INT);
@@ -205,7 +205,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
                     $responseStatus = 403;
                     $output['form_result_class'] = 'notice-error';
                     /* translators: %s: list of banned files */
-                    $output['form_result_msg'] = sprintf(__('Unable to delete file that is in system file (%s).', 'rd-downloads'), '<strong>' . $bannedFile . '</strong>');
+                    $output['form_result_msg'] = sprintf(__('Unable to delete file that is in system file (%s).', 'rundiz-downloads'), '<strong>' . $bannedFile . '</strong>');
                     $disallowDelete = true;
                     break;
                 }
@@ -235,7 +235,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
             ) {
                 $responseStatus = 403;
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('Unable to delete index file that is preventing directory browsing.', 'rd-downloads');
+                $output['form_result_msg'] = __('Unable to delete index file that is preventing directory browsing.', 'rundiz-downloads');
                 $disallowDelete = true;
             }
 
@@ -270,13 +270,13 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
                         $output['form_result_class'] = 'notice-error';
                         $output['form_result_msg'] = sprintf(
                             /* translators: %1$s: Open link tag, %2$s Close link tag. */
-                            __('Unable to delete the selected file. The file is already in use. Please %1$sedit%2$s this downloads instead..', 'rd-downloads'),
+                            __('Unable to delete the selected file. The file is already in use. Please %1$sedit%2$s this downloads instead..', 'rundiz-downloads'),
                             '<a href="' . admin_url('admin.php?page=rd-downloads_edit&download_id=' . $itemRow->download_id) . '">',
                             '</a>'
                         );
                     } else {
                         // if in the conditions that is able to delete the file.
-                        $FileSystem = new \RdDownloads\App\Libraries\FileSystem();
+                        $FileSystem = new \RundizDownloads\App\Libraries\FileSystem();
                         $unlink = $FileSystem->deleteFile($wp_upload_dir['basedir'] . '/' . $target);
                         $output['unlink'] = $unlink;
                         $output['deleted'] = !is_file($wp_upload_dir['basedir'] . '/' . $target);
@@ -293,13 +293,13 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
                     $responseStatus = 404;
                     $output['form_result_class'] = 'notice-error';
                     /* translators: %s: The selected URL to show in error. */
-                    $output['form_result_msg'] = sprintf(__('The selected file was not found (%s).', 'rd-downloads'), $wp_upload_dir['baseurl'] . $target);
+                    $output['form_result_msg'] = sprintf(__('The selected file was not found (%s).', 'rundiz-downloads'), $wp_upload_dir['baseurl'] . $target);
                 } elseif (stripos($target, '/rd-downloads') === false) {
                     // does not in /rd-downloads folder
                     $responseStatus = 403;
                     $output['form_result_class'] = 'notice-error';
                     /* translators: %1$s: /rd-downloads path string, %2$s: The selected URL to show in error. */
-                    $output['form_result_msg'] = sprintf(__('Unable to delete file that is not in %1$s folder (%2$s).', 'rd-downloads'), '<strong>/rd-downlods</strong>', $wp_upload_dir['baseurl'] . $target);
+                    $output['form_result_msg'] = sprintf(__('Unable to delete file that is not in %1$s folder (%2$s).', 'rundiz-downloads'), '<strong>/rd-downlods</strong>', $wp_upload_dir['baseurl'] . $target);
                 }// endif $wp_upload_dir
                 unset($wp_upload_dir);
             }// endif; $disallowDelete
@@ -323,7 +323,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
             $remote_file = trim(filter_input(INPUT_GET, 'remote_file', FILTER_SANITIZE_URL));
 
             if (filter_var($remote_file, FILTER_VALIDATE_URL) !== false) {
-                $Url = new \RdDownloads\App\Libraries\Url();
+                $Url = new \RundizDownloads\App\Libraries\Url();
                 $remoteFileResult = $Url->getRemoteFileInfo($remote_file);
                 if (is_array($remoteFileResult)) {
                     $output = $output + $remoteFileResult;
@@ -334,7 +334,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
                     $output['debug_remoteurl'] = 'invalid';
                 }
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('Invalid URL.', 'rd-downloads');
+                $output['form_result_msg'] = __('Invalid URL.', 'rundiz-downloads');
             }
 
             wp_send_json($output, $responseStatus);
@@ -464,7 +464,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFi
                 // other else.
                 $responseStatus = 400;
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('Unable to process your request, please reload the page and try again.', 'rd-downloads');
+                $output['form_result_msg'] = __('Unable to process your request, please reload the page and try again.', 'rundiz-downloads');
             }
 
             wp_send_json($output, $responseStatus);

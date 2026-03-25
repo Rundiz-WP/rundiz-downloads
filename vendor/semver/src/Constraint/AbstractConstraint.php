@@ -9,7 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace RdDownloads\Composer\Semver\Constraint;
+namespace RundizDownloads\Composer\Semver\Constraint;
 
 trigger_error('The ' . __CLASS__ . ' abstract class is deprecated, there is no replacement for it, it will be removed in the next major version.', E_USER_DEPRECATED);
 

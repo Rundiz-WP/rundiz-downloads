@@ -9,12 +9,12 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace RdDownloads\Composer\Semver;
+namespace RundizDownloads\Composer\Semver;
 
-use RdDownloads\Composer\Semver\Constraint\ConstraintInterface;
-use RdDownloads\Composer\Semver\Constraint\EmptyConstraint;
-use RdDownloads\Composer\Semver\Constraint\MultiConstraint;
-use RdDownloads\Composer\Semver\Constraint\Constraint;
+use RundizDownloads\Composer\Semver\Constraint\ConstraintInterface;
+use RundizDownloads\Composer\Semver\Constraint\EmptyConstraint;
+use RundizDownloads\Composer\Semver\Constraint\MultiConstraint;
+use RundizDownloads\Composer\Semver\Constraint\Constraint;
 
 /**
  * Version parser.

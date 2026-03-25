@@ -2,14 +2,14 @@
 /**
  * Enqueue CSS for front-end.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Front;
+namespace RundizDownloads\App\Controllers\Front;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\EnqueueCss')) {
-    class EnqueueCss implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\EnqueueCss')) {
+    class EnqueueCss implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
@@ -19,7 +19,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\EnqueueCss')) {
         public function enqueueStyles()
         {
             wp_enqueue_style('rd-downloads-font-awesome5');
-            wp_enqueue_style('rd-downloads-front-css', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/css/front/rd-downloads.min.css', [], RDDOWNLOADS_VERSION);
+            wp_enqueue_style('rd-downloads-front-css', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/front/rd-downloads.min.css', [], RUNDIZDOWNLOADS_VERSION);
         }// enqueueStyles
 
 

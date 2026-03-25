@@ -2,27 +2,27 @@
 /**
  * Front-end download process page.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Front\Hooks\Query\DownloadPage;
+namespace RundizDownloads\App\Controllers\Front\Hooks\Query\DownloadPage;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\DownloadPage\\RdDownloadsPage')) {
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\DownloadPage\\RdDownloadsPage')) {
     /**
      * Process the download.
      *
      * This class was called from `App\Controllers\Front\Hooks\Query\DownloadPage` class -> `goToRdDownloadsPage()` method.
      */
-    class RdDownloadsPage extends \RdDownloads\App\Controllers\Front\ControllerBased
+    class RdDownloadsPage extends \RundizDownloads\App\Controllers\Front\ControllerBased
     {
 
 
-        use \RdDownloads\App\AppTrait;
+        use \RundizDownloads\App\AppTrait;
 
 
         /**
-         * @var \RdDownloads\App\Libraries\Loader The loader class.
+         * @var \RundizDownloads\App\Libraries\Loader The loader class.
          */
         protected $Loader;
 
@@ -32,7 +32,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
          */
         public function __construct()
         {
-            $this->Loader = new \RdDownloads\App\Libraries\Loader();
+            $this->Loader = new \RundizDownloads\App\Libraries\Loader();
 
             $this->getOptions();
 
@@ -138,7 +138,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
             global $rd_downloads_options;
 
             // set page title.
-            $this->setTitle(__('Rundiz Downloads', 'rd-downloads'));
+            $this->setTitle(__('Rundiz Downloads', 'rundiz-downloads'));
 
             // check for banned user agent.
             $result = $this->subCheckBannedUA($download_id);
@@ -217,7 +217,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                         if (stripos($currentUserAgent, $bannedUserAgent) !== false) {
                             // if user agent has been banned.
                             // write download log.
-                            $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
+                            $RdDownloadLogs = new \RundizDownloads\App\Models\RdDownloadLogs();
                             $data = [];
                             $data['download_id'] = $download_id;
                             $RdDownloadLogs->writeLog('user_dl_banned', $data);
@@ -250,7 +250,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
          */
         protected function subDownloadNotFound($download_id)
         {
-            $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
+            $RdDownloadLogs = new \RundizDownloads\App\Models\RdDownloadLogs();
 
             // write download log.
             $data = [];
@@ -274,8 +274,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
          */
         protected function subGetDownloadData($download_id)
         {
-            $RdDownloads = new \RdDownloads\App\Models\RdDownloads();
-            $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
+            $RdDownloads = new \RundizDownloads\App\Models\RdDownloads();
+            $RdDownloadLogs = new \RundizDownloads\App\Models\RdDownloadLogs();
             $downloadRow = $RdDownloads->get(['download_id' => $download_id]);
 
             if (empty($downloadRow) || is_null($downloadRow)) {
@@ -391,11 +391,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                     status_header(400);
                     $output['disableAntibotForm'] = true;
                     $output['form_result'] = 'error';
-                    $output['form_result_msg'] = __('You are not authorized to download the file. Failed to set required cookie.', 'rd-downloads');
+                    $output['form_result_msg'] = __('You are not authorized to download the file. Failed to set required cookie.', 'rundiz-downloads');
                 } else {
                     // if not redirected.
                     // set cookie and redirect to page with ?rddownloads_redir_set_cookie=1.
-                    \RdDownloads\App\Libraries\Cookies::setCookie($cookieName, 'true', time()+60*60*24*1);
+                    \RundizDownloads\App\Libraries\Cookies::setCookie($cookieName, 'true', time()+60*60*24*1);
                     // phpcs:ignore
                     wp_safe_redirect(add_query_arg(['rddownloads_redir_set_cookie' => 1]));
                     exit();
@@ -408,7 +408,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
             if (true === $validatedCookieTest) {
                 // if validated cookie test.
                 // retrieve download data to show.
-                $RdDownloads = new \RdDownloads\App\Models\RdDownloads();
+                $RdDownloads = new \RundizDownloads\App\Models\RdDownloads();
                 $downloadRow = $RdDownloads->get(['download_id' => $download_id]);
                 if (empty($downloadRow) || is_null($downloadRow)) {
                     // if not found.
@@ -422,26 +422,26 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                 $requestMethod = (isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'get');// phpcs:ignore
                 if ('get' === $requestMethod) {
                     // if method GET, displaying antibot form field.
-                    $AntiBot = new \RdDownloads\App\Libraries\AntiBot();
+                    $AntiBot = new \RundizDownloads\App\Libraries\AntiBot();
                     $output['honeypotName'] = $AntiBot->setAndGetHoneypotName();
                     unset($AntiBot);
                 } elseif ('post' === $requestMethod) {
                     // if method POST, process form submitted.
-                    $honeypotName = \RdDownloads\App\Libraries\AntiBot::staticGetHoneypotName();
+                    $honeypotName = \RundizDownloads\App\Libraries\AntiBot::staticGetHoneypotName();
                     $validatedHoneypot = false;
                     if (!isset($_POST[$honeypotName]) || !empty($_POST[$honeypotName])) {// phpcs:ignore
                         // if honeypot name is not in the form or it is in but not empty (bot filled).
                         status_header(400);
                         $output['disableAntibotForm'] = true;
                         $output['form_result'] = 'error';
-                        $output['form_result_msg'] = __('You are not authorized to download the file. Failed to validate human.', 'rd-downloads');
+                        $output['form_result_msg'] = __('You are not authorized to download the file. Failed to validate human.', 'rundiz-downloads');
 
-                        $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
+                        $RdDownloadLogs = new \RundizDownloads\App\Models\RdDownloadLogs();
                         $RdDownloadLogs->writeLog('user_dl_antbotfailed', ['download_id' => $download_id]);
                         unset($RdDownloadLogs);
                     } elseif (isset($_POST[$honeypotName]) && empty($_POST[$honeypotName])) {// phpcs:ignore
                         // if honeypot name is in the form and empty. correct!
-                        $AntiBot = new \RdDownloads\App\Libraries\AntiBot();
+                        $AntiBot = new \RundizDownloads\App\Libraries\AntiBot();
                         $AntiBot->unsetHoneypotName();
                         unset($AntiBot);
                         $validatedHoneypot = true;
@@ -459,9 +459,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Downloa
                             status_header(400);
                             $output['disableAntibotForm'] = true;
                             $output['form_result'] = 'error';
-                            $output['form_result_msg'] = __('You are not authorized to download the file. Failed to validate human.', 'rd-downloads');
+                            $output['form_result_msg'] = __('You are not authorized to download the file. Failed to validate human.', 'rundiz-downloads');
 
-                            $RdDownloadLogs = new \RdDownloads\App\Models\RdDownloadLogs();
+                            $RdDownloadLogs = new \RundizDownloads\App\Models\RdDownloadLogs();
                             $RdDownloadLogs->writeLog('user_dl_antbotfailed', ['download_id' => $download_id]);
                             unset($RdDownloadLogs);
                         }

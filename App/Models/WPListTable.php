@@ -13,7 +13,7 @@
  */
 
 
-namespace RdDownloads\App\Models;
+namespace RundizDownloads\App\Models;
 
 
 /**

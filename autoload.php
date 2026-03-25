@@ -8,7 +8,7 @@
  * 
  *      new \Foo\Bar\Baz\Qux;
  *      
- * @package rd-downloads
+ * @package rundiz-downloads
  * @param string $class The fully-qualified class name.
  * @return void
  * @link http://www.php-fig.org/psr/psr-4/examples/ copy from here.
@@ -16,7 +16,7 @@
 spl_autoload_register(function($class) {
 
     // project-specific namespace prefix
-    $prefix = 'RdDownloads\\';
+    $prefix = 'RundizDownloads\\';
 
     // base directory for the namespace prefix
     $base_dir = __DIR__.'/';

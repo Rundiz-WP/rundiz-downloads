@@ -2,14 +2,14 @@
 /**
  * Download page from querystring.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Front\Hooks\Query;
+namespace RundizDownloads\App\Controllers\Front\Hooks\Query;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Front\\Hooks\\Query\\DownloadPage')) {
-    class DownloadPage implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\DownloadPage')) {
+    class DownloadPage implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 

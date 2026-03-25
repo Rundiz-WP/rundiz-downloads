@@ -8,7 +8,7 @@
  * 
  * This page only visible if user agent has been blocked.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
@@ -17,18 +17,18 @@ get_header();
 ?>
 <div id="main-column" class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
     <div class="alert alert-danger">
-        <h1 class="alert-heading"><?php esc_html_e('Forbidden', 'rd-downloads'); ?></h1>
-        <p><?php esc_html_e('Your user agent has been blocked by the administrator. Please contact an administrator for your help.', 'rd-downloads'); ?></p>
+        <h1 class="alert-heading"><?php esc_html_e('Forbidden', 'rundiz-downloads'); ?></h1>
+        <p><?php esc_html_e('Your user agent has been blocked by the administrator. Please contact an administrator for your help.', 'rundiz-downloads'); ?></p>
         <p><?php 
             printf(
                 /* translators: %s: Current user agent. */
-                esc_html__('Your user agent: %s.', 'rd-downloads'),
+                esc_html__('Your user agent: %s.', 'rundiz-downloads'),
                 (isset($currentUserAgent) ? esc_html($currentUserAgent) : '')
             );
             echo '<br>' . PHP_EOL;
             printf(
                 /* translators: %s: Match banned user agent. */
-                esc_html__('Match banned user agent: %s.', 'rd-downloads'),
+                esc_html__('Match banned user agent: %s.', 'rundiz-downloads'),
                 (isset($matchBannedUserAgent) ? esc_html($matchBannedUserAgent) : '')
             );
         ?></p>

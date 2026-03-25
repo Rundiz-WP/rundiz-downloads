@@ -2,18 +2,18 @@
 /**
  * Add settings sub menu and page into the Settings menu.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Admin;
+namespace RundizDownloads\App\Controllers\Admin;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
-    class Settings implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
+    class Settings implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
-        use \RdDownloads\App\AppTrait;
+        use \RundizDownloads\App\AppTrait;
 
 
         /**
@@ -47,7 +47,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
             $output = [];
             $output['rd_downloads_options'] = $rd_downloads_options;
 
-            $Loader = new \RdDownloads\App\Libraries\Loader();
+            $Loader = new \RundizDownloads\App\Libraries\Loader();
             $Loader->loadView('admin/readsettings_v', $output);
             unset($Loader, $output);
         }// pluginReadSettingsPage
@@ -58,14 +58,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
          */
         public function pluginSettingsMenu()
         {
-            $hook_suffix = add_submenu_page('rd-downloads', __('Downloads Settings', 'rd-downloads'), __('Settings', 'rd-downloads'), 'manage_options', 'rd-downloads_settings', [$this, 'pluginSettingsPage']);
+            $hook_suffix = add_submenu_page(Downloads\Menu::MENU_SLUG, __('Downloads Settings', 'rundiz-downloads'), __('Settings', 'rundiz-downloads'), 'manage_options', 'rd-downloads_settings', [$this, 'pluginSettingsPage']);
             $this->hook_suffix = $hook_suffix;
             if (is_string($hook_suffix)) {
                 add_action('load-' . $hook_suffix, [$this, 'callEnqueueHook']);
             }
             unset($hook_suffix);
 
-            //add_options_page(__('Plugin Template read settings value', 'rd-downloads'), __('Plugin Template read settings', 'rd-downloads'), 'manage_options', 'rd-downloads-read-settings', [$this, 'pluginReadSettingsPage']);
+            //add_options_page(__('Plugin Template read settings value', 'rundiz-downloads'), __('Plugin Template read settings', 'rundiz-downloads'), 'manage_options', 'rd-downloads-read-settings', [$this, 'pluginReadSettingsPage']);
         }// pluginSettingsMenu
 
 
@@ -86,18 +86,18 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
                     wp_die(
                         sprintf(
                             /* translators: %1$s: Open link tag, %2$s: Close link tag. */
-                            esc_html__('The manual update is required, please %1$supdate first%2$s.', 'rd-downloads'), 
+                            esc_html__('The manual update is required, please %1$supdate first%2$s.', 'rundiz-downloads'), 
                             '<a href="' . esc_attr(network_admin_url('index.php?page=rd-downloads-manual-update')) . '">', 
                             '</a>'
                         )
                     );
                 } else {
-                    wp_die(esc_html__('The manual update is required, please tell administrator to update first.', 'rd-downloads'));
+                    wp_die(esc_html__('The manual update is required, please tell administrator to update first.', 'rundiz-downloads'));
                 }
             }
 
             // load config values to get settings config file.
-            $Loader = new \RdDownloads\App\Libraries\Loader();
+            $Loader = new \RundizDownloads\App\Libraries\Loader();
             $config_values = $Loader->loadConfig();
             if (is_array($config_values) && array_key_exists('rundiz_settings_config_file', $config_values)) {
                 $settings_config_file = $config_values['rundiz_settings_config_file'];
@@ -108,7 +108,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
             }
             unset($config_values);
 
-            $RundizSettings = new \RdDownloads\App\Libraries\RundizSettings();
+            $RundizSettings = new \RundizDownloads\App\Libraries\RundizSettings();
             $RundizSettings->settings_config_file = $settings_config_file;
 
             $options_values = $this->getOptions();
@@ -128,13 +128,13 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
                 // if admin cleanup client id and secret then remove all the access token from users.
                 if ('' === $options_values['rdd_github_client_id'] && '' === $options_values['rdd_github_client_secret']) {
                     global $wpdb;
-                    $Github = new \RdDownloads\App\Libraries\Github();
+                    $Github = new \RundizDownloads\App\Libraries\Github();
                     $wpdb->query($wpdb->prepare('UPDATE `' . $wpdb->usermeta . '` SET `meta_value`=\'\' WHERE `meta_key` = %s', [$Github->getOAuthAccessTokenName()]));// phpcs:ignore WordPress.DB.DirectDatabaseQuery
                     unset($Github);
                 }
 
                 // create necessary file on save.
-                $FileSystem = new \RdDownloads\App\Libraries\FileSystem();
+                $FileSystem = new \RundizDownloads\App\Libraries\FileSystem();
                 $wp_upload_dir = wp_upload_dir();
                 if (
                     is_array($wp_upload_dir) &&
@@ -162,7 +162,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
                 }
 
                 // clear all cache on save.
-                $Cache = new \RdDownloads\App\Libraries\Cache();
+                $Cache = new \RundizDownloads\App\Libraries\Cache();
                 $output['cacheCleared'] = $Cache->getInstance()->clear();
                 unset($Cache);
             }// endif $_POST
@@ -203,7 +203,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Settings')) {
             wp_enqueue_script('rd-downloads-settings-tabs-js');
 
             // custom ajax for settings page.
-            wp_enqueue_script('rd-downloads-settings-ajax', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/admin/settings/settings-ajax.js', [], RDDOWNLOADS_VERSION, true);
+            wp_enqueue_script('rd-downloads-settings-ajax', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/admin/settings/settings-ajax.js', [], RUNDIZDOWNLOADS_VERSION, true);
             wp_localize_script(
                 'rd-downloads-settings-ajax',
                 'RdDownloadsSettings',

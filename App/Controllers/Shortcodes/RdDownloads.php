@@ -2,14 +2,14 @@
 /**
  * [rddownloads] shortcode.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Shortcodes;
+namespace RundizDownloads\App\Controllers\Shortcodes;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Shortcodes\\RdDownloads')) {
-    class RdDownloads implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Shortcodes\\RdDownloads')) {
+    class RdDownloads implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
@@ -21,11 +21,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Shortcodes\\RdDownloads')) {
         public function convertShortcode($atts)
         {
             $cacheKey = 'rd-downloads.shortcode.rddownloads.blog-id-' . get_current_blog_id() . '_atts-' . md5(wp_json_encode($atts));
-            $SimpleCache = new \RdDownloads\App\Libraries\Cache();
+            $SimpleCache = new \RundizDownloads\App\Libraries\Cache();
             $rendered = $SimpleCache->getInstance()->get($cacheKey);
 
             if (false === $rendered) {
-                $ShortcodeRdDownloads = new \RdDownloads\App\Libraries\ShortcodeRdDownloads();
+                $ShortcodeRdDownloads = new \RundizDownloads\App\Libraries\ShortcodeRdDownloads();
                 $rendered = $ShortcodeRdDownloads->renderHtml($atts);
                 $cacheLifetime = apply_filters('rddownloads_cachelifetime_shortcode', (6 * 60 * 60));// hours * minutes * seconds = total seconds.
                 $SimpleCache->getInstance()->save($cacheKey, $rendered, $cacheLifetime);

@@ -4,15 +4,15 @@
  * 
  * This page was copied from wp-admin/edit.php
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
-/* @var $RdDownloadsListTable \RdDownloads\App\Models\RdDownloadsListTable */
+/* @var $RdDownloadsListTable \RundizDownloads\App\Models\RdDownloadsListTable */
 ?>
 <div class="wrap">
-    <h1 class="wp-heading-inline"><?php esc_html_e('Downloads', 'rd-downloads'); ?> 
+    <h1 class="wp-heading-inline"><?php esc_html_e('Downloads', 'rundiz-downloads'); ?> 
         <?php if (current_user_can('upload_files')) { ?>
-        <a class="page-title-action" href="<?php echo admin_url('admin.php?page=rd-downloads_add');// phpcs:ignore ?>"><?php esc_html_e('Add New', 'rd-downloads'); ?></a>
+        <a class="page-title-action" href="<?php echo admin_url('admin.php?page=rd-downloads_add');// phpcs:ignore ?>"><?php esc_html_e('Add New', 'rundiz-downloads'); ?></a>
         <?php }// endif; ?>
     </h1>
 
@@ -46,7 +46,7 @@
         } 
 
         if (isset($RdDownloadsListTable) && is_object($RdDownloadsListTable)) {
-            $RdDownloadsListTable->search_box(__('Search', 'rd-downloads'), 'rd-downloads');
+            $RdDownloadsListTable->search_box(__('Search', 'rundiz-downloads'), 'rundiz-downloads');
             $RdDownloadsListTable->display();
         }
         ?> 

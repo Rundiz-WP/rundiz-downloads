@@ -2,19 +2,19 @@
 /**
  * Uninstall or delete the plugin.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Plugins;
+namespace RundizDownloads\App\Controllers\Admin\Plugins;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallation')) {
-    class Uninstallation implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallation')) {
+    class Uninstallation implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
-        use \RdDownloads\App\AppTrait;
+        use \RundizDownloads\App\AppTrait;
 
 
         /**
@@ -37,7 +37,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
             global $wp_version;
 
             // register uninstall hook. MUST be static method or function.
-            register_uninstall_hook(RDDOWNLOADS_FILE, ['\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallation', 'uninstall']);
+            register_uninstall_hook(RUNDIZDOWNLOADS_FILE, ['\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallation', 'uninstall']);
 
             if (version_compare($wp_version, '5.1', '>=')) {
                 add_action('wp_delete_site', [$this, 'uninstallDeleteSite']);
@@ -153,7 +153,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
         /**
          * Drop tables that was created with this plugin.
          *
-         * Only tables that was created in `RdDownloads\App\Models\PluginDbStructure->get()` method will be drop here.
+         * Only tables that was created in `RundizDownloads\App\Models\PluginDbStructure->get()` method will be drop here.
          *
          * @global \wpdb $wpdb
          * @param bool $mainsite Set to `true` to drop table of this plugin that created for main site. Otherwise it will be drop table with `prefix_sitenumber_` for switched to sub site only (in case multi-site enabled).
@@ -163,7 +163,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
             global $wpdb;
             $wpdb->show_errors();
 
-            $PluginDbStructure = new \RdDownloads\App\Models\PluginDbStructure();
+            $PluginDbStructure = new \RundizDownloads\App\Models\PluginDbStructure();
             $schemas = $PluginDbStructure->get();
             unset($PluginDbStructure);
 
@@ -194,7 +194,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallati
             $wp_upload_dir = wp_upload_dir();
             if (is_array($wp_upload_dir) && array_key_exists('basedir', $wp_upload_dir)) {
                 $target_dir = realpath($wp_upload_dir['basedir']) . DIRECTORY_SEPARATOR . 'rd-downloads';
-                \RdDownloads\App\Libraries\FileSystem::rrmDir($target_dir, $wp_upload_dir['basedir']);
+                \RundizDownloads\App\Libraries\FileSystem::rrmDir($target_dir, $wp_upload_dir['basedir']);
             }
             unset($target_dir, $wp_upload_dir);
         }// uninstallDropTables

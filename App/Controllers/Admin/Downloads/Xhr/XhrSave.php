@@ -2,14 +2,14 @@
 /**
  * Saving the data to DB. (including insert, update).
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Downloads\Xhr;
+namespace RundizDownloads\App\Controllers\Admin\Downloads\Xhr;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSave')) {
-    class XhrSave extends \RdDownloads\App\Controllers\XhrBased implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSave')) {
+    class XhrSave extends \RundizDownloads\App\Controllers\XhrBased implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
@@ -32,7 +32,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                 return ;
             }
 
-            $Github = new \RdDownloads\App\Libraries\Github();
+            $Github = new \RundizDownloads\App\Libraries\Github();
 
             $user_id = (isset($data['user_id']) && !empty($data['user_id']) ? $data['user_id'] : get_current_user_id());
             $accessToken = $Github->getOAuthAccessToken($user_id);
@@ -63,7 +63,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
 
             $result = $Github->apiAddUpdateGitHubWebhook($user_id, '', $secretKey, $repoOwner, $repoName, $headers);
 
-            \RdDownloads\App\Libraries\Logger::staticDebugLog($result, 'github-api-add-webhook-on-save-download-data-' . current_time('Ymd-Hi'));
+            \RundizDownloads\App\Libraries\Logger::staticDebugLog($result, 'github-api-add-webhook-on-save-download-data-' . current_time('Ymd-Hi'));
             unset($result);
 
             unset($accessToken, $Github, $headers, $repoName, $repoOwner, $secretKey, $user_id);
@@ -83,7 +83,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
             $data['download_url'] = filter_input(INPUT_POST, 'download_url', FILTER_SANITIZE_URL);
 
             if (strpos($data['download_url'], '..') !== false) {
-                return __('Hacking attempt!', 'rd-downloads');
+                return __('Hacking attempt!', 'rundiz-downloads');
             }
 
             $data['download_name'] = filter_input(INPUT_POST, 'download_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -100,10 +100,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
             $data['download_update'] = current_time('mysql');
             $data['download_update_gmt'] = current_time('mysql', true);
 
-            $Url = new \RdDownloads\App\Libraries\Url();
+            $Url = new \RundizDownloads\App\Libraries\Url();
             $domainNoSub = strtolower($Url->getDomain($data['download_url']));
             $currentDomain = strtolower($Url->getDomain('http://' . (isset($_SERVER['HTTP_HOST']) ? sanitize_text_field(wp_unslash($_SERVER['HTTP_HOST'])) : '') . '/'));
-            $FileSystem = new \RdDownloads\App\Libraries\FileSystem();
+            $FileSystem = new \RundizDownloads\App\Libraries\FileSystem();
             if (null !== $domainNoSub && false !== $domainNoSub) {
                 // if can get domain without sub domain from the specific URL.
                 $opt_force_download = filter_input(INPUT_POST, 'opt_force_download', FILTER_SANITIZE_NUMBER_INT);
@@ -129,14 +129,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                         // for github domain.
                         $data['download_type'] = 1;
 
-                        $Semver = new \RdDownloads\App\Libraries\Semver();
+                        $Semver = new \RundizDownloads\App\Libraries\Semver();
                         $version_range = $opt_download_version_range;
                         if ((is_null($version_range) || '' === $version_range)) {
                             $version_range = $Semver->getDefaultVersionConstraint($opt_download_version);
                         }
                         unset($Semver);
 
-                        $Github = new \RdDownloads\App\Libraries\Github();
+                        $Github = new \RundizDownloads\App\Libraries\Github();
                         $nameWithOwner = $Github->getNameWithOwnerFromUrl($data['download_url']);
                         unset($Github);
                         if (is_array($nameWithOwner) && isset($nameWithOwner[0]) && isset($nameWithOwner[1])) {
@@ -215,7 +215,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
             } else {
                 // if cannot get domain without sub domain from the specific URL.
                 unset($currentDomain, $domainNoSub, $FileSystem, $Url);
-                return __('Incorrect Download URL value.', 'rd-downloads');
+                return __('Incorrect Download URL value.', 'rundiz-downloads');
             }// endif; $domainNoSub.
             unset($currentDomain, $domainNoSub, $FileSystem, $Url);
 
@@ -283,7 +283,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                 $data = $data + $additionalData;
 
                 // make empty as null.
-                $Input = new \RdDownloads\App\Libraries\Input();
+                $Input = new \RundizDownloads\App\Libraries\Input();
                 $data = $Input->setNullIfDataValueEmpty($data);
                 unset($Input);
 
@@ -292,7 +292,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                 // if contain error.
                 $responseStatus = 400;
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = (is_scalar($additionalData) ? $additionalData : __('Unknown error, please reload the webpage and try again.', 'rd-downloads'));
+                $output['form_result_msg'] = (is_scalar($additionalData) ? $additionalData : __('Unknown error, please reload the webpage and try again.', 'rundiz-downloads'));
                 $validated = false;
             }
             unset($additionalData);
@@ -310,9 +310,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                     $output['saved'] = true;
                     $output['editUrl'] = admin_url('admin.php?page=rd-downloads_edit&download_id=' . $output['download_id']);
                     $output['form_result_class'] = 'notice-success';
-                    $output['form_result_msg'] = __('Your download was saved successfully.', 'rd-downloads');
+                    $output['form_result_msg'] = __('Your download was saved successfully.', 'rundiz-downloads');
 
-                    $Dll = new \RdDownloads\App\Models\RdDownloadLogs();
+                    $Dll = new \RundizDownloads\App\Models\RdDownloadLogs();
                     $Dll->writeLog('admin_insert', [
                         'download_id' => $output['download_id'],
                     ]);
@@ -348,7 +348,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
             $download_id = filter_input(INPUT_POST, 'download_id', FILTER_SANITIZE_NUMBER_INT);
 
             // check first that is this user editing other's file or not.
-            $RdDownloads = new \RdDownloads\App\Models\RdDownloads();
+            $RdDownloads = new \RundizDownloads\App\Models\RdDownloads();
             $checkResult = $RdDownloads->get(['*select' => 'user_id', 'download_id' => $download_id]);
             if (
                 empty($checkResult) ||
@@ -362,7 +362,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                 )
             ) {
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('The editing item was not found.', 'rd-downloads');
+                $output['form_result_msg'] = __('The editing item was not found.', 'rundiz-downloads');
                 wp_send_json($output, 404);
             } else {
                 if (isset($checkResult->user_id) && intval($checkResult->user_id) !== get_current_user_id() && !current_user_can('edit_others_posts')) {
@@ -379,7 +379,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                 $data = $data + $additionalData;
 
                 // make empty as null.
-                $Input = new \RdDownloads\App\Libraries\Input();
+                $Input = new \RundizDownloads\App\Libraries\Input();
                 $data = $Input->setNullIfDataValueEmpty($data);
                 unset($Input);
 
@@ -388,7 +388,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                 // if contain error.
                 $responseStatus = 400;
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = (is_scalar($additionalData) ? $additionalData : __('Unknown error, please reload the webpage and try again.', 'rd-downloads'));
+                $output['form_result_msg'] = (is_scalar($additionalData) ? $additionalData : __('Unknown error, please reload the webpage and try again.', 'rundiz-downloads'));
                 $validated = false;
             }
             unset($additionalData);
@@ -401,12 +401,12 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
 
                 $output['updateResult'] = $RdDownloads->update($data, ['download_id' => $download_id]);
                 if (false !== $output['updateResult']) {
-                    $output['last_update'] = \RdDownloads\App\Libraries\DateTime::displayDateTime(current_time('mysql', true));
+                    $output['last_update'] = \RundizDownloads\App\Libraries\DateTime::displayDateTime(current_time('mysql', true));
                     $output['saved'] = true;
                     $output['form_result_class'] = 'notice-success';
-                    $output['form_result_msg'] = __('Your download was saved successfully.', 'rd-downloads');
+                    $output['form_result_msg'] = __('Your download was saved successfully.', 'rundiz-downloads');
 
-                    $Dll = new \RdDownloads\App\Models\RdDownloadLogs();
+                    $Dll = new \RundizDownloads\App\Models\RdDownloadLogs();
                     $Dll->writeLog('admin_update', [
                         'download_id' => $download_id,
                     ]);
@@ -415,7 +415,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSa
                     $this->addGitHubWebhook($data);
 
                     // clear all cache on save.
-                    $Cache = new \RdDownloads\App\Libraries\Cache();
+                    $Cache = new \RundizDownloads\App\Libraries\Cache();
                     $output['cacheCleared'] = $Cache->getInstance()->clear();
                     unset($Cache);
                 } else {

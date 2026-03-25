@@ -2,18 +2,18 @@
 /**
  * Shortcode class for [rddownloads]
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Libraries;
+namespace RundizDownloads\App\Libraries;
 
-if (!class_exists('\\RdDownloads\\App\\Libraries\\ShortcodeRdDownloads')) {
+if (!class_exists('\\RundizDownloads\\App\\Libraries\\ShortcodeRdDownloads')) {
     class ShortcodeRdDownloads
     {
 
 
-        use \RdDownloads\App\AppTrait;
+        use \RundizDownloads\App\AppTrait;
 
 
         /**
@@ -26,48 +26,48 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\ShortcodeRdDownloads')) {
             return [
                 'id' => [
                     'default' => '',
-                    'helpmsg' => __('Required attribute for display link to download.', 'rd-downloads'),
+                    'helpmsg' => __('Required attribute for display link to download.', 'rundiz-downloads'),
                 ],// REQUIRED. based attribute that will convert to html with link.
                 'display_size' => [
                     'default' => '',
                     'isbool' => true,
                     /* translators: %s: true (boolean) */
-                    'helpmsg' => sprintf(__('Set to %s to display file size. Default is not set.', 'rd-downloads'), '<code>true</code>'),
+                    'helpmsg' => sprintf(__('Set to %s to display file size. Default is not set.', 'rundiz-downloads'), '<code>true</code>'),
                 ],// for toggle display file size or not. its value is boolean.
                 'display_file_name' => [
                     'default' => '',
                     'isbool' => true,
                     /* translators: %s: true (boolean) */
-                    'helpmsg' => sprintf(__('Set to %s to display file name. Default is not set.', 'rd-downloads'), '<code>true</code>'),
+                    'helpmsg' => sprintf(__('Set to %s to display file name. Default is not set.', 'rundiz-downloads'), '<code>true</code>'),
                 ],// for toggle display file name or not. its value is boolean.
                 'display_download_count' => [
                     'default' => '',
                     'isbool' => true,
                     /* translators: %s: true (boolean) */
-                    'helpmsg' => sprintf(__('Set to %s to display download count. Default is not set.', 'rd-downloads'), '<code>true</code>'),
+                    'helpmsg' => sprintf(__('Set to %s to display download count. Default is not set.', 'rundiz-downloads'), '<code>true</code>'),
                 ],// for toggle display download count or not. its value is boolean.
                 'display_download_version' => [
                     'default' => '',
                     'isbool' => true,
                     /* translators: %s: true (boolean) */
-                    'helpmsg' => sprintf(__('Set to %s to display download file version. Default is not set.', 'rd-downloads'), '<code>true</code>'),
+                    'helpmsg' => sprintf(__('Set to %s to display download file version. Default is not set.', 'rundiz-downloads'), '<code>true</code>'),
                 ],
                 'display_create_date' => [
                     'default' => '',
                     'isbool' => true,
                     /* translators: %s: true (boolean) */
-                    'helpmsg' => sprintf(__('Set to %s to display create date. Default is not set.', 'rd-downloads'), '<code>true</code>'),
+                    'helpmsg' => sprintf(__('Set to %s to display create date. Default is not set.', 'rundiz-downloads'), '<code>true</code>'),
                 ],// for toggle display create date or not. its value is boolean.
                 'display_last_update' => [
                     'default' => '',
                     'isbool' => true,
                     /* translators: %s: true (boolean) */
-                    'helpmsg' => sprintf(__('Set to %s to display last update. Default is not set.', 'rd-downloads'), '<code>true</code>'),
+                    'helpmsg' => sprintf(__('Set to %s to display last update. Default is not set.', 'rundiz-downloads'), '<code>true</code>'),
                 ],// for toggle display last update or not. its value is boolean.
                 'datetime_format' => [
                     'default' => '',
                     /* translators: %1$s: Open link, %2$s: Close link, %3$s: Default value. */
-                    'helpmsg' => sprintf(__('Use %1$sPHP date/time format%2$s. Default is %3$s.', 'rd-downloads'), '<a href="http://php.net/manual/en/datetime.format.php" target="php_datetime_format">', '</a>', '<code>' . get_option('date_format') . ' ' . get_option('time_format') . '</code>'),
+                    'helpmsg' => sprintf(__('Use %1$sPHP date/time format%2$s. Default is %3$s.', 'rundiz-downloads'), '<a href="http://php.net/manual/en/datetime.format.php" target="php_datetime_format">', '</a>', '<code>' . get_option('date_format') . ' ' . get_option('time_format') . '</code>'),
                 ],// date/time format same as `date()` in PHP. its value is string.
             ];
         }// availableAttributes
@@ -144,7 +144,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\ShortcodeRdDownloads')) {
             }
 
             // get data from DB.
-            $RdDownloads = new \RdDownloads\App\Models\RdDownloads();
+            $RdDownloads = new \RundizDownloads\App\Models\RdDownloads();
             $DlRow = $RdDownloads->get(['download_id' => $combinedAttributes['id']]);
             unset($RdDownloads);
 

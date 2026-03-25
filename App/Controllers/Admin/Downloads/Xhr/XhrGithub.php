@@ -2,19 +2,19 @@
 /**
  * GitHub data.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Downloads\Xhr;
+namespace RundizDownloads\App\Controllers\Admin\Downloads\Xhr;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGithub')) {
-    class XhrGithub extends \RdDownloads\App\Controllers\XhrBased implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGithub')) {
+    class XhrGithub extends \RundizDownloads\App\Controllers\XhrBased implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
         /**
-         * @var \RdDownloads\App\Libraries\Github GitHub class.
+         * @var \RundizDownloads\App\Libraries\Github GitHub class.
          */
         protected $Github;
 
@@ -24,7 +24,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
          */
         public function __construct()
         {
-            $this->Github = new \RdDownloads\App\Libraries\Github();
+            $this->Github = new \RundizDownloads\App\Libraries\Github();
         }// __construct
 
 
@@ -87,7 +87,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
                 $version_range = wp_strip_all_tags($version_range);
             }
 
-            $Semver = new \RdDownloads\App\Libraries\Semver();
+            $Semver = new \RundizDownloads\App\Libraries\Semver();
             if ((is_null($version_range) || '' === $version_range)) {
                 $version_range = $Semver->getDefaultVersionConstraint($current_version);
             }
@@ -97,7 +97,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
                 $responseStatus = 400;
                 $output['form_result_class'] = 'notice-error';
                 /* translators: %s: Example GitHub repository URL. */
-                $output['form_result_msg'] = sprintf(__('Invalid GitHub repository URL. The correct format should be %s.', 'rd-downloads'), 'https://github.com/owner/name');
+                $output['form_result_msg'] = sprintf(__('Invalid GitHub repository URL. The correct format should be %s.', 'rundiz-downloads'), 'https://github.com/owner/name');
             } else {
                 $result = $this->Github->apiGetLatestRepositoryData($remote_file, $version_range);
                 if (is_array($result)) {
@@ -145,7 +145,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
             $user_id = get_current_user_id();
 
             $options = [];
-            $RdDownloads = new \RdDownloads\App\Models\RdDownloads();
+            $RdDownloads = new \RundizDownloads\App\Models\RdDownloads();
             $options['user_id'] = $user_id;
             $options['download_type'] = 1;
             $options['*unlimit'] = true;
@@ -273,7 +273,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
 
             if (false === $output['updated']) {
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('Unable to update secret key, please reload the page and try again.', 'rd-downloads');
+                $output['form_result_msg'] = __('Unable to update secret key, please reload the page and try again.', 'rundiz-downloads');
 
                 if (defined('WP_DEBUG') && WP_DEBUG === true) {
                     global $wpdb;
@@ -281,7 +281,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGi
                 }
             } else {
                 $output['form_result_class'] = 'notice-success';
-                $output['form_result_msg'] = __('The secret key was updated successfully.', 'rd-downloads');
+                $output['form_result_msg'] = __('The secret key was updated successfully.', 'rundiz-downloads');
             }
 
             wp_send_json($output, $responseStatus);

@@ -2,13 +2,13 @@
 /**
  * Input library
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Libraries;
+namespace RundizDownloads\App\Libraries;
 
-if (!class_exists('\\RdDownloads\\App\\Libraries\\Input')) {
+if (!class_exists('\\RundizDownloads\\App\\Libraries\\Input')) {
     class Input
     {
 

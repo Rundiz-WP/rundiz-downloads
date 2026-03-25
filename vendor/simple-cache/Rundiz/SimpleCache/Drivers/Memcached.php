@@ -9,9 +9,9 @@
  */
 
 
-namespace RdDownloads\Rundiz\SimpleCache\Drivers;
+namespace RundizDownloads\Rundiz\SimpleCache\Drivers;
 
-use RdDownloads\Rundiz\SimpleCache\SimpleCacheInterface;
+use RundizDownloads\Rundiz\SimpleCache\SimpleCacheInterface;
 
 /**
  * Memcached driver class

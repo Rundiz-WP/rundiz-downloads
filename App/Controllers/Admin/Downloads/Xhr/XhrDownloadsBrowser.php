@@ -2,14 +2,14 @@
 /**
  * Search downloads via editor such as TinyMCE.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Downloads\Xhr;
+namespace RundizDownloads\App\Controllers\Admin\Downloads\Xhr;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrDownloadsBrowser')) {
-    class XhrDownloadsBrowser extends \RdDownloads\App\Controllers\XhrBased implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrDownloadsBrowser')) {
+    class XhrDownloadsBrowser extends \RundizDownloads\App\Controllers\XhrBased implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
@@ -44,7 +44,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrDo
             $output['per_page'] = 10;
             $output['current_page'] = (isset($_GET['page']) && !empty(trim($_GET['page'])) ? floatval(wp_unslash($_GET['page'])) : 1);// phpcs:ignore
 
-            $RdDownloads = new \RdDownloads\App\Models\RdDownloads();
+            $RdDownloads = new \RundizDownloads\App\Models\RdDownloads();
             $options = [];
             if (isset($_GET['search']) && !empty(trim($_GET['search']))) {// phpcs:ignore
                 $options['*search'] = sanitize_text_field(wp_unslash($_GET['search']));

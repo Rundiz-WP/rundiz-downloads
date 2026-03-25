@@ -2,17 +2,17 @@
 /**
  * Upgrade or update the plugin action.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Plugins;
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) {
-    class Upgrader implements \RdDownloads\App\Controllers\ControllerInterface
+namespace RundizDownloads\App\Controllers\Admin\Plugins;
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) {
+    class Upgrader implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
-        use \RdDownloads\App\AppTrait;
+        use \RundizDownloads\App\AppTrait;
 
 
         /**
@@ -29,12 +29,12 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) 
             if (isset($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) === 'post' && isset($_POST) && !empty($_POST)) {// phpcs:ignore
                 if (check_ajax_referer('rd_downloads_nonce', 'security', false) === false) {
                     status_header(403);
-                    wp_die(esc_html__('Please reload this page and try again.', 'rd-downloads'), '', ['response' => 403]);
+                    wp_die(esc_html__('Please reload this page and try again.', 'rundiz-downloads'), '', ['response' => 403]);
                 }
 
                 $updateKey = filter_input(INPUT_POST, 'updateKey', FILTER_SANITIZE_NUMBER_INT);
 
-                $Loader = new \RdDownloads\App\Libraries\Loader();
+                $Loader = new \RundizDownloads\App\Libraries\Loader();
                 $manualUpdateClasses = $Loader->getManualUpdateClasses();
                 $maxManualUpdateVersion = 0;
                 unset($Loader);
@@ -54,7 +54,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) 
                             if (is_array($lastError) && array_key_exists('message', $lastError) && is_scalar($lastError['message'])) {
                                 $errorMessage = $lastError['message'];
                             } else {
-                                $errorMessage = __('An error has been occur, cannot continue manual update. Please contact plugin author.', 'rd-downloads');
+                                $errorMessage = __('An error has been occur, cannot continue manual update. Please contact plugin author.', 'rundiz-downloads');
                             }
                         }
                         unset($lastError);
@@ -71,10 +71,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) 
                         $output['formResultClass'] = 'notice-success';
                         if (array_key_exists(($updateKey + 1), $manualUpdateClasses)) {
                             $output['nextRunKey'] = ($updateKey + 1);
-                            $output['formResultMsg'] = __('Success, please click next to continue update.', 'rd-downloads');
+                            $output['formResultMsg'] = __('Success, please click next to continue update.', 'rundiz-downloads');
                         } else {
                             $output['nextRunKey'] = 'end';
-                            $output['formResultMsg'] = __('All manual update completed successfully. This page will be no longer available until there is next manual update.', 'rd-downloads');
+                            $output['formResultMsg'] = __('All manual update completed successfully. This page will be no longer available until there is next manual update.', 'rundiz-downloads');
 
                             $currentConfig = $this->getOptions();
                             $currentConfig['rdsfw_manual_update_version'] = $maxManualUpdateVersion;
@@ -93,7 +93,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) 
                 } else {
                     status_header(501);
                     $output['formResultClass'] = 'notice-error';
-                    $output['formResultMsg'] = __('Unable to run update, there is no update classes to run.', 'rd-downloads');
+                    $output['formResultMsg'] = __('Unable to run update, there is no update classes to run.', 'rundiz-downloads');
                 }
 
                 unset($manualUpdateClasses, $maxManualUpdateVersion, $updateKey);
@@ -115,7 +115,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) 
         {
             if (get_transient('rd_downloads_updated') && current_user_can('update_plugins')) {
                 // if there is updated transient
-                $Loader = new \RdDownloads\App\Libraries\Loader();
+                $Loader = new \RundizDownloads\App\Libraries\Loader();
 
                 if ($Loader->haveManualUpdate() === true) {
                     // if found that there are manual update in this new version of code.
@@ -127,7 +127,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) 
                             <p>' . 
                                 sprintf(
                                     /* translators: %1$s: Open link tag, %2$s: Close link tag. */
-                                    __('The Rundiz Downloads is just upgraded and need to be manually update. Please continue to the %1$splugin update page%2$s.', 'rd-downloads'), 
+                                    __('The Rundiz Downloads is just upgraded and need to be manually update. Please continue to the %1$splugin update page%2$s.', 'rundiz-downloads'), 
                                     '<a href="' . esc_attr(network_admin_url('index.php?page=rd-downloads-manual-update')) . '">', // this link will be auto convert to admin_url if not in multisite installed.
                                     '</a>'
                                 ) . 
@@ -168,7 +168,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) 
          */
         public function displayManualUpdateMenu()
         {
-            $hook_suffix = add_dashboard_page(__('Rundiz Downloads update', 'rd-downloads'), __('Rundiz Downloads update', 'rd-downloads'), 'update_plugins', 'rd-downloads-manual-update', [$this, 'displayManualUpdatePage']);
+            $hook_suffix = add_dashboard_page(__('Rundiz Downloads update', 'rundiz-downloads'), __('Rundiz Downloads update', 'rundiz-downloads'), 'update_plugins', 'rd-downloads-manual-update', [$this, 'displayManualUpdatePage']);
             add_action('admin_print_styles-' . $hook_suffix, [$this, 'registerStyles']);
             add_action('admin_print_scripts-' . $hook_suffix, [$this, 'registerScripts']);
             unset($hook_suffix);
@@ -186,7 +186,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) 
 
             $output = [];
 
-            $Loader = new \RdDownloads\App\Libraries\Loader();
+            $Loader = new \RundizDownloads\App\Libraries\Loader();
             $output['manualUpdateClasses'] = $Loader->getManualUpdateClasses();
 
             $Loader->loadView('admin/Plugins/Upgrader_v', $output);
@@ -220,9 +220,9 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) 
                     'alreadyRunUpdateKey' => '',
                     'alreadyRunUpdateTotal' => 0,
                     'completed' => 'false',
-                    'completedTxt' => __('Completed', 'rd-downloads'),
-                    'dismissNoticeTxt' => __('Dismiss', 'rd-downloads'),
-                    'nextTxt' => __('Next', 'rd-downloads'),
+                    'completedTxt' => __('Completed', 'rundiz-downloads'),
+                    'dismissNoticeTxt' => __('Dismiss', 'rundiz-downloads'),
+                    'nextTxt' => __('Next', 'rundiz-downloads'),
                     'nonce' => wp_create_nonce('rd_downloads_nonce'),
                 ]
             );
@@ -258,7 +258,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) 
         {
             if (is_array($hook_extra) && array_key_exists('action', $hook_extra) && array_key_exists('type', $hook_extra) && array_key_exists('plugins', $hook_extra)) {
                 if ('update' === $hook_extra['action'] && 'plugin' === $hook_extra['type'] && is_array($hook_extra['plugins']) && !empty($hook_extra['plugins'])) {
-                    $this_plugin = plugin_basename(RDDOWNLOADS_FILE);
+                    $this_plugin = plugin_basename(RUNDIZDOWNLOADS_FILE);
                     foreach ($hook_extra['plugins'] as $key => $plugin) {
                         if ($this_plugin === $plugin) {
                             // if this plugin is in the updated plugins.

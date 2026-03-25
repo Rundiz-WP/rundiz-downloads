@@ -2,13 +2,13 @@
 /**
  * Rundiz Downloads management page.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Downloads;
+namespace RundizDownloads\App\Controllers\Admin\Downloads;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Management')) {
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Management')) {
     class Management
     {
 
@@ -40,7 +40,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Management
         public function adminHelpTab()
         {
             $screen = get_current_screen();
-            $Loader = new \RdDownloads\App\Libraries\Loader();
+            $Loader = new \RundizDownloads\App\Libraries\Loader();
             $wp_upload_dir = wp_upload_dir();
 
             $output = [];
@@ -53,7 +53,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Management
             ob_end_clean();
             $screen->add_help_tab([
                 'id' => 'rd-downloads-listing-helptab-shortcodes',
-                'title' => __('Shortcodes', 'rd-downloads'),
+                'title' => __('Shortcodes', 'rundiz-downloads'),
                 'content' => $content,
             ]);
             unset($content);
@@ -64,7 +64,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Management
             ob_end_clean();
             $screen->add_help_tab([
                 'id' => 'rd-downloads-listing-helptab-permission',
-                'title' => __('Permissions', 'rd-downloads'),
+                'title' => __('Permissions', 'rundiz-downloads'),
                 'content' => $content,
             ]);
             unset($content);
@@ -75,7 +75,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Management
             ob_end_clean();
             $screen->add_help_tab([
                 'id' => 'rd-downloads-listing-helptab-adminhelp',
-                'title' => __('Admin help', 'rd-downloads'),
+                'title' => __('Admin help', 'rundiz-downloads'),
                 'content' => $content,
             ]);
             unset($content);
@@ -140,7 +140,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Management
             $output = [];
 
             // initialize list table model.
-            $RdDownloadsListTable = new \RdDownloads\App\Models\RdDownloadsListTable();
+            $RdDownloadsListTable = new \RundizDownloads\App\Models\RdDownloadsListTable();
             $options = [];
             if (isset($_REQUEST['filter_user_id']) && trim($_REQUEST['filter_user_id']) !== '') {// phpcs:ignore
                 $options['user_id'] = intval(wp_unslash($_REQUEST['filter_user_id']));
@@ -166,7 +166,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Management
             $output['RdDownloadsListTable'] = $RdDownloadsListTable;
             unset($RdDownloadsListTable);
 
-            $Loader = new \RdDownloads\App\Libraries\Loader();
+            $Loader = new \RundizDownloads\App\Libraries\Loader();
             $Loader->loadView('admin/Downloads/Management/pageIndex_v', $output);
             unset($Loader);
         }// pageIndex
@@ -205,13 +205,13 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Management
                 return;
             }
 
-            wp_enqueue_script('rd-downloads-manage-form', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/admin/Downloads/Management/pageIndex.js', ['rd-downloads-common-functions'], RDDOWNLOADS_VERSION, true);
+            wp_enqueue_script('rd-downloads-manage-form', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/admin/Downloads/Management/pageIndex.js', ['rd-downloads-common-functions'], RUNDIZDOWNLOADS_VERSION, true);
             wp_localize_script(
                 'rd-downloads-manage-form',
                 'RdDownloads',
                 [
                     'nonce' => wp_create_nonce('rd-downloads_ajax-manage-nonce'),
-                    'txtAreYouSureDelete' => __('Are you sure?', 'rd-downloads') . "\n" . __('The selected files will be deleted. GitHub and any remote files will be remain.', 'rd-downloads') . "\n" . __('This can not be un-done.', 'rd-downloads'),
+                    'txtAreYouSureDelete' => __('Are you sure?', 'rundiz-downloads') . "\n" . __('The selected files will be deleted. GitHub and any remote files will be remain.', 'rundiz-downloads') . "\n" . __('This can not be un-done.', 'rundiz-downloads'),
                 ]
             );
         }// registerScripts
@@ -230,7 +230,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Management
 
             wp_enqueue_style('rd-downloads-font-awesome5');
 
-            wp_enqueue_style('rd-downloads-manage-form', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/css/admin/Downloads/Management/pageIndex.css', [], RDDOWNLOADS_VERSION);
+            wp_enqueue_style('rd-downloads-manage-form', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/admin/Downloads/Management/pageIndex.css', [], RUNDIZDOWNLOADS_VERSION);
         }// registerStyles
 
 

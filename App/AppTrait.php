@@ -2,19 +2,24 @@
 /**
  * Main app trait for common works.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App;
+namespace RundizDownloads\App;
 
-if (!trait_exists('\\RdDownloads\\App\\AppTrait')) {
+
+if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
+    /**
+     * App trait.
+     */
     trait AppTrait
     {
 
 
         /**
          * Main option name.
+         * 
          * @var string set main option name of this plugin. the name should be english, number, underscore, or anycharacters that can be set to variable. for example: 'rd_downloads_options' will be set to $rd_downloads_options
          * @uses call this trait method $this->getOptions(); before access $rd_downloads_options in global variable.
          */
@@ -25,6 +30,7 @@ if (!trait_exists('\\RdDownloads\\App\\AppTrait')) {
          * 
          * These options will be accessible via main option name variable. for example: options name 'the_name' can call from $rd_downloads_options['the_name'];.
          * If you want to access this property, please call to `setupAllOptions()` method first.
+         * 
          * @var array set all options available for this plugin. it must be 2D array (key => default value, key2 => default value, ...)
          */
         public $all_options = [];
@@ -33,11 +39,11 @@ if (!trait_exists('\\RdDownloads\\App\\AppTrait')) {
          * The database version.
          * 
          * If you have no tables to create on activate this plugin or don't use db for this plugin at all then set this to NULL.
-         * If you have tables to create on activate this plugin then set the db version number (string) here and then write create table schema at \RdDownloads\App\Models\PluginDbStructure->get() method.
+         * If you have tables to create on activate this plugin then set the db version number (string) here and then write create table schema at \RundizDownloads\App\Models\PluginDbStructure->get() method.
          * Do not access this property directly if not necessary, use `getDbVersion()` method instead.
          * 
          * @var string Version number of DB structure.
-         * @todo [rd-downloads][routine] Set the DB version here if structure changed. Read the description above and only set this if there is any tables to create on activate this plugin.
+         * @todo [rundiz][routine] Set the DB version here if structure changed. Read the description above and only set this if there is any tables to create on activate this plugin.
          */
         protected $db_version = '0.2';
 
@@ -126,17 +132,17 @@ if (!trait_exists('\\RdDownloads\\App\\AppTrait')) {
         public function setupAllOptions()
         {
             // load config values to get settings config file.
-            $loader = new \RdDownloads\App\Libraries\Loader();
+            $loader = new \RundizDownloads\App\Libraries\Loader();
             $config_values = $loader->loadConfig();
             if (is_array($config_values) && array_key_exists('rundiz_settings_config_file', $config_values)) {
                 $settings_config_file = $config_values['rundiz_settings_config_file'];
             } else {
-                wp_die(esc_html__('Settings configuration file was not set.', 'rd-downloads'));
+                wp_die(esc_html__('Settings configuration file was not set.', 'rundiz-downloads'));
                 exit;
             }
             unset($config_values, $loader);
 
-            $RundizSettings = new \RdDownloads\App\Libraries\RundizSettings();
+            $RundizSettings = new \RundizDownloads\App\Libraries\RundizSettings();
             $RundizSettings->settings_config_file = $settings_config_file;
             $this->all_options = $RundizSettings->getSettingsFieldsId();
             unset($RundizSettings, $settings_config_file);
@@ -153,5 +159,5 @@ if (!trait_exists('\\RdDownloads\\App\\AppTrait')) {
         }// setupAllOptions
 
 
-    }
+    }// AppTrait
 }

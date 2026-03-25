@@ -2,13 +2,13 @@
 /**
  * Simple template parser
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Libraries;
+namespace RundizDownloads\App\Libraries;
 
-if (!class_exists('\\RdDownloads\\App\\Libraries\\Template')) {
+if (!class_exists('\\RundizDownloads\\App\\Libraries\\Template')) {
     /**
      * Simple template parser class.
      * 

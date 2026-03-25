@@ -2,18 +2,18 @@
 /**
  * Rundiz Downloads editing page (including add, edit page).
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Downloads;
+namespace RundizDownloads\App\Controllers\Admin\Downloads;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing')) {
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Editing')) {
     class Editing
     {
 
 
-        use \RdDownloads\App\AppTrait;
+        use \RundizDownloads\App\AppTrait;
 
 
         /**
@@ -31,7 +31,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
         public function adminHelpTab()
         {
             $screen = get_current_screen();
-            $Loader = new \RdDownloads\App\Libraries\Loader();
+            $Loader = new \RundizDownloads\App\Libraries\Loader();
             $wp_upload_dir = wp_upload_dir();
 
             $output = [];
@@ -44,7 +44,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
             unset($output);
             $screen->add_help_tab([
                 'id' => 'rd-downloads-editing-helptab-1',
-                'title' => __('Basic guide', 'rd-downloads'),
+                'title' => __('Basic guide', 'rundiz-downloads'),
                 'content' => $content,
             ]);
             unset($content);
@@ -56,7 +56,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
             $content = ob_get_contents();
             $screen->add_help_tab([
                 'id' => 'rd-downloads-editing-helptab-2',
-                'title' => __('Force download', 'rd-downloads'),
+                'title' => __('Force download', 'rundiz-downloads'),
                 'content' => $content,
             ]);
             unset($content);
@@ -98,10 +98,10 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
             global $rd_downloads_options;
 
             $output = [];
-            $output['page_heading1'] = __('Add new download', 'rd-downloads');
+            $output['page_heading1'] = __('Add new download', 'rundiz-downloads');
             $output['rd_downloads_options'] = $rd_downloads_options;
 
-            $Loader = new \RdDownloads\App\Libraries\Loader();
+            $Loader = new \RundizDownloads\App\Libraries\Loader();
             $Loader->loadView('admin/Downloads/Editing/pageEdit_v', $output);
             unset($Loader);
         }// pageAdd
@@ -124,11 +124,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
             global $rd_downloads_options;
 
             $output = [];
-            $output['page_heading1'] = __('Edit download', 'rd-downloads');
+            $output['page_heading1'] = __('Edit download', 'rundiz-downloads');
             $output['rd_downloads_options'] = $rd_downloads_options;
 
             // prepare data for form.
-            $RdDownloads = new \RdDownloads\App\Models\RdDownloads();
+            $RdDownloads = new \RundizDownloads\App\Models\RdDownloads();
             $rdDownloadsData = $RdDownloads->get(
                 [
                     'download_id' => filter_input(INPUT_GET, 'download_id', FILTER_SANITIZE_NUMBER_INT),
@@ -137,14 +137,14 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
             unset($RdDownloads);
 
             if (empty($rdDownloadsData) || is_null($rdDownloadsData)) {
-                wp_die(esc_html__('The editing item was not found.', 'rd-downloads'), '', ['response' => 404]);
+                wp_die(esc_html__('The editing item was not found.', 'rundiz-downloads'), '', ['response' => 404]);
             } elseif (
                 isset($rdDownloadsData->user_id) && 
                 intval($rdDownloadsData->user_id) !== get_current_user_id() && 
                 !current_user_can('edit_others_posts')
             ) {
                 // if this user is not editing own downloads data and do not have permission to edit other's posts.
-                wp_die(esc_html__('You do not have permission to edit other\'s downloads data.', 'rd-downloads'), '', ['response' => 403]);
+                wp_die(esc_html__('You do not have permission to edit other\'s downloads data.', 'rundiz-downloads'), '', ['response' => 403]);
             }
 
             if (is_object($rdDownloadsData)) {
@@ -164,7 +164,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
                 }
             }
 
-            $Loader = new \RdDownloads\App\Libraries\Loader();
+            $Loader = new \RundizDownloads\App\Libraries\Loader();
             $Loader->loadView('admin/Downloads/Editing/pageEdit_v', $output);
             unset($Loader);
         }// pageEdit
@@ -175,15 +175,15 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
          */
         public function registerScripts()
         {
-            wp_enqueue_script('rd-downloads-edit-form', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/js/admin/Downloads/Management/pageEdit.js', ['jquery', 'wp-util', 'rd-downloads-common-functions'], RDDOWNLOADS_VERSION, true);
+            wp_enqueue_script('rd-downloads-edit-form', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/admin/Downloads/Management/pageEdit.js', ['jquery', 'wp-util', 'rd-downloads-common-functions'], RUNDIZDOWNLOADS_VERSION, true);
             wp_localize_script(
                 'rd-downloads-edit-form',
                 'RdDownloads',
                 [
                     'nonce' => wp_create_nonce('rd-downloads_ajax-file-browser-nonce'),
                     'savenonce' => wp_create_nonce('rd-downloads-ajax-saving-nonce'),
-                    'txtAreYouSureDeleteFileUndone' => __('Are you sure?', 'rd-downloads') . "\n" . __('If the selected file had linked with other downloads then it will show the error message.', 'rd-downloads') . "\n" . __('This can not be un-done.', 'rd-downloads'),
-                    'txtDismiss' => __('Dismiss', 'rd-downloads'),
+                    'txtAreYouSureDeleteFileUndone' => __('Are you sure?', 'rundiz-downloads') . "\n" . __('If the selected file had linked with other downloads then it will show the error message.', 'rundiz-downloads') . "\n" . __('This can not be un-done.', 'rundiz-downloads'),
+                    'txtDismiss' => __('Dismiss', 'rundiz-downloads'),
                 ]
             );
         }// registerScripts
@@ -196,7 +196,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Editing'))
         {
             wp_enqueue_style('rd-downloads-font-awesome5');
 
-            wp_enqueue_style('rd-downloads-edit-form', plugin_dir_url(RDDOWNLOADS_FILE) . 'assets/css/admin/Downloads/Management/pageEdit.css', [], RDDOWNLOADS_VERSION);
+            wp_enqueue_style('rd-downloads-edit-form', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/admin/Downloads/Management/pageEdit.css', [], RUNDIZDOWNLOADS_VERSION);
         }// registerStyles
 
 

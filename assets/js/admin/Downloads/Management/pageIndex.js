@@ -3,7 +3,7 @@
  *
  * IE not supported.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 

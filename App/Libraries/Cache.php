@@ -2,19 +2,19 @@
 /**
  * Cache class between this plugin and Rundiz\SimpleCache.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Libraries;
+namespace RundizDownloads\App\Libraries;
 
-if (!class_exists('\\RdDownloads\\App\\Libraries\\Cache')) {
+if (!class_exists('\\RundizDownloads\\App\\Libraries\\Cache')) {
     class Cache
     {
 
 
         /**
-         * @var \RdDownloads\Rundiz\SimpleCache\Drivers\FileSystem;
+         * @var \RundizDownloads\Rundiz\SimpleCache\Drivers\FileSystem;
          */
         protected $SimpleCache;
 
@@ -25,17 +25,17 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Cache')) {
          */
         public function __construct()
         {
-            require_once plugin_dir_path(RDDOWNLOADS_FILE) . 'vendor/simple-cache/Rundiz/SimpleCache/SimpleCacheInterface.php';
-            require_once plugin_dir_path(RDDOWNLOADS_FILE) . 'vendor/simple-cache/Rundiz/SimpleCache/Drivers/FileSystem.php';
+            require_once plugin_dir_path(RUNDIZDOWNLOADS_FILE) . 'vendor/simple-cache/Rundiz/SimpleCache/SimpleCacheInterface.php';
+            require_once plugin_dir_path(RUNDIZDOWNLOADS_FILE) . 'vendor/simple-cache/Rundiz/SimpleCache/Drivers/FileSystem.php';
 
-            $this->SimpleCache = new \RdDownloads\Rundiz\SimpleCache\Drivers\FileSystem(plugin_dir_path(RDDOWNLOADS_FILE) . '_cache');
+            $this->SimpleCache = new \RundizDownloads\Rundiz\SimpleCache\Drivers\FileSystem(plugin_dir_path(RUNDIZDOWNLOADS_FILE) . '_cache');
         }// __construct
 
 
         /**
          * Get Simple Cache instance.
          * 
-         * @return \RdDownloads\Rundiz\SimpleCache\Drivers\FileSystem
+         * @return \RundizDownloads\Rundiz\SimpleCache\Drivers\FileSystem
          */
         public function getInstance()
         {

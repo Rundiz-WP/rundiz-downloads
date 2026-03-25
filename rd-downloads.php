@@ -3,43 +3,43 @@
  * Plugin Name: Rundiz Downloads
  * Plugin URI: https://rundiz.com/?p=319
  * Description: Download manager for WordPress that support GitHub auto update.
- * Version: 1.0.17
+ * Version: 1.0.18dev-20260325
  * Requires at least: 4.7.0
  * Requires PHP: 5.5
  * Author: Vee Winch
  * Author URI: https://rundiz.com
  * License: MIT
  * License URI: https://opensource.org/licenses/MIT
- * Text Domain: rd-downloads
+ * Text Domain: rundiz-downloads
  * Domain Path: /App/languages/
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
 // define this plugin main file path.
-if (!defined('RDDOWNLOADS_FILE')) {
-    define('RDDOWNLOADS_FILE', __FILE__);
+if (!defined('RUNDIZDOWNLOADS_FILE')) {
+    define('RUNDIZDOWNLOADS_FILE', __FILE__);
 }
 
 
-if (!defined('RDDOWNLOADS_VERSION')) {
-    $pluginData = (function_exists('get_file_data') ? get_file_data(__FILE__, ['Version' => 'Version']) : null);
+if (!defined('RUNDIZDOWNLOADS_VERSION')) {
+    $rundiz_downloads_pluginData = (function_exists('get_file_data') ? get_file_data(__FILE__, ['Version' => 'Version']) : null);
     // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-    $pluginVersion = (isset($pluginData['Version']) ? $pluginData['Version'] : date('Ym'));
-    unset($pluginData);
+    $rundiz_downloads_pluginVersion = (isset($rundiz_downloads_pluginData['Version']) ? $rundiz_downloads_pluginData['Version'] : date('Ym'));
+    unset($rundiz_downloads_pluginData);
 
-    define('RDDOWNLOADS_VERSION', $pluginVersion);
+    define('RUNDIZDOWNLOADS_VERSION', $rundiz_downloads_pluginVersion);
 
-    unset($pluginVersion);
+    unset($rundiz_downloads_pluginVersion);
 }
 
 
 // include this plugin's autoload.
-require __DIR__.'/autoload.php';
+require __DIR__ . '/autoload.php';
 
 
 // initialize plugin app main class.
-$this_plugin_app = new \RdDownloads\App\App();
-$this_plugin_app->run();
-unset($this_plugin_app);
+$rundiz_downloads_App = new \RundizDownloads\App\App();
+$rundiz_downloads_App->run();
+unset($rundiz_downloads_App);

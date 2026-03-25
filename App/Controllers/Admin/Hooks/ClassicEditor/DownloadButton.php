@@ -2,13 +2,13 @@
 /**
  * Add download button into content editor hook.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Hooks\ClassicEditor;
+namespace RundizDownloads\App\Controllers\Admin\Hooks\ClassicEditor;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEditor\\DownloadButton')) {
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEditor\\DownloadButton')) {
     /**
      * Add a download button class.
      * 
@@ -19,7 +19,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEditor\
      * @link https://www.sitepoint.com/adding-a-media-button-to-the-content-editor/ Example code.
      * @link https://gist.github.com/vralle/9e28e9d18a4b340b93ad Example code.
      */
-    class DownloadButton implements \RdDownloads\App\Controllers\ControllerInterface
+    class DownloadButton implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
@@ -76,24 +76,24 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEditor\
         {
             
             if ('post.php' === $hook || 'post-new.php' === $hook) {
-                $Loader = new \RdDownloads\App\Libraries\Loader();
+                $Loader = new \RundizDownloads\App\Libraries\Loader();
                 ob_start();
                 $Loader->loadView('admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v');
                 $dialogContent = ob_get_contents();
                 ob_end_clean();
 
-                wp_enqueue_script('rd-downloads-tinymce-ajax', plugins_url('/assets/js/admin/Hooks/ClassicEditor/tinymce-ajax.js', RDDOWNLOADS_FILE), ['jquery', 'rd-downloads-common-functions', 'wp-util'], RDDOWNLOADS_VERSION, true);
+                wp_enqueue_script('rd-downloads-tinymce-ajax', plugins_url('/assets/js/admin/Hooks/ClassicEditor/tinymce-ajax.js', RUNDIZDOWNLOADS_FILE), ['jquery', 'rd-downloads-common-functions', 'wp-util'], RUNDIZDOWNLOADS_VERSION, true);
                 wp_localize_script(
                     'rd-downloads-tinymce-ajax',
                     'RdDownloads',
                     [
                         'nonce' => wp_create_nonce('rd-downloads_editor-ajax-nonce'),
                         'customDialogContent' => $dialogContent,
-                        'txtAddADownload' => __('Add a download', 'rd-downloads'),
-                        'txtAnyRemoteFile' => __('Any remote file', 'rd-downloads'),
-                        'txtGitHubFile' => __('GitHub file', 'rd-downloads'),
-                        'txtLocalFile' => __('Local file', 'rd-downloads'),
-                        'txtUnknow' => __('Unknown', 'rd-downloads'),
+                        'txtAddADownload' => __('Add a download', 'rundiz-downloads'),
+                        'txtAnyRemoteFile' => __('Any remote file', 'rundiz-downloads'),
+                        'txtGitHubFile' => __('GitHub file', 'rundiz-downloads'),
+                        'txtLocalFile' => __('Local file', 'rundiz-downloads'),
+                        'txtUnknow' => __('Unknown', 'rundiz-downloads'),
                     ]
                 );
                 unset($dialogContent, $Loader);
@@ -110,13 +110,13 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEditor\
         {
             if ('post.php' === $hook || 'post-new.php' === $hook) {
                 if (!wp_script_is('rd-downloads-font-awesome5', 'registered')) {
-                    $StylesScripts = new \RdDownloads\App\Libraries\StylesAndScripts();
+                    $StylesScripts = new \RundizDownloads\App\Libraries\StylesAndScripts();
                     $StylesScripts->registerStylesAndScripts();
                     unset($StylesScripts);
                 }
                 wp_enqueue_style('rd-downloads-font-awesome5');
-                wp_enqueue_style('rd-downloads-tinymce-font-awesome5', plugin_dir_url(RDDOWNLOADS_FILE).'assets/css/admin/Hooks/ClassicEditor/tinymce-font-awesome5.css', [], RDDOWNLOADS_VERSION);
-                wp_enqueue_style('rd-downloads-tinymce-custom-dialog', plugin_dir_url(RDDOWNLOADS_FILE).'assets/css/admin/Hooks/ClassicEditor/tinymce-custom-dialog.css', [], RDDOWNLOADS_VERSION);
+                wp_enqueue_style('rd-downloads-tinymce-font-awesome5', plugin_dir_url(RUNDIZDOWNLOADS_FILE).'assets/css/admin/Hooks/ClassicEditor/tinymce-font-awesome5.css', [], RUNDIZDOWNLOADS_VERSION);
+                wp_enqueue_style('rd-downloads-tinymce-custom-dialog', plugin_dir_url(RUNDIZDOWNLOADS_FILE).'assets/css/admin/Hooks/ClassicEditor/tinymce-custom-dialog.css', [], RUNDIZDOWNLOADS_VERSION);
             }
         }// registerStyles
 
@@ -129,7 +129,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEditor\
          */
         public function registerTinyMceJavascript($plugin_array)
         {
-            $plugin_array['rddownloads_button'] = plugins_url('/assets/js/admin/Hooks/ClassicEditor/tinymce-dialog.js', RDDOWNLOADS_FILE);
+            $plugin_array['rddownloads_button'] = plugins_url('/assets/js/admin/Hooks/ClassicEditor/tinymce-dialog.js', RUNDIZDOWNLOADS_FILE);
             return $plugin_array;
         }// registerTinyMceJavascript
 

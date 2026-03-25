@@ -1,15 +1,15 @@
 <?php
 /**
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  * @license http://opensource.org/licenses/MIT MIT
  */
 
 
-namespace RdDownloads\App\Libraries;
+namespace RundizDownloads\App\Libraries;
 
 
-if (!class_exists('\\RdDownloads\\App\\Libraries\\AntiBot')) {
+if (!class_exists('\\RundizDownloads\\App\\Libraries\\AntiBot')) {
     /**
      * Anti robot class to prevent spam.
      */

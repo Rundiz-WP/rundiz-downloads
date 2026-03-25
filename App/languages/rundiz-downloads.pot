@@ -1,22 +1,22 @@
-# Copyright (C) 2025 Vee Winch
+# Copyright (C) 2026 Vee Winch
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rundiz Downloads 1.0.16\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rd-downloads\n"
+"Project-Id-Version: Rundiz Downloads 1.0.18dev-20260325\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rundiz-downloads\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-12-18T21:44:36+07:00\n"
+"POT-Creation-Date: 2026-03-25T21:41:54+07:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: rd-downloads\n"
+"X-Domain: rundiz-downloads\n"
 
 #. Plugin Name of the plugin
 #: rd-downloads.php
-#: App/Controllers/Admin/Downloads/Menu.php:64
+#: App/Controllers/Admin/Downloads/Menu.php:70
 #: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:141
 #: App/Controllers/Front/Hooks/Query/GithubAutoUpdatePage/GithubAutoUpdatePage.php:58
 #: App/Views/admin/Hooks/DashboardWidgets/DownloadStat/displayDownloadStat_v.php:15
@@ -43,7 +43,7 @@ msgstr ""
 msgid "https://rundiz.com"
 msgstr ""
 
-#: App/AppTrait.php:134
+#: App/AppTrait.php:140
 msgid "Settings configuration file was not set."
 msgstr ""
 
@@ -344,12 +344,12 @@ msgid "Basic guide"
 msgstr ""
 
 #: App/Controllers/Admin/Downloads/Editing.php:101
-#: App/Controllers/Admin/Downloads/Menu.php:77
+#: App/Controllers/Admin/Downloads/Menu.php:83
 msgid "Add new download"
 msgstr ""
 
 #: App/Controllers/Admin/Downloads/Editing.php:127
-#: App/Controllers/Admin/Downloads/Menu.php:86
+#: App/Controllers/Admin/Downloads/Menu.php:92
 msgid "Edit download"
 msgstr ""
 
@@ -460,12 +460,12 @@ msgstr ""
 msgid "The selected files will be deleted. GitHub and any remote files will be remain."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Menu.php:64
+#: App/Controllers/Admin/Downloads/Menu.php:70
 #: App/Views/admin/Downloads/Management/pageIndex_v.php:13
 msgid "Downloads"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Menu.php:77
+#: App/Controllers/Admin/Downloads/Menu.php:83
 #: App/Views/admin/Downloads/Management/pageIndex_v.php:15
 msgid "Add New"
 msgstr ""
@@ -856,13 +856,13 @@ msgid "Version"
 msgstr ""
 
 #. translators: %s: Template path.
-#: App/Libraries/Loader.php:201
+#: App/Libraries/Loader.php:205
 #, php-format
 msgid "The template file was not found. (%s)"
 msgstr ""
 
 #. translators: %s: Path to template file to show in error.
-#: App/Libraries/Loader.php:251
+#: App/Libraries/Loader.php:255
 #, php-format
 msgid "The views file was not found (%s)."
 msgstr ""

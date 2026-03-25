@@ -2,13 +2,13 @@
 /**
  * Cookies class.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Libraries;
+namespace RundizDownloads\App\Libraries;
 
-if (!class_exists('\\RdDownloads\\App\\Libraries\\Cookies')) {
+if (!class_exists('\\RundizDownloads\\App\\Libraries\\Cookies')) {
     class Cookies
     {
 

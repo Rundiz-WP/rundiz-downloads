@@ -2,13 +2,13 @@
 /**
  * Semantic versioning
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Libraries;
+namespace RundizDownloads\App\Libraries;
 
-if (!class_exists('\\RdDownloads\\App\\Libraries\\Semver')) {
+if (!class_exists('\\RundizDownloads\\App\\Libraries\\Semver')) {
     /**
      * Semantic versioning class that connect between the plugin and Composer/Semver classes.
      * 
@@ -29,13 +29,13 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Semver')) {
          */
         public function __construct()
         {
-            require_once plugin_dir_path(RDDOWNLOADS_FILE) . 'vendor/semver/src/Constraint/ConstraintInterface.php';// interface must required first
-            require_once plugin_dir_path(RDDOWNLOADS_FILE) . 'vendor/semver/src/Constraint/Constraint.php';
-            require_once plugin_dir_path(RDDOWNLOADS_FILE) . 'vendor/semver/src/Constraint/EmptyConstraint.php';
-            require_once plugin_dir_path(RDDOWNLOADS_FILE) . 'vendor/semver/src/Constraint/MultiConstraint.php';
-            require_once plugin_dir_path(RDDOWNLOADS_FILE) . 'vendor/semver/src/Comparator.php';
-            require_once plugin_dir_path(RDDOWNLOADS_FILE) . 'vendor/semver/src/Semver.php';
-            require_once plugin_dir_path(RDDOWNLOADS_FILE) . 'vendor/semver/src/VersionParser.php';
+            require_once plugin_dir_path(RUNDIZDOWNLOADS_FILE) . 'vendor/semver/src/Constraint/ConstraintInterface.php';// interface must required first
+            require_once plugin_dir_path(RUNDIZDOWNLOADS_FILE) . 'vendor/semver/src/Constraint/Constraint.php';
+            require_once plugin_dir_path(RUNDIZDOWNLOADS_FILE) . 'vendor/semver/src/Constraint/EmptyConstraint.php';
+            require_once plugin_dir_path(RUNDIZDOWNLOADS_FILE) . 'vendor/semver/src/Constraint/MultiConstraint.php';
+            require_once plugin_dir_path(RUNDIZDOWNLOADS_FILE) . 'vendor/semver/src/Comparator.php';
+            require_once plugin_dir_path(RUNDIZDOWNLOADS_FILE) . 'vendor/semver/src/Semver.php';
+            require_once plugin_dir_path(RUNDIZDOWNLOADS_FILE) . 'vendor/semver/src/VersionParser.php';
         }// __construct
 
 
@@ -69,12 +69,12 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Semver')) {
         {
             if (!is_string($version)) {
                 /* translators: %s Argument name. */
-                throw new \InvalidArgumentException(sprintf(esc_html__('The %s must be string.', 'rd-downloads'), '$version'));
+                throw new \InvalidArgumentException(sprintf(esc_html__('The %s must be string.', 'rundiz-downloads'), '$version'));
             }
 
             if (!is_string($prefix)) {
                 /* translators: %s Argument name. */
-                throw new \InvalidArgumentException(sprintf(esc_html__('The %s must be string.', 'rd-downloads'), '$prefix'));
+                throw new \InvalidArgumentException(sprintf(esc_html__('The %s must be string.', 'rundiz-downloads'), '$prefix'));
             }
 
             return preg_replace('#(' . $prefix . ')?(.+)#iu', '$2', $version, 1);

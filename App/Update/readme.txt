@@ -21,9 +21,9 @@ The update class MUST have `run()` method to run the update code.
 Example:
 ```
 <?php
-namespace RdDownloads\App\Update\Manual;
+namespace RundizDownloads\App\Update\Manual;
 
-class V1Sub1 implements \RdDownloads\App\Update\Manual\ManualUpdateInterface
+class V1Sub1 implements \RundizDownloads\App\Update\Manual\ManualUpdateInterface
 {
 
 

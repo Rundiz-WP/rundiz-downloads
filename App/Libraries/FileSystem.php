@@ -2,13 +2,13 @@
 /**
  * File system.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Libraries;
+namespace RundizDownloads\App\Libraries;
 
-if (!class_exists('\\RdDownloads\\App\\Libraries\\FileSystem')) {
+if (!class_exists('\\RundizDownloads\\App\\Libraries\\FileSystem')) {
     class FileSystem
     {
 
@@ -113,7 +113,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\FileSystem')) {
                 throw new \InvalidArgumentException(
                     sprintf(
                         /* translators: %s Argument name. */
-                        esc_html__('The %s must be string.', 'rd-downloads')
+                        esc_html__('The %s must be string.', 'rundiz-downloads')
                         , '$path'
                     )
                 );

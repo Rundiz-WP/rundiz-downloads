@@ -2,14 +2,14 @@
 /**
  * Deactivate the plugin action.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Plugins;
+namespace RundizDownloads\App\Controllers\Admin\Plugins;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Deactivation')) {
-    class Deactivation implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Deactivation')) {
+    class Deactivation implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
@@ -30,7 +30,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins\\Deactivation
         public function registerHooks()
         {
             // register deactivate hook
-            register_deactivation_hook(RDDOWNLOADS_FILE, [$this, 'deactivate']);
+            register_deactivation_hook(RUNDIZDOWNLOADS_FILE, [$this, 'deactivate']);
         }// registerHooks
 
 

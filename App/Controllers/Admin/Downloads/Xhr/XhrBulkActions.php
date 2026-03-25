@@ -2,15 +2,15 @@
 /**
  * Bulk actions class.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Downloads\Xhr;
+namespace RundizDownloads\App\Controllers\Admin\Downloads\Xhr;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBulkActions')) {
-    class XhrBulkActions extends \RdDownloads\App\Controllers\XhrBased implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBulkActions')) {
+    class XhrBulkActions extends \RundizDownloads\App\Controllers\XhrBased implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
@@ -67,7 +67,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
             unset($bulkAction);
 
             $output['form_result_class'] = 'notice-error';
-            $output['form_result_msg'] = __('Invalid form action, please try again.', 'rd-downloads');
+            $output['form_result_msg'] = __('Invalid form action, please try again.', 'rundiz-downloads');
             wp_send_json($output, 400);
         }// bulkActions
 
@@ -118,8 +118,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                 $failed_delete_download_names = [];
                 $failed_remove_githubwebhook = [];
 
-                $FileSystem = new \RdDownloads\App\Libraries\FileSystem();
-                $Github = new \RdDownloads\App\Libraries\Github();
+                $FileSystem = new \RundizDownloads\App\Libraries\FileSystem();
+                $Github = new \RundizDownloads\App\Libraries\Github();
                 $accessToken = $Github->getOAuthAccessToken($current_user_id);
                 $apiHeader = $Github->apiV3Headers($accessToken);
                 unset($accessToken);
@@ -190,7 +190,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                             if (false !== $deleteResult) {
                                 $deleted_download_ids[] = $row->download_id;
                                 $deleted_download_names[] = $row->download_name;
-                                $Dll = new \RdDownloads\App\Models\RdDownloadLogs();
+                                $Dll = new \RundizDownloads\App\Models\RdDownloadLogs();
                                 $Dll->writeLog('admin_delete', [
                                     'download_id' => $row->download_id,
                                 ]);
@@ -238,22 +238,22 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                 // check deleted, failed, result and set the error message.
                 if (count($download_ids) === count($deleted_download_ids)) {
                     $output['form_result_class'] = 'notice-success';
-                    $output['form_result_msg'] = __('Success! All selected items have been deleted.', 'rd-downloads');
+                    $output['form_result_msg'] = __('Success! All selected items have been deleted.', 'rundiz-downloads');
                     if (!empty($failed_remove_githubwebhook)) {
                         $output['form_result_class'] = 'notice-warning';
-                        $output['form_result_msg'] .= '<br>' . __('There are some webhook that is unable to remove, here is the result.', 'rd-downloads') . ' ' . implode(', ', $failed_remove_githubwebhook);
+                        $output['form_result_msg'] .= '<br>' . __('There are some webhook that is unable to remove, here is the result.', 'rundiz-downloads') . ' ' . implode(', ', $failed_remove_githubwebhook);
                     }
                 } else {
                     $notfound_download_ids = array_diff($download_ids, $found_download_ids);
 
                     $output['form_result_class'] = 'notice-warning';
-                    $output['form_result_msg'] = '<p><strong>' . __('Warning! There are some problem about delete the items, here are the results.', 'rd-downloads') . '</strong></p>' .
+                    $output['form_result_msg'] = '<p><strong>' . __('Warning! There are some problem about delete the items, here are the results.', 'rundiz-downloads') . '</strong></p>' .
                         '<ul class="rd-downloads-ul">' .
-                            (count($deleted_download_names) > 0 ? '<li><strong>' . _n('Deleted item', 'Deleted items', count($deleted_download_names), 'rd-downloads') . ':</strong> ' . implode(', ', $deleted_download_names) . '</li>' : '') .
-                            (count($failed_delete_download_names) > 0 ? '<li><strong>' . _n('Failed to delete item', 'Failed to delete items', count($failed_delete_download_names), 'rd-downloads') . ':</strong> ' . implode(', ', $failed_delete_download_names) . '</li>' : '') .
-                            (count($failed_remove_githubwebhook) > 0 ? '<li><strong>' . _n('Failed to remove webhook on GitHub', 'Failed to remove webhooks on GitHub', count($failed_remove_githubwebhook), 'rd-downloads') . ':</strong> ' . implode(', ', $failed_remove_githubwebhook) . '</li>' : '') .
-                            (count($capability_limited_download_names) > 0 ? '<li><strong>' . _n('Capability limited item', 'Capability limited items', count($capability_limited_download_names), 'rd-downloads') . ':</strong> ' . implode(', ', $capability_limited_download_names) . '</li>' : '') .
-                            (count($notfound_download_ids) > 0 ? '<li><strong>' .  _n('Mismatch ID', 'Mismatch IDs', count($notfound_download_ids), 'rd-downloads') . ':</strong> ' . implode(', ', $notfound_download_ids) . '</li>' : '') .
+                            (count($deleted_download_names) > 0 ? '<li><strong>' . _n('Deleted item', 'Deleted items', count($deleted_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $deleted_download_names) . '</li>' : '') .
+                            (count($failed_delete_download_names) > 0 ? '<li><strong>' . _n('Failed to delete item', 'Failed to delete items', count($failed_delete_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $failed_delete_download_names) . '</li>' : '') .
+                            (count($failed_remove_githubwebhook) > 0 ? '<li><strong>' . _n('Failed to remove webhook on GitHub', 'Failed to remove webhooks on GitHub', count($failed_remove_githubwebhook), 'rundiz-downloads') . ':</strong> ' . implode(', ', $failed_remove_githubwebhook) . '</li>' : '') .
+                            (count($capability_limited_download_names) > 0 ? '<li><strong>' . _n('Capability limited item', 'Capability limited items', count($capability_limited_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $capability_limited_download_names) . '</li>' : '') .
+                            (count($notfound_download_ids) > 0 ? '<li><strong>' .  _n('Mismatch ID', 'Mismatch IDs', count($notfound_download_ids), 'rundiz-downloads') . ':</strong> ' . implode(', ', $notfound_download_ids) . '</li>' : '') .
                         '</ul>';
                 }
 
@@ -274,7 +274,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
             } else {
                 $responseStatus = 404;
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('The selected items was not found.', 'rd-downloads');
+                $output['form_result_msg'] = __('The selected items was not found.', 'rundiz-downloads');
             }
             unset($results);
 
@@ -329,8 +329,8 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                 $failed_update_download_ids = [];
                 $failed_update_download_names = [];
 
-                $Github = new \RdDownloads\App\Libraries\Github();
-                $FileSystem = new \RdDownloads\App\Libraries\FileSystem();
+                $Github = new \RundizDownloads\App\Libraries\Github();
+                $FileSystem = new \RundizDownloads\App\Libraries\FileSystem();
 
                 if (defined('WP_DEBUG') && WP_DEBUG === true) {
                     $output['debug_sql_lasterror'] = [];
@@ -356,7 +356,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                                 empty($download_options['opt_download_version_range']) &&
                                 !empty($download_options['opt_download_version'])
                             ) {
-                                $Semver = new \RdDownloads\App\Libraries\Semver();
+                                $Semver = new \RundizDownloads\App\Libraries\Semver();
                                 $version_range = $Semver->getDefaultVersionConstraint($download_options['opt_download_version']);
                                 unset($Semver);
                             } else {
@@ -385,12 +385,12 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                                 }
                             }
 
-                            $RdDownloads = new \RdDownloads\App\Models\RdDownloads();
+                            $RdDownloads = new \RundizDownloads\App\Models\RdDownloads();
                             $updateResult = $RdDownloads->update($data, ['download_id' => $row->download_id]);
                             if (false !== $updateResult) {
                                 $updated_download_ids[] = $row->download_id;
                                 $updated_download_names[] = $row->download_name;
-                                $Dll = new \RdDownloads\App\Models\RdDownloadLogs();
+                                $Dll = new \RundizDownloads\App\Models\RdDownloadLogs();
                                 $Dll->writeLog('admin_update', [
                                     'download_id' => $row->download_id,
                                 ]);
@@ -415,17 +415,17 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                 // check updated, failed, result and set the error message.
                 if (count($download_ids) === count($updated_download_ids)) {
                     $output['form_result_class'] = 'notice-success';
-                    $output['form_result_msg'] = __('Success! All selected items have been updated.', 'rd-downloads');
+                    $output['form_result_msg'] = __('Success! All selected items have been updated.', 'rundiz-downloads');
                 } else {
                     $notfound_download_ids = array_diff($download_ids, $found_download_ids);
 
                     $output['form_result_class'] = 'notice-warning';
-                    $output['form_result_msg'] = '<p><strong>' . __('Warning! There are some problem about update the items, here are the results.', 'rd-downloads') . '</strong></p>' .
+                    $output['form_result_msg'] = '<p><strong>' . __('Warning! There are some problem about update the items, here are the results.', 'rundiz-downloads') . '</strong></p>' .
                         '<ul class="rd-downloads-ul">' .
-                            (count($updated_download_names) > 0 ? '<li><strong>' . _n('Updated item', 'Updated items', count($updated_download_names), 'rd-downloads') . ':</strong> ' . implode(', ', $updated_download_names) . '</li>' : '') .
-                            (count($failed_update_download_names) > 0 ? '<li><strong>' . _n('Failed to update item', 'Failed to update items', count($failed_update_download_names), 'rd-downloads') . ':</strong> ' . implode(', ', $failed_update_download_names) . '</li>' : '') .
-                            (count($capability_limited_download_names) > 0 ? '<li><strong>' . _n('Capability limited item', 'Capability limited items', count($capability_limited_download_names), 'rd-downloads') . ':</strong> ' . implode(', ', $capability_limited_download_names) . '</li>' : '') .
-                            (count($notfound_download_ids) > 0 ? '<li><strong>' .  _n('Mismatch ID', 'Mismatch IDs', count($notfound_download_ids), 'rd-downloads') . ':</strong> ' . implode(', ', $notfound_download_ids) . '</li>' : '') .
+                            (count($updated_download_names) > 0 ? '<li><strong>' . _n('Updated item', 'Updated items', count($updated_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $updated_download_names) . '</li>' : '') .
+                            (count($failed_update_download_names) > 0 ? '<li><strong>' . _n('Failed to update item', 'Failed to update items', count($failed_update_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $failed_update_download_names) . '</li>' : '') .
+                            (count($capability_limited_download_names) > 0 ? '<li><strong>' . _n('Capability limited item', 'Capability limited items', count($capability_limited_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $capability_limited_download_names) . '</li>' : '') .
+                            (count($notfound_download_ids) > 0 ? '<li><strong>' .  _n('Mismatch ID', 'Mismatch IDs', count($notfound_download_ids), 'rundiz-downloads') . ':</strong> ' . implode(', ', $notfound_download_ids) . '</li>' : '') .
                         '</ul>';
                 }
 
@@ -445,7 +445,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
             } else {
                 $responseStatus = 404;
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('The selected items was not found or not matched download type.', 'rd-downloads');
+                $output['form_result_msg'] = __('The selected items was not found or not matched download type.', 'rundiz-downloads');
             }
             unset($results);
 
@@ -510,7 +510,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                 $failed_update_download_ids = [];
                 $failed_update_download_names = [];
 
-                $Url = new \RdDownloads\App\Libraries\Url();
+                $Url = new \RundizDownloads\App\Libraries\Url();
 
                 foreach ($results as $row) {
                     $found_download_ids[] = $row->download_id;
@@ -550,17 +550,17 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
                 // check updated, failed, result and set the error message.
                 if (count($download_ids) === count($updated_download_ids)) {
                     $output['form_result_class'] = 'notice-success';
-                    $output['form_result_msg'] = __('Success! All selected items have been updated.', 'rd-downloads');
+                    $output['form_result_msg'] = __('Success! All selected items have been updated.', 'rundiz-downloads');
                 } else {
                     $notfound_download_ids = array_diff($download_ids, $found_download_ids);
 
                     $output['form_result_class'] = 'notice-warning';
-                    $output['form_result_msg'] = '<p><strong>' . __('Warning! There are some problem about update the items, here are the results.', 'rd-downloads') . '</strong></p>' .
+                    $output['form_result_msg'] = '<p><strong>' . __('Warning! There are some problem about update the items, here are the results.', 'rundiz-downloads') . '</strong></p>' .
                         '<ul class="rd-downloads-ul">' .
-                            (count($updated_download_names) > 0 ? '<li><strong>' . _n('Updated item', 'Updated items', count($updated_download_names), 'rd-downloads') . ':</strong> ' . implode(', ', $updated_download_names) . '</li>' : '') .
-                            (count($failed_update_download_names) > 0 ? '<li><strong>' . _n('Failed to update item', 'Failed to update items', count($failed_update_download_names), 'rd-downloads') . ':</strong> ' . implode(', ', $failed_update_download_names) . '</li>' : '') .
-                            (count($capability_limited_download_names) > 0 ? '<li><strong>' . _n('Capability limited item', 'Capability limited items', count($capability_limited_download_names), 'rd-downloads') . ':</strong> ' . implode(', ', $capability_limited_download_names) . '</li>' : '') .
-                            (count($notfound_download_ids) > 0 ? '<li><strong>' .  _n('Mismatch ID', 'Mismatch IDs', count($notfound_download_ids), 'rd-downloads') . ':</strong> ' . implode(', ', $notfound_download_ids) . '</li>' : '') .
+                            (count($updated_download_names) > 0 ? '<li><strong>' . _n('Updated item', 'Updated items', count($updated_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $updated_download_names) . '</li>' : '') .
+                            (count($failed_update_download_names) > 0 ? '<li><strong>' . _n('Failed to update item', 'Failed to update items', count($failed_update_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $failed_update_download_names) . '</li>' : '') .
+                            (count($capability_limited_download_names) > 0 ? '<li><strong>' . _n('Capability limited item', 'Capability limited items', count($capability_limited_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $capability_limited_download_names) . '</li>' : '') .
+                            (count($notfound_download_ids) > 0 ? '<li><strong>' .  _n('Mismatch ID', 'Mismatch IDs', count($notfound_download_ids), 'rundiz-downloads') . ':</strong> ' . implode(', ', $notfound_download_ids) . '</li>' : '') .
                         '</ul>';
                 }
 
@@ -580,7 +580,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBu
             } else {
                 $responseStatus = 404;
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('The selected items was not found or not matched download type.', 'rd-downloads');
+                $output['form_result_msg'] = __('The selected items was not found or not matched download type.', 'rundiz-downloads');
             }
             unset($results);
 

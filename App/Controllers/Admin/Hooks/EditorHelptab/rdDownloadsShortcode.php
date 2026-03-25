@@ -2,14 +2,14 @@
 /**
  * Add [rddownloads] shortcode help tab to editor page.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Hooks\EditorHelptab;
+namespace RundizDownloads\App\Controllers\Admin\Hooks\EditorHelptab;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\EditorHelptab\\rdDownloadsShortcode')) {
-    class rdDownloadsShortcode implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\EditorHelptab\\rdDownloadsShortcode')) {
+    class rdDownloadsShortcode implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
@@ -18,7 +18,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\EditorHelptab\
          */
         public function rdDownloadsShortcodeHelpTab()
         {
-            $Loader = new \RdDownloads\App\Libraries\Loader();
+            $Loader = new \RundizDownloads\App\Libraries\Loader();
             $screen = get_current_screen();
 
             if (
@@ -33,7 +33,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Hooks\\EditorHelptab\
                 // add the help tab content to the last.
                 $screen->add_help_tab([
                     'id' => 'rd-downloads-listing-helptab-shortcodes',
-                    'title' => __('Rundiz Downloads shortcodes', 'rd-downloads'),
+                    'title' => __('Rundiz Downloads shortcodes', 'rundiz-downloads'),
                     'content' => $content,
                 ]);
                 unset($content);

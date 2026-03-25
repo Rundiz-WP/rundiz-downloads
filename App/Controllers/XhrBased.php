@@ -2,13 +2,13 @@
 /**
  * Rundiz Downloads - Xhr based class.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers;
+namespace RundizDownloads\App\Controllers;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\XhrBased')) {
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\XhrBased')) {
     abstract class XhrBased
     {
 
@@ -51,7 +51,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\XhrBased')) {
             ) {
                 // if no method or method is not in allowed list.
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('Method not allowed.', 'rd-downloads');
+                $output['form_result_msg'] = __('Method not allowed.', 'rundiz-downloads');
                 wp_send_json($output, 405);
             }
 
@@ -70,7 +70,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\XhrBased')) {
 
                 if (check_ajax_referer($action, $query_arg, false) === false) {
                     $output['form_result_class'] = 'notice-error';
-                    $output['form_result_msg'] = __('Please reload the page and try again.', 'rd-downloads');
+                    $output['form_result_msg'] = __('Please reload the page and try again.', 'rundiz-downloads');
                     wp_send_json($output, 403);
                 }
 

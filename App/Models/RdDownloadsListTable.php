@@ -2,14 +2,14 @@
 /**
  * Rundiz Downloads list table.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
-namespace RdDownloads\App\Models;
+namespace RundizDownloads\App\Models;
 
-if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
+if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadsListTable')) {
     /**
      * List data into table.
      * Warning! Do not modify method name because they are extended from WP_List_Table class of WordPress. Changing the method name may cause program error.
@@ -78,17 +78,17 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
                     return str_replace('.00', '', size_format($size, 2));
                 case 'shortcode':
                     return '<input class="shortcode-text" type="text" readonly="readonly" value="[rddownloads id=&quot;' . esc_attr($item->download_id) . '&quot;]">' .
-                        '<div class="copied-msg hidden"><i>' . __('Shortcode copied to clipboard.', 'rd-downloads') . '</i></div>';
+                        '<div class="copied-msg hidden"><i>' . __('Shortcode copied to clipboard.', 'rundiz-downloads') . '</i></div>';
                 case 'opt_force_download':
                     $download_options = maybe_unserialize($item->download_options);
                     if (isset($download_options['opt_force_download'])) {
                         switch ($download_options['opt_force_download']) {
                             case '0':
-                                return '<i class="fas fa-times" title="' . esc_attr__('No', 'rd-downloads') . '"></i><span class="sr-only">' . __('No', 'rd-downloads') . '</span>';
+                                return '<i class="fas fa-times" title="' . esc_attr__('No', 'rundiz-downloads') . '"></i><span class="sr-only">' . __('No', 'rundiz-downloads') . '</span>';
                             case '1':
-                                return '<i class="fas fa-check" title="' . esc_attr__('Yes', 'rd-downloads') . '"></i><span class="sr-only">' . __('Yes', 'rd-downloads') . '</span>';
+                                return '<i class="fas fa-check" title="' . esc_attr__('Yes', 'rundiz-downloads') . '"></i><span class="sr-only">' . __('Yes', 'rundiz-downloads') . '</span>';
                             default:
-                                return '<i class="fas fa-question" title="' . esc_attr__('Default', 'rd-downloads') . '"></i><span class="sr-only">' . __('Default', 'rd-downloads') . '</span>';
+                                return '<i class="fas fa-question" title="' . esc_attr__('Default', 'rundiz-downloads') . '"></i><span class="sr-only">' . __('Default', 'rundiz-downloads') . '</span>';
                         }// endswitch;
                     }// endif;
                 case 'download_count':
@@ -116,12 +116,12 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
                     $datetime_local = strtotime(get_date_from_gmt($item->download_create_gmt, 'Y-m-d H:i:s'));
                     $datetime_withtimezone = date_i18n('Y-m-d H:i:s (P)', $datetime_local);
                     /* translators: %s: Date/time value. */
-                    $output .= sprintf(__('Created: %s', 'rd-downloads'), '<time datetime="' . esc_attr(mysql2date('c', $item->download_create_gmt, false)) . '" title="' . esc_attr($datetime_withtimezone) . '">' . wp_date('Y-m-d', strtotime($item->download_create)) . '</time>') . PHP_EOL;
+                    $output .= sprintf(__('Created: %s', 'rundiz-downloads'), '<time datetime="' . esc_attr(mysql2date('c', $item->download_create_gmt, false)) . '" title="' . esc_attr($datetime_withtimezone) . '">' . wp_date('Y-m-d', strtotime($item->download_create)) . '</time>') . PHP_EOL;
                     $output .= '<br>' . PHP_EOL;
                     $datetime_local = strtotime(get_date_from_gmt($item->download_update_gmt, 'Y-m-d H:i:s'));
                     $datetime_withtimezone = date_i18n('Y-m-d H:i:s (P)', $datetime_local);
                     /* translators: %s: Date/time value. */
-                    $output .= sprintf(__('Updated: %s', 'rd-downloads'), '<time datetime="' . esc_attr(mysql2date('c', $item->download_update_gmt, false)) . '" title="' . esc_attr($datetime_withtimezone) . '">' . wp_date('Y-m-d', strtotime($item->download_update)) . '</time>') . PHP_EOL;
+                    $output .= sprintf(__('Updated: %s', 'rundiz-downloads'), '<time datetime="' . esc_attr(mysql2date('c', $item->download_update_gmt, false)) . '" title="' . esc_attr($datetime_withtimezone) . '">' . wp_date('Y-m-d', strtotime($item->download_update)) . '</time>') . PHP_EOL;
                     unset($datetime_local, $datetime_withtimezone);
                     return $output;
                 default:
@@ -163,7 +163,7 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
                     !empty($download_options['opt_download_version'])
                 ) {
                     /* translators: %s: version number. */
-                    $output .= ' <i class="rd-downloads-version" title="' . sprintf(esc_attr__('Version %s', 'rd-downloads'), $download_options['opt_download_version']) . '">(' . esc_html($download_options['opt_download_version']) . ')</i>';
+                    $output .= ' <i class="rd-downloads-version" title="' . sprintf(esc_attr__('Version %s', 'rundiz-downloads'), $download_options['opt_download_version']) . '">(' . esc_html($download_options['opt_download_version']) . ')</i>';
                 }
                 unset($download_options);
             }
@@ -182,13 +182,13 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
         {
             switch ($item->download_type) {
                 case '0':
-                    return '<i class="fas fa-box download_type_icon" title="' . esc_attr__('Local file', 'rd-downloads') . '"></i> <span class="download_type_text">' . __('Local file', 'rd-downloads') . '</span>';
+                    return '<i class="fas fa-box download_type_icon" title="' . esc_attr__('Local file', 'rundiz-downloads') . '"></i> <span class="download_type_text">' . __('Local file', 'rundiz-downloads') . '</span>';
                 case '1':
-                    return '<i class="fab fa-github download_type_icon" title="' . esc_attr__('GitHub file', 'rd-downloads') . '"></i> <span class="download_type_text">' . __('GitHub file', 'rd-downloads') . '</span>';
+                    return '<i class="fab fa-github download_type_icon" title="' . esc_attr__('GitHub file', 'rundiz-downloads') . '"></i> <span class="download_type_text">' . __('GitHub file', 'rundiz-downloads') . '</span>';
                 case '2':
-                    return '<i class="fas fa-globe download_type_icon" title="' . esc_attr__('Any remote file', 'rd-downloads') . '"></i> <span class="download_type_text">' . __('Any remote file', 'rd-downloads') . '</span>';
+                    return '<i class="fas fa-globe download_type_icon" title="' . esc_attr__('Any remote file', 'rundiz-downloads') . '"></i> <span class="download_type_text">' . __('Any remote file', 'rundiz-downloads') . '</span>';
                 default:
-                    return '<i class="fas fa-question download_type_icon" title="' . esc_attr__('Unknown', 'rd-downloads') . '"></i> <span class="download_type_text">' . __('Unknown', 'rd-downloads') . '</span>';
+                    return '<i class="fas fa-question download_type_icon" title="' . esc_attr__('Unknown', 'rundiz-downloads') . '"></i> <span class="download_type_text">' . __('Unknown', 'rundiz-downloads') . '</span>';
             }
         }// column_download_type
 
@@ -206,16 +206,16 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
 
             $actions = [];
 
-            $Github = new \RdDownloads\App\Libraries\Github();
+            $Github = new \RundizDownloads\App\Libraries\Github();
             $accessToken = $Github->getOAuthAccessToken();
             unset($Github);
 
             if (false !== $accessToken) {
-                $actions['githubUpdate'] = __('Update GitHub', 'rd-downloads');
+                $actions['githubUpdate'] = __('Update GitHub', 'rundiz-downloads');
             }
             unset($accessToken);
-            $actions['remoteUpdate'] = __('Update remote file', 'rd-downloads');
-            $actions['delete'] = __('Delete', 'rd-downloads');
+            $actions['remoteUpdate'] = __('Update remote file', 'rundiz-downloads');
+            $actions['delete'] = __('Delete', 'rundiz-downloads');
 
             return $actions;
         }// get_bulk_actions
@@ -228,15 +228,15 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
         {
             $columns = [
                 'cb' => '<input type="checkbox">',
-                'download_name' => __('Downloads name', 'rd-downloads'),
-                'user_id' => __('Author', 'rd-downloads'),
-                'download_type' => '<i class="fas fa-server download_type_icon" title="' . esc_attr__('Type', 'rd-downloads') . '"></i> <span class="download_type_text">' . __('Type', 'rd-downloads') . '</span>',
-                'download_file_name' => __('File', 'rd-downloads'),
-                'download_size' => __('Size', 'rd-downloads'),
-                'shortcode' => __('Shortcode', 'rd-downloads'),
-                'opt_force_download' => '<span title = "' . esc_attr__('Force download', 'rd-downloads') . '"><i class="fas fa-arrow-alt-circle-down"></i> <span class="sr-only">' . __('Force download', 'rd-downloads') . '</span></span>',
-                'download_count' => '<span title = "' . esc_attr__('Download count', 'rd-downloads') . '"><i class="fas fa-chart-line"></i> <span class="sr-only">' . __('Download count', 'rd-downloads') . '</span></span>',
-                'download_create_gmt' => '<span title="' . esc_attr__('Date', 'rd-downloads') . '"><i class="far fa-calendar-alt"></i> <span class="sr-only">' . __('Date', 'rd-downloads') . '</span></span>',
+                'download_name' => __('Downloads name', 'rundiz-downloads'),
+                'user_id' => __('Author', 'rundiz-downloads'),
+                'download_type' => '<i class="fas fa-server download_type_icon" title="' . esc_attr__('Type', 'rundiz-downloads') . '"></i> <span class="download_type_text">' . __('Type', 'rundiz-downloads') . '</span>',
+                'download_file_name' => __('File', 'rundiz-downloads'),
+                'download_size' => __('Size', 'rundiz-downloads'),
+                'shortcode' => __('Shortcode', 'rundiz-downloads'),
+                'opt_force_download' => '<span title = "' . esc_attr__('Force download', 'rundiz-downloads') . '"><i class="fas fa-arrow-alt-circle-down"></i> <span class="sr-only">' . __('Force download', 'rundiz-downloads') . '</span></span>',
+                'download_count' => '<span title = "' . esc_attr__('Download count', 'rundiz-downloads') . '"><i class="fas fa-chart-line"></i> <span class="sr-only">' . __('Download count', 'rundiz-downloads') . '</span></span>',
+                'download_create_gmt' => '<span title="' . esc_attr__('Date', 'rundiz-downloads') . '"><i class="far fa-calendar-alt"></i> <span class="sr-only">' . __('Date', 'rundiz-downloads') . '</span></span>',
             ];
 
             return $columns;
@@ -290,28 +290,28 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
 
             // all items
             $class = (is_null($filter_download_type) && is_null($filter_user_id) ? ' class="current"' : '');
-            $views['all'] = '<a' . $class . ' href="' . esc_url(remove_query_arg(['filter_download_type', 'filter_user_id'])) . '">' . __('All', 'rd-downloads') . ' <span class="count">(' . $wpdb->get_var($sql) . ')</span></a>';
+            $views['all'] = '<a' . $class . ' href="' . esc_url(remove_query_arg(['filter_download_type', 'filter_user_id'])) . '">' . __('All', 'rundiz-downloads') . ' <span class="count">(' . $wpdb->get_var($sql) . ')</span></a>';
             unset($class);
 
             // local uploaded items
             $options['download_type'] = '0';
             $sqlFiltered = $RdDownloads->get($options);
             $class = (strval($filter_download_type) === $options['download_type'] ? ' class="current"' : '');
-            $views['download_type_' . $options['download_type']] = '<a' . $class . ' href="' . esc_url(add_query_arg('filter_download_type', $options['download_type'])) . '">' . __('Local file', 'rd-downloads') . ' <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>';
+            $views['download_type_' . $options['download_type']] = '<a' . $class . ' href="' . esc_url(add_query_arg('filter_download_type', $options['download_type'])) . '">' . __('Local file', 'rundiz-downloads') . ' <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>';
             unset($class, $options['download_type'], $sqlFiltered);
 
             // GitHub items
             $options['download_type'] = '1';
             $sqlFiltered = $RdDownloads->get($options);
             $class = (strval($filter_download_type) === $options['download_type'] ? ' class="current"' : '');
-            $views['download_type_' . $options['download_type']] = '<a' . $class . ' href="' . esc_url(add_query_arg('filter_download_type', $options['download_type'])) . '">' . __('GitHub file', 'rd-downloads') . ' <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>';
+            $views['download_type_' . $options['download_type']] = '<a' . $class . ' href="' . esc_url(add_query_arg('filter_download_type', $options['download_type'])) . '">' . __('GitHub file', 'rundiz-downloads') . ' <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>';
             unset($class, $options['download_type'], $sqlFiltered);
 
             // any remote file
             $options['download_type'] = '2';
             $sqlFiltered = $RdDownloads->get($options);
             $class = (strval($filter_download_type) === $options['download_type'] ? ' class="current"' : '');
-            $views['download_type_' . $options['download_type']] = '<a' . $class . ' href="' . esc_url(add_query_arg('filter_download_type', $options['download_type'])) . '">' . __('Any remote file', 'rd-downloads') . ' <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>';
+            $views['download_type_' . $options['download_type']] = '<a' . $class . ' href="' . esc_url(add_query_arg('filter_download_type', $options['download_type'])) . '">' . __('Any remote file', 'rundiz-downloads') . ' <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>';
             unset($class, $options['download_type'], $sqlFiltered);
 
             // filtered user
@@ -320,10 +320,10 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
                 $options['user_id'] = $filter_user_id;
                 $sqlFiltered = $RdDownloads->get($options);
                 /* translators: %s: Link to edit user. */
-                $views['filtered_user'] = '<strong>' . sprintf(__('Filtered user: %s', 'rd-downloads'), '<a href="' . esc_url(get_edit_user_link($filter_user_id)) . '" target="editUser">' . $User->display_name . '</a>') . '</strong>';
+                $views['filtered_user'] = '<strong>' . sprintf(__('Filtered user: %s', 'rundiz-downloads'), '<a href="' . esc_url(get_edit_user_link($filter_user_id)) . '" target="editUser">' . $User->display_name . '</a>') . '</strong>';
                 unset($class, $options['user_id'], $sqlFiltered, $User);
 
-                $views['reset_filtered_user'] = '<a href="' . esc_url(remove_query_arg('filter_user_id')) . '">' . __('Reset filtered user', 'rd-downloads') . '</a>';
+                $views['reset_filtered_user'] = '<a href="' . esc_url(remove_query_arg('filter_user_id')) . '">' . __('Reset filtered user', 'rundiz-downloads') . '</a>';
             }
 
             unset($filter_download_type, $filter_user_id, $options, $RdDownloads);
@@ -353,28 +353,28 @@ if (!class_exists('\\RdDownloads\\App\\Models\\RdDownloadsListTable')) {
             $actions['previewFile'] = sprintf(
                 '<a href="%s" target="rddownloads_preview">%s</a>',
                 esc_url($item->download_url),
-                __('Preview', 'rd-downloads')
+                __('Preview', 'rundiz-downloads')
             );
 
             if (strval($item->download_type) === '1' && !empty($item->download_github_name)) {
                 $actions['githubRepository'] = sprintf(
                     '<a href="%s" target="rddownloads_github_repository">%s</a>',
                     esc_url('https://github.com/' . $item->download_github_name),
-                    __('GitHub repository', 'rd-downloads')
+                    __('GitHub repository', 'rundiz-downloads')
                 );
             }
 
             $actions['filter_user'] = sprintf(
                 '<a href="%s">%s</a>',
                 esc_url(add_query_arg('filter_user_id', $item->user_id)),
-                __('Filter user', 'rd-downloads')
+                __('Filter user', 'rundiz-downloads')
             );
 
             if (current_user_can('upload_files')) {
                 $actions['viewLogs'] = sprintf(
                     '<a href="%s">%s</a>',
                     esc_url(admin_url('admin.php?page=rd-downloads_logs&filter_download_id=' . $item->download_id)),
-                    __('Logs', 'rd-downloads')
+                    __('Logs', 'rundiz-downloads')
                 );
             }
 

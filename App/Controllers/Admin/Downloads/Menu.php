@@ -2,15 +2,21 @@
 /**
  * Rundiz Downloads admin menu.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Admin\Downloads;
+namespace RundizDownloads\App\Controllers\Admin\Downloads;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')) {
-    class Menu implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')) {
+    class Menu implements \RundizDownloads\App\Controllers\ControllerInterface
     {
+
+
+        /**
+         * @var string Rundiz downloads main page slug. This constant must be public.
+         */
+        const MENU_SLUG = 'rd-downloads';
 
 
         /**
@@ -31,7 +37,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')) {
                 // if in rundiz downloads/edit page.
                 // modify $plugin_page as parent menu ('rd-downloads');
                 // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-                $plugin_page = 'rd-downloads';
+                $plugin_page = self::MENU_SLUG;
             }
 
             return $parent_file;
@@ -61,7 +67,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')) {
          */
         public function rdDownloadsMenu() {
             $Management = new Management();
-            $hook_suffix = add_menu_page(__('Rundiz Downloads', 'rd-downloads'), __('Downloads', 'rd-downloads'), 'edit_posts', 'rd-downloads', [$Management, 'pageIndex'], 'dashicons-download', 26);
+            $hook_suffix = add_menu_page(__('Rundiz Downloads', 'rundiz-downloads'), __('Downloads', 'rundiz-downloads'), 'edit_posts', self::MENU_SLUG, [$Management, 'pageIndex'], 'dashicons-download', 26);
             $Management->hook_suffix = $hook_suffix;
             if (is_string($hook_suffix)) {
                 add_action('load-' . $hook_suffix, [$Management, 'redirectNiceUrl']);
@@ -74,7 +80,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')) {
             // editing pages ---------------------------------------------------------------------------------------------------
             // add page.
             $Editing = new Editing();
-            $hook_suffix = add_submenu_page('rd-downloads', __('Add new download', 'rd-downloads'), __('Add New', 'rd-downloads'), 'upload_files', 'rd-downloads_add', [$Editing, 'pageAdd']);
+            $hook_suffix = add_submenu_page(self::MENU_SLUG, __('Add new download', 'rundiz-downloads'), __('Add New', 'rundiz-downloads'), 'upload_files', 'rd-downloads_add', [$Editing, 'pageAdd']);
             if (is_string($hook_suffix)) {
                 add_action('load-' . $hook_suffix, [$Editing, 'adminHelpTab']);
                 add_action('load-' . $hook_suffix, [$Editing, 'callEnqueueHook']);
@@ -83,7 +89,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')) {
 
             // edit page.
             // set random name to parent slug argument to prevent it displaying in submenu. ( https://stackoverflow.com/a/11820396/128761 )
-            $hook_suffix = add_submenu_page('rd-downloads_NOTEXISTS', __('Edit download', 'rd-downloads'), null, 'upload_files', 'rd-downloads_edit', [$Editing, 'pageEdit']);
+            $hook_suffix = add_submenu_page('rd-downloads_NOTEXISTS', __('Edit download', 'rundiz-downloads'), null, 'upload_files', 'rd-downloads_edit', [$Editing, 'pageEdit']);
             if (is_string($hook_suffix)) {
                 add_action('load-' . $hook_suffix, [$Editing, 'adminHelpTab']);
                 add_action('load-' . $hook_suffix, [$Editing, 'callEnqueueHook']);

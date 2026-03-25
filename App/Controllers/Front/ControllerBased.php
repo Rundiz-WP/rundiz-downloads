@@ -2,13 +2,13 @@
 /**
  * Based controller that have common use method(s).
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Front;
+namespace RundizDownloads\App\Controllers\Front;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\Front\\ControllerBased')) {
+if (!class_exists('\\RundizDownloads\\App\\Controllers\Front\\ControllerBased')) {
     abstract class ControllerBased
     {
 

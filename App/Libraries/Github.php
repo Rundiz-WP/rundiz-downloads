@@ -2,19 +2,19 @@
 /**
  * GitHub class
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
-namespace RdDownloads\App\Libraries;
+namespace RundizDownloads\App\Libraries;
 
-if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
+if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
     class Github
     {
 
 
-        use \RdDownloads\App\AppTrait;
+        use \RundizDownloads\App\AppTrait;
 
 
         /**
@@ -84,7 +84,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          *
          * It will be add if `$hook_id` is empty (not exists). Otherwise it will be update.
          *
-         * @see \RdDownloads\App\Libraries\Github::apiV3Request() about `$headers` and `$postData` arguments.
+         * @see \RundizDownloads\App\Libraries\Github::apiV3Request() about `$headers` and `$postData` arguments.
          * @param integer|false $user_id The current user ID. Set to false to get current user ID.
          * @param string|false $hook_id The hook_id get from `apiGetWebhookId()` method. Set to empty if there is no hook ID. Set to false for auto detect.
          * @param string $secretKey The secret key to set into GitHub webhook and use it on call back to this site for auto update.
@@ -99,7 +99,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
             if (!is_scalar($hook_id) && false !== $hook_id && '' !== $hook_id) {
                 // if $hook_id is not string, not false, not empty.
                 /* translators: %s Argument name. */
-                throw new \InvalidArgumentException(sprintf(esc_html__('The %s must be string.', 'rd-downloads'), '$hook_id'));
+                throw new \InvalidArgumentException(sprintf(esc_html__('The %s must be string.', 'rundiz-downloads'), '$hook_id'));
             }
 
             if ('' === $secretKey) {
@@ -313,7 +313,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                 unset($item);
 
                 // re-order the versions
-                $tmpVersions = \RdDownloads\Composer\Semver\Semver::rsort($tmpVersions);
+                $tmpVersions = \RundizDownloads\Composer\Semver\Semver::rsort($tmpVersions);
                 $tmpReleasesReorder = [];
                 if (is_array($tmpVersions)) {
                     foreach ($tmpVersions as $tmpVersion) {
@@ -345,7 +345,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                     } elseif (is_scalar($version_range) && !empty($version_range)) {
                         // if version range is not empty, check using Composer Semver.
                         foreach ($tmpReleasesReorder as $key => $item) {
-                            if (is_scalar($key) && \RdDownloads\Composer\Semver\Semver::satisfies($key, $version_range)) {
+                            if (is_scalar($key) && \RundizDownloads\Composer\Semver\Semver::satisfies($key, $version_range)) {
                                 $releases = $tmpReleasesReorder[$key];
                                 if (defined('WP_DEBUG') && WP_DEBUG === true) {
                                     $releases['debug_version_range_matchsemver'] = true;
@@ -389,7 +389,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
          * This will be check on github.com website.
          *
          * @link https://developer.github.com/v3/repos/hooks/ repo hook reference.
-         * @see \RdDownloads\App\Libraries\Github::apiV3Request() about `$headers` argument.
+         * @see \RundizDownloads\App\Libraries\Github::apiV3Request() about `$headers` argument.
          * @param array $headers The `wp_remote_request()` headers array.
          * @param string $repoOwner Repository owner.
          * @param string $repoName Repository name.
@@ -932,7 +932,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
                 $user_id = get_current_user_id();
             }
 
-            \RdDownloads\App\Libraries\Cookies::deleteCookie($this->oauthAccessTokenName);
+            \RundizDownloads\App\Libraries\Cookies::deleteCookie($this->oauthAccessTokenName);
             unset($_COOKIE[$this->oauthAccessTokenName]);
 
             // don't remove access token data.
@@ -1158,7 +1158,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Github')) {
         {
             if (!is_scalar($phpinput)) {
                 /* translators: %s Argument name. */
-                throw new \InvalidArgumentException(sprintf(esc_html__('The %s must be string.', 'rd-downloads'), '$phpinput'));
+                throw new \InvalidArgumentException(sprintf(esc_html__('The %s must be string.', 'rundiz-downloads'), '$phpinput'));
             }
 
             $this->webhookHeaders = $headers;

@@ -2,13 +2,13 @@
 /**
  * URL class.
  *
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Libraries;
+namespace RundizDownloads\App\Libraries;
 
-if (!class_exists('\\RdDownloads\\App\\Libraries\\Url')) {
+if (!class_exists('\\RundizDownloads\\App\\Libraries\\Url')) {
     class Url
     {
 
@@ -27,7 +27,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Url')) {
                 throw new \InvalidArgumentException(
                     sprintf(
                         /* translators: %s Argument name. */
-                        esc_html__('The %s must be string.', 'rd-downloads'), 
+                        esc_html__('The %s must be string.', 'rundiz-downloads'), 
                         '$url'
                     )
                 );
@@ -95,7 +95,7 @@ if (!class_exists('\\RdDownloads\\App\\Libraries\\Url')) {
                 throw new \InvalidArgumentException(
                     sprintf(
                         /* translators: %s Argument name. */
-                        esc_html__('The %s must be string.', 'rd-downloads'), 
+                        esc_html__('The %s must be string.', 'rundiz-downloads'), 
                         '$url'
                     )
                 );

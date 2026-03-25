@@ -4,13 +4,13 @@
  * 
  * This page was copied from wp-admin/edit.php
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
-/* @var $RdDownloadLogsListTable \RdDownloads\App\Models\RdDownloadLogsListTable */
+/* @var $RdDownloadLogsListTable \RundizDownloads\App\Models\RdDownloadLogsListTable */
 ?>
 <div class="wrap">
-    <h1 class="wp-heading-inline"><?php esc_html_e('Download logs', 'rd-downloads'); ?></h1>
+    <h1 class="wp-heading-inline"><?php esc_html_e('Download logs', 'rundiz-downloads'); ?></h1>
 
     <?php if (isset($form_result_class) && isset($form_result_msg)) { ?> 
     <div class="<?php esc_attr_e($form_result_class); ?> notice is-dismissible">
@@ -42,7 +42,7 @@
         } 
 
         if (isset($RdDownloadLogsListTable) && is_object($RdDownloadLogsListTable)) {
-            $RdDownloadLogsListTable->search_box(__('Search', 'rd-downloads'), 'rd-downloads');
+            $RdDownloadLogsListTable->search_box(__('Search', 'rundiz-downloads'), 'rundiz-downloads');
             $RdDownloadLogsListTable->display();
         }
         ?> 

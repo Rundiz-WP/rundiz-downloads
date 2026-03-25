@@ -2,18 +2,18 @@
 /**
  * Hooks into Plugins page.
  * 
- * @package rd-downloads
+ * @package rundiz-downloads
  */
 
 
-namespace RdDownloads\App\Controllers\Admin;
+namespace RundizDownloads\App\Controllers\Admin;
 
-if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins')) {
-    class Plugins implements \RdDownloads\App\Controllers\ControllerInterface
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins')) {
+    class Plugins implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
-        use \RdDownloads\App\AppTrait;
+        use \RundizDownloads\App\AppTrait;
 
 
         /**
@@ -28,7 +28,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins')) {
             static $plugin;
             
             if (!isset($plugin)) {
-                $plugin = plugin_basename(RDDOWNLOADS_FILE);
+                $plugin = plugin_basename(RUNDIZDOWNLOADS_FILE);
             }
             
             if ($plugin === $plugin_file) {
@@ -67,7 +67,7 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins')) {
             static $plugin;
             
             if (!isset($plugin)) {
-                $plugin = plugin_basename(RDDOWNLOADS_FILE);
+                $plugin = plugin_basename(RUNDIZDOWNLOADS_FILE);
             }
             
             if ($plugin === $file) {
@@ -76,11 +76,11 @@ if (!class_exists('\\RdDownloads\\App\\Controllers\\Admin\\Plugins')) {
                 $configValues = $this->getOptions();
                 if (is_array($configValues) && array_key_exists('rdsfw_plugin_db_version', $configValues) && is_scalar($configValues['rdsfw_plugin_db_version']) && !empty($configValues['rdsfw_plugin_db_version'])) {
                     /* translators: %s: Current DB version. */
-                    $after_link[] = sprintf(__('DB version %s', 'rd-downloads'), $configValues['rdsfw_plugin_db_version']);
+                    $after_link[] = sprintf(__('DB version %s', 'rundiz-downloads'), $configValues['rdsfw_plugin_db_version']);
                 }
                 unset($configValues);
 
-                $after_link[] = '<a href="https://rundiz.com/en/donate" target="donate">' . __('Donate', 'rd-downloads') . '</a>';
+                $after_link[] = '<a href="https://rundiz.com/en/donate" target="donate">' . __('Donate', 'rundiz-downloads') . '</a>';
 
                 $links = array_merge($links, $after_link);
                 unset($after_link);
