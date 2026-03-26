@@ -274,9 +274,9 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadsListTable')) {
             $views = [];
             $options = [];
 
-            $filter_user_id = (isset($_REQUEST['filter_user_id']) && trim($_REQUEST['filter_user_id']) !== '' ? sanitize_text_field(wp_unslash($_REQUEST['filter_user_id'])) : null);// phpcs:ignore
-            $filter_download_type = (isset($_REQUEST['filter_download_type']) && trim($_REQUEST['filter_download_type']) !== '' ? sanitize_text_field(wp_unslash($_REQUEST['filter_download_type'])) : null);// phpcs:ignore
-            $search = (isset($_REQUEST['s']) && !empty(trim($_REQUEST['s'])) ? sanitize_text_field(wp_unslash($_REQUEST['s'])) : null);// phpcs:ignore
+            $filter_user_id = (isset($_REQUEST['filter_user_id']) && trim($_REQUEST['filter_user_id']) !== '' ? sanitize_text_field(wp_unslash($_REQUEST['filter_user_id'])) : null);
+            $filter_download_type = (isset($_REQUEST['filter_download_type']) && trim($_REQUEST['filter_download_type']) !== '' ? sanitize_text_field(wp_unslash($_REQUEST['filter_download_type'])) : null);
+            $search = (isset($_REQUEST['s']) && !empty(trim($_REQUEST['s'])) ? sanitize_text_field(wp_unslash($_REQUEST['s'])) : null);
 
             // get result using `RdDownloads` class.
             $RdDownloads = new RdDownloads();

@@ -97,7 +97,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\FileSystem')) {
                 }
 
                 if ($dir !== $limited_dir) {
-                    rmdir($dir);// phpcs:ignore
+                    rmdir($dir);
                 }
             }
         }// rrmDir
@@ -146,8 +146,8 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\FileSystem')) {
                 } else {
                     $flag = 0;
                 }
-                file_put_contents($path, $content, $flag);// phpcs:ignore
-                chmod($path, $chmod);// phpcs:ignore
+                file_put_contents($path, $content, $flag);
+                chmod($path, $chmod);
 
                 unset($flag);
                 return true;

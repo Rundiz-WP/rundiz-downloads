@@ -75,7 +75,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Logger')) {
                     $content .= var_export(stripslashes_deep($_GET), true);
                     $content .= "\r\n\r\n";
                     $content .= 'POST data'."\r\n";
-                    $content .= var_export(stripslashes_deep($_POST), true);// phpcs:ignore
+                    $content .= var_export(stripslashes_deep($_POST), true);
                     $content .= "\r\n\r\n";
                     $content .= 'SERVER data'."\r\n";
                     $content .= var_export(stripslashes_deep($_SERVER), true);

@@ -10,7 +10,7 @@
     <?php if (isset($form_result_class) && isset($form_result_msg)) { ?>
     <div class="<?php esc_attr_e($form_result_class); ?> notice is-dismissible">
         <p>
-            <strong><?php echo $form_result_msg;// phpcs:ignore ?></strong>
+            <strong><?php echo $form_result_msg; ?></strong>
         </p>
         <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e('Dismiss this notice.'); ?></span></button>
     </div>

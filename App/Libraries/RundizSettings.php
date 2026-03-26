@@ -186,7 +186,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
 
                     if (isset($_REQUEST) && is_array($_REQUEST) && isset($_REQUEST[$key_no_sqb])) {
                         // receive form field below muse accept HTML.
-                        $output[$key] = wp_unslash($_REQUEST[$key_no_sqb]);// phpcs:ignore
+                        $output[$key] = wp_unslash($_REQUEST[$key_no_sqb]);
                     } else {
                         $output[$key] = '';
                     }

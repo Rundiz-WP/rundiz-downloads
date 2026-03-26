@@ -297,7 +297,6 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
                     // if download type is NOT local.
                     // it is not possible or not good to use force download. just redirect.
                     // not set status header here because it is already in redirect function.
-                    // phpcs:ignore
                     wp_redirect($downloadRow->download_url);
                     exit();
                 } else {
@@ -396,7 +395,6 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
                     // if not redirected.
                     // set cookie and redirect to page with ?rddownloads_redir_set_cookie=1.
                     \RundizDownloads\App\Libraries\Cookies::setCookie($cookieName, 'true', time()+60*60*24*1);
-                    // phpcs:ignore
                     wp_safe_redirect(add_query_arg(['rddownloads_redir_set_cookie' => 1]));
                     exit();
                 }
@@ -419,7 +417,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
                 unset($downloadRow, $RdDownloads);
                 // end retrieve download data to show.
 
-                $requestMethod = (isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'get');// phpcs:ignore
+                $requestMethod = (isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'get');
                 if ('get' === $requestMethod) {
                     // if method GET, displaying antibot form field.
                     $AntiBot = new \RundizDownloads\App\Libraries\AntiBot();
@@ -429,7 +427,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
                     // if method POST, process form submitted.
                     $honeypotName = \RundizDownloads\App\Libraries\AntiBot::staticGetHoneypotName();
                     $validatedHoneypot = false;
-                    if (!isset($_POST[$honeypotName]) || !empty($_POST[$honeypotName])) {// phpcs:ignore
+                    if (!isset($_POST[$honeypotName]) || !empty($_POST[$honeypotName])) {
                         // if honeypot name is not in the form or it is in but not empty (bot filled).
                         status_header(400);
                         $output['disableAntibotForm'] = true;
@@ -439,7 +437,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
                         $RdDownloadLogs = new \RundizDownloads\App\Models\RdDownloadLogs();
                         $RdDownloadLogs->writeLog('user_dl_antbotfailed', ['download_id' => $download_id]);
                         unset($RdDownloadLogs);
-                    } elseif (isset($_POST[$honeypotName]) && empty($_POST[$honeypotName])) {// phpcs:ignore
+                    } elseif (isset($_POST[$honeypotName]) && empty($_POST[$honeypotName])) {
                         // if honeypot name is in the form and empty. correct!
                         $AntiBot = new \RundizDownloads\App\Libraries\AntiBot();
                         $AntiBot->unsetHoneypotName();

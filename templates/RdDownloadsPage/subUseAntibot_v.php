@@ -20,7 +20,7 @@ get_header();
 
     <?php if (isset($form_result) && isset($form_result_msg)) { ?>
     <div class="alert alert-<?php echo ('success' === $form_result ? 'success' : 'danger'); ?>" role="alert">
-        <?php echo $form_result_msg;// phpcs:ignore ?>
+        <?php echo $form_result_msg; ?>
     </div>
     <?php } ?>
 

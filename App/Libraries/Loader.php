@@ -203,7 +203,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
                         sprintf(
                             /* translators: %s: Template path. */
                             esc_html__('The template file was not found. (%s)', 'rundiz-downloads'), 
-                            $template_path// phpcs:ignore
+                            $template_path
                         )
                     );
                 }
@@ -253,7 +253,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
                     sprintf(
                         /* translators: %s: Path to template file to show in error. */
                         esc_html__('The views file was not found (%s).', 'rundiz-downloads'), 
-                        str_replace(['\\', '/'], '/', $templateFile)// phpcs:ignore
+                        str_replace(['\\', '/'], '/', $templateFile)
                     ),
                     E_USER_WARNING
                 );

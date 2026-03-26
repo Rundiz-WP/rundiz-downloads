@@ -32,7 +32,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
 
             $output = [];
 
-            if (isset($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) === 'post' && isset($_POST) && !empty($_POST)) {// phpcs:ignore
+            if (isset($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) === 'post' && isset($_POST) && !empty($_POST)) {
                 if (check_ajax_referer('rd_downloads_nonce', 'security', false) === false) {
                     status_header(403);
                     wp_die(esc_html__('Please reload this page and try again.', 'rundiz-downloads'), '', ['response' => 403]);
@@ -141,10 +141,10 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                         </div>';
 
                         add_action('admin_notices', function() use ($manualUpdateNotice) {
-                            echo $manualUpdateNotice."\n";// phpcs:ignore
+                            echo $manualUpdateNotice."\n";
                         });
                         add_action('network_admin_notices', function() use ($manualUpdateNotice) {
-                            echo $manualUpdateNotice."\n";// phpcs:ignore
+                            echo $manualUpdateNotice."\n";
                         });
 
                         unset($manualUpdateNotice);

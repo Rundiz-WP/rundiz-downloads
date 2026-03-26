@@ -42,11 +42,11 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             $responseStatus = 200;
 
             $output['per_page'] = 10;
-            $output['current_page'] = (isset($_GET['page']) && !empty(trim($_GET['page'])) ? floatval(wp_unslash($_GET['page'])) : 1);// phpcs:ignore
+            $output['current_page'] = (isset($_GET['page']) && !empty(trim($_GET['page'])) ? floatval(wp_unslash($_GET['page'])) : 1);
 
             $RdDownloads = new \RundizDownloads\App\Models\RdDownloads();
             $options = [];
-            if (isset($_GET['search']) && !empty(trim($_GET['search']))) {// phpcs:ignore
+            if (isset($_GET['search']) && !empty(trim($_GET['search']))) {
                 $options['*search'] = sanitize_text_field(wp_unslash($_GET['search']));
             }
             $options['*current_page'] = $output['current_page'];

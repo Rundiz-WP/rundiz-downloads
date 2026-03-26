@@ -437,9 +437,9 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             if ('0' === $download_id || !is_numeric($download_id)) {
                 $download_id = '';
             }
-            $upload_file = (isset($_FILES['upload_file']) ? $_FILES['upload_file'] : null);// phpcs:ignore
+            $upload_file = (isset($_FILES['upload_file']) ? $_FILES['upload_file'] : null);
 
-            $overrides['action'] = (isset($_POST['action']) ? sanitize_text_field(wp_unslash($_POST['action'])) : null);// phpcs:ignore
+            $overrides['action'] = (isset($_POST['action']) ? sanitize_text_field(wp_unslash($_POST['action'])) : null);
             add_filter('upload_dir', [$this, 'changeUploadDir']);
             add_filter('wp_unique_filename', [$this, 'safeWebFileName'], 10, 4);
             $uploadResult = wp_handle_upload($upload_file, $overrides);

@@ -149,13 +149,13 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Logs')
             // initialize list table model
             $RdDownloadLogsListTable = new \RundizDownloads\App\Models\RdDownloadLogsListTable();
             $options = [];
-            if (isset($_REQUEST['filter_user_id']) && trim($_REQUEST['filter_user_id']) !== '') {// phpcs:ignore
+            if (isset($_REQUEST['filter_user_id']) && trim($_REQUEST['filter_user_id']) !== '') {
                 $options['user_id'] = intval(wp_unslash($_REQUEST['filter_user_id']));
             }
-            if (isset($_REQUEST['filter_download_id']) && trim($_REQUEST['filter_download_id']) !== '') {// phpcs:ignore
+            if (isset($_REQUEST['filter_download_id']) && trim($_REQUEST['filter_download_id']) !== '') {
                 $options['download_id'] = sanitize_text_field(wp_unslash($_REQUEST['filter_download_id']));
             }
-            if (isset($_REQUEST['s']) && trim($_REQUEST['s']) !== '') {// phpcs:ignore
+            if (isset($_REQUEST['s']) && trim($_REQUEST['s']) !== '') {
                 // the s is forced by WordPress.
                 $options['search'] = sanitize_text_field(wp_unslash($_REQUEST['s']));
             }

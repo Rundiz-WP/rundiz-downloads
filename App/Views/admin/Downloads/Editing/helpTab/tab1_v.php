@@ -4,7 +4,6 @@
 printf(
     /* translators: %s: Full path to this plugin upload folder. */
     esc_html__('You can upload a file to the server using upload button below. You can also use FTP for large file size by uploading it to %s and then use file browser below to select the file.', 'rundiz-downloads'), 
-    // phpcs:ignore
     '<strong>' . realpath(esc_html($basedir) . '/' . RundizDownloads\App\Libraries\FileSystem::UPLOAD_FOLDER_NAME) . '</strong>'
 )
 ?></p>

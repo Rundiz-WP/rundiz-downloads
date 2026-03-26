@@ -1,4 +1,4 @@
-<?php // phpcs:ignore
+<?php 
 /*<div class="wrap">
     <h1><?php _e('Example of how to access settings values in option db.', 'rundiz-downloads'); ?></h1>
 

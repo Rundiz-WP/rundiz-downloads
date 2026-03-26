@@ -281,12 +281,12 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\GitHubOAuthListTable')) {
             $output .= ' data-url="' . esc_attr($item->node->url) . '"';
             $output .= ' data-isarchived="' . (false === $item->node->isArchived ? 'false' : 'true') . '"';
             $output .= '>' . PHP_EOL;
-            echo $output;// phpcs:ignore
+            echo $output;
 
             $this->single_row_columns($item);
 
             $output = '</tr>' . PHP_EOL;
-            echo $output;// phpcs:ignore
+            echo $output;
         }// single_row
 
 

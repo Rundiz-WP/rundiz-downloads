@@ -987,7 +987,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
                         return $body;
                     }
                 } elseif (is_wp_error($result)) {
-                    throw new \Exception($result->get_error_message());// phpcs:ignore
+                    throw new \Exception($result->get_error_message());
                 }
             }
 
@@ -1023,7 +1023,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
                 if (is_array($result) && isset($result['headers']['location'])) {
                     return $result['headers']['location'];
                 } elseif (is_wp_error($result)) {
-                    throw new \Exception($result->get_error_message());// phpcs:ignore
+                    throw new \Exception($result->get_error_message());
                 }
             }
 

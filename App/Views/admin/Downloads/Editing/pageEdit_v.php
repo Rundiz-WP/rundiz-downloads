@@ -4,7 +4,7 @@
     <?php if (isset($form_result_class) && isset($form_result_msg)) { ?> 
     <div class="<?php esc_attr_e($form_result_class); ?> notice is-dismissible">
         <p>
-            <strong><?php echo $form_result_msg;// phpcs:ignore ?></strong>
+            <strong><?php echo $form_result_msg; ?></strong>
         </p>
         <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e('Dismiss this notice.'); ?></span></button>
     </div>
@@ -29,7 +29,7 @@
                         <input id="download_size" type="hidden" name="download_size" value="<?php if (isset($download_size)) {echo esc_attr($download_size);} ?>">
                         <div id="download-size-and-preview" class="download-size-and-preview"><?php 
                         if (isset($download_size)) {
-                            echo size_format(esc_html($download_size));// phpcs:ignore
+                            echo size_format(esc_html($download_size));
                         }
                         if (isset($download_url)) {
                             echo ' ';
@@ -48,7 +48,7 @@
                         </div><!--.rundiz-downloads-local-buttons-->
                         <p class="description"><?php 
                         /* translators: %s: Max upload size. */
-                        printf(esc_html__('Maximum upload file size: %s.', 'rundiz-downloads'), size_format(wp_max_upload_size())); // phpcs:ignore
+                        printf(esc_html__('Maximum upload file size: %s.', 'rundiz-downloads'), size_format(wp_max_upload_size())); 
                         ?></p>
                     </td>
                 </tr>
@@ -133,7 +133,7 @@
                     <td>
                         <p><i class="fas fa-user"></i> <?php esc_html_e('Created by', 'rundiz-downloads'); ?>: <span class="create-by"><?php 
                         if (isset($user_id)) {
-                            echo '<a href="' . get_edit_user_link($user_id) . '" target="editUser">';// phpcs:ignore
+                            echo '<a href="' . get_edit_user_link($user_id) . '" target="editUser">';
                         } 
                         if (isset($display_name)) {
                             esc_html_e($display_name);
@@ -144,12 +144,12 @@
                         ?></span></p>
                         <p><i class="fas fa-calendar-alt"></i> <?php esc_html_e('Created on', 'rundiz-downloads'); ?>: <span class="create-on"><?php 
                         if (isset($download_create_gmt)) {
-                            echo RundizDownloads\App\Libraries\DateTime::displayDateTime($download_create_gmt);// phpcs:ignore
+                            echo RundizDownloads\App\Libraries\DateTime::displayDateTime($download_create_gmt);
                         } 
                         ?></span></p>
                         <p><i class="fas fa-calendar-alt"></i> <?php esc_html_e('Last update', 'rundiz-downloads'); ?>: <span class="last-update"><?php 
                         if (isset($download_update_gmt)) {
-                            echo RundizDownloads\App\Libraries\DateTime::displayDateTime($download_update_gmt);// phpcs:ignore
+                            echo RundizDownloads\App\Libraries\DateTime::displayDateTime($download_update_gmt);
                         } 
                         ?></span></p>
                     </td>

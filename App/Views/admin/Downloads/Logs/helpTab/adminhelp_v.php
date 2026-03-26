@@ -7,7 +7,7 @@ $pageParamLink = htmlspecialchars((string) filter_input(INPUT_GET, 'page'), ENT_
     printf(esc_html__('You can filter the log for each user by adding the %s query string as name and the user id as value to the URL.', 'rundiz-downloads'), '<code>filter_user_id</code>'); 
     ?><br>
     <?php esc_html_e('Example:', 'rundiz-downloads'); ?>
-    <a href="<?php echo admin_url('admin.php?page=' . $pageParamLink . '&filter_user_id=1');// phpcs:ignore ?>"><?php echo admin_url('admin.php?page=' . $pageParamLink . '&filter_user_id=1');// phpcs:ignore ?></a>
+    <a href="<?php echo admin_url('admin.php?page=' . $pageParamLink . '&filter_user_id=1'); ?>"><?php echo admin_url('admin.php?page=' . $pageParamLink . '&filter_user_id=1'); ?></a>
 </p>
 <p>
     <?php 
@@ -15,10 +15,10 @@ $pageParamLink = htmlspecialchars((string) filter_input(INPUT_GET, 'page'), ENT_
     printf(esc_html__('You can also filter the log for each download item by adding the %s query string as name and the download id as value to the URL.', 'rundiz-downloads'), '<code>filter_download_id</code>'); 
     ?><br>
     <?php esc_html_e('Example:', 'rundiz-downloads'); ?>
-    <a href="<?php echo admin_url('admin.php?page=' . $pageParamLink . '&filter_download_id=1');// phpcs:ignore ?>"><?php echo admin_url('admin.php?page=' . $pageParamLink . '&filter_download_id=1');// phpcs:ignore ?></a>
+    <a href="<?php echo admin_url('admin.php?page=' . $pageParamLink . '&filter_download_id=1'); ?>"><?php echo admin_url('admin.php?page=' . $pageParamLink . '&filter_download_id=1'); ?></a>
 </p>
 <p>
     <?php esc_html_e('The filters can be combined together.', 'rundiz-downloads'); ?><br>
     <?php esc_html_e('Example:', 'rundiz-downloads'); ?>
-    <a href="<?php echo admin_url('admin.php?page=' . $pageParamLink . '&filter_user_id=1&filter_download_id=1');// phpcs:ignore ?>"><?php echo admin_url('admin.php?page=' . $pageParamLink . '&filter_user_id=1&filter_download_id=1');// phpcs:ignore ?></a>
+    <a href="<?php echo admin_url('admin.php?page=' . $pageParamLink . '&filter_user_id=1&filter_download_id=1'); ?>"><?php echo admin_url('admin.php?page=' . $pageParamLink . '&filter_user_id=1&filter_download_id=1'); ?></a>
 </p>
