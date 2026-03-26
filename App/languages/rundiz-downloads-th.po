@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rundiz Downloads\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rundiz-downloads\n"
-"POT-Creation-Date: 2026-03-25T23:33:39+07:00\n"
-"PO-Revision-Date: 2026-03-25 23:34+0700\n"
+"POT-Creation-Date: 2026-03-27T01:25:56+07:00\n"
+"PO-Revision-Date: 2026-03-27 01:26+0700\n"
 "Last-Translator: Vee W.\n"
 "Language-Team: \n"
 "Language: th_TH\n"
@@ -547,46 +547,46 @@ msgstr[0] "รายการที่ล้มเหลวในการอั
 msgid "The selected items was not found or not matched download type."
 msgstr "ไม่พบรายการที่เลือกหรือประเภทดาวน์โหลดไม่ตรงกัน."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:40
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:192
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:47
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:199
 #: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:86
 msgid "Hacking attempt!"
 msgstr "พยายามแฮ็ก!"
 
 #. translators: %s: list of banned files
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:208
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:215
 #, php-format
 msgid "Unable to delete file that is in system file (%s)."
 msgstr "ไม่สามารถลบไฟล์ของระบบได้ (%s)."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:238
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:245
 msgid "Unable to delete index file that is preventing directory browsing."
 msgstr "ไม่สามารถลบไฟล์ index ซึ่งป้องกันการเปิดดูโฟลเดอร์."
 
 #. translators: %1$s: Open link tag, %2$s Close link tag.
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:273
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:280
 #, php-format
 msgid ""
 "Unable to delete the selected file. The file is already in use. Please %1$sedit%2$s this downloads instead.."
 msgstr "ไม่สามารถลบไฟล์ที่เลือก. ไฟล์กำลังถูกใช้งานอยู่. โปรด%1$sแก้ไข%2$sดาวน์โหลดนี้แทน."
 
 #. translators: %s: The selected URL to show in error.
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:296
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:303
 #, php-format
 msgid "The selected file was not found (%s)."
 msgstr "ไม่พบไฟล์ที่เลือก (%s)."
 
-#. translators: %1$s: /rd-downloads path string, %2$s: The selected URL to show in error.
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:302
+#. translators: %1$s: /rundiz-downloads path string, %2$s: The selected URL to show in error.
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:309
 #, php-format
 msgid "Unable to delete file that is not in %1$s folder (%2$s)."
 msgstr "ไม่สามารถลบไฟล์ที่ไม่อยู่ในโฟลเดอร์ %1$s (%2$s)."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:337
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:344
 msgid "Invalid URL."
 msgstr "URL ไม่ถูกต้อง."
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:467
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:474
 msgid "Unable to process your request, please reload the page and try again."
 msgstr "ไม่สามารถดำเนินการประมวลผลได้, โปรดโหลดหน้านี้ใหม่แล้วลองอีกครั้ง."
 
@@ -682,7 +682,7 @@ msgid "Donate"
 msgstr "บริจาค"
 
 #. translators: %1$s: Current PHP version, %2$s: Required PHP version.
-#: App/Controllers/Admin/Plugins/Activation.php:47
+#: App/Controllers/Admin/Plugins/Activation.php:54
 #, php-format
 msgid ""
 "You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or "
@@ -691,17 +691,17 @@ msgstr ""
 "คุณกำลังใช้ PHP %1$s ซึ่งไม่ตรงความต้องการขั้นต่ำ. โปรดตัดสินใจอัปเกรดรุ่น PHP หรือติดต่อผู้เขียนปลั๊กอินเพื่อขอความช่วยเหลือ."
 "<br><br>ความต้องการขั้นต่ำ:<br>PHP %2$s"
 
-#: App/Controllers/Admin/Plugins/Activation.php:51
+#: App/Controllers/Admin/Plugins/Activation.php:58
 msgid "Minimum requirement of PHP version does not meet."
 msgstr "รุ่น PHP ที่ใช้ไม่ตรงตามความต้องการขั้นต่ำ."
 
 #. translators: %1$s: Current WordPress version, %2$s: Required WordPress version.
-#: App/Controllers/Admin/Plugins/Activation.php:59
+#: App/Controllers/Admin/Plugins/Activation.php:66
 #, php-format
 msgid "Your WordPress version does not meet the requirement. (%1$s < %2$s)."
 msgstr "รุ่นเวิร์ดเพรสของคุณไม่ตรงตามความต้องการขั้นต่ำ. (%1$s < %2$s)."
 
-#: App/Controllers/Admin/Plugins/Activation.php:69
+#: App/Controllers/Admin/Plugins/Activation.php:76
 msgid "Unable to network activate, please activate from each site that have to use it only."
 msgstr "ไม่สามารถเปิดใช้งานแบบเน็ตเวิร์คได้, โปรดเปิดใช้งานจากแต่ละเว็บไซต์ที่ต้องใช้เท่านั้น."
 
@@ -744,25 +744,25 @@ msgid "Completed"
 msgstr "เรียบร้อยแล้ว"
 
 #: App/Controllers/Admin/Plugins/Upgrader.php:231
-#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:45
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:46
 msgid "Next"
 msgstr "ถัดไป"
 
-#: App/Controllers/Admin/Settings.php:67 App/Views/admin/settings_v.php:2
+#: App/Controllers/Admin/Settings.php:74 App/Views/admin/settings_v.php:2
 msgid "Downloads Settings"
 msgstr "ตั้งค่าดาวน์โหลด"
 
-#: App/Controllers/Admin/Settings.php:67
+#: App/Controllers/Admin/Settings.php:74
 msgid "Settings"
 msgstr "ตั้งค่า"
 
 #. translators: %1$s: Open link tag, %2$s: Close link tag.
-#: App/Controllers/Admin/Settings.php:95
+#: App/Controllers/Admin/Settings.php:102
 #, php-format
 msgid "The manual update is required, please %1$supdate first%2$s."
 msgstr "จำเป็นต้องดำเนินการอัปเดทด้วยตนเอง, โปรด %1$sทำการอัปเดทก่อน%2$s."
 
-#: App/Controllers/Admin/Settings.php:101
+#: App/Controllers/Admin/Settings.php:108
 msgid "The manual update is required, please tell administrator to update first."
 msgstr "จำเป็นต้องดำเนินการอัปเดทด้วยตนเอง, โปรดติดต่อผู้ดูแลเพื่อดำเนินการอัปเดทก่อน."
 
@@ -784,7 +784,7 @@ msgid "Please reload the page and try again."
 msgstr "โปรดโหลดหน้านี้ใหม่แล้วลองอีกครั้ง."
 
 #. translators: %s Argument name.
-#: App/Libraries/DateTime.php:33 App/Libraries/FileSystem.php:116 App/Libraries/Github.php:102
+#: App/Libraries/DateTime.php:33 App/Libraries/FileSystem.php:122 App/Libraries/Github.php:102
 #: App/Libraries/Github.php:1161 App/Libraries/Semver.php:72 App/Libraries/Semver.php:77
 #: App/Libraries/Url.php:30 App/Libraries/Url.php:98
 #, php-format
@@ -797,7 +797,7 @@ msgstr "ดาวน์โหลด"
 
 #: App/Libraries/ElementPlaceholders.php:58 App/Models/RdDownloadLogsListTable.php:156
 #: App/Models/RdDownloadsListTable.php:231 App/Views/admin/Downloads/Editing/pageEdit_v.php:19
-#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:19
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:20
 #: templates/RdDownloadsPage/subUseAntibot_v.php:33
 msgid "Downloads name"
 msgstr "ชื่อดาวน์โหลด"
@@ -807,7 +807,7 @@ msgid "GitHub repository name"
 msgstr "ชื่อ repository ของ GitHub"
 
 #: App/Libraries/ElementPlaceholders.php:60 App/Models/RdDownloadsListTable.php:235
-#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:22
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:23
 msgid "Size"
 msgstr "ขนาด"
 
@@ -1068,11 +1068,11 @@ msgstr "ลบ"
 msgid "Author"
 msgstr "ผู้เขียน"
 
-#: App/Models/RdDownloadsListTable.php:233 App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:20
+#: App/Models/RdDownloadsListTable.php:233 App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:21
 msgid "Type"
 msgstr "ประเภท"
 
-#: App/Models/RdDownloadsListTable.php:234 App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:21
+#: App/Models/RdDownloadsListTable.php:234 App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:22
 msgid "File"
 msgstr "ไฟล์"
 
@@ -1085,8 +1085,8 @@ msgid "Download count"
 msgstr "นับดาวน์โหลด"
 
 #: App/Models/RdDownloadsListTable.php:356 App/Views/admin/Downloads/Editing/pageEdit_v.php:36
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:166 App/Views/admin/Downloads/Editing/pageEdit_v.php:178
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:179
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:167 App/Views/admin/Downloads/Editing/pageEdit_v.php:180
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:181
 msgid "Preview"
 msgstr "ดูก่อน"
 
@@ -1238,11 +1238,11 @@ msgstr "สร้างเมื่อ"
 msgid "Save"
 msgstr "บันทึก"
 
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:183 App/Views/admin/Downloads/Editing/pageEdit_v.php:187
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:185 App/Views/admin/Downloads/Editing/pageEdit_v.php:189
 msgid "This file is linked with other downloads data."
 msgstr "ไฟล์นี้ถูกใช้โดยข้อมูลดาวน์โหลดอื่นๆ."
 
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:195 App/Views/admin/Downloads/Editing/pageEdit_v.php:196
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:197 App/Views/admin/Downloads/Editing/pageEdit_v.php:198
 msgid "Delete this file"
 msgstr "ลบไฟล์นี้"
 
@@ -1443,21 +1443,21 @@ msgstr "คุณสามารถใช้แอตทริบิวท์ใ
 msgid "These attributes will be working if the downloads element was set properly by the administrator."
 msgstr "แอตทริบิวท์เหล่านี้จะทำงานได้ถ้าหาก element ถูกตั้งค่าสมบูรณ์โดยผู้ดูแล."
 
-#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:14
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:15
 msgid "Found total"
 msgstr "พบทั้งหมด"
 
 #. translators: %1$s: Current page, %2$s: Total pages.
-#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:35
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:36
 #, php-format
 msgid "Page %1$s of %2$s"
 msgstr "หน้า %1$s จาก %2$s"
 
-#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:42
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:43
 msgid "Previous"
 msgstr "ก่อนหน้า"
 
-#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:60
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:62
 msgid "Insert"
 msgstr "เพิ่ม"
 

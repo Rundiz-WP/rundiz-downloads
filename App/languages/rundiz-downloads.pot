@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-25T23:33:39+07:00\n"
+"POT-Creation-Date: 2026-03-27T01:25:56+07:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: rundiz-downloads\n"
@@ -554,45 +554,45 @@ msgstr[1] ""
 msgid "The selected items was not found or not matched download type."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:40
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:192
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:47
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:199
 #: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:86
 msgid "Hacking attempt!"
 msgstr ""
 
 #. translators: %s: list of banned files
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:208
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:215
 #, php-format
 msgid "Unable to delete file that is in system file (%s)."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:238
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:245
 msgid "Unable to delete index file that is preventing directory browsing."
 msgstr ""
 
 #. translators: %1$s: Open link tag, %2$s Close link tag.
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:273
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:280
 #, php-format
 msgid "Unable to delete the selected file. The file is already in use. Please %1$sedit%2$s this downloads instead.."
 msgstr ""
 
 #. translators: %s: The selected URL to show in error.
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:296
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:303
 #, php-format
 msgid "The selected file was not found (%s)."
 msgstr ""
 
-#. translators: %1$s: /rd-downloads path string, %2$s: The selected URL to show in error.
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:302
+#. translators: %1$s: /rundiz-downloads path string, %2$s: The selected URL to show in error.
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:309
 #, php-format
 msgid "Unable to delete file that is not in %1$s folder (%2$s)."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:337
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:344
 msgid "Invalid URL."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:467
+#: App/Controllers/Admin/Downloads/Xhr/XhrFileBrowser.php:474
 msgid "Unable to process your request, please reload the page and try again."
 msgstr ""
 
@@ -697,22 +697,22 @@ msgid "Donate"
 msgstr ""
 
 #. translators: %1$s: Current PHP version, %2$s: Required PHP version.
-#: App/Controllers/Admin/Plugins/Activation.php:47
+#: App/Controllers/Admin/Plugins/Activation.php:54
 #, php-format
 msgid "You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or contact plugin author for this help.<br><br>Minimum requirement:<br>PHP %2$s"
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Activation.php:51
+#: App/Controllers/Admin/Plugins/Activation.php:58
 msgid "Minimum requirement of PHP version does not meet."
 msgstr ""
 
 #. translators: %1$s: Current WordPress version, %2$s: Required WordPress version.
-#: App/Controllers/Admin/Plugins/Activation.php:59
+#: App/Controllers/Admin/Plugins/Activation.php:66
 #, php-format
 msgid "Your WordPress version does not meet the requirement. (%1$s < %2$s)."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Activation.php:69
+#: App/Controllers/Admin/Plugins/Activation.php:76
 msgid "Unable to network activate, please activate from each site that have to use it only."
 msgstr ""
 
@@ -751,26 +751,26 @@ msgid "Completed"
 msgstr ""
 
 #: App/Controllers/Admin/Plugins/Upgrader.php:231
-#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:45
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:46
 msgid "Next"
 msgstr ""
 
-#: App/Controllers/Admin/Settings.php:67
+#: App/Controllers/Admin/Settings.php:74
 #: App/Views/admin/settings_v.php:2
 msgid "Downloads Settings"
 msgstr ""
 
-#: App/Controllers/Admin/Settings.php:67
+#: App/Controllers/Admin/Settings.php:74
 msgid "Settings"
 msgstr ""
 
 #. translators: %1$s: Open link tag, %2$s: Close link tag.
-#: App/Controllers/Admin/Settings.php:95
+#: App/Controllers/Admin/Settings.php:102
 #, php-format
 msgid "The manual update is required, please %1$supdate first%2$s."
 msgstr ""
 
-#: App/Controllers/Admin/Settings.php:101
+#: App/Controllers/Admin/Settings.php:108
 msgid "The manual update is required, please tell administrator to update first."
 msgstr ""
 
@@ -793,7 +793,7 @@ msgstr ""
 
 #. translators: %s Argument name.
 #: App/Libraries/DateTime.php:33
-#: App/Libraries/FileSystem.php:116
+#: App/Libraries/FileSystem.php:122
 #: App/Libraries/Github.php:102
 #: App/Libraries/Github.php:1161
 #: App/Libraries/Semver.php:72
@@ -812,7 +812,7 @@ msgstr ""
 #: App/Models/RdDownloadLogsListTable.php:156
 #: App/Models/RdDownloadsListTable.php:231
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:19
-#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:19
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:20
 #: templates/RdDownloadsPage/subUseAntibot_v.php:33
 msgid "Downloads name"
 msgstr ""
@@ -823,7 +823,7 @@ msgstr ""
 
 #: App/Libraries/ElementPlaceholders.php:60
 #: App/Models/RdDownloadsListTable.php:235
-#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:22
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:23
 msgid "Size"
 msgstr ""
 
@@ -1095,12 +1095,12 @@ msgid "Author"
 msgstr ""
 
 #: App/Models/RdDownloadsListTable.php:233
-#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:20
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:21
 msgid "Type"
 msgstr ""
 
 #: App/Models/RdDownloadsListTable.php:234
-#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:21
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:22
 msgid "File"
 msgstr ""
 
@@ -1115,9 +1115,9 @@ msgstr ""
 
 #: App/Models/RdDownloadsListTable.php:356
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:36
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:166
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:178
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:179
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:167
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:180
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:181
 msgid "Preview"
 msgstr ""
 
@@ -1264,13 +1264,13 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:183
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:187
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:185
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:189
 msgid "This file is linked with other downloads data."
 msgstr ""
 
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:195
-#: App/Views/admin/Downloads/Editing/pageEdit_v.php:196
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:197
+#: App/Views/admin/Downloads/Editing/pageEdit_v.php:198
 msgid "Delete this file"
 msgstr ""
 
@@ -1454,21 +1454,21 @@ msgstr ""
 msgid "These attributes will be working if the downloads element was set properly by the administrator."
 msgstr ""
 
-#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:14
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:15
 msgid "Found total"
 msgstr ""
 
 #. translators: %1$s: Current page, %2$s: Total pages.
-#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:35
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:36
 #, php-format
 msgid "Page %1$s of %2$s"
 msgstr ""
 
-#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:42
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:43
 msgid "Previous"
 msgstr ""
 
-#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:60
+#: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:62
 msgid "Insert"
 msgstr ""
 
