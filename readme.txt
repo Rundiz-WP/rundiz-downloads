@@ -81,6 +81,7 @@ Yes, the plugin's tables will be dropped on uninstall.
 * Rename nonce, template ID.
 * Rename rd-downloads.css to rundiz-downloads.css.
 * Rename option name to match plugin slug.
+* Rename upload folder name to match plugin slug.
 
 = 1.0.17 =
 2025-12-21
