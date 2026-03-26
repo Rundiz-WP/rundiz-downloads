@@ -33,7 +33,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
             $output = [];
 
             if (isset($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) === 'post' && isset($_POST) && !empty($_POST)) {
-                if (check_ajax_referer('rd_downloads_nonce', 'security', false) === false) {
+                if (check_ajax_referer('rundiz_downloads_nonce', 'security', false) === false) {
                     status_header(403);
                     wp_die(esc_html__('Please reload this page and try again.', 'rundiz-downloads'), '', ['response' => 403]);
                 }
@@ -114,7 +114,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                             $this->saveOptions($currentConfig);
                             unset($currentConfig);
 
-                            delete_transient('rd_downloads_updated');
+                            delete_transient('rundiz_downloads_transient__updated');
                         }
                     } else {
                         // if contain error.
@@ -146,7 +146,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
          */
         public function detectPluginUpdate()
         {
-            if (get_transient('rd_downloads_updated') && current_user_can('update_plugins')) {
+            if (get_transient('rundiz_downloads_transient__updated') && current_user_can('update_plugins')) {
                 // if there is updated transient
                 $Loader = new \RundizDownloads\App\Libraries\Loader();
 
@@ -183,12 +183,12 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                         add_action('admin_menu', [$this, 'displayManualUpdateMenu']);
                     }
 
-                    add_action('wp_ajax_rd_downloads_manualUpdate', [$this, 'ajaxManualUpdate']);
+                    add_action('wp_ajax_rundiz_downloads_manualUpdate', [$this, 'ajaxManualUpdate']);
                     // end display link to manual update page.
                     // -------------------------------------------------------------------------------------
                 } else {
                     // if don't have any manual update.
-                    delete_transient('rd_downloads_updated');
+                    delete_transient('rundiz_downloads_transient__updated');
                 }// endif;
 
                 unset($Loader);
@@ -256,7 +256,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                     'completedTxt' => __('Completed', 'rundiz-downloads'),
                     'dismissNoticeTxt' => __('Dismiss', 'rundiz-downloads'),
                     'nextTxt' => __('Next', 'rundiz-downloads'),
-                    'nonce' => wp_create_nonce('rd_downloads_nonce'),
+                    'nonce' => wp_create_nonce('rundiz_downloads_nonce'),
                 ]
             );
 
@@ -296,7 +296,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                         if ($this_plugin === $plugin) {
                             // if this plugin is in the updated plugins.
                             // set transient to let it run later. this transient will be called and run in `detectPluginUpdate()` method.
-                            set_transient('rd_downloads_updated', 1);
+                            set_transient('rundiz_downloads_transient__updated', 1);
                             break;
                         }
                     }// endforeach;

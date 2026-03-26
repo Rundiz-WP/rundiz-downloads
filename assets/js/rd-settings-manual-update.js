@@ -8,7 +8,7 @@
  *
  * @returns {undefined}
  */
-function rd_downloads_manualUpdateAjax()
+function rundiz_downloads_manualUpdateAjax()
 {
     var $ = jQuery.noConflict();
 
@@ -30,7 +30,7 @@ function rd_downloads_manualUpdateAjax()
     $.ajax({
         'url': ajaxurl,
         'method': 'POST',
-        'data': 'security=' + encodeURIComponent(RdSettingsManualUpdate.nonce) + '&action=rd_downloads_manualUpdate&updateKey=' + encodeURIComponent(runUpdateKey),
+        'data': 'security=' + encodeURIComponent(RdSettingsManualUpdate.nonce) + '&action=rundiz_downloads_manualUpdate&updateKey=' + encodeURIComponent(runUpdateKey),
         'dataType': 'json'
     })
     .done(function(data, textStatus, jqXHR) {
@@ -76,13 +76,13 @@ function rd_downloads_manualUpdateAjax()
         }
 
         if (typeof(response) !== 'undefined' && typeof(response.formResultClass) !== 'undefined' && typeof(response.formResultMsg) !== 'undefined') {
-            var noticehtml = rd_downloads_GetNoticeElement(response.formResultClass, response.formResultMsg);
+            var noticehtml = rundiz_downloads_GetNoticeElement(response.formResultClass, response.formResultMsg);
             $('.form-result-placeholder').html(noticehtml);
         }
 
         $('.manual-update-action-button').removeAttr('disabled');
     });
-}// rd_downloads_manualUpdateAjax
+}// rundiz_downloads_manualUpdateAjax
 
 
 /**
@@ -92,7 +92,7 @@ function rd_downloads_manualUpdateAjax()
  * @param {string} notice_message
  * @returns {String}
  */
-function rd_downloads_GetNoticeElement(notice_class, notice_message) {
+function rundiz_downloads_GetNoticeElement(notice_class, notice_message) {
     var output = '<div class="'+notice_class+' notice is-dismissible">';
 
     if (typeof(notice_message) === 'string') {
@@ -107,13 +107,13 @@ function rd_downloads_GetNoticeElement(notice_class, notice_message) {
         +'</div>';
 
     return output;
-}// rd_downloads_GetNoticeElement
+}// rundiz_downloads_GetNoticeElement
 
 
 // on dom ready --------------------------------------------------------------------------------------------------------
 (function($) {
     $('.manual-update-action-button').on('click', function(e) {
         e.preventDefault();
-        rd_downloads_manualUpdateAjax();
+        rundiz_downloads_manualUpdateAjax();
     });
 })(jQuery);

@@ -94,7 +94,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
                 wp_die(esc_html__('You do not have permission to access this page.'));
             }
 
-            if (get_transient('rd_downloads_updated')) {
+            if (get_transient('rundiz_downloads_transient__updated')) {
                 if (current_user_can('update_plugins')) {
                     wp_die(
                         sprintf(

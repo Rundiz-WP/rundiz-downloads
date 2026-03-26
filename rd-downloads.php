@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-$rundiz_downloads_old_file = 'rd-downloads.php';
+$rundiz_downloads_old_file = 'rd-downloads.php';// must not be renamed.
 $rundiz_downloads_new_file = 'rundiz-downloads.php';
 
 // Update active_plugins option so WP uses the new file going forward.
