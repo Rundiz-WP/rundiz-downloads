@@ -2,3 +2,4 @@
 /.dist/
 /.requires-at-least_check-data-php*
 /node_modules
+/*.zip
