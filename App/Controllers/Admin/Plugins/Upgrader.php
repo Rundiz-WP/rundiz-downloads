@@ -59,8 +59,35 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                         if (!empty($lastError)) {
                             if (is_array($lastError) && array_key_exists('message', $lastError) && is_scalar($lastError['message'])) {
                                 $errorMessage = $lastError['message'];
+                                if (defined('WP_DEBUG') && WP_DEBUG === true) {
+                                    $debugTraces = debug_backtrace();
+                                    $errorMessage .= '<br>' . PHP_EOL;
+                                    foreach ($debugTraces as $index => $trace) {
+                                        $errorMessage .= '[' . $index . ']';
+                                        if (isset($trace['file']) && isset($trace['line'])) {
+                                            $errorMessage .= esc_html($trace['file'] . ':' . $trace['line']) . '<br>' . PHP_EOL;
+                                        }
+                                        if (isset($trace['class'])) {
+                                            $errorMessage .= '&nbsp; ' . esc_html($trace['class']);
+                                            if (isset($trace['type'])) {
+                                                $errorMessage .= esc_html($trace['type']);
+                                            }
+                                        }
+                                        if (isset($trace['function'])) {
+                                            if (!isset($trace['class'])) {
+                                                $errorMessage .= '&nbsp; ';
+                                            }
+                                            $errorMessage .= esc_html($trace['function']) . '()<br>' . PHP_EOL;
+                                        }
+                                        if (isset($trace['args'])) {
+                                            $errorMessage .= '&nbsp; ' . esc_html(var_export($trace['args'], true)) . '<br>' . PHP_EOL;
+                                        }
+                                    }// endforeach;
+                                    unset($index, $trace);
+                                    unset($debugTraces);
+                                }
                             } else {
-                                $errorMessage = __('An error has been occur, cannot continue manual update. Please contact plugin author.', 'rundiz-downloads');
+                                $errorMessage = esc_html__('An error has been occur, cannot continue manual update. Please contact plugin author.', 'rundiz-downloads');
                             }
                         }
                         unset($lastError);
@@ -156,7 +183,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                         add_action('admin_menu', [$this, 'displayManualUpdateMenu']);
                     }
 
-                    add_action('wp_ajax_plugin_template_manualUpdate', [$this, 'ajaxManualUpdate']);
+                    add_action('wp_ajax_rd_downloads_manualUpdate', [$this, 'ajaxManualUpdate']);
                     // end display link to manual update page.
                     // -------------------------------------------------------------------------------------
                 } else {

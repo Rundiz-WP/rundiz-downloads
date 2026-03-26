@@ -1090,7 +1090,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
                 unset($hashAlgo, $payloadObject);
                 return false;
             } else {
-                $sql = 'SELECT `user_id`, `download_github_name` FROM `' . $wpdb->prefix . 'rd_downloads` WHERE `download_github_name` = %s GROUP BY `user_id`';
+                $sql = 'SELECT `user_id`, `download_github_name` FROM `' . $wpdb->prefix . 'rundiz_downloads` WHERE `download_github_name` = %s GROUP BY `user_id`';
                 $downloadItems = $wpdb->get_results($wpdb->prepare($sql, [$payloadObject->repository->full_name]));
                 unset($sql);
 

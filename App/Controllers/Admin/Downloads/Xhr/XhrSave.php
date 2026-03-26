@@ -304,7 +304,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                 }
 
                 global $wpdb;
-                $output['insertResult'] = $wpdb->insert($wpdb->prefix . 'rd_downloads', $data);
+                $output['insertResult'] = $wpdb->insert($wpdb->prefix . 'rundiz_downloads', $data);
                 if (false !== $output['insertResult']) {
                     $output['download_id'] = $wpdb->insert_id;
                     $output['saved'] = true;

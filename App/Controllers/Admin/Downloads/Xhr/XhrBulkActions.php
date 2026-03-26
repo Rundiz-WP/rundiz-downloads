@@ -89,7 +89,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             global $wpdb;
             // use WHERE IN to search for *any* of the values. https://mariadb.com/kb/en/library/in/
             $sql = 'SELECT `download_id`, `user_id`, `download_name`, `download_type`, `download_github_name`, `download_related_path`
-                FROM `' . $wpdb->prefix . 'rd_downloads`
+                FROM `' . $wpdb->prefix . 'rundiz_downloads`
                 WHERE `download_id` IN (' . implode(', ', array_fill(0, count($download_ids), '%d')) . ')';// https://stackoverflow.com/a/10634225/128761
             $results = $wpdb->get_results(
                 $wpdb->prepare(
@@ -136,7 +136,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                         if (strval($row->download_type) === '0' && stripos($row->download_related_path, \RundizDownloads\App\Libraries\FileSystem::UPLOAD_FOLDER_NAME . '/') !== false) {
                             // if local file.
                             // check again that this file is NOT linked with other downloads data.
-                            $sql = 'SELECT COUNT(`download_id`) AS `total`, `download_id`, `download_related_path` FROM `' . $wpdb->prefix . 'rd_downloads` WHERE `download_related_path` = %s AND `download_id` != %d';
+                            $sql = 'SELECT COUNT(`download_id`) AS `total`, `download_id`, `download_related_path` FROM `' . $wpdb->prefix . 'rundiz_downloads` WHERE `download_related_path` = %s AND `download_id` != %d';
                             $checkExists = $wpdb->get_var($wpdb->prepare($sql, [$row->download_related_path, $row->download_id]));
                             unset($sql);
                             if (is_null($checkExists)) {
@@ -164,7 +164,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                         } elseif (strval($row->download_type) === '1') {
                             // if github file.
                             // check that if there is no same github repo name on db.
-                            $sql = 'SELECT COUNT(`download_id`) AS `total`, `download_id`, `download_github_name` FROM `' . $wpdb->prefix . 'rd_downloads` WHERE `download_github_name` = %s AND `download_id` != %d';
+                            $sql = 'SELECT COUNT(`download_id`) AS `total`, `download_id`, `download_github_name` FROM `' . $wpdb->prefix . 'rundiz_downloads` WHERE `download_github_name` = %s AND `download_id` != %d';
                             $checkExists = $wpdb->get_var($wpdb->prepare($sql, [$row->download_github_name, $row->download_id]));
                             unset($sql);
                             if (is_null($checkExists)) {
@@ -186,7 +186,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
 
                         if (!isset($donot_delete) || (isset($donot_delete) && false === $donot_delete)) {
                             // if it is able to delete, delete it in db.
-                            $deleteResult = $wpdb->delete($wpdb->prefix . 'rd_downloads', ['download_id' => $row->download_id]);
+                            $deleteResult = $wpdb->delete($wpdb->prefix . 'rundiz_downloads', ['download_id' => $row->download_id]);
                             if (false !== $deleteResult) {
                                 $deleted_download_ids[] = $row->download_id;
                                 $deleted_download_names[] = $row->download_name;
@@ -299,7 +299,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             global $wpdb;
             // use WHERE IN to search for *any* of the values. https://mariadb.com/kb/en/library/in/
             $sql = 'SELECT `download_id`, `user_id`, `download_name`, `download_type`, `download_github_name`, `download_url`, `download_options`
-                FROM `' . $wpdb->prefix . 'rd_downloads`
+                FROM `' . $wpdb->prefix . 'rundiz_downloads`
                 WHERE `download_id` IN (' . implode(', ', array_fill(0, count($download_ids), '%d')) . ')';// https://stackoverflow.com/a/10634225/128761
             $sql .= ' AND `download_type` = 1';
             $sql .= ' AND `download_github_name` IS NOT NULL';
@@ -481,7 +481,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             global $wpdb;
             // use WHERE IN to search for *any* of the values. https://mariadb.com/kb/en/library/in/
             $sql = 'SELECT `download_id`, `user_id`, `download_name`, `download_type`, `download_url`
-                FROM `' . $wpdb->prefix . 'rd_downloads`
+                FROM `' . $wpdb->prefix . 'rundiz_downloads`
                 WHERE `download_id` IN (' . implode(', ', array_fill(0, count($download_ids), '%d')) . ')';// https://stackoverflow.com/a/10634225/128761
             $sql .= ' AND `download_type` = 2';
             $results = $wpdb->get_results(
@@ -529,7 +529,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                             $data['download_update'] = current_time('mysql');
                             $data['download_update_gmt'] = current_time('mysql', true);
 
-                            $updateResult = $wpdb->update($wpdb->prefix . 'rd_downloads', $data, ['download_id' => $row->download_id]);
+                            $updateResult = $wpdb->update($wpdb->prefix . 'rundiz_downloads', $data, ['download_id' => $row->download_id]);
                             if (false !== $updateResult) {
                                 $updated_download_ids[] = $row->download_id;
                                 $updated_download_names[] = $row->download_name;

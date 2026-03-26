@@ -110,7 +110,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                 if (!empty($whereFiles)) {
                     global $wpdb;
                     $whereInPlaceholder = implode(', ', array_fill(0, count($whereFiles), '%s'));// https://stackoverflow.com/a/10634225/128761
-                    $sql = 'SELECT `user_id`, `download_id`, `download_type`, `download_url` FROM `' . $wpdb->prefix . 'rd_downloads` WHERE `download_type` = 0 AND `download_url` IN (' . $whereInPlaceholder . ')';
+                    $sql = 'SELECT `user_id`, `download_id`, `download_type`, `download_url` FROM `' . $wpdb->prefix . 'rundiz_downloads` WHERE `download_type` = 0 AND `download_url` IN (' . $whereInPlaceholder . ')';
                     $searchFilesResults = $wpdb->get_results(
                         $wpdb->prepare(
                             $sql,
@@ -262,7 +262,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                     global $wpdb;
                     $itemRow = $wpdb->get_row(
                         $wpdb->prepare(
-                            'SELECT `download_id`, `download_type`, `download_url` FROM `' . $wpdb->prefix . 'rd_downloads` WHERE `download_type` = 0 AND `download_url` = %s',
+                            'SELECT `download_id`, `download_type`, `download_url` FROM `' . $wpdb->prefix . 'rundiz_downloads` WHERE `download_type` = 0 AND `download_url` = %s',
                             $output['deleteUrl']
                         )
                     );

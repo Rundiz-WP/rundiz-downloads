@@ -26,14 +26,14 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\PluginDbStructure')) {
          * 
          * Example:
          * <pre>
-         * $schema[0]['tablename'] = 'plugin_template1';
+         * $schema[0]['tablename'] = 'my_plugin_table1';
          * $schema[0]['statement'] = 'CREATE TABLE %PREFIX%%TABLE% (
          * id bigint(20) NOT NULL AUTO_INCREMENT,
          * PRIMARY KEY (id)
          * ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';// no back tick (`) to prevent error.
          * $schema[0]['is_multisite'] = false;// by default it is set to false (not multisite tables).
          * 
-         * $schema[1]['tablename'] = 'plugin_template2';
+         * $schema[1]['tablename'] = 'my_plugin_table2';
          * $schema[1]['statement'] = 'CREATE TABLE ...';
          * $schema[1]['is_multisite'] = true;
          * </pre>
@@ -44,7 +44,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\PluginDbStructure')) {
         {
             $schema = [];
 
-            $schema[0]['tablename'] = 'rd_downloads';
+            $schema[0]['tablename'] = 'rundiz_downloads';
             $schema[0]['statement'] = "CREATE TABLE %PREFIX%%TABLE% (
               download_id bigint(20) NOT NULL AUTO_INCREMENT,
               user_id bigint(20) DEFAULT NULL COMMENT 'Refer to users.ID of who create this.',
@@ -67,10 +67,10 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\PluginDbStructure')) {
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='contain downloads data.' AUTO_INCREMENT=1 ;";
             $schema[0]['is_multisite'] = true;
             
-            $schema[1]['tablename'] = 'rd_download_logs';
+            $schema[1]['tablename'] = 'rundiz_download_logs';
             $schema[1]['statement'] = "CREATE TABLE %PREFIX%%TABLE% (
               dl_id bigint(20) NOT NULL AUTO_INCREMENT,
-              download_id bigint(20) DEFAULT NULL COMMENT 'Refer to rd_downloads.download_id',
+              download_id bigint(20) DEFAULT NULL COMMENT 'Refer to rundiz_downloads.download_id',
               user_id bigint(20) DEFAULT NULL COMMENT 'Refer to users.ID',
               dl_cookie varchar(255) DEFAULT NULL COMMENT 'Downloads cookie for non-member.',
               dl_status varchar(20) DEFAULT NULL COMMENT 'Download status such as ''success'', ''error'', ''banned''.',

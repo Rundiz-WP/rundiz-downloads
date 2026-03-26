@@ -45,7 +45,7 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
          * @var string Version number of DB structure.
          * @todo [rundiz][routine] Set the DB version here if structure changed. Read the description above and only set this if there is any tables to create on activate this plugin.
          */
-        protected $db_version = '0.2';
+        protected $db_version = '0.3';
 
 
         /**

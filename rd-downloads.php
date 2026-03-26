@@ -69,7 +69,7 @@ add_action('plugins_loaded', 'rundiz_downloads_migrate_old_prefix');
 if (!function_exists('rundiz_downloads_migrate_upload_folder_replace_db_values')) {
     function rundiz_downloads_migrate_upload_folder_replace_db_values(\wpdb $wpdb, $old_folder, $old_url, $new_folder, $new_url)
     {
-        $old_table = $wpdb->prefix . 'rd_downloads';
+        $old_table = $wpdb->prefix . 'rd_downloads';// must not be renamed.
         $new_table = $wpdb->prefix . 'rundiz_downloads';
 
         $table_to_use = null;
@@ -98,7 +98,7 @@ if (!function_exists('rundiz_downloads_migrate_upload_folder_replace_db_values')
 if (!function_exists('rundiz_downloads_migrate_upload_folder')) {
     function rundiz_downloads_migrate_upload_folder()
     {
-        $old_folder = 'rd-downloads';   // do not change this
+        $old_folder = 'rd-downloads'; // must not be renamed.
         $new_folder = 'rundiz-downloads';
 
         // Safety flag (per-site)

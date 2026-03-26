@@ -1,6 +1,6 @@
 <?php
 /**
- * Rundiz Downloads table (rd_downloads).
+ * Rundiz Downloads table (rundiz_downloads).
  * 
  * @package rundiz-downloads
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
@@ -15,7 +15,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
 
 
         /**
-         * Get one row of data from rd_downloads and related tables.
+         * Get one row of data from rundiz_downloads and related tables.
          * 
          * This method use `get_row()` of `\wpdb` class.
          * 
@@ -55,8 +55,8 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
                 // if there is no custom select fields.
                 $sql .= $this->getSelectFields();
             }
-            $sql .= ' FROM `' . $wpdb->prefix . 'rd_downloads`';
-            $sql .= ' LEFT JOIN `' . $wpdb->users . '` ON `' . $wpdb->prefix . 'rd_downloads`.`user_id` = `' . $wpdb->users . '`.`ID`';
+            $sql .= ' FROM `' . $wpdb->prefix . 'rundiz_downloads`';
+            $sql .= ' LEFT JOIN `' . $wpdb->users . '` ON `' . $wpdb->prefix . 'rundiz_downloads`.`user_id` = `' . $wpdb->users . '`.`ID`';
 
             $sql .= ' WHERE %d';
             $prepareValues[] = 1;
@@ -178,7 +178,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
             global $wpdb;
 
             $fields = [
-                '`' . $wpdb->prefix . 'rd_downloads`.*',
+                '`' . $wpdb->prefix . 'rundiz_downloads`.*',
                 '`' . $wpdb->users . '`.`ID`',
                 '`' . $wpdb->users . '`.`user_login`',
                 '`' . $wpdb->users . '`.`user_nicename`',
@@ -206,7 +206,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
         {
             global $wpdb;
 
-            $sql = 'UPDATE `' . $wpdb->prefix . 'rd_downloads` SET `download_count` = `download_count` + 1 WHERE `download_id` = %d';
+            $sql = 'UPDATE `' . $wpdb->prefix . 'rundiz_downloads` SET `download_count` = `download_count` + 1 WHERE `download_id` = %d';
 
             $updateResult = $wpdb->query($wpdb->prepare($sql, [$download_id]));
 
@@ -220,7 +220,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
 
 
         /**
-         * List items from rd_downloads and related tables.
+         * List items from `rundiz_downloads` and related tables.
          * 
          * This method use `get_results()` of `\wpdb` class.
          * 
@@ -260,8 +260,8 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
             // sql
             $prepareValues = [];
             $sql = 'SELECT %*%';
-            $sql .= ' FROM `' . $wpdb->prefix . 'rd_downloads`';
-            $sql .= ' LEFT JOIN `' . $wpdb->users . '` ON `' . $wpdb->prefix . 'rd_downloads`.`user_id` = `' . $wpdb->users . '`.`ID`';
+            $sql .= ' FROM `' . $wpdb->prefix . 'rundiz_downloads`';
+            $sql .= ' LEFT JOIN `' . $wpdb->users . '` ON `' . $wpdb->prefix . 'rundiz_downloads`.`user_id` = `' . $wpdb->users . '`.`ID`';
 
             $sql .= ' WHERE %d';
             $prepareValues[] = 1;
@@ -315,7 +315,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
             $total_items = $wpdb->get_var(
                 $wpdb->prepare(
                     // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnsupportedPlaceholder, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
-                    str_replace(['%*%'], ['COUNT(' . $wpdb->prefix . 'rd_downloads.download_id)'], $sql), 
+                    str_replace(['%*%'], ['COUNT(' . $wpdb->prefix . 'rundiz_downloads.download_id)'], $sql), 
                     $prepareValues
                 )
             );
@@ -421,7 +421,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
             unset($data['download_create'], $data['download_create_gmt']);
 
             return $wpdb->update(
-                $wpdb->prefix . 'rd_downloads',
+                $wpdb->prefix . 'rundiz_downloads',
                 $data,
                 $where
             );
