@@ -45,11 +45,11 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogs')) {
 
             $output = [];
 
-            $truncateResult = $wpdb->query('TRUNCATE TABLE `' . $wpdb->prefix . 'rundiz_download_logs`');
+            $truncateResult = $wpdb->query('TRUNCATE TABLE `' . $wpdb->prefix . 'rundiz_downloads_logs`');
             $output['truncate'] = $truncateResult;
             if (false === $truncateResult) {
                 $output['truncate_error'] = $wpdb->last_error;
-                $deleteResult = $wpdb->query('DELETE FROM `' . $wpdb->prefix . 'rundiz_download_logs`');
+                $deleteResult = $wpdb->query('DELETE FROM `' . $wpdb->prefix . 'rundiz_downloads_logs`');
                 $output['delete'] = $deleteResult;
                 if (false === $deleteResult) {
                     $output['delete_error'] = $wpdb->last_error;
@@ -65,7 +65,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogs')) {
 
 
         /**
-         * Get one row of data from `rundiz_download_logs` and related tables.
+         * Get one row of data from `rundiz_downloads_logs` and related tables.
          *
          * This method use `get_row()` of `\wpdb` class.
          *
@@ -96,11 +96,11 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogs')) {
 
             // fix ambiguous
             if (isset($options['user_id'])) {
-                $options[$wpdb->prefix . 'rundiz_download_logs.user_id'] = $options['user_id'];
+                $options[$wpdb->prefix . 'rundiz_downloads_logs.user_id'] = $options['user_id'];
                 unset($options['user_id']);
             }
             if (isset($options['download_id'])) {
-                $options[$wpdb->prefix . 'rundiz_download_logs.download_id'] = $options['download_id'];
+                $options[$wpdb->prefix . 'rundiz_downloads_logs.download_id'] = $options['download_id'];
                 unset($options['download_id']);
             }
 
@@ -115,9 +115,9 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogs')) {
                 // if there is no custom select fields.
                 $sql .= $this->getSelectFields();
             }
-            $sql .= ' FROM `' . $wpdb->prefix . 'rundiz_download_logs`';
-            $sql .= ' LEFT JOIN `' . $wpdb->prefix . 'rundiz_downloads` ON `' . $wpdb->prefix . 'rundiz_download_logs`.`download_id` = `' . $wpdb->prefix . 'rundiz_downloads`.`download_id`';
-            $sql .= ' LEFT JOIN `' . $wpdb->users . '` ON `' . $wpdb->prefix . 'rundiz_download_logs`.`user_id` = `' . $wpdb->users . '`.`ID`';
+            $sql .= ' FROM `' . $wpdb->prefix . 'rundiz_downloads_logs`';
+            $sql .= ' LEFT JOIN `' . $wpdb->prefix . 'rundiz_downloads` ON `' . $wpdb->prefix . 'rundiz_downloads_logs`.`download_id` = `' . $wpdb->prefix . 'rundiz_downloads`.`download_id`';
+            $sql .= ' LEFT JOIN `' . $wpdb->users . '` ON `' . $wpdb->prefix . 'rundiz_downloads_logs`.`user_id` = `' . $wpdb->users . '`.`ID`';
 
             $sql .= ' WHERE %d';
             $prepareValues[] = 1;
@@ -242,9 +242,9 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogs')) {
             global $wpdb;
 
             $fields = [
-                '`' . $wpdb->prefix . 'rundiz_download_logs`.*',
-                '`' . $wpdb->prefix . 'rundiz_download_logs`.`download_id` AS `download_id`',
-                '`' . $wpdb->prefix . 'rundiz_download_logs`.`user_id` AS `user_id`',
+                '`' . $wpdb->prefix . 'rundiz_downloads_logs`.*',
+                '`' . $wpdb->prefix . 'rundiz_downloads_logs`.`download_id` AS `download_id`',
+                '`' . $wpdb->prefix . 'rundiz_downloads_logs`.`user_id` AS `user_id`',
                 '`' . $wpdb->users . '`.`ID`',
                 '`' . $wpdb->users . '`.`user_login`',
                 '`' . $wpdb->users . '`.`user_nicename`',
@@ -262,7 +262,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogs')) {
 
 
         /**
-         * List items from `rundiz_download_logs` and related tables.
+         * List items from `rundiz_downloads_logs` and related tables.
          *
          * This method use `get_results()` of `\wpdb` class.
          *
@@ -301,20 +301,20 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogs')) {
 
             // fix ambiguous
             if (isset($options['user_id'])) {
-                $options[$wpdb->prefix . 'rundiz_download_logs.user_id'] = $options['user_id'];
+                $options[$wpdb->prefix . 'rundiz_downloads_logs.user_id'] = $options['user_id'];
                 unset($options['user_id']);
             }
             if (isset($options['download_id'])) {
-                $options[$wpdb->prefix . 'rundiz_download_logs.download_id'] = $options['download_id'];
+                $options[$wpdb->prefix . 'rundiz_downloads_logs.download_id'] = $options['download_id'];
                 unset($options['download_id']);
             }
 
             // sql
             $prepareValues = [];
-            $sql = 'SELECT %*%, `' . $wpdb->prefix . 'rundiz_download_logs`.`download_id` AS `download_id`, `' . $wpdb->prefix . 'rundiz_download_logs`.`user_id` AS `user_id`';
-            $sql .= ' FROM `' . $wpdb->prefix . 'rundiz_download_logs`';
-            $sql .= ' LEFT JOIN `' . $wpdb->prefix . 'rundiz_downloads` ON `' . $wpdb->prefix . 'rundiz_download_logs`.`download_id` = `' . $wpdb->prefix . 'rundiz_downloads`.`download_id`';
-            $sql .= ' LEFT JOIN `' . $wpdb->users . '` ON `' . $wpdb->prefix . 'rundiz_download_logs`.`user_id` = `' . $wpdb->users . '`.`ID`';
+            $sql = 'SELECT %*%, `' . $wpdb->prefix . 'rundiz_downloads_logs`.`download_id` AS `download_id`, `' . $wpdb->prefix . 'rundiz_downloads_logs`.`user_id` AS `user_id`';
+            $sql .= ' FROM `' . $wpdb->prefix . 'rundiz_downloads_logs`';
+            $sql .= ' LEFT JOIN `' . $wpdb->prefix . 'rundiz_downloads` ON `' . $wpdb->prefix . 'rundiz_downloads_logs`.`download_id` = `' . $wpdb->prefix . 'rundiz_downloads`.`download_id`';
+            $sql .= ' LEFT JOIN `' . $wpdb->users . '` ON `' . $wpdb->prefix . 'rundiz_downloads_logs`.`user_id` = `' . $wpdb->users . '`.`ID`';
 
             $sql .= ' WHERE %d';
             $prepareValues[] = 1;
@@ -372,7 +372,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogs')) {
             $total_items = $wpdb->get_var(
                 $wpdb->prepare(
                     // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnsupportedPlaceholder, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
-                    str_replace(['%*%'], ['COUNT(' . $wpdb->prefix . 'rundiz_download_logs.download_id)'], $sql),
+                    str_replace(['%*%'], ['COUNT(' . $wpdb->prefix . 'rundiz_downloads_logs.download_id)'], $sql),
                     $prepareValues
                 )
             );
@@ -385,7 +385,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogs')) {
             if ('user_id' === $sort) {
                 $sort = $wpdb->users . '.display_name';
             } elseif ('download_id' === $sort) {
-                $sort = $wpdb->prefix . 'rundiz_download_logs.download_id';
+                $sort = $wpdb->prefix . 'rundiz_downloads_logs.download_id';
             }
 
             $order = 'DESC';
@@ -500,7 +500,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogs')) {
             $data['dl_status'] = $status;
 
             global $wpdb;
-            $saveResult = $wpdb->insert($wpdb->prefix . 'rundiz_download_logs', $data);
+            $saveResult = $wpdb->insert($wpdb->prefix . 'rundiz_downloads_logs', $data);
             if (false !== $saveResult) {
                 unset($saveResult);
                 return true;

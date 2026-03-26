@@ -30,7 +30,7 @@ if (!class_exists('\\RundizDownloads\\App\\Update\\Manual\\V1d0d18Sub1')) {
         {
             $table_map = [
                 'rd_downloads' => 'rundiz_downloads',
-                'rd_download_logs' => 'rundiz_download_logs',
+                'rd_download_logs' => 'rundiz_downloads_logs',
             ];
 
             $prefix = $wpdb->prefix;

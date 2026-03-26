@@ -31,7 +31,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadS
             $output['part_date_gmt'] = [];
 
             $tableRdDownloads = '`' . $wpdb->prefix . 'rundiz_downloads`';
-            $tableRdDownloadLogs = '`' . $wpdb->prefix . 'rundiz_download_logs`';
+            $tableRdDownloadLogs = '`' . $wpdb->prefix . 'rundiz_downloads_logs`';
 
             // setup date for graph axis. this can be use in sql statement.
             $output['part_date_gmt'][] = current_time('Y-m-d', true);
@@ -169,7 +169,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadS
 
             if (false === $results) {
                 $tableRdDownloads = '`' . $wpdb->prefix . 'rundiz_downloads`';
-                $tableRdDownloadLogs = '`' . $wpdb->prefix . 'rundiz_download_logs`';
+                $tableRdDownloadLogs = '`' . $wpdb->prefix . 'rundiz_downloads_logs`';
 
                 if ($scope > '0') {
                     $sql = 'SELECT ' . $tableRdDownloadLogs . '.*';

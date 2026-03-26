@@ -67,7 +67,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\PluginDbStructure')) {
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='contain downloads data.' AUTO_INCREMENT=1 ;";
             $schema[0]['is_multisite'] = true;
             
-            $schema[1]['tablename'] = 'rundiz_download_logs';
+            $schema[1]['tablename'] = 'rundiz_downloads_logs';
             $schema[1]['statement'] = "CREATE TABLE %PREFIX%%TABLE% (
               dl_id bigint(20) NOT NULL AUTO_INCREMENT,
               download_id bigint(20) DEFAULT NULL COMMENT 'Refer to rundiz_downloads.download_id',

@@ -44,7 +44,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\Cron\\Purg
             // purge old logs from DB.
             global $wpdb;
             $result = $wpdb->query(
-                $wpdb->prepare('DELETE FROM ' . $wpdb->prefix . 'rundiz_download_logs WHERE dl_date_gmt < DATE_SUB(%s, INTERVAL %d DAY)', $current_datetime_gmt, $days)
+                $wpdb->prepare('DELETE FROM ' . $wpdb->prefix . 'rundiz_downloads_logs WHERE dl_date_gmt < DATE_SUB(%s, INTERVAL %d DAY)', $current_datetime_gmt, $days)
             );
 
             if (false !== $result && $result > 0) {
