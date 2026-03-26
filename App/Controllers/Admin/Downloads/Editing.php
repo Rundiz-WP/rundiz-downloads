@@ -50,8 +50,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Editin
             unset($content);
             ob_clean();
 
-            global $rd_downloads_options;
-            $output['rd_downloads_options'] = $rd_downloads_options;
+            global $rundiz_downloads_options;
+            $output['rundiz_downloads_options'] = $rundiz_downloads_options;
             $Loader->loadView('admin/Downloads/Editing/helpTab/tab2_v', $output);
             $content = ob_get_contents();
             $screen->add_help_tab([
@@ -86,7 +86,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Editin
          *
          * This method was called from Menu class.
          *
-         * @global array $rd_downloads_options
+         * @global array $rundiz_downloads_options
          */
         public function pageAdd()
         {
@@ -95,11 +95,11 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Editin
                 wp_die(esc_html__('You do not have permission to access this page.'), '', ['response' => 403]);
             }
 
-            global $rd_downloads_options;
+            global $rundiz_downloads_options;
 
             $output = [];
             $output['page_heading1'] = __('Add new download', 'rundiz-downloads');
-            $output['rd_downloads_options'] = $rd_downloads_options;
+            $output['rundiz_downloads_options'] = $rundiz_downloads_options;
 
             $Loader = new \RundizDownloads\App\Libraries\Loader();
             $Loader->loadView('admin/Downloads/Editing/pageEdit_v', $output);
@@ -112,7 +112,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Editin
          *
          * This method was called from Menu class.
          *
-         * @global array $rd_downloads_options
+         * @global array $rundiz_downloads_options
          */
         public function pageEdit()
         {
@@ -121,11 +121,11 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Editin
                 wp_die(esc_html__('You do not have permission to access this page.'), '', ['response' => 403]);
             }
 
-            global $rd_downloads_options;
+            global $rundiz_downloads_options;
 
             $output = [];
             $output['page_heading1'] = __('Edit download', 'rundiz-downloads');
-            $output['rd_downloads_options'] = $rd_downloads_options;
+            $output['rundiz_downloads_options'] = $rundiz_downloads_options;
 
             // prepare data for form.
             $RdDownloads = new \RundizDownloads\App\Models\RdDownloads();

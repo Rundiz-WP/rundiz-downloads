@@ -138,7 +138,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
             }
 
             $this->getOptions();
-            global $rd_downloads_options;
+            global $rundiz_downloads_options;
 
             $actions = [];
             $actions['clearlogs'] = __('Clear', 'rundiz-downloads');

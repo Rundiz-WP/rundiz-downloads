@@ -451,7 +451,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogs')) {
         /**
          * Write log to DB.
          *
-         * @global array $rd_downloads_options
+         * @global array $rundiz_downloads_options
          * @global \wpdb $wpdb
          * @param string $status The log status, please refer from `dlStatuses` property.
          * @param array $data The associate array where key is table fields.
@@ -467,9 +467,9 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogs')) {
             }
 
             $this->getOptions();
-            global $rd_downloads_options;
+            global $rundiz_downloads_options;
 
-            if (isset($rd_downloads_options['rdd_admin_logs']) && strval($rd_downloads_options['rdd_admin_logs']) !== '1') {
+            if (isset($rundiz_downloads_options['rdd_admin_logs']) && strval($rundiz_downloads_options['rdd_admin_logs']) !== '1') {
                 // if admin logs is in the settings page was not set (set to do not log admin actions).
                 if (stripos($status, 'admin_') !== false) {
                     // if found admin log.

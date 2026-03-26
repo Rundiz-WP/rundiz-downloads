@@ -20,22 +20,22 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\Cron\\Purg
         /**
          * Purge old logs from DB.
          * 
-         * @global array $rd_downloads_options
+         * @global array $rundiz_downloads_options
          * @global \wpdb $wpdb
          * @return boolean
          */
         public function purgeLogs()
         {
             $this->getOptions();
-            global $rd_downloads_options;
+            global $rundiz_downloads_options;
 
-            if (isset($rd_downloads_options['rdd_auto_delete_logs']) && strval($rd_downloads_options['rdd_auto_delete_logs']) !== '1') {
+            if (isset($rundiz_downloads_options['rdd_auto_delete_logs']) && strval($rundiz_downloads_options['rdd_auto_delete_logs']) !== '1') {
                 // if setting is not to auto purge old logs.
                 return false;
             }
 
-            if (isset($rd_downloads_options['rdd_auto_delete_logs_days']) && is_numeric($rd_downloads_options['rdd_auto_delete_logs_days'])) {
-                $days = $rd_downloads_options['rdd_auto_delete_logs_days'];
+            if (isset($rundiz_downloads_options['rdd_auto_delete_logs_days']) && is_numeric($rundiz_downloads_options['rdd_auto_delete_logs_days'])) {
+                $days = $rundiz_downloads_options['rdd_auto_delete_logs_days'];
             } else {
                 $days = 90;
             }

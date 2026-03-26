@@ -112,7 +112,7 @@
                             <input type="radio" name="opt_force_download" value=""<?php if (!isset($opt_force_download) || (isset($opt_force_download) && strval($opt_force_download) === '')) {echo ' checked="checked"';} ?>>
                             <?php esc_html_e('Default', 'rundiz-downloads'); ?> 
                             <span class="description">(<?php
-                            if (isset($rd_downloads_options['rdd_force_download']) && strval($rd_downloads_options['rdd_force_download']) === '1') {
+                            if (isset($rundiz_downloads_options['rdd_force_download']) && strval($rundiz_downloads_options['rdd_force_download']) === '1') {
                                 $pluginSettingsUse = __('Force download', 'rundiz-downloads');
                             } else {
                                 $pluginSettingsUse = __('redirect to file', 'rundiz-downloads');

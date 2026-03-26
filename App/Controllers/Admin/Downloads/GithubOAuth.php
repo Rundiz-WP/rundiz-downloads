@@ -139,18 +139,18 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Github
         /**
          * Display "GitHub OAuth" sub-menu inside "Downloads" menu.
          *
-         * @global array $rd_downloads_options
+         * @global array $rundiz_downloads_options
          */
         public function githubOAuthMenu()
         {
             $this->getOptions();
-            global $rd_downloads_options;
+            global $rundiz_downloads_options;
 
             if (
-                isset($rd_downloads_options['rdd_github_client_id']) &&
-                isset($rd_downloads_options['rdd_github_client_secret']) &&
-                !empty($rd_downloads_options['rdd_github_client_id']) &&
-                !empty($rd_downloads_options['rdd_github_client_secret'])
+                isset($rundiz_downloads_options['rdd_github_client_id']) &&
+                isset($rundiz_downloads_options['rdd_github_client_secret']) &&
+                !empty($rundiz_downloads_options['rdd_github_client_id']) &&
+                !empty($rundiz_downloads_options['rdd_github_client_secret'])
             ) {
                 $hook_suffix = add_submenu_page(Menu::MENU_SLUG, __('GitHub OAuth', 'rundiz-downloads'), __('GitHub OAuth', 'rundiz-downloads'), 'upload_files', self::MENU_SLUG, [$this, 'pageIndex']);
                 $this->hook_suffix = $hook_suffix;

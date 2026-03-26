@@ -14,7 +14,7 @@ printf(
 ); 
 ?></p>
 <p><?php
-if (isset($rd_downloads_options['rdd_force_download']) && strval($rd_downloads_options['rdd_force_download']) === '1') {
+if (isset($rundiz_downloads_options['rdd_force_download']) && strval($rundiz_downloads_options['rdd_force_download']) === '1') {
     $pluginSettingsUse = __('Force download', 'rundiz-downloads');
 } else {
     $pluginSettingsUse = __('redirect to file', 'rundiz-downloads');

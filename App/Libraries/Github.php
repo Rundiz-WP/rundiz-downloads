@@ -71,8 +71,8 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
         public function __construct()
         {
             $this->getOptions();
-            global $rd_downloads_options;
-            $this->pluginOptions = $rd_downloads_options;
+            global $rundiz_downloads_options;
+            $this->pluginOptions = $rundiz_downloads_options;
 
             // initialize Semver class to be able to use Composer/Semver classes.
             new Semver();

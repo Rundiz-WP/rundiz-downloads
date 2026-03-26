@@ -20,15 +20,15 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
         /**
          * Main option name.
          * 
-         * @var string set main option name of this plugin. the name should be english, number, underscore, or anycharacters that can be set to variable. for example: 'rd_downloads_options' will be set to $rd_downloads_options
-         * @uses call this trait method $this->getOptions(); before access $rd_downloads_options in global variable.
+         * @var string set main option name of this plugin. the name should be english, number, underscore, or anycharacters that can be set to variable. for example: 'rundiz_downloads_options' will be set to $rundiz_downloads_options
+         * @uses call this trait method $this->getOptions(); before access $rundiz_downloads_options in global variable.
          */
-        public $main_option_name = 'rd_downloads_options';
+        public $main_option_name = 'rundiz_downloads_options';
 
         /**
          * All available options.
          * 
-         * These options will be accessible via main option name variable. for example: options name 'the_name' can call from $rd_downloads_options['the_name'];.
+         * These options will be accessible via main option name variable. for example: options name 'the_name' can call from $rundiz_downloads_options['the_name'];.
          * If you want to access this property, please call to `setupAllOptions()` method first.
          * 
          * @var array set all options available for this plugin. it must be 2D array (key => default value, key2 => default value, ...)

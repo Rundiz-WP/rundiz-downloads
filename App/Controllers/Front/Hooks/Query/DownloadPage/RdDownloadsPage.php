@@ -124,7 +124,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
          * 
          * This method will be echo out, or response to the browser including headers.
          *
-         * @global array $rd_downloads_options
+         * @global array $rundiz_downloads_options
          * @param int $download_id The `download_id` to match in DB.
          */
         public function pageIndex($download_id)
@@ -135,7 +135,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
                 return ;
             }
 
-            global $rd_downloads_options;
+            global $rundiz_downloads_options;
 
             // set page title.
             $this->setTitle(__('Rundiz Downloads', 'rundiz-downloads'));
@@ -164,7 +164,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
                 );
             }// endif; http referrer
 
-            if (isset($rd_downloads_options['rdd_use_antibotfield']) && !empty($rd_downloads_options['rdd_use_antibotfield'])) {
+            if (isset($rundiz_downloads_options['rdd_use_antibotfield']) && !empty($rundiz_downloads_options['rdd_use_antibotfield'])) {
                 // if setting was set to use anti bot form field.
                 // do a filter hook to allow custom antibot.
                 $useCustomAntibot = apply_filters('rddownloads_use_custom_antibot', false);
@@ -199,18 +199,18 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
         /**
          * Sub page check banned User Agent.
          *
-         * @global array $rd_downloads_options
+         * @global array $rundiz_downloads_options
          * @param int $download_id The download_id field.
          * @return bool Return `true` if BANNED and displaying banned page.<br>
          *      Return `false` if not banned but not display anything.
          */
         protected function subCheckBannedUA($download_id)
         {
-            global $rd_downloads_options;
+            global $rundiz_downloads_options;
 
-            if (isset($rd_downloads_options['rdd_block_ua']) && !empty($rd_downloads_options['rdd_block_ua'])) {
+            if (isset($rundiz_downloads_options['rdd_block_ua']) && !empty($rundiz_downloads_options['rdd_block_ua'])) {
                 $currentUserAgent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_UNSAFE_RAW);
-                $bannedUserAgents = explode("\n", str_replace(["\r\n", "\r", "\n"], "\n", $rd_downloads_options['rdd_block_ua']));
+                $bannedUserAgents = explode("\n", str_replace(["\r\n", "\r", "\n"], "\n", $rundiz_downloads_options['rdd_block_ua']));
 
                 if (is_array($bannedUserAgents)) {
                     foreach ($bannedUserAgents as $bannedUserAgent) {
@@ -268,7 +268,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
         /**
          * Sub page check for download item exists and start download.
          *
-         * @global array $rd_downloads_options
+         * @global array $rundiz_downloads_options
          * @param int $download_id The `download_id` that matched in DB.
          * @return bool Return false for failure. If success then it will process the download here and exit.
          */
@@ -303,8 +303,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
                 } else {
                     // if download type is local.
                     // check for global setting is force download or not.
-                    global $rd_downloads_options;
-                    if (isset($rd_downloads_options['rdd_force_download']) && strval($rd_downloads_options['rdd_force_download']) === '1') {
+                    global $rundiz_downloads_options;
+                    if (isset($rundiz_downloads_options['rdd_force_download']) && strval($rundiz_downloads_options['rdd_force_download']) === '1') {
                         // if "global setting" is using force download.
                         $forceDownload = true;
                     }

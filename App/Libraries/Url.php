@@ -62,7 +62,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Url')) {
          * The URI /wordpress-install-path/?pagename=DDD is download page.<br>
          * This page will process the download step.
          *
-         * @global array $rd_downloads_options
+         * @global array $rundiz_downloads_options
          * @param integer $download_id The `download_id` from DB.
          * @return string Return generated download page URL.
          */

@@ -125,7 +125,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\ShortcodeRdDownloads')) {
         /**
          * Render download HTML element from shortcode.
          * 
-         * @global array $rd_downloads_options
+         * @global array $rundiz_downloads_options
          * @param array $userAttributes The user input shortcode attributes.
          * @return string Return rendered HTML.
          */
@@ -159,16 +159,16 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\ShortcodeRdDownloads')) {
             }
 
             $this->getOptions();
-            global $rd_downloads_options;
+            global $rundiz_downloads_options;
 
             $ElementPlaceholders = new ElementPlaceholders();
             // set HTML template from setting page.
             if (
-                isset($rd_downloads_options['rdd_download_element']) && 
-                is_scalar($rd_downloads_options['rdd_download_element']) && 
-                !empty(trim($rd_downloads_options['rdd_download_element']))
+                isset($rundiz_downloads_options['rdd_download_element']) && 
+                is_scalar($rundiz_downloads_options['rdd_download_element']) && 
+                !empty(trim($rundiz_downloads_options['rdd_download_element']))
             ) {
-                $templateString = $rd_downloads_options['rdd_download_element'];
+                $templateString = $rundiz_downloads_options['rdd_download_element'];
             } else {
                 $templateString = $ElementPlaceholders->defaultDownloadHtml();
             }

@@ -116,32 +116,32 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Git
          *
          * The process will be end here.
          *
-         * @global array $rd_downloads_options
+         * @global array $rundiz_downloads_options
          */
         protected function subGithubPush()
         {
-            global $rd_downloads_options;
+            global $rundiz_downloads_options;
 
             $output = [];
 
             if ($this->Github->webhookIsCommit() === true) {
                 // if this event is commit.
-                if (isset($rd_downloads_options['rdd_github_auto_update']) && 'release+commit' === $rd_downloads_options['rdd_github_auto_update']) {
+                if (isset($rundiz_downloads_options['rdd_github_auto_update']) && 'release+commit' === $rundiz_downloads_options['rdd_github_auto_update']) {
                     // if global setting is allow to update release+commit.
                     $this->subGithubPushUpdateData();
                 } else {
                     // if global setting is NOT allow to update release+commit. it just allow release only.
                     $output['updated'] = false;
                     $output['webhook_event'] = 'commit';
-                    $output['rdd_autoupdate_config'] = $rd_downloads_options['rdd_github_auto_update'];
+                    $output['rdd_autoupdate_config'] = $rundiz_downloads_options['rdd_github_auto_update'];
                 }// endif;
             } elseif ($this->Github->webhookIsTagging('created') || $this->Github->webhookIsTagging('deleted')) {
                 // if this event is tagging.
                 if (
-                    isset($rd_downloads_options['rdd_github_auto_update']) &&
+                    isset($rundiz_downloads_options['rdd_github_auto_update']) &&
                     (
-                        'release+commit' === $rd_downloads_options['rdd_github_auto_update'] ||
-                        'release' === $rd_downloads_options['rdd_github_auto_update']
+                        'release+commit' === $rundiz_downloads_options['rdd_github_auto_update'] ||
+                        'release' === $rundiz_downloads_options['rdd_github_auto_update']
                     )
                 ) {
                     // if global setting is allow to update release or release+commit.
@@ -150,7 +150,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Git
                     // if global setting is NOT allow to update release+commit, release only. there is something terrible wrong in config.
                     $output['updated'] = false;
                     $output['webhook_event'] = 'release';
-                    $output['rdd_autoupdate_config'] = $rd_downloads_options['rdd_github_auto_update'];
+                    $output['rdd_autoupdate_config'] = $rundiz_downloads_options['rdd_github_auto_update'];
                 }// endif;
             }// endif; check webhook event. (is commit, tag created, tag deleted).
 

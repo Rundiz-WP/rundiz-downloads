@@ -43,15 +43,15 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
         /**
          * An example of how to access settings variable and its values.
          *
-         * @global array $rd_downloads_options
+         * @global array $rundiz_downloads_options
          */
         public function pluginReadSettingsPage()
         {
             $this->getOptions();
-            global $rd_downloads_options;
+            global $rundiz_downloads_options;
 
             $output = [];
-            $output['rd_downloads_options'] = $rd_downloads_options;
+            $output['rundiz_downloads_options'] = $rundiz_downloads_options;
 
             $Loader = new \RundizDownloads\App\Libraries\Loader();
             $Loader->loadView('admin/readsettings_v', $output);
