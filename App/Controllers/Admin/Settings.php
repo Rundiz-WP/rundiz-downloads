@@ -8,7 +8,14 @@
 
 namespace RundizDownloads\App\Controllers\Admin;
 
+
+use RundizDownloads\App\Libraries\FileSystem;
+
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
+    /**
+     * Settings class.
+     */
     class Settings implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -148,10 +155,10 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
                 ) {
                     if (isset($options_values['rdd_force_download']) && strval($options_values['rdd_force_download']) === '1') {
                         // if setting is to Force download, create .htaccess to prevent direct access file.
-                        $FileSystem->writeFile(trailingslashit($wp_upload_dir['basedir']) . 'rd-downloads/.htaccess', 'Options -Indexes' . PHP_EOL . 'deny from all', false);
+                        $FileSystem->writeFile(trailingslashit($wp_upload_dir['basedir']) . FileSystem::UPLOAD_FOLDER_NAME . '/.htaccess', 'Options -Indexes' . PHP_EOL . 'deny from all', false);
                     } else {
                         // if setting is NOT to Force download, remove .htaccess to allow direct access file.
-                        $FileSystem->deleteFile(trailingslashit($wp_upload_dir['basedir']) . 'rd-downloads/.htaccess');
+                        $FileSystem->deleteFile(trailingslashit($wp_upload_dir['basedir']) . FileSystem::UPLOAD_FOLDER_NAME . '/.htaccess');
                     }
                 }
                 unset($FileSystem, $wp_upload_dir);
@@ -226,5 +233,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
         }// registerScripts
 
 
-    }
+    }// Settings
 }

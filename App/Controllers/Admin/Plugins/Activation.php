@@ -8,7 +8,14 @@
 
 namespace RundizDownloads\App\Controllers\Admin\Plugins;
 
+
+use RundizDownloads\App\Libraries\FileSystem;
+
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')) {
+    /**
+     * Activation class.
+     */
     class Activation implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -82,9 +89,9 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
             // create folder in upload folder.
             $wp_upload_dir = wp_upload_dir();
             if (is_array($wp_upload_dir) && array_key_exists('basedir', $wp_upload_dir)) {
-                wp_mkdir_p(realpath($wp_upload_dir['basedir']) . DIRECTORY_SEPARATOR . 'rd-downloads');
+                wp_mkdir_p(realpath($wp_upload_dir['basedir']) . DIRECTORY_SEPARATOR . FileSystem::UPLOAD_FOLDER_NAME);
                 $FileSystem = new \RundizDownloads\App\Libraries\FileSystem();
-                $FileSystem->writeFile(realpath($wp_upload_dir['basedir']) . DIRECTORY_SEPARATOR . 'rd-downloads' . DIRECTORY_SEPARATOR . 'index.html', 'Access denied!', false);
+                $FileSystem->writeFile(realpath($wp_upload_dir['basedir']) . DIRECTORY_SEPARATOR . FileSystem::UPLOAD_FOLDER_NAME . DIRECTORY_SEPARATOR . 'index.html', 'Access denied!', false);
                 unset($FileSystem);
             }
             unset($wp_upload_dir);
@@ -239,5 +246,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
         }// tempFixMaybeConvertTableToUtf8mb4
 
 
-    }
+    }// Activation
 }

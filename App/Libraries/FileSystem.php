@@ -14,6 +14,12 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\FileSystem')) {
 
 
         /**
+         * @var string The upload folder name that should matched the plugin slug. Contain only folder name for example `rundiz-downloads`. This constant must be public.
+         */
+        const UPLOAD_FOLDER_NAME = 'rundiz-downloads';
+
+
+        /**
          * Delete a file.
          * 
          * @param string $path File path.

@@ -9,7 +9,14 @@
 
 namespace RundizDownloads\App\Controllers\Admin\Downloads\Xhr;
 
+
+use RundizDownloads\App\Libraries\FileSystem;
+
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrFileBrowser')) {
+    /**
+     * XHR file browser class.
+     */
     class XhrFileBrowser extends \RundizDownloads\App\Controllers\XhrBased implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -85,8 +92,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                             $files[$FileInfo->getFilename()]['previousTarget'] = $target . '/' . $FileInfo->getFilename();
                             $files[$FileInfo->getFilename()]['relatedPath'] = ltrim($target . '/' . $FileInfo->getFilename(), '/');
                             if (
-                                stripos($target, '/rd-downloads') !== false &&
-                                $target . '/' . $FileInfo->getFilename() !== '/rd-downloads/index.html' &&
+                                stripos($target, '/' . FileSystem::UPLOAD_FOLDER_NAME) !== false &&
+                                $target . '/' . $FileInfo->getFilename() !== '/' . FileSystem::UPLOAD_FOLDER_NAME . '/index.html' &&
                                 current_user_can('upload_files')
                             ) {
                                 $files[$FileInfo->getFilename()]['isDeletable'] = true;
@@ -164,9 +171,9 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
         public function changeUploadDir($dir)
         {
             if (is_array($dir)) {
-                $dir['path'] = $dir['basedir'] . DIRECTORY_SEPARATOR . 'rd-downloads' . DIRECTORY_SEPARATOR . current_time('Y') . DIRECTORY_SEPARATOR . current_time('m');
-                $dir['url'] = $dir['baseurl'] . '/rd-downloads/' . current_time('Y') . '/' . current_time('m');
-                $dir['subdir'] = '/rd-downloads/' . current_time('Y') . '/' . current_time('m');
+                $dir['path'] = $dir['basedir'] . DIRECTORY_SEPARATOR . FileSystem::UPLOAD_FOLDER_NAME . DIRECTORY_SEPARATOR . current_time('Y') . DIRECTORY_SEPARATOR . current_time('m');
+                $dir['url'] = $dir['baseurl'] . '/' . FileSystem::UPLOAD_FOLDER_NAME . '/' . current_time('Y') . '/' . current_time('m');
+                $dir['subdir'] = '/' . FileSystem::UPLOAD_FOLDER_NAME . '/' . current_time('Y') . '/' . current_time('m');
             }
 
             return $dir;
@@ -219,7 +226,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                 $disallowDelete = true;
             }
 
-            // search for deleting /rd-downloads/index.html
+            // search for deleting /rundiz-downloads/index.html
             if (
                 (
                     !isset($disallowDelete) ||
@@ -229,8 +236,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                     )
                 ) &&
                 (
-                    strtolower($target) === '/rd-downloads/index.html' ||
-                    strtolower($target) === 'rd-downloads/index.html'
+                    strtolower($target) === '/' . FileSystem::UPLOAD_FOLDER_NAME . '/index.html' ||
+                    strtolower($target) === FileSystem::UPLOAD_FOLDER_NAME . '/index.html'
                 )
             ) {
                 $responseStatus = 403;
@@ -246,7 +253,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                     array_key_exists('basedir', $wp_upload_dir) &&
                     array_key_exists('baseurl', $wp_upload_dir) &&
                     is_file($wp_upload_dir['basedir'] . '/' . $target) &&
-                    stripos($target, '/rd-downloads') !== false
+                    stripos($target, '/' . FileSystem::UPLOAD_FOLDER_NAME) !== false
                 ) {
                     // if file was found.
                     $output['deleteFile'] = realpath($wp_upload_dir['basedir'] . '/' . $target);
@@ -294,12 +301,12 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                     $output['form_result_class'] = 'notice-error';
                     /* translators: %s: The selected URL to show in error. */
                     $output['form_result_msg'] = sprintf(__('The selected file was not found (%s).', 'rundiz-downloads'), $wp_upload_dir['baseurl'] . $target);
-                } elseif (stripos($target, '/rd-downloads') === false) {
-                    // does not in /rd-downloads folder
+                } elseif (stripos($target, '/' . FileSystem::UPLOAD_FOLDER_NAME) === false) {
+                    // does not in /rundiz-downloads folder
                     $responseStatus = 403;
                     $output['form_result_class'] = 'notice-error';
-                    /* translators: %1$s: /rd-downloads path string, %2$s: The selected URL to show in error. */
-                    $output['form_result_msg'] = sprintf(__('Unable to delete file that is not in %1$s folder (%2$s).', 'rundiz-downloads'), '<strong>/rd-downlods</strong>', $wp_upload_dir['baseurl'] . $target);
+                    /* translators: %1$s: /rundiz-downloads path string, %2$s: The selected URL to show in error. */
+                    $output['form_result_msg'] = sprintf(__('Unable to delete file that is not in %1$s folder (%2$s).', 'rundiz-downloads'), '<strong>/' . FileSystem::UPLOAD_FOLDER_NAME . '</strong>', $wp_upload_dir['baseurl'] . $target);
                 }// endif $wp_upload_dir
                 unset($wp_upload_dir);
             }// endif; $disallowDelete
@@ -454,7 +461,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                 unset($wp_upload_dir);
                 $output['download_size'] = filesize($uploadResult['file']);
                 $output['download_url'] = $uploadResult['url'];
-                $output['parentDir'] = '/rd-downloads/' . current_time('Y') . '/' . current_time('m');
+                $output['parentDir'] = '/' . FileSystem::UPLOAD_FOLDER_NAME . '/' . current_time('Y') . '/' . current_time('m');
                 $output['parentId'] = md5(dirname(realpath($uploadResult['file'])));
                 $output['downloadFullPath'] = realpath($uploadResult['file']);
                 $output['uploadSuccess'] = true;
@@ -471,5 +478,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
         }// uploadFile
 
 
-    }
+    }// XhrFileBrowser
 }

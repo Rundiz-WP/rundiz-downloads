@@ -9,7 +9,11 @@
 
 namespace RundizDownloads\App\Controllers\Admin\Plugins;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallation')) {
+    /**
+     * Uninstallation class.
+     */
     class Uninstallation implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -91,6 +95,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstal
         private static function uninstallDeleteOption()
         {
             delete_option(static::getMainOptionName());
+            delete_option('rundiz_downloads_renamed_upload_folder_v1_0_18');
 
             wp_clear_scheduled_hook('rddownloads_cron_purgelogs');
         }// uninstallDeleteOption
@@ -193,12 +198,12 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstal
             // remove all files & folders in upload folder. -----------------
             $wp_upload_dir = wp_upload_dir();
             if (is_array($wp_upload_dir) && array_key_exists('basedir', $wp_upload_dir)) {
-                $target_dir = realpath($wp_upload_dir['basedir']) . DIRECTORY_SEPARATOR . 'rd-downloads';
+                $target_dir = realpath($wp_upload_dir['basedir']) . DIRECTORY_SEPARATOR . \RundizDownloads\App\Libraries\FileSystem::UPLOAD_FOLDER_NAME;
                 \RundizDownloads\App\Libraries\FileSystem::rrmDir($target_dir, $wp_upload_dir['basedir']);
             }
             unset($target_dir, $wp_upload_dir);
         }// uninstallDropTables
 
 
-    }
+    }// Uninstallation
 }

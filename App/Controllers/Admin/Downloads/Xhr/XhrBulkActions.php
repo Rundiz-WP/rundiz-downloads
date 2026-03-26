@@ -133,7 +133,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                         $capability_limited_download_names[] = $row->download_name;
                     } else {
                         // this condition is able to delete the data.
-                        if (strval($row->download_type) === '0' && stripos($row->download_related_path, 'rd-downloads/') !== false) {
+                        if (strval($row->download_type) === '0' && stripos($row->download_related_path, \RundizDownloads\App\Libraries\FileSystem::UPLOAD_FOLDER_NAME . '/') !== false) {
                             // if local file.
                             // check again that this file is NOT linked with other downloads data.
                             $sql = 'SELECT COUNT(`download_id`) AS `total`, `download_id`, `download_related_path` FROM `' . $wpdb->prefix . 'rd_downloads` WHERE `download_related_path` = %s AND `download_id` != %d';
