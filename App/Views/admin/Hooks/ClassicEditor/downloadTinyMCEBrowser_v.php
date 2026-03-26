@@ -10,6 +10,7 @@
 <div id="rundiz-downloads-search-result"></div>
 
 
+<!-- do not use HTML template tag because `wp.template()` will not work. -->
 <script type="text/html" id="tmpl-rundiz-downloads-search-table-result">
     <?php esc_html_e('Found total', 'rundiz-downloads'); ?>: {{data.total}}
     <div class="rundiz-downloads-table-responsive">
@@ -48,6 +49,7 @@
 </script>
 
 
+<!-- do not use HTML template tag because `wp.template()` will not work. -->
 <script type="text/html" id="tmpl-rundiz-downloads-search-list-item">
     <tr>
         <td>

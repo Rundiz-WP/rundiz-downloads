@@ -162,10 +162,12 @@
         </p>
     </form><!--#rundiz-downloads-edit-form-->
 
-    <template id="tmpl-selected-download-file-size">
+    <!-- do not use HTML template tag because `wp.template()` will not work. -->
+    <script type="text/html" id="tmpl-selected-download-file-size">
         {{{data.size}}} <a href="{{data.url}}" target="preview-file" title="<?php esc_attr_e('Preview', 'rundiz-downloads'); ?>"><i class="fas fa-eye fa-fw rundiz-downloads-icon-preview"></i> <span class="sr-only"><?php esc_html_e('Preview', 'rundiz-downloads'); ?></span></a>
-    </template>
-    
+    </script>
+
+    <!-- do not use HTML template tag because `wp.template()` will not work. -->
     <script type="text/html" id="tmpl-file-browser-list-item">
         <li id="{{{data.id}}}" class="<# if (data.isFile === true) { #>item-file<# } else { #>item-folder<# } #>">
             <# if (data.isFile === true) { #>
@@ -201,5 +203,5 @@
                 <a onclick="return rdDownloadsAjaxFileBrowser('{{data.previousTargetEscaped}}', '{{{data.id}}}');"><i class="fas fa-folder icon-folder"></i> {{{data.filename}}}</a>
             <# } #>
         </li>
-    </script><!-- multi line template that contain <#if#> with <template> element is not working. use script element instead. -->
+    </script>
 </div><!--.wrap-->
