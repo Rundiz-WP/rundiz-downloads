@@ -320,7 +320,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
                 $listItemsOptions['*order'] = $options['order'];
             }
             $listItemsOptions['*current_page'] = $this->get_pagenum();
-            $per_page = $this->get_items_per_page('rddownloads_logs_items_perpage');
+            $per_page = $this->get_items_per_page('rundiz_downloads_logs_items_perpage');
             $listItemsOptions['*per_page'] = $per_page;
             $listItems = $RdDownloadLogs->listItems($listItemsOptions);
             unset($listItemsOptions, $RdDownloadLogs, $sortable);

@@ -76,10 +76,10 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\Cron\\Purg
          */
         public function registerHooks()
         {
-            add_action('rddownloads_cron_purgelogs', [$this, 'purgeLogs']);
+            add_action('rundiz_downloads_cron_purgelogs', [$this, 'purgeLogs']);
 
-            if (!wp_next_scheduled('rddownloads_cron_purgelogs')) {
-                wp_schedule_event(time(), 'daily', 'rddownloads_cron_purgelogs');
+            if (!wp_next_scheduled('rundiz_downloads_cron_purgelogs')) {
+                wp_schedule_event(time(), 'daily', 'rundiz_downloads_cron_purgelogs');
             }
         }// registerHooks
 

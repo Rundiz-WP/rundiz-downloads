@@ -23,7 +23,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\DashboardW
         public function addWidget()
         {
             wp_add_dashboard_widget(
-                'rddownloads_dashboard_widget_downloadstat',
+                'rundiz_downloads_dashboard_widget_downloadstat',
                 __('Download Statistics', 'rundiz-downloads'),
                 [$this, 'displayDownloadStat']
             );

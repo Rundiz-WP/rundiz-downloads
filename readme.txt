@@ -84,6 +84,7 @@ Yes, the plugin's tables will be dropped on uninstall.
 * Rename upload folder name to match plugin slug.
 * Rename DB table names.
 * Update as per PHPCS's instructions.
+* Rename `rddownloads_` prefix to be `rundiz_downloads_`.
 
 = 1.0.17 =
 2025-12-21

@@ -20,7 +20,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
         /**
          * @var string Download query string name. This constant must be public.
          */
-        const DOWNLOAD_QUERY_VAR = 'rddownloads_page';
+        const DOWNLOAD_QUERY_VAR = 'rundiz_downloads_page';
 
 
         /**
@@ -32,7 +32,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
         public function goToRdDownloadsPage()
         {
             if (get_query_var('pagename') === self::DOWNLOAD_QUERY_VAR) {
-                $subpage = get_query_var('rddownloads_subpage');
+                $subpage = get_query_var('rundiz_downloads_subpage');
                 switch ($subpage) {
                     default:
                         $RdDownloadsPage = new DownloadPage\RdDownloadsPage();
@@ -54,10 +54,10 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
          */
         public function queryVars($vars)
         {
-            $vars[] = 'rddownloads_subpage';
+            $vars[] = 'rundiz_downloads_subpage';
             $vars[] = 'download_id';
-            $vars[] = 'rddownloads_redir_set_cookie';
-            $vars[] = 'rddownloads_http_referrer';
+            $vars[] = 'rundiz_downloads_redir_set_cookie';
+            $vars[] = 'rundiz_downloads_http_referrer';
 
             return $vars;
         }// queryVars

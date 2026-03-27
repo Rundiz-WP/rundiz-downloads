@@ -362,14 +362,14 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadsListTable')) {
             }
 
             $actions['previewFile'] = sprintf(
-                '<a href="%s" target="rddownloads_preview">%s</a>',
+                '<a href="%s" target="rundiz_downloads_preview">%s</a>',
                 esc_url($item->download_url),
                 __('Preview', 'rundiz-downloads')
             );
 
             if (strval($item->download_type) === '1' && !empty($item->download_github_name)) {
                 $actions['githubRepository'] = sprintf(
-                    '<a href="%s" target="rddownloads_github_repository">%s</a>',
+                    '<a href="%s" target="rundiz_downloads_github_repository">%s</a>',
                     esc_url('https://github.com/' . $item->download_github_name),
                     __('GitHub repository', 'rundiz-downloads')
                 );
@@ -428,7 +428,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadsListTable')) {
                 $listItemsOptions['*order'] = $options['order'];
             }
             $listItemsOptions['*current_page'] = $this->get_pagenum();
-            $per_page = $this->get_items_per_page('rddownloads_items_perpage');
+            $per_page = $this->get_items_per_page('rundiz_downloads_items_perpage');
             $listItemsOptions['*per_page'] = $per_page;
             $listItems = $RdDownloads->listItems($listItemsOptions);
             unset($listItemsOptions, $RdDownloads, $sortable);

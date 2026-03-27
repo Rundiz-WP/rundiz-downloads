@@ -171,8 +171,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Github
         protected function headerSubPageDisconnect()
         {
             if (isset($_SERVER['REQUEST_METHOD']) && 'POST' === $_SERVER['REQUEST_METHOD']) {
-                if (!check_admin_referer('rddownloads_github_disconnect', 'rddownloads_github_disconnect')) {
-                    wp_nonce_ays('rddownloads_github_disconnect');
+                if (!check_admin_referer('rundiz_downloads_github_disconnect', 'rundiz_downloads_github_disconnect')) {
+                    wp_nonce_ays('rundiz_downloads_github_disconnect');
                 }
 
                 $this->Github->oauthDisconnect($this->currentUserId);

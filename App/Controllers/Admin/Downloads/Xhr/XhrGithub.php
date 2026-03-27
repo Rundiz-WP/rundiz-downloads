@@ -223,7 +223,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                     }
                 }// endif; empty token or secret key.
                 unset($accessToken, $secretKey);
-            }// endif there is rddownloads result
+            }// endif there is `$rdDownloadsResult` result
 
             unset($rdDownloadsResult);
 
@@ -259,21 +259,21 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             $responseStatus = 200;
 
             $user_id = get_current_user_id();
-            $rddownloads_githubwebhook_secret = filter_input(INPUT_POST, 'rddownloads_githubwebhook_secret');
-            if (is_string($rddownloads_githubwebhook_secret)) {
-                $rddownloads_githubwebhook_secret = htmlspecialchars($rddownloads_githubwebhook_secret, ENT_QUOTES);
+            $rundiz_downloads_githubwebhook_secret = filter_input(INPUT_POST, 'rundiz_downloads_githubwebhook_secret');
+            if (is_string($rundiz_downloads_githubwebhook_secret)) {
+                $rundiz_downloads_githubwebhook_secret = htmlspecialchars($rundiz_downloads_githubwebhook_secret, ENT_QUOTES);
             }
-            if (mb_strlen(trim($rddownloads_githubwebhook_secret)) < 20) {// phpcs:ignore PHPCompatibility.ParameterValues.NewIconvMbstringCharsetDefault.NotSet
+            if (mb_strlen(trim($rundiz_downloads_githubwebhook_secret)) < 20) {// phpcs:ignore PHPCompatibility.ParameterValues.NewIconvMbstringCharsetDefault.NotSet
                 $output['secretLengthFailed'] = true;
-                $output['secretLength'] = mb_strlen(trim($rddownloads_githubwebhook_secret));// phpcs:ignore PHPCompatibility.ParameterValues.NewIconvMbstringCharsetDefault.NotSet
-                $output['oldSecret'] = $rddownloads_githubwebhook_secret;
-                $rddownloads_githubwebhook_secret = $this->Github->generateWebhookSecretKey($user_id);
+                $output['secretLength'] = mb_strlen(trim($rundiz_downloads_githubwebhook_secret));// phpcs:ignore PHPCompatibility.ParameterValues.NewIconvMbstringCharsetDefault.NotSet
+                $output['oldSecret'] = $rundiz_downloads_githubwebhook_secret;
+                $rundiz_downloads_githubwebhook_secret = $this->Github->generateWebhookSecretKey($user_id);
             }
 
-            $output['updateResult'] = update_user_meta($user_id, $this->Github->getWebhookSecretName(), $rddownloads_githubwebhook_secret);
+            $output['updateResult'] = update_user_meta($user_id, $this->Github->getWebhookSecretName(), $rundiz_downloads_githubwebhook_secret);
             $output['updated'] = (false === $output['updateResult'] ? false : true);
-            $output['githubSecret'] = $rddownloads_githubwebhook_secret;
-            unset($rddownloads_githubwebhook_secret, $user_id);
+            $output['githubSecret'] = $rundiz_downloads_githubwebhook_secret;
+            unset($rundiz_downloads_githubwebhook_secret, $user_id);
 
             if (false === $output['updated']) {
                 $output['form_result_class'] = 'notice-error';

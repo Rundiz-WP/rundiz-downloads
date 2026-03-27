@@ -151,11 +151,11 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
             }
             unset($result);
 
-            if (!isset($_GET['rddownloads_http_referrer']) && isset($_SERVER['HTTP_REFERER'])) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            if (!isset($_GET['rundiz_downloads_http_referrer']) && isset($_SERVER['HTTP_REFERER'])) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 wp_safe_redirect(
                     add_query_arg(
                         [
-                            'rddownloads_http_referrer' => rawurlencode(
+                            'rundiz_downloads_http_referrer' => rawurlencode(
                                 rawurldecode(
                                     sanitize_url(wp_unslash($_SERVER['HTTP_REFERER']))
                                 )
@@ -379,13 +379,13 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
                 session_start();
             }
 
-            $cookieName = 'rddownloads_antibotcookietest';
+            $cookieName = 'rundiz_downloads_antibotcookietest';
             $output = [];
 
             // cookie test.
             $validatedCookieTest = false;
             if (!isset($_COOKIE[$cookieName]) || 'true' !== $_COOKIE[$cookieName]) {
-                if (isset($_GET['rddownloads_redir_set_cookie'])) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                if (isset($_GET['rundiz_downloads_redir_set_cookie'])) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
                     // if redirected but still not found cookie.
                     // just display banned message.
                     status_header(400);
@@ -394,9 +394,9 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
                     $output['form_result_msg'] = __('You are not authorized to download the file. Failed to set required cookie.', 'rundiz-downloads');
                 } else {
                     // if not redirected.
-                    // set cookie and redirect to page with ?rddownloads_redir_set_cookie=1.
+                    // set cookie and redirect to page with ?rundiz_downloads_redir_set_cookie=1.
                     \RundizDownloads\App\Libraries\Cookies::setCookie($cookieName, 'true', time()+60*60*24*1);
-                    wp_safe_redirect(add_query_arg(['rddownloads_redir_set_cookie' => 1]));
+                    wp_safe_redirect(add_query_arg(['rundiz_downloads_redir_set_cookie' => 1]));
                     exit();
                 }
             } else {

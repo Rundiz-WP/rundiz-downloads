@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) {
     printf(
         /* translators: %1$s: Filter name, %2$s: "1" value (string). */
         esc_html__('To disable it, you have to go to your repository setting on GitHub and change this setting or use %1$s filter and change value to %2$s (string) and then sync again.', 'rundiz-downloads'),
-        '<code>rddownloads_githubapi_webhookinsecure</code>',
+        '<code>rundiz_downloads_githubapi_webhookinsecure</code>',
         '<strong>\'1\'</strong>'
     );
     ?>

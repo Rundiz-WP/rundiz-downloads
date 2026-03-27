@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
 
     <?php if (!isset($disconnected) || (isset($disconnected) && false === $disconnected)) { ?>
     <form method="post">
-        <?php wp_nonce_field('rddownloads_github_disconnect', 'rddownloads_github_disconnect'); ?>
+        <?php wp_nonce_field('rundiz_downloads_github_disconnect', 'rundiz_downloads_github_disconnect'); ?>
         <p>
             <?php esc_html_e('Are you sure to disconnect?', 'rundiz-downloads'); ?><br>
             <?php esc_html_e('You can connect again at anytime.', 'rundiz-downloads'); ?>

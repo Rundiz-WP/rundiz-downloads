@@ -32,7 +32,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Manage
                 [
                     'label' => __('Number of items per page:', 'rundiz-downloads'),
                     'default' => 20,
-                    'option' => 'rddownloads_items_perpage',// require alpha-numeric, underscore (_). no dash (-) allowed.
+                    'option' => 'rundiz_downloads_items_perpage',// require alpha-numeric, underscore (_). no dash (-) allowed.
                 ]
             );
         }// addScreenOptions
@@ -114,7 +114,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Manage
          */
         public function filterScreenOption($status, $option, $value)
         {
-            if ('rddownloads_items_perpage' === $option) {
+            if ('rundiz_downloads_items_perpage' === $option) {
                 $value = intval($value);
                 if ($value <= 0) {
                     $value = 20;

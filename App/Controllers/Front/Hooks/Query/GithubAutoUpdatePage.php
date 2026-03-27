@@ -27,7 +27,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Git
          */
         public function githubAutoUpdatePage()
         {
-            if (get_query_var('pagename') !== 'rddownloads_github_autoupdate') {
+            if (get_query_var('pagename') !== 'rundiz_downloads_github_autoupdate') {
                 return false;
             }
 

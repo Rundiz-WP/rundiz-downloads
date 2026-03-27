@@ -46,9 +46,9 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
         {
             if (isset($buttons[11])) {
                 // if $button key 11 (position 12) exists, add a button after this.
-                array_splice($buttons, 12, 0, 'rddownloads_button');
+                array_splice($buttons, 12, 0, 'rundiz_downloads_button');
             } else {
-                array_push($buttons, 'separator', 'rddownloads_button');
+                array_push($buttons, 'separator', 'rundiz_downloads_button');
             }
             return $buttons;
         }// registerButtons
@@ -130,7 +130,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
          */
         public function registerTinyMceJavascript($plugin_array)
         {
-            $plugin_array['rddownloads_button'] = plugins_url('/assets/js/admin/Hooks/ClassicEditor/tinymce-dialog.js', RUNDIZDOWNLOADS_FILE);
+            $plugin_array['rundiz_downloads_button'] = plugins_url('/assets/js/admin/Hooks/ClassicEditor/tinymce-dialog.js', RUNDIZDOWNLOADS_FILE);
             return $plugin_array;
         }// registerTinyMceJavascript
 

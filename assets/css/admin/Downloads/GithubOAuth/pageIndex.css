@@ -3,31 +3,31 @@
  */
 
 
-.rddownloads_githubrepo_webhook > a {
+.rundiz_downloads_githubrepo_webhook > a {
     cursor: pointer;
 }
 
 
-.rddownloads_icon-webhook-status {
+.rundiz_downloads_icon-webhook-status {
     font-size: 0.85rem;
 }
 
 
-.rddownloads_repo_list-table td,
-.rddownloads_repo_list-table th {
+.rundiz_downloads_repo_list-table td,
+.rundiz_downloads_repo_list-table th {
     word-break: break-all;
     word-wrap: break-word;
 }
 
 
-.rddownloads-row .col {
+.rundiz-downloads-row .col {
     padding-bottom: .625rem;
     word-break: break-all;
     word-wrap: break-word;
 }
 
 @media (min-width: 783px) {
-    .rddownloads-row {
+    .rundiz-downloads-row {
         align-content: stretch;
         align-items: stretch;
         display: flex;
@@ -36,7 +36,7 @@
         margin-right: -.625rem;
     }
 
-    .rddownloads-row .col {
+    .rundiz-downloads-row .col {
         flex-basis: 0;
         flex-grow: 1;
         padding-bottom: 1.25rem;
@@ -70,6 +70,6 @@
 
 
 /* specific element */
-#rddownloads_githubwebhook_secret {
+#rundiz_downloads_githubwebhook_secret {
     width: 190px;
 }

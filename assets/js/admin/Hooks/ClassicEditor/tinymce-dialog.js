@@ -3,9 +3,9 @@
  */
 
 
-tinymce.PluginManager.add('rddownloads_button', function (editor, url) {
+tinymce.PluginManager.add('rundiz_downloads_button', function (editor, url) {
 	// Add a button that opens a window
-	editor.addButton('rddownloads_button', {
+	editor.addButton('rundiz_downloads_button', {
 		icon: 'icon-add-download fontawesome-icon fas fa-download',
 		text: false,
 		title: RdDownloads.txtAddADownload,
@@ -15,7 +15,7 @@ tinymce.PluginManager.add('rddownloads_button', function (editor, url) {
 	});
 
 	// Adds a menu item to the tools menu
-	editor.addMenuItem('rddownloads_button', {
+	editor.addMenuItem('rundiz_downloads_button', {
 		context: 'insert',
 		icon: 'icon-add-download fontawesome-icon fas fa-download',
 		text: RdDownloads.txtAddADownload,

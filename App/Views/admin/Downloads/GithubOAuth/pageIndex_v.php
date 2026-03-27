@@ -28,7 +28,7 @@ if (!defined('ABSPATH')) {
     <?php } ?>
     <div class="rundiz-downloads-form-result-placeholder"></div>
 
-    <div class="rddownloads-row">
+    <div class="rundiz-downloads-row">
         <div class="col">
             <?php
             if (isset($githubOAuthLink)) {
@@ -55,19 +55,19 @@ if (!defined('ABSPATH')) {
             }
             ?>
         </div>
-    </div><!--.rddownloads-row-->
+    </div><!--.rundiz-downloads-row-->
     <?php
     if (isset($githubSecret)) {
     ?>
-    <div class="rddownloads-row">
+    <div class="rundiz-downloads-row">
         <div class="col">
             <?php esc_html_e('Your secret key to use with GitHub auto update', 'rundiz-downloads'); ?>:
-            <input id="rddownloads_githubwebhook_secret" type="password" name="rddownloads_githubwebhook_secret" value="<?php echo esc_attr($githubSecret); ?>">
-            <button id="rddownloads_showhide_secret" class="button" type="button"><?php esc_html_e('Show/Hide', 'rundiz-downloads'); ?></button>
-            <button id="rddownloads_regenerate_secret" class="button" type="button"><i class="fas fa-random"></i> <?php esc_html_e('Re-generate secret', 'rundiz-downloads'); ?></button>
-            <button id="rddownloads_forcesync_github_secret" class="button" type="button" title="<?php esc_attr_e('This will be force synchronize secret with your GitHub repositories.', 'rundiz-downloads'); ?>"><i class="fas fa-sync-alt"></i> <?php esc_html_e('Force sync secret on GitHub.', 'rundiz-downloads'); ?></button>
+            <input id="rundiz_downloads_githubwebhook_secret" type="password" name="rundiz_downloads_githubwebhook_secret" value="<?php echo esc_attr($githubSecret); ?>">
+            <button id="rundiz_downloads_showhide_secret" class="button" type="button"><?php esc_html_e('Show/Hide', 'rundiz-downloads'); ?></button>
+            <button id="rundiz_downloads_regenerate_secret" class="button" type="button"><i class="fas fa-random"></i> <?php esc_html_e('Re-generate secret', 'rundiz-downloads'); ?></button>
+            <button id="rundiz_downloads_forcesync_github_secret" class="button" type="button" title="<?php esc_attr_e('This will be force synchronize secret with your GitHub repositories.', 'rundiz-downloads'); ?>"><i class="fas fa-sync-alt"></i> <?php esc_html_e('Force sync secret on GitHub.', 'rundiz-downloads'); ?></button>
         </div>
-    </div><!--.rddownloads-row-->
+    </div><!--.rundiz-downloads-row-->
     <?php
     }
     ?>

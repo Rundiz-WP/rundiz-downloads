@@ -98,7 +98,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstal
             delete_option(static::getMainOptionName());
             delete_option('rundiz_downloads_renamed_upload_folder_v1_0_18');
 
-            wp_clear_scheduled_hook('rddownloads_cron_purgelogs');
+            wp_clear_scheduled_hook('rundiz_downloads_cron_purgelogs');
         }// uninstallDeleteOption
 
 
@@ -150,7 +150,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstal
         {
             global $wpdb;
 
-            $sql = 'DELETE FROM `' . $wpdb->usermeta . '` WHERE `meta_key` LIKE \'rddownloads_%\'';
+            $sql = 'DELETE FROM `' . $wpdb->usermeta . '` WHERE `meta_key` LIKE \'rundiz_downloads_%\'';
             $wpdb->query($sql);// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
             unset($sql);
         }// uninstallDeleteUserOptions

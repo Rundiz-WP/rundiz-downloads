@@ -52,7 +52,7 @@ class RdDownloadsGitHubOAuth {
      * @since 1.0.14 Moved from `checkRepoWebhook()` with new code that did not use jQuery.
      */
     #listenClickCheckRepoWebhook() {
-        const checkButton = document.querySelector('.rddownloads_githubrepo_webhook_check');
+        const checkButton = document.querySelector('.rundiz_downloads_githubrepo_webhook_check');
         if (!checkButton) {
             console.error('[rundiz-downloads]: Check repo web hook button is not exists.');
             return;
@@ -60,17 +60,17 @@ class RdDownloadsGitHubOAuth {
 
         document.addEventListener('click', (event) => {
             let thisTarget;
-            if (event.target.closest('.rddownloads_githubrepo_webhook_check')) {
-                thisTarget = event.target.closest('.rddownloads_githubrepo_webhook_check');
+            if (event.target.closest('.rundiz_downloads_githubrepo_webhook_check')) {
+                thisTarget = event.target.closest('.rundiz_downloads_githubrepo_webhook_check');
                 event.preventDefault();
             } else {
                 return;
             }
 
             const thisTr = thisTarget.closest('tr');
-            const statusIcon = thisTarget.querySelector('.rddownloads_icon-webhook-status');
+            const statusIcon = thisTarget.querySelector('.rundiz_downloads_icon-webhook-status');
             statusIcon.className = '';
-            statusIcon.classList.add('rddownloads_icon-webhook-status', 'fas', 'fa-solid', 'fa-spinner', 'fa-pulse', 'fontawesome-icon');
+            statusIcon.classList.add('rundiz_downloads_icon-webhook-status', 'fas', 'fa-solid', 'fa-spinner', 'fa-pulse', 'fontawesome-icon');
             const formResultPlaceholder = document.querySelector('.rundiz-downloads-form-result-placeholder');
             formResultPlaceholder.innerHTML = '';
 
@@ -108,9 +108,9 @@ class RdDownloadsGitHubOAuth {
             .then((response) => {
                 if (typeof(response) === 'object') {
                     if (typeof(response.foundWebhook) !== 'undefined' && response.foundWebhook === true) {
-                        thisTarget.innerHTML = '<i class="rddownloads_icon-webhook-status fas fa-check"></i> ' + RdDownloads.txtExists;
+                        thisTarget.innerHTML = '<i class="rundiz_downloads_icon-webhook-status fas fa-check"></i> ' + RdDownloads.txtExists;
                     } else {
-                        thisTarget.innerHTML = '<i class="rddownloads_icon-webhook-status fas fa-times"></i> ' + RdDownloads.txtNotExists;
+                        thisTarget.innerHTML = '<i class="rundiz_downloads_icon-webhook-status fas fa-times"></i> ' + RdDownloads.txtNotExists;
                     }
                 }
 
@@ -123,7 +123,7 @@ class RdDownloadsGitHubOAuth {
                 formResultPlaceholder.scrollIntoView({'behavior': 'smooth'});
 
                 statusIcon.className = '';
-                statusIcon.classList.add('rddownloads_icon-webhook-status', 'fas', 'fa-solid', 'fa-question', 'fontawesome-icon');
+                statusIcon.classList.add('rundiz_downloads_icon-webhook-status', 'fas', 'fa-solid', 'fa-question', 'fontawesome-icon');
             })
             ;
         });
@@ -136,7 +136,7 @@ class RdDownloadsGitHubOAuth {
      * @since 1.0.14 Moved from `forceSyncSecret()` with new code that did not use jQuery.
      */
     #listenClickForceSyncSecret() {
-        const forceSyncButton = document.getElementById('rddownloads_forcesync_github_secret');
+        const forceSyncButton = document.getElementById('rundiz_downloads_forcesync_github_secret');
         if (!forceSyncButton) {
             console.error('[rundiz-downloads]: Force sync secret button is not exists.');
             return;
@@ -210,7 +210,7 @@ class RdDownloadsGitHubOAuth {
      * @since 1.0.14 Moved from `regenerateSecret()` with new code that did not use jQuery.
      */
     #listenClickRegenerateSecret() {
-        const regenerateButton = document.getElementById('rddownloads_regenerate_secret');
+        const regenerateButton = document.getElementById('rundiz_downloads_regenerate_secret');
         if (!regenerateButton) {
             console.error('[rundiz-downloads]: The re-generate button is not exists.');
             return;
@@ -223,7 +223,7 @@ class RdDownloadsGitHubOAuth {
             }
 
             const newSecret = RdDownloads.currentUserId + '_' + this.#randomString();
-            const secretField = document.getElementById('rddownloads_githubwebhook_secret');
+            const secretField = document.getElementById('rundiz_downloads_githubwebhook_secret');
             if (!secretField) {
                 console.error('[rundiz-downloads]: There is no secret field.');
                 return;
@@ -241,7 +241,7 @@ class RdDownloadsGitHubOAuth {
             const formData = new FormData();
             formData.set('security', RdDownloads.nonce);
             formData.set('action', 'RdDownloadsNewGitHubSecret');
-            formData.set('rddownloads_githubwebhook_secret', newSecret);
+            formData.set('rundiz_downloads_githubwebhook_secret', newSecret);
 
             fetch(ajaxurl, {
                 'method': 'POST',
@@ -313,8 +313,8 @@ class RdDownloadsGitHubOAuth {
      * @returns {undefined}
      */
     #listenClickShowHideSecret() {
-        const showHideButton = document.getElementById('rddownloads_showhide_secret');
-        const secretField = document.getElementById('rddownloads_githubwebhook_secret');
+        const showHideButton = document.getElementById('rundiz_downloads_showhide_secret');
+        const secretField = document.getElementById('rundiz_downloads_githubwebhook_secret');
         if (!showHideButton || !secretField) {
             console.error('[rundiz-downloads]: There is no show/hide secret button or no secret field.');
             return;

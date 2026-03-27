@@ -34,7 +34,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\GitHubOAuthListTable')) {
         public function _column_webhook($item, $classes, $data, $primary)// phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
         {
             $output = '<td';
-            $output .= ' class="' . $classes . ' rddownloads_githubrepo_webhook"';
+            $output .= ' class="' . $classes . ' rundiz_downloads_githubrepo_webhook"';
             $output .= ' ' . $data;
             $output .= '>';
             $output .= $this->column_default($item, 'webhook');
@@ -64,7 +64,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\GitHubOAuthListTable')) {
                     return '<a href="' . $item->node->url . '" target="github_repository">' . esc_html($item->node->nameWithOwner) . '</a>';
                 case 'webhook':
                     if (isset($item->node->isArchived) && false === $item->node->isArchived) {
-                        return '<a class="rddownloads_githubrepo_webhook_check"><i class="rddownloads_icon-webhook-status fas fa-question"></i> ' . __('Check this.', 'rundiz-downloads') . '</a>';
+                        return '<a class="rundiz_downloads_githubrepo_webhook_check"><i class="rundiz_downloads_icon-webhook-status fas fa-question"></i> ' . __('Check this.', 'rundiz-downloads') . '</a>';
                     }
                     // not in condition above, go to default.
                 default:
@@ -123,7 +123,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\GitHubOAuthListTable')) {
             $default = parent::get_table_classes();
             $output = [];
             if (is_array($default)) {
-                $output = array_merge($output, $default, ['rddownloads_repo_list-table']);
+                $output = array_merge($output, $default, ['rundiz_downloads_repo_list-table']);
             }
             unset($default);
             return $output;

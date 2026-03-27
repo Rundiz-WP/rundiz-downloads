@@ -483,8 +483,8 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogs')) {
                 }
             }
 
-            if (!isset($data['dl_referrer']) && isset($_GET['rddownloads_http_referrer'])) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-                $data['dl_referrer'] = sanitize_url(wp_unslash($_GET['rddownloads_http_referrer']));// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            if (!isset($data['dl_referrer']) && isset($_GET['rundiz_downloads_http_referrer'])) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                $data['dl_referrer'] = sanitize_url(wp_unslash($_GET['rundiz_downloads_http_referrer']));// phpcs:ignore WordPress.Security.NonceVerification.Recommended
             }
 
             $prepareData = [];

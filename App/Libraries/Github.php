@@ -43,7 +43,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
         /**
          * @var string The OAuth access token name will be use in `user_meta` and `cookie`. Do not change this.
          */
-        protected $oauthAccessTokenName = 'rddownloads_githuboauth_accesstoken';
+        protected $oauthAccessTokenName = 'rundiz_downloads_githuboauth_accesstoken';
 
 
         /**
@@ -61,7 +61,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
         /**
          * @var string The GitHub webhook secret name will be use in `user_meta`. Do not change this.
          */
-        protected $webhookSecretName = 'rddownloads_githubwebhook_secret';
+        protected $webhookSecretName = 'rundiz_downloads_githubwebhook_secret';
 
 
         /**
@@ -705,7 +705,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
          */
         public function getWebhookPayloadUrl()
         {
-            return add_query_arg(['pagename' => 'rddownloads_github_autoupdate'], home_url());
+            return add_query_arg(['pagename' => 'rundiz_downloads_github_autoupdate'], home_url());
         }// getWebhookPayloadUrl
 
 
