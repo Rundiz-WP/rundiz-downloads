@@ -74,6 +74,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
 
         /**
          * Register common scripts.
+         * 
+         * @since 1.1.1
          */
         public function registerCommonScripts()
         {

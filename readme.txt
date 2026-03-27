@@ -2,7 +2,7 @@
 Contributors: okvee
 Tags: downloads, download, download manager, file hosting, GitHub
 Tested up to: 7.0
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 4.7.0
@@ -68,6 +68,13 @@ Yes, the plugin's tables will be dropped on uninstall.
 12. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
+= 1.1.1 =
+2026-03-27
+
+* Fix wrong enqueue without register script.
+* Update prevent load the (download button) into other Tiny MCE editor.
+* Add set transient to mark site need manual update.
+
 = 1.1.0 =
 2026-03-27
 
