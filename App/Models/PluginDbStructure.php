@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Models;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Models\\PluginDbStructure')) {
+    /**
+     * Plugin DB structure class.
+     */
     class PluginDbStructure
     {
 
@@ -89,5 +93,5 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\PluginDbStructure')) {
         }// get
 
 
-    }
+    }// PluginDbStructure
 }

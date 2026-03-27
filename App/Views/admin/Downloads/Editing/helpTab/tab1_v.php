@@ -1,10 +1,22 @@
+<?php
+/**
+ * Edit downloads help tab 1.
+ * 
+ * @package rundiz-downloads
+ */
+
+
+if (!defined('ABSPATH')) {
+    exit();
+}
+?>
 <p><?php esc_html_e('To save the downloads data, the Download URL field is required.', 'rundiz-downloads'); ?></p>
 <h3><?php esc_html_e('Local file', 'rundiz-downloads'); ?></h3>
 <p><?php
 printf(
     /* translators: %s: Full path to this plugin upload folder. */
     esc_html__('You can upload a file to the server using upload button below. You can also use FTP for large file size by uploading it to %s and then use file browser below to select the file.', 'rundiz-downloads'), 
-    '<strong>' . realpath(esc_html($basedir) . '/' . RundizDownloads\App\Libraries\FileSystem::UPLOAD_FOLDER_NAME) . '</strong>'
+    '<strong>' . esc_html(realpath($basedir . '/' . RundizDownloads\App\Libraries\FileSystem::UPLOAD_FOLDER_NAME)) . '</strong>'
 )
 ?></p>
 <p><?php esc_html_e('If you will be uploading the files using FTP, the file name should be web safe. For example: English, number, dash(-), underscore (_), no anything else.', 'rundiz-downloads'); ?></p>

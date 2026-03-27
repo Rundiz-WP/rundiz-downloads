@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Controllers\Admin\Hooks\DashboardWidgets;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\DashboardWidgets\\DownloadStat')) {
+    /**
+     * Download stat class.
+     */
     class DownloadStat implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -63,5 +67,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\DashboardW
         }// registerHooks
 
 
-    }
+    }// DownloadStat
 }

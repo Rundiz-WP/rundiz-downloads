@@ -9,6 +9,8 @@
  * This page only visible if user agent has been blocked.
  * 
  * @package rundiz-downloads
+ * 
+ * phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact, Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace
  */
 
 

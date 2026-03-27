@@ -91,7 +91,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
         {
             // check permission.
             if (!current_user_can('manage_options')) {
-                wp_die(esc_html__('You do not have permission to access this page.'));
+                wp_die(esc_html__('You do not have permission to access this page.', 'rundiz-downloads'));
             }
 
             if (get_transient('rundiz_downloads_transient__updated')) {
@@ -168,10 +168,10 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
 
                 if (true === $result) {
                     $output['form_result_class'] = 'notice-success';
-                    $output['form_result_msg'] = __('Settings saved.');
+                    $output['form_result_msg'] = __('Settings saved.', 'rundiz-downloads');
                 } else {
                     $output['form_result_class'] = 'notice-success';
-                    $output['form_result_msg'] = __('Settings saved.');
+                    $output['form_result_msg'] = __('Settings saved.', 'rundiz-downloads');
                 }
 
                 // clear all cache on save.

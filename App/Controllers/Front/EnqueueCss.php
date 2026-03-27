@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Controllers\Front;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\EnqueueCss')) {
+    /**
+     * Enqueue CSS class.
+     */
     class EnqueueCss implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -32,5 +36,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\EnqueueCss')) {
         }// registerHooks
 
 
-    }
+    }// EnqueueCss
 }

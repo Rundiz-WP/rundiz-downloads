@@ -1,5 +1,6 @@
 <?php
 /**
+ * Anti bot.
  * 
  * @package rundiz-downloads
  * @license http://opensource.org/licenses/MIT MIT
@@ -105,5 +106,5 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\AntiBot')) {
         }// unsetHoneypotName
 
 
-    }
+    }// AntiBot
 }// endif;

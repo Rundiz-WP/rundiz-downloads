@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Controllers\Admin\Downloads;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')) {
+    /**
+     * Downloads menu class.
+     */
     class Menu implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -38,7 +42,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')
          *
          * @link https://stackoverflow.com/a/28856349/128761 Source code copied from here.
          * @global string $plugin_page
-         * @param string $parent_file
+         * @param string $parent_file Plugin file.
          * @return string
          */
         public function manualHighlightParentMenu($parent_file)
@@ -121,5 +125,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Menu')
         }// rdDownloadsMenu
 
 
-    }
+    }// Menu
 }

@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Controllers\Admin\Downloads\Xhr;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrGithub')) {
+    /**
+     * XhrGithub class.
+     */
     class XhrGithub extends \RundizDownloads\App\Controllers\XhrBased implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -231,7 +235,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             $output['form_result_class'] = 'notice-success';
             $output['form_result_msg'] = sprintf(
                 /* translators: %1$d: Total synced, %2$d: Total new webhooks, %3$d: Total existing webhooks (use update), %4$d: Total download items. */
-                __('Synced successfully. Total %1$d synced (%2$d new, %3$d exists) from total %4$d download items.'),
+                __('Synced successfully. Total %1$d synced (%2$d new, %3$d exists) from total %4$d download items.', 'rundiz-downloads'),
                 $totalSynced,
                 $totalNewSynced,
                 $totalUpdateSynced,
@@ -259,9 +263,9 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             if (is_string($rddownloads_githubwebhook_secret)) {
                 $rddownloads_githubwebhook_secret = htmlspecialchars($rddownloads_githubwebhook_secret, ENT_QUOTES);
             }
-            if (mb_strlen(trim($rddownloads_githubwebhook_secret)) < 20) {
+            if (mb_strlen(trim($rddownloads_githubwebhook_secret)) < 20) {// phpcs:ignore PHPCompatibility.ParameterValues.NewIconvMbstringCharsetDefault.NotSet
                 $output['secretLengthFailed'] = true;
-                $output['secretLength'] = mb_strlen(trim($rddownloads_githubwebhook_secret));
+                $output['secretLength'] = mb_strlen(trim($rddownloads_githubwebhook_secret));// phpcs:ignore PHPCompatibility.ParameterValues.NewIconvMbstringCharsetDefault.NotSet
                 $output['oldSecret'] = $rddownloads_githubwebhook_secret;
                 $rddownloads_githubwebhook_secret = $this->Github->generateWebhookSecretKey($user_id);
             }
@@ -288,5 +292,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
         }// updateGitHubSecret
 
 
-    }
+    }// XhrGithub
 }

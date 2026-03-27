@@ -3,13 +3,18 @@
  * Rundiz Downloads table (rundiz_downloads).
  * 
  * @package rundiz-downloads
+ * 
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
 namespace RundizDownloads\App\Models;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
+    /**
+     * RdDownloads class.
+     */
     class RdDownloads
     {
 
@@ -78,7 +83,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
             if (isset($options['*search'])) {
                 $sql .= ' AND ' . $this->getSearchFields();
                 foreach ($this->getSearchFields(false) as $item) {
-                    $prepareValues[] = '%'.$wpdb->esc_like($options['*search']).'%';
+                    $prepareValues[] = '%' . $wpdb->esc_like($options['*search']) . '%';
                 }// endforeach;
                 unset($item);
                 unset($options['*search']);
@@ -107,14 +112,14 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
             }
             unset($fieldsOptions);
 
-            $prepared = $wpdb->prepare($sql, $prepareValues);
+            $prepared = $wpdb->prepare($sql, $prepareValues);// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
             unset($prepareValues, $sql);
 
             if (isset($options['*return_prepare']) && true === $options['*return_prepare']) {
                 return $prepared;
             }
 
-            $result = $wpdb->get_row($prepared);
+            $result = $wpdb->get_row($prepared);// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
             return $result;
         }// get
@@ -208,7 +213,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
 
             $sql = 'UPDATE `' . $wpdb->prefix . 'rundiz_downloads` SET `download_count` = `download_count` + 1 WHERE `download_id` = %d';
 
-            $updateResult = $wpdb->query($wpdb->prepare($sql, [$download_id]));
+            $updateResult = $wpdb->query($wpdb->prepare($sql, [$download_id]));// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
             unset($sql);
 
@@ -283,7 +288,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
             if (isset($options['*search']) && !empty($options['*search'])) {
                 $sql .= ' AND ' . $this->getSearchFields();
                 foreach ($this->getSearchFields(false) as $item) {
-                    $prepareValues[] = '%'.$wpdb->esc_like($options['*search']).'%';
+                    $prepareValues[] = '%' . $wpdb->esc_like($options['*search']) . '%';
                 }// endforeach;
                 unset($item);
                 unset($options['*search']);
@@ -314,7 +319,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
 
             $total_items = $wpdb->get_var(
                 $wpdb->prepare(
-                    // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnsupportedPlaceholder, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+                    // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnsupportedPlaceholder, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQL.NotPrepared
                     str_replace(['%*%'], ['COUNT(' . $wpdb->prefix . 'rundiz_downloads.download_id)'], $sql), 
                     $prepareValues
                 )
@@ -333,7 +338,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
             if (isset($options['*order'])) {
                 if (strtolower($options['*order']) === 'asc') {
                     $order = 'ASC';
-                }  elseif (strtolower($options['*order']) === 'desc') {
+                } elseif (strtolower($options['*order']) === 'desc') {
                     $order = 'DESC';
                 }
             }
@@ -357,7 +362,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
             }
 
             $results = $wpdb->get_results(
-                $wpdb->prepare($sql, $prepareValues)
+                $wpdb->prepare($sql, $prepareValues)// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
             );
             unset($order, $prepareValues, $sort, $sql);
 
@@ -428,5 +433,5 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloads')) {
         }// update
 
 
-    }
+    }// RdDownloads
 }

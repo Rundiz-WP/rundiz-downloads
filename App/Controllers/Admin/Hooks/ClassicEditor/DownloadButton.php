@@ -8,6 +8,7 @@
 
 namespace RundizDownloads\App\Controllers\Admin\Hooks\ClassicEditor;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEditor\\DownloadButton')) {
     /**
      * Add a download button class.
@@ -38,7 +39,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
         /**
          * Register TinyMce buttons
          * 
-         * @param array $buttons
+         * @param array $buttons Buttons.
          * @return array
          */
         public function registerButtons($buttons)
@@ -70,7 +71,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
         /**
          * Enqueue scripts
          * 
-         * @param string $hook
+         * @param string $hook Hook name.
          */
         public function registerScripts($hook)
         {
@@ -104,7 +105,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
         /**
          * Enqueue styles.
          * 
-         * @param string $hook
+         * @param string $hook Hook name.
          */
         public function registerStyles($hook)
         {
@@ -115,8 +116,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
                     unset($StylesScripts);
                 }
                 wp_enqueue_style('rundiz-downloads-font-awesome5');
-                wp_enqueue_style('rundiz-downloads-tinymce-font-awesome5', plugin_dir_url(RUNDIZDOWNLOADS_FILE).'assets/css/admin/Hooks/ClassicEditor/tinymce-font-awesome5.css', [], RUNDIZDOWNLOADS_VERSION);
-                wp_enqueue_style('rundiz-downloads-tinymce-custom-dialog', plugin_dir_url(RUNDIZDOWNLOADS_FILE).'assets/css/admin/Hooks/ClassicEditor/tinymce-custom-dialog.css', [], RUNDIZDOWNLOADS_VERSION);
+                wp_enqueue_style('rundiz-downloads-tinymce-font-awesome5', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/admin/Hooks/ClassicEditor/tinymce-font-awesome5.css', [], RUNDIZDOWNLOADS_VERSION);
+                wp_enqueue_style('rundiz-downloads-tinymce-custom-dialog', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/admin/Hooks/ClassicEditor/tinymce-custom-dialog.css', [], RUNDIZDOWNLOADS_VERSION);
             }
         }// registerStyles
 
@@ -124,7 +125,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
         /**
          * Register TinyMCE JS for new button.
          * 
-         * @param array $plugin_array
+         * @param array $plugin_array Plugin array.
          * @return array
          */
         public function registerTinyMceJavascript($plugin_array)
@@ -134,5 +135,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
         }// registerTinyMceJavascript
 
 
-    }
+    }// DownloadButton
 }

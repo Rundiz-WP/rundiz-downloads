@@ -1,3 +1,15 @@
+<?php
+/**
+ * Edit downloads help tab 2.
+ * 
+ * @package rundiz-downloads
+ */
+
+
+if (!defined('ABSPATH')) {
+    exit();
+}
+?>
 <p><?php esc_html_e('The Force download option will work with the local file only.', 'rundiz-downloads'); ?></p>
 <p><?php 
 printf(
@@ -15,14 +27,14 @@ printf(
 ?></p>
 <p><?php
 if (isset($rundiz_downloads_options['rdd_force_download']) && strval($rundiz_downloads_options['rdd_force_download']) === '1') {
-    $pluginSettingsUse = __('Force download', 'rundiz-downloads');
+    $rundiz_downloads_pluginSettingsUse = __('Force download', 'rundiz-downloads');
 } else {
-    $pluginSettingsUse = __('redirect to file', 'rundiz-downloads');
+    $rundiz_downloads_pluginSettingsUse = __('redirect to file', 'rundiz-downloads');
 }
 printf(
     /* translators: %s: Force download option value for main plugin setting. */
     esc_html__('The plugin setting is using %s.', 'rundiz-downloads'), 
-    '<strong>' . esc_html($pluginSettingsUse) . '</strong>'
+    '<strong>' . esc_html($rundiz_downloads_pluginSettingsUse) . '</strong>'
 );
-unset($pluginSettingsUse);
+unset($rundiz_downloads_pluginSettingsUse);
 ?></p>

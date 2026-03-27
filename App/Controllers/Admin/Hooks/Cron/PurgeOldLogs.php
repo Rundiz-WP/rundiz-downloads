@@ -3,13 +3,18 @@
  * Purge old logs
  * 
  * @package rundiz-downloads
+ * 
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
 namespace RundizDownloads\App\Controllers\Admin\Hooks\Cron;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\Cron\\PurgeOldLogs')) {
+    /**
+     * Purge old logs class.
+     */
     class PurgeOldLogs implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -52,10 +57,10 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\Cron\\Purg
                 $RdDownloadLogs->writeLog('auto_purge_old_logs');
                 unset($RdDownloadLogs);
             } elseif (false === $result) {
-                error_log(
+                error_log(// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
                     sprintf(
                         /* translators: %1$s: The last query statement, %2$s: MySQL error message. */
-                        __('An error has been occur in SQL statement (%1$s). The error message: %2$s .'),
+                        __('An error has been occur in SQL statement (%1$s). The error message: %2$s .', 'rundiz-downloads'),
                         $wpdb->last_query,
                         $wpdb->last_error
                     )
@@ -79,5 +84,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\Cron\\Purg
         }// registerHooks
 
 
-    }
+    }// PurgeOldLogs
 }

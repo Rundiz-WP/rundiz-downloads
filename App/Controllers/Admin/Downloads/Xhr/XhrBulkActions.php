@@ -3,13 +3,18 @@
  * Bulk actions class.
  *
  * @package rundiz-downloads
+ * 
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
 namespace RundizDownloads\App\Controllers\Admin\Downloads\Xhr;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrBulkActions')) {
+    /**
+     * XHR bulk actions class.
+     */
     class XhrBulkActions extends \RundizDownloads\App\Controllers\XhrBased implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -24,7 +29,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             // check the most basic capability (permission).
             if (!current_user_can('upload_files')) {
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('You do not have permission to access this page.');
+                $output['form_result_msg'] = __('You do not have permission to access this page.', 'rundiz-downloads');
                 wp_send_json($output, 403);
             }
 
@@ -93,7 +98,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                 WHERE `download_id` IN (' . implode(', ', array_fill(0, count($download_ids), '%d')) . ')';// https://stackoverflow.com/a/10634225/128761
             $results = $wpdb->get_results(
                 $wpdb->prepare(
-                    $sql,
+                    $sql, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                     $download_ids
                 )
             );
@@ -137,17 +142,17 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                             // if local file.
                             // check again that this file is NOT linked with other downloads data.
                             $sql = 'SELECT COUNT(`download_id`) AS `total`, `download_id`, `download_related_path` FROM `' . $wpdb->prefix . 'rundiz_downloads` WHERE `download_related_path` = %s AND `download_id` != %d';
-                            $checkExists = $wpdb->get_var($wpdb->prepare($sql, [$row->download_related_path, $row->download_id]));
+                            $checkExists = $wpdb->get_var($wpdb->prepare($sql, [$row->download_related_path, $row->download_id]));// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                             unset($sql);
                             if (is_null($checkExists)) {
                                 // if `get_var()` contain some error.
                                 $failed_delete_download_ids[] = $row->download_id;
                                 $failed_delete_download_names[] = $row->download_name;
                                 $donot_delete = true;
-                                error_log(
+                                error_log(// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
                                     sprintf(
                                         /* translators: %1$s: The last query statement, %2$s: MySQL error message. */
-                                        __('An error has been occur in SQL statement (%1$s). The error message: %2$s .'),
+                                        __('An error has been occur in SQL statement (%1$s). The error message: %2$s .', 'rundiz-downloads'),
                                         $wpdb->last_query,
                                         $wpdb->last_error
                                     )
@@ -165,14 +170,14 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                             // if github file.
                             // check that if there is no same github repo name on db.
                             $sql = 'SELECT COUNT(`download_id`) AS `total`, `download_id`, `download_github_name` FROM `' . $wpdb->prefix . 'rundiz_downloads` WHERE `download_github_name` = %s AND `download_id` != %d';
-                            $checkExists = $wpdb->get_var($wpdb->prepare($sql, [$row->download_github_name, $row->download_id]));
+                            $checkExists = $wpdb->get_var($wpdb->prepare($sql, [$row->download_github_name, $row->download_id]));// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                             unset($sql);
                             if (is_null($checkExists)) {
                                 // if `get_var()` contain some error.
-                                error_log(
+                                error_log(// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
                                     sprintf(
                                         /* translators: %1$s: The last query statement, %2$s: MySQL error message. */
-                                        __('An error has been occur in SQL statement (%1$s). The error message: %2$s .'),
+                                        __('An error has been occur in SQL statement (%1$s). The error message: %2$s .', 'rundiz-downloads'),
                                         $wpdb->last_query,
                                         $wpdb->last_error
                                     )
@@ -253,7 +258,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                             (count($failed_delete_download_names) > 0 ? '<li><strong>' . _n('Failed to delete item', 'Failed to delete items', count($failed_delete_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $failed_delete_download_names) . '</li>' : '') .
                             (count($failed_remove_githubwebhook) > 0 ? '<li><strong>' . _n('Failed to remove webhook on GitHub', 'Failed to remove webhooks on GitHub', count($failed_remove_githubwebhook), 'rundiz-downloads') . ':</strong> ' . implode(', ', $failed_remove_githubwebhook) . '</li>' : '') .
                             (count($capability_limited_download_names) > 0 ? '<li><strong>' . _n('Capability limited item', 'Capability limited items', count($capability_limited_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $capability_limited_download_names) . '</li>' : '') .
-                            (count($notfound_download_ids) > 0 ? '<li><strong>' .  _n('Mismatch ID', 'Mismatch IDs', count($notfound_download_ids), 'rundiz-downloads') . ':</strong> ' . implode(', ', $notfound_download_ids) . '</li>' : '') .
+                            (count($notfound_download_ids) > 0 ? '<li><strong>' . _n('Mismatch ID', 'Mismatch IDs', count($notfound_download_ids), 'rundiz-downloads') . ':</strong> ' . implode(', ', $notfound_download_ids) . '</li>' : '') .
                         '</ul>';
                 }
 
@@ -305,7 +310,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             $sql .= ' AND `download_github_name` IS NOT NULL';
             $results = $wpdb->get_results(
                 $wpdb->prepare(
-                    $sql,
+                    $sql, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                     $download_ids
                 )
             );
@@ -425,7 +430,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                             (count($updated_download_names) > 0 ? '<li><strong>' . _n('Updated item', 'Updated items', count($updated_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $updated_download_names) . '</li>' : '') .
                             (count($failed_update_download_names) > 0 ? '<li><strong>' . _n('Failed to update item', 'Failed to update items', count($failed_update_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $failed_update_download_names) . '</li>' : '') .
                             (count($capability_limited_download_names) > 0 ? '<li><strong>' . _n('Capability limited item', 'Capability limited items', count($capability_limited_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $capability_limited_download_names) . '</li>' : '') .
-                            (count($notfound_download_ids) > 0 ? '<li><strong>' .  _n('Mismatch ID', 'Mismatch IDs', count($notfound_download_ids), 'rundiz-downloads') . ':</strong> ' . implode(', ', $notfound_download_ids) . '</li>' : '') .
+                            (count($notfound_download_ids) > 0 ? '<li><strong>' . _n('Mismatch ID', 'Mismatch IDs', count($notfound_download_ids), 'rundiz-downloads') . ':</strong> ' . implode(', ', $notfound_download_ids) . '</li>' : '') .
                         '</ul>';
                 }
 
@@ -486,7 +491,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             $sql .= ' AND `download_type` = 2';
             $results = $wpdb->get_results(
                 $wpdb->prepare(
-                    $sql,
+                    $sql, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                     $download_ids
                 )
             );
@@ -560,7 +565,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                             (count($updated_download_names) > 0 ? '<li><strong>' . _n('Updated item', 'Updated items', count($updated_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $updated_download_names) . '</li>' : '') .
                             (count($failed_update_download_names) > 0 ? '<li><strong>' . _n('Failed to update item', 'Failed to update items', count($failed_update_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $failed_update_download_names) . '</li>' : '') .
                             (count($capability_limited_download_names) > 0 ? '<li><strong>' . _n('Capability limited item', 'Capability limited items', count($capability_limited_download_names), 'rundiz-downloads') . ':</strong> ' . implode(', ', $capability_limited_download_names) . '</li>' : '') .
-                            (count($notfound_download_ids) > 0 ? '<li><strong>' .  _n('Mismatch ID', 'Mismatch IDs', count($notfound_download_ids), 'rundiz-downloads') . ':</strong> ' . implode(', ', $notfound_download_ids) . '</li>' : '') .
+                            (count($notfound_download_ids) > 0 ? '<li><strong>' . _n('Mismatch ID', 'Mismatch IDs', count($notfound_download_ids), 'rundiz-downloads') . ':</strong> ' . implode(', ', $notfound_download_ids) . '</li>' : '') .
                         '</ul>';
                 }
 
@@ -588,5 +593,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
         }// remoteUpdate
 
 
-    }
+    }// XhrBulkActions
 }

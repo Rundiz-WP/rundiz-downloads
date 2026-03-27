@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Controllers\Admin\Downloads\Xhr;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrDownloadsBrowser')) {
+    /**
+     * XHR downloads browser class.
+     */
     class XhrDownloadsBrowser extends \RundizDownloads\App\Controllers\XhrBased implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -34,7 +38,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
 
             if (!current_user_can('edit_posts')) {
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('You do not have permission to access this page.');
+                $output['form_result_msg'] = __('You do not have permission to access this page.', 'rundiz-downloads');
                 wp_send_json($output, 403);
             }
 
@@ -42,12 +46,12 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             $responseStatus = 200;
 
             $output['per_page'] = 10;
-            $output['current_page'] = (isset($_GET['page']) && !empty(trim($_GET['page'])) ? floatval(wp_unslash($_GET['page'])) : 1);
+            $output['current_page'] = (isset($_GET['page']) && !empty(trim(wp_unslash($_GET['page']))) ? floatval(wp_unslash($_GET['page'])) : 1);// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
             $RdDownloads = new \RundizDownloads\App\Models\RdDownloads();
             $options = [];
-            if (isset($_GET['search']) && !empty(trim($_GET['search']))) {
-                $options['*search'] = sanitize_text_field(wp_unslash($_GET['search']));
+            if (isset($_GET['search']) && !empty(trim(wp_unslash($_GET['search'])))) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                $options['*search'] = sanitize_text_field(wp_unslash($_GET['search']));// phpcs:ignore WordPress.Security.NonceVerification.Recommended
             }
             $options['*current_page'] = $output['current_page'];
             $options['*per_page'] = $output['per_page'];
@@ -62,5 +66,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
         }// searchDownloads
 
 
-    }
+    }// XhrDownloadsBrowser
 }

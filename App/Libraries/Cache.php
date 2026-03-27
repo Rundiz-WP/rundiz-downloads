@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Libraries;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Libraries\\Cache')) {
+    /**
+     * Cache class.
+     */
     class Cache
     {
 
@@ -21,7 +25,6 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Cache')) {
 
         /**
          * Cache class that connect between this plugin and Rundiz\SimpleCache.
-         * 
          */
         public function __construct()
         {
@@ -43,5 +46,5 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Cache')) {
         }// getInstance
 
 
-    }
+    }// Cache
 }

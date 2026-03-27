@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Controllers\Admin\Downloads\Xhr;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrLogsBulkActions')) {
+    /**
+     * Xhr logs bulk actions class.
+     */
     class XhrLogsBulkActions extends \RundizDownloads\App\Controllers\XhrBased implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -23,7 +27,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             // check the most basic capability (permission).
             if (!current_user_can('upload_files')) {
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('You do not have permission to access this page.');
+                $output['form_result_msg'] = __('You do not have permission to access this page.', 'rundiz-downloads');
                 wp_send_json($output, 403);
             }
 
@@ -54,7 +58,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             // check the most basic capability (permission).
             if (!current_user_can('delete_users')) {
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('You do not have permission to access this page.');
+                $output['form_result_msg'] = __('You do not have permission to access this page.', 'rundiz-downloads');
                 wp_send_json($output, 403);
             }
 
@@ -88,5 +92,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
         }// registerHooks
 
 
-    }
+    }// XhrLogsBulkActions
 }

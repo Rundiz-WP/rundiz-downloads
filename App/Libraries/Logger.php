@@ -3,6 +3,8 @@
  * Logger
  * 
  * @package rundiz-downloads
+ * 
+ * phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_var_export
  */
 
 
@@ -65,19 +67,19 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Logger')) {
                 }
 
                 if (is_null($content) || '' === $content) {
-                    $content = 'This file was generated for debug data while `WP_DEBUG` constant is set to `true`.'."\r\n";
-                    $content .= 'This debug data was generated from '.__FILE__.' at `debugLog()` method.'."\r\n";
-                    $content .= 'To turn off this debug, set `WP_DEBUG` to `false` or add `return false;` at the top of this method.'."\r\n\r\n";
-                    $content .= 'HEADERS data'."\r\n";
+                    $content = 'This file was generated for debug data while `WP_DEBUG` constant is set to `true`.' . "\r\n";
+                    $content .= 'This debug data was generated from ' . __FILE__ . ' at `debugLog()` method.' . "\r\n";
+                    $content .= 'To turn off this debug, set `WP_DEBUG` to `false` or add `return false;` at the top of this method.' . "\r\n\r\n";
+                    $content .= 'HEADERS data' . "\r\n";
                     $content .= var_export(stripslashes_deep(getallheaders()), true);
                     $content .= "\r\n\r\n";
-                    $content .= 'GET data'."\r\n";
-                    $content .= var_export(stripslashes_deep($_GET), true);
+                    $content .= 'GET data' . "\r\n";
+                    $content .= var_export(stripslashes_deep($_GET), true);// phpcs:ignore WordPress.Security.NonceVerification.Recommended
                     $content .= "\r\n\r\n";
-                    $content .= 'POST data'."\r\n";
-                    $content .= var_export(stripslashes_deep($_POST), true);
+                    $content .= 'POST data' . "\r\n";
+                    $content .= var_export(stripslashes_deep($_POST), true);// phpcs:ignore WordPress.Security.NonceVerification.Missing
                     $content .= "\r\n\r\n";
-                    $content .= 'SERVER data'."\r\n";
+                    $content .= 'SERVER data' . "\r\n";
                     $content .= var_export(stripslashes_deep($_SERVER), true);
                     $content .= "\r\n\r\n";
                 } elseif (is_string($content) || is_numeric($content)) {
@@ -116,5 +118,5 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Logger')) {
         }// debugLog
 
 
-    }
+    }// Logger
 }

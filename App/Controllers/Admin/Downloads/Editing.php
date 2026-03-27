@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Controllers\Admin\Downloads;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Editing')) {
+    /**
+     * Editing downloads class.
+     */
     class Editing
     {
 
@@ -92,7 +96,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Editin
         {
             // check permission.
             if (!current_user_can('upload_files')) {
-                wp_die(esc_html__('You do not have permission to access this page.'), '', ['response' => 403]);
+                wp_die(esc_html__('You do not have permission to access this page.', 'rundiz-downloads'), '', ['response' => 403]);
             }
 
             global $rundiz_downloads_options;
@@ -118,7 +122,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Editin
         {
             // check permission.
             if (!current_user_can('upload_files')) {
-                wp_die(esc_html__('You do not have permission to access this page.'), '', ['response' => 403]);
+                wp_die(esc_html__('You do not have permission to access this page.', 'rundiz-downloads'), '', ['response' => 403]);
             }
 
             global $rundiz_downloads_options;
@@ -200,5 +204,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Editin
         }// registerStyles
 
 
-    }
+    }// Editing
 }

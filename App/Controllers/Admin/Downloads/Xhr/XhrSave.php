@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Controllers\Admin\Downloads\Xhr;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\XhrSave')) {
+    /**
+     * XhrSave class.
+     */
     class XhrSave extends \RundizDownloads\App\Controllers\XhrBased implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -24,12 +28,12 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
         {
             if (!isset($data['download_type']) || (isset($data['download_type']) && intval($data['download_type']) !== 1)) {
                 // if not GitHub.
-                return ;
+                return;
             }
 
             if (!isset($data['download_github_name']) || (isset($data['download_github_name']) && empty($data['download_github_name']))) {
                 // if there is no GitHub name.
-                return ;
+                return;
             }
 
             $Github = new \RundizDownloads\App\Libraries\Github();
@@ -42,7 +46,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                 // if there is no access token or secret key.
                 // do nothing
                 unset($accessToken, $Github, $secretKey, $user_id);
-                return ;
+                return;
             }
 
             $expNameWithOwner = explode('/', $data['download_github_name']);
@@ -57,7 +61,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             if (false !== $hook_id) {
                 // if already have webhook.
                 unset($accessToken, $Github, $headers, $hook_id, $repoName, $repoOwner, $secretKey, $user_id);
-                return ;
+                return;
             }
             unset($hook_id);
 
@@ -245,7 +249,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
 
             if (!current_user_can('upload_files')) {
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('You do not have permission to access this page.');
+                $output['form_result_msg'] = __('You do not have permission to access this page.', 'rundiz-downloads');
                 wp_send_json($output, 403);
             }
 
@@ -304,7 +308,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                 }
 
                 global $wpdb;
-                $output['insertResult'] = $wpdb->insert($wpdb->prefix . 'rundiz_downloads', $data);
+                $output['insertResult'] = $wpdb->insert($wpdb->prefix . 'rundiz_downloads', $data);// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
                 if (false !== $output['insertResult']) {
                     $output['download_id'] = $wpdb->insert_id;
                     $output['saved'] = true;
@@ -367,7 +371,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             } else {
                 if (isset($checkResult->user_id) && intval($checkResult->user_id) !== get_current_user_id() && !current_user_can('edit_others_posts')) {
                     $output['form_result_class'] = 'notice-error';
-                    $output['form_result_msg'] = __('You do not have permission to access this page.');
+                    $output['form_result_msg'] = __('You do not have permission to access this page.', 'rundiz-downloads');
                     wp_send_json($output, 403);
                 }
             }
@@ -433,5 +437,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
         }// saveUpdateData
 
 
-    }
+    }// XhrSave
 }

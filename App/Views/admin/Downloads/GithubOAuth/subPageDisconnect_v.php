@@ -1,3 +1,15 @@
+<?php
+/**
+ * GitHub sub page disconnect.
+ * 
+ * @package rundiz-downloads
+ */
+
+
+if (!defined('ABSPATH')) {
+    exit();
+}
+?>
 <div class="wrap rundiz-downloads-page-githuboauth rundiz-downloads-page-githuboauth-subpage-disconnect">
     <h1 class="wp-heading-inline"><?php esc_html_e('GitHub OAuth', 'rundiz-downloads'); ?></h1>
 

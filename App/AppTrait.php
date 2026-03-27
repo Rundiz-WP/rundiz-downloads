@@ -25,6 +25,7 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
          */
         public $main_option_name = 'rundiz_downloads_options';
 
+
         /**
          * All available options.
          * 
@@ -34,6 +35,7 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
          * @var array set all options available for this plugin. it must be 2D array (key => default value, key2 => default value, ...)
          */
         public $all_options = [];
+
 
         /**
          * The database version.
@@ -70,14 +72,16 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
          */
         public function getOptions()
         {
-            ${$this->main_option_name} = [];
-            global ${$this->main_option_name};
+            $option_name = $this->main_option_name;
+            global ${$option_name};// phpcs:ignore PHPCompatibility.Variables.ForbiddenGlobalVariableVariable.NonBareVariableFound
+            ${$option_name} = [];// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
-            $get_option = get_option($this->main_option_name);
+            $get_option = get_option($option_name);
             if (false !== $get_option) {
-                ${$this->main_option_name} = maybe_unserialize($get_option);
+                // if option has value.
+                ${$option_name} = maybe_unserialize($get_option);// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
                 unset($get_option);
-                return (array) ${$this->main_option_name};
+                return (array) ${$option_name};
             }
 
             unset($get_option);

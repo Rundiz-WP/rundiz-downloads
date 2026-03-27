@@ -3,13 +3,18 @@
  * GitHub class
  *
  * @package rundiz-downloads
+ * 
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
 namespace RundizDownloads\App\Libraries;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
+    /**
+     * GitHub class.
+     */
     class Github
     {
 
@@ -124,7 +129,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
             $postData->config->url = $this->getWebhookPayloadUrl();
             $postData->config->content_type = 'json';
             $postData->config->secret = $secretKey;
-            $postData->config->insecure_ssl = apply_filters('rddownloads_githubapi_webhookinsecure', '0');
+            $postData->config->insecure_ssl = apply_filters('rundiz_downloads_githubapi_webhookinsecure', '0');
             $postData->events = ['push'];
             $postData->active = true;
             $postData = wp_json_encode($postData);
@@ -475,7 +480,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
             if ('' !== $userPassword && !is_null($userPassword)) {
                 // @link https://johnblackbourn.com/wordpress-http-api-basicauth/ Basic auth for `wp_remote_xxx()`.
                 if (!isset($headers['Authorization'])) {
-                    $headers['Authorization'] = 'basic ' . base64_encode($userPassword);
+                    $headers['Authorization'] = 'basic ' . base64_encode($userPassword);// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
                 }
             }
             $remoteArgs = [];
@@ -487,7 +492,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
 
             $result = wp_remote_request($this->apiV3Url . $uri, $remoteArgs);
             Logger::staticDebugLog('Request URL: ' . $this->apiV3Url . $uri, 'github-apiv3-rawresponse-' . current_time('Ymd-Hi'));
-            Logger::staticDebugLog('Arguments: ' . var_export($remoteArgs, true), 'github-apiv3-rawresponse-' . current_time('Ymd-Hi'));
+            Logger::staticDebugLog('Arguments: ' . var_export($remoteArgs, true), 'github-apiv3-rawresponse-' . current_time('Ymd-Hi'));// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
             Logger::staticDebugLog($result, 'github-apiv3-rawresponse-' . current_time('Ymd-Hi'));
             Logger::staticDebugLog('END log ' . str_repeat('-', 60), 'github-apiv3-rawresponse-' . current_time('Ymd-Hi'));
             unset($remoteArgs);
@@ -559,8 +564,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
                 if ($i > 100) {
                     $end = true;
                 }
-            }// end do;
-            while (false === $end);
+            } while (false === $end);
 
             unset($end, $i, $perPage);
 
@@ -619,7 +623,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
         /**
          * Generate webhook secret key.
          *
-         * @param integer $user_id
+         * @param int $user_id User ID.
          * @return string
          */
         public function generateWebhookSecretKey($user_id = '')
@@ -710,7 +714,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
          *
          * The secret key will be use on GitHub auto update (push events).
          *
-         * @param integer $user_id
+         * @param int $user_id User ID.
          * @return string|false Return user's secret key. Return false if not found.
          */
         public function getWebhookSecretKey($user_id)
@@ -907,7 +911,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
 
             global $wpdb;
             $sql = 'SELECT * FROM `' . $wpdb->usermeta . '` WHERE `meta_key` = %s AND `meta_value` != \'\'';
-            $result = $wpdb->get_var($wpdb->prepare($sql, [$this->getWebhookSecretName()]));
+            $result = $wpdb->get_var($wpdb->prepare($sql, [$this->getWebhookSecretName()]));// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
             unset($sql);
 
             if (empty($result)) {
@@ -924,7 +928,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
          *
          * Clear the cookie and set user meta where access token was stored to empty.
          *
-         * @param integer|empty $user_id
+         * @param int|empty $user_id User ID.
          */
         public function oauthDisconnect($user_id = '')
         {
@@ -987,7 +991,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
                         return $body;
                     }
                 } elseif (is_wp_error($result)) {
-                    throw new \Exception($result->get_error_message());
+                    throw new \Exception(esc_html($result->get_error_message()));
                 }
             }
 
@@ -1023,7 +1027,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
                 if (is_array($result) && isset($result['headers']['location'])) {
                     return $result['headers']['location'];
                 } elseif (is_wp_error($result)) {
-                    throw new \Exception($result->get_error_message());
+                    throw new \Exception(esc_html($result->get_error_message()));
                 }
             }
 
@@ -1091,7 +1095,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
                 return false;
             } else {
                 $sql = 'SELECT `user_id`, `download_github_name` FROM `' . $wpdb->prefix . 'rundiz_downloads` WHERE `download_github_name` = %s GROUP BY `user_id`';
-                $downloadItems = $wpdb->get_results($wpdb->prepare($sql, [$payloadObject->repository->full_name]));
+                $downloadItems = $wpdb->get_results($wpdb->prepare($sql, [$payloadObject->repository->full_name]));// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 unset($sql);
 
                 if (is_array($downloadItems) && !empty($downloadItems)) {
@@ -1118,7 +1122,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
                 $data = [];
                 $data[] = $this->getWebhookSecretName();
                 $data = array_merge($data, $user_ids);
-                $userMetaResults = $wpdb->get_results($wpdb->prepare($sql, $data));
+                $userMetaResults = $wpdb->get_results($wpdb->prepare($sql, $data));// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 unset($data, $sql);
             }
             unset($user_ids);
@@ -1321,5 +1325,5 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Github')) {
         }// webhookPingCheckConfig
 
 
-    }
+    }// Github
 }

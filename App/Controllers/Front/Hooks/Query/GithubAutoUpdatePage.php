@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Controllers\Front\Hooks\Query;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubAutoUpdatePage')) {
+    /**
+     * GithubAutoUpdatePage class.
+     */
     class GithubAutoUpdatePage implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -52,5 +56,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Git
         }// registerHooks
 
 
-    }
+    }// GithubAutoUpdatePage
 }

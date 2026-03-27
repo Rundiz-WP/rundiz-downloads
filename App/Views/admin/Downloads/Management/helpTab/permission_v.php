@@ -1,7 +1,14 @@
 <?php
 /**
+ * Management page help tab permission.
+ * 
  * @package rundiz-downloads
  */
+
+
+if (!defined('ABSPATH')) {
+    exit();
+}
 ?>
 <p>
     <?php

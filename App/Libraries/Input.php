@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Libraries;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Libraries\\Input')) {
+    /**
+     * Input class.
+     */
     class Input
     {
 
@@ -34,5 +38,5 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Input')) {
         }// setNullIfDataValueEmpty
 
 
-    }
+    }// Input
 }

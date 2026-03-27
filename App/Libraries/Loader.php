@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Libraries;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
+    /**
+     * Loader class.
+     */
     class Loader
     {
 
@@ -146,19 +150,19 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
         /**
          * Load config file and return its values.
          * 
-         * @param string $config_file_name
-         * @param boolean $require_once
+         * @param string $config_file_name Config file name without extension.
+         * @param bool $require_once Set to `true` to use `require_once`.
          * @return mixed return config file content if success. return false if failed.
          */
         public function loadConfig($config_file_name = 'config', $require_once = false)
         {
             $config_dir = dirname(__DIR__) . '/config/';
 
-            if (file_exists($config_dir) && is_file($config_dir.$config_file_name.'.php')) {
+            if (file_exists($config_dir) && is_file($config_dir . $config_file_name . '.php')) {
                 if (true === $require_once) {
-                    $config_values = require_once $config_dir.$config_file_name.'.php';
+                    $config_values = require_once $config_dir . $config_file_name . '.php';
                 } else {
-                    $config_values = require $config_dir.$config_file_name.'.php';
+                    $config_values = require $config_dir . $config_file_name . '.php';
                 }
             }
 
@@ -203,7 +207,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
                         sprintf(
                             /* translators: %s: Template path. */
                             esc_html__('The template file was not found. (%s)', 'rundiz-downloads'), 
-                            $template_path
+                            esc_html($template_path)
                         )
                     );
                 }
@@ -226,18 +230,18 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
          * 
          * @param string $view_name view file name refer from app/Views folder.
          * @param array $data for send data variable to view.
-         * @param boolean $require_once use include or include_once? if true, use include_once.
-         * @return boolean return true if success loading, or return false if failed to load.
+         * @param boo $require_once use include or include_once? if true, use include_once.
+         * @return boo return true if success loading, or return false if failed to load.
          */
         public function loadView($view_name, array $data = [], $require_once = false)
         {
-            $view_dir = dirname(__DIR__).'/Views/';
+            $view_dir = dirname(__DIR__) . '/Views/';
             $templateFile = $view_dir . (is_string($view_name) ? $view_name : '') . '.php';
             unset($view_dir);
 
             if (file_exists($templateFile) && is_file($templateFile)) {
                 if (is_array($data)) {
-                    extract($data, EXTR_PREFIX_SAME, 'dupvar_');
+                    extract($data, EXTR_PREFIX_SAME, 'dupvar_');// phpcs:ignore WordPress.PHP.DontExtract.extract_extract
                 }
 
                 if (true === $require_once) {
@@ -249,11 +253,11 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
                 unset($templateFile);
                 return true;
             } elseif (!file_exists($templateFile)) {
-                trigger_error(
+                trigger_error(// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
                     sprintf(
                         /* translators: %s: Path to template file to show in error. */
                         esc_html__('The views file was not found (%s).', 'rundiz-downloads'), 
-                        str_replace(['\\', '/'], '/', $templateFile)
+                        esc_html(str_replace(['\\', '/'], '/', $templateFile))
                     ),
                     E_USER_WARNING
                 );
@@ -264,5 +268,5 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
         }// loadView
 
 
-    }
+    }// Loader
 }

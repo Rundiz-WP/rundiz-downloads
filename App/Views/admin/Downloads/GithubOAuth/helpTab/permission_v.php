@@ -1,3 +1,15 @@
+<?php
+/**
+ * GitHub OAuth help tab permission.
+ * 
+ * @package rundiz-downloads
+ */
+
+
+if (!defined('ABSPATH')) {
+    exit();
+}
+?>
 <p>
     <?php
     esc_html_e('Users who are able to access this page must have permission to manage downloads.', 'rundiz-downloads');

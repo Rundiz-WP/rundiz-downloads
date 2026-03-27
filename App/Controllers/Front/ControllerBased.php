@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Controllers\Front;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\Front\\ControllerBased')) {
+    /**
+     * ControllerBased abstract class.
+     */
     abstract class ControllerBased
     {
 
@@ -25,7 +29,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\Front\\ControllerBased'))
                 return null;
             }
 
-            add_filter('document_title_parts', function($title) use ($customTitle) {
+            add_filter('document_title_parts', function ($title) use ($customTitle) {
                 $title['title'] = $customTitle;
                 return $title;
             });
@@ -33,16 +37,16 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\Front\\ControllerBased'))
             // in case this site has Yoast SEO plugin.
             // this plugin make `document_title_parts` filter dead.
             // @link https://github.com/Yoast/wordpress-seo/issues/3579 See issue.
-            add_filter('wpseo_title', function($title) use ($customTitle) {
+            add_filter('wpseo_title', function ($title) use ($customTitle) {// phpcs:ignore WordPress.NamingConventions.ValidVariableName.InterpolatedVariableNotSnakeCase
                 $sep = '|';
                 if (!is_admin()) {
                     $name = get_bloginfo('name');
-                    return "{$customTitle} {$sep} {$name}";
+                    return "{$customTitle} {$sep} {$name}";// phpcs:ignore WordPress.NamingConventions.ValidVariableName.InterpolatedVariableNotSnakeCase
                 }
                 return $title;
             });
         }// setTitle
 
 
-    }
+    }// ControllerBased
 }

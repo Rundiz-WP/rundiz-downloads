@@ -9,6 +9,9 @@
 namespace RundizDownloads\App\Libraries;
 
 if (!class_exists('\\RundizDownloads\\App\\Libraries\\DateTime')) {
+    /**
+     * Date time class.
+     */
     class DateTime
     {
 
@@ -30,8 +33,8 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\DateTime')) {
                 throw new \InvalidArgumentException(
                     sprintf(
                         /* translators: %s Argument name. */
-                        esc_html__('The %s must be string.', 'rundiz-downloads')
-                        , '$datetime_gmt'
+                        esc_html__('The %s must be string.', 'rundiz-downloads'), 
+                        '$datetime_gmt'
                     )
                 );
             }
@@ -52,5 +55,5 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\DateTime')) {
         }// displayDateTime
 
 
-    }
+    }// DateTime
 }

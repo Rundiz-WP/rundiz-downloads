@@ -7,7 +7,12 @@
 
 
 namespace RundizDownloads\App\Controllers\Admin\Plugins;
+
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) {
+    /**
+     * Upgrader class.
+     */
     class Upgrader implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -27,12 +32,12 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
         public function ajaxManualUpdate()
         {
             if (!current_user_can('update_plugins')) {
-                wp_die(esc_html__('You do not have permission to access this page.'), '', ['response' => 403]);
+                wp_die(esc_html__('You do not have permission to access this page.', 'rundiz-downloads'), '', ['response' => 403]);
             }
 
             $output = [];
 
-            if (isset($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) === 'post' && isset($_POST) && !empty($_POST)) {
+            if (isset($_SERVER['REQUEST_METHOD']) && strtolower(wp_unslash($_SERVER['REQUEST_METHOD'])) === 'post' && isset($_POST) && !empty($_POST)) {// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 if (check_ajax_referer('rundiz_downloads_nonce', 'security', false) === false) {
                     status_header(403);
                     wp_die(esc_html__('Please reload this page and try again.', 'rundiz-downloads'), '', ['response' => 403]);
@@ -60,7 +65,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                             if (is_array($lastError) && array_key_exists('message', $lastError) && is_scalar($lastError['message'])) {
                                 $errorMessage = $lastError['message'];
                                 if (defined('WP_DEBUG') && WP_DEBUG === true) {
-                                    $debugTraces = debug_backtrace();
+                                    $debugTraces = debug_backtrace();// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace
                                     $errorMessage .= '<br>' . PHP_EOL;
                                     foreach ($debugTraces as $index => $trace) {
                                         $errorMessage .= '[' . $index . ']';
@@ -80,7 +85,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                                             $errorMessage .= esc_html($trace['function']) . '()<br>' . PHP_EOL;
                                         }
                                         if (isset($trace['args'])) {
-                                            $errorMessage .= '&nbsp; ' . esc_html(var_export($trace['args'], true)) . '<br>' . PHP_EOL;
+                                            $errorMessage .= '&nbsp; ' . esc_html(var_export($trace['args'], true)) . '<br>' . PHP_EOL;// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
                                         }
                                     }// endforeach;
                                     unset($index, $trace);
@@ -155,7 +160,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                     // display link or redirect to manual update page. (display link is preferred to prevent bad user experience.)
                     // -------------------------------------------------------------------------------------
                     // display link to manual update page.
-                    if (!isset($_REQUEST['page']) || (isset($_REQUEST['page']) && self::MENU_SLUG !== $_REQUEST['page'])) {
+                    if (!isset($_REQUEST['page']) || (isset($_REQUEST['page']) && self::MENU_SLUG !== sanitize_text_field(wp_unslash($_REQUEST['page'])))) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
                         $manualUpdateNotice = '<div class="notice notice-warning is-dismissible">
                             <p>' . 
                                 sprintf(
@@ -167,11 +172,11 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                             '</p>
                         </div>';
 
-                        add_action('admin_notices', function() use ($manualUpdateNotice) {
-                            echo $manualUpdateNotice."\n";
+                        add_action('admin_notices', function () use ($manualUpdateNotice) {
+                            echo $manualUpdateNotice . "\n";// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                         });
-                        add_action('network_admin_notices', function() use ($manualUpdateNotice) {
-                            echo $manualUpdateNotice."\n";
+                        add_action('network_admin_notices', function () use ($manualUpdateNotice) {
+                            echo $manualUpdateNotice . "\n";// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                         });
 
                         unset($manualUpdateNotice);
@@ -214,7 +219,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
         public function displayManualUpdatePage()
         {
             if (!current_user_can('update_plugins')) {
-                wp_die(esc_html__('You do not have permission to access this page.'));
+                wp_die(esc_html__('You do not have permission to access this page.', 'rundiz-downloads'));
             }
 
             $output = [];
@@ -284,8 +289,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
          * 
          * @link https://developer.wordpress.org/reference/hooks/upgrader_process_complete/ Reference.
          * @link https://codex.wordpress.org/Plugin_API/Action_Reference/upgrader_process_complete Reference.
-         * @param \WP_Upgrader $upgrader
-         * @param array $hook_extra
+         * @param \WP_Upgrader $upgrader Upgrader object.
+         * @param array $hook_extra Hook extra.
          */
         public function updateProcessComplete(\WP_Upgrader $upgrader, array $hook_extra)
         {
@@ -306,5 +311,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
         }// updateProcessComplete
 
 
-    }
+    }// Upgrader
 }

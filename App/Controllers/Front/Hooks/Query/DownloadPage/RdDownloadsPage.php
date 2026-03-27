@@ -8,6 +8,7 @@
 
 namespace RundizDownloads\App\Controllers\Front\Hooks\Query\DownloadPage;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\DownloadPage\\RdDownloadsPage')) {
     /**
      * Process the download.
@@ -87,7 +88,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
             unset($Finfo);
 
             // flush and turn off all the output buffering that were left.
-            for ($i = 0; $i < ob_get_level(); ++$i) {
+            for ($i = 0; $i < ob_get_level(); ++$i) {// phpcs:ignore Generic.CodeAnalysis.ForLoopWithTestFunctionCall.NotAllowed
                 ob_end_flush();
             }
 
@@ -98,7 +99,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
             if (false === $readfile) {
                 $error = error_get_last();
                 if (isset($error['message']) && is_scalar($error['message'])) {
-                    error_log($error['message']);
+                    error_log($error['message']);// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
                 }
                 unset($error);
             }
@@ -132,7 +133,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
             if (!is_numeric($download_id) || $download_id <= 0) {
                 // if download id is something wrong.
                 // don't waste your time for this.
-                return ;
+                return;
             }
 
             global $rundiz_downloads_options;
@@ -146,11 +147,11 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
                 // if banned.
                 // stop process here.
                 unset($result);
-                return ;
+                return;
             }
             unset($result);
 
-            if (!isset($_GET['rddownloads_http_referrer']) && isset($_SERVER['HTTP_REFERER'])) {
+            if (!isset($_GET['rddownloads_http_referrer']) && isset($_SERVER['HTTP_REFERER'])) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 wp_safe_redirect(
                     add_query_arg(
                         [
@@ -167,13 +168,13 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
             if (isset($rundiz_downloads_options['rdd_use_antibotfield']) && !empty($rundiz_downloads_options['rdd_use_antibotfield'])) {
                 // if setting was set to use anti bot form field.
                 // do a filter hook to allow custom antibot.
-                $useCustomAntibot = apply_filters('rddownloads_use_custom_antibot', false);
+                $useCustomAntibot = apply_filters('rundiz_downloads_use_custom_antibot', false);
 
                 if (true === $useCustomAntibot) {
                     // if there is filter hook to use custom antibot.
                     // do a filter hook to display anti bot page. while displaying anti bot page, return `false` only.
                     // when validate the anti bot form, return `true` on success and `false` on failure.
-                    $stepAntibot = apply_filters('rddownloads_use_custom_antibot_result', false, $download_id);
+                    $stepAntibot = apply_filters('rundiz_downloads_use_custom_antibot_result', false, $download_id);
                     if (!is_bool($stepAntibot)) {
                         $stepAntibot = false;
                     }
@@ -297,7 +298,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
                     // if download type is NOT local.
                     // it is not possible or not good to use force download. just redirect.
                     // not set status header here because it is already in redirect function.
-                    wp_redirect($downloadRow->download_url);
+                    wp_redirect($downloadRow->download_url);// phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
                     exit();
                 } else {
                     // if download type is local.
@@ -315,7 +316,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
                         if (is_array($download_options) && isset($download_options['opt_force_download']) && strval($download_options['opt_force_download']) === '1') {
                             // if per download setting is using force download.
                             $forceDownload = true;
-                        } else {
+                        } else {// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedElse
                             // otherwise per download setting can be redirect, use default.
                             // these other options than force download are same as redirect except that global setting is set to force download which will not go into this condition.
                         }
@@ -366,7 +367,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
         /**
          * Display antibot form field including validate the submitted form.
          * 
-         * @param int $download_id
+         * @param int $download_id Download ID.
          * @return bool Return `true` if validated anti bot succeeded but not display anything.<br>
          *      Return `false` and display anti bot form page if form is not validated or validated but failed.
          */
@@ -384,7 +385,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
             // cookie test.
             $validatedCookieTest = false;
             if (!isset($_COOKIE[$cookieName]) || 'true' !== $_COOKIE[$cookieName]) {
-                if (isset($_GET['rddownloads_redir_set_cookie'])) {
+                if (isset($_GET['rddownloads_redir_set_cookie'])) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
                     // if redirected but still not found cookie.
                     // just display banned message.
                     status_header(400);
@@ -417,7 +418,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
                 unset($downloadRow, $RdDownloads);
                 // end retrieve download data to show.
 
-                $requestMethod = (isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'get');
+                $requestMethod = (isset($_SERVER['REQUEST_METHOD']) ? strtolower(wp_unslash($_SERVER['REQUEST_METHOD'])) : 'get');// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 if ('get' === $requestMethod) {
                     // if method GET, displaying antibot form field.
                     $AntiBot = new \RundizDownloads\App\Libraries\AntiBot();
@@ -427,7 +428,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
                     // if method POST, process form submitted.
                     $honeypotName = \RundizDownloads\App\Libraries\AntiBot::staticGetHoneypotName();
                     $validatedHoneypot = false;
-                    if (!isset($_POST[$honeypotName]) || !empty($_POST[$honeypotName])) {
+                    if (!isset($_POST[$honeypotName]) || !empty($_POST[$honeypotName])) {// phpcs:ignore WordPress.Security.NonceVerification.Missing
                         // if honeypot name is not in the form or it is in but not empty (bot filled).
                         status_header(400);
                         $output['disableAntibotForm'] = true;
@@ -437,7 +438,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
                         $RdDownloadLogs = new \RundizDownloads\App\Models\RdDownloadLogs();
                         $RdDownloadLogs->writeLog('user_dl_antbotfailed', ['download_id' => $download_id]);
                         unset($RdDownloadLogs);
-                    } elseif (isset($_POST[$honeypotName]) && empty($_POST[$honeypotName])) {
+                    } elseif (isset($_POST[$honeypotName]) && empty($_POST[$honeypotName])) {// phpcs:ignore WordPress.Security.NonceVerification.Missing
                         // if honeypot name is in the form and empty. correct!
                         $AntiBot = new \RundizDownloads\App\Libraries\AntiBot();
                         $AntiBot->unsetHoneypotName();
@@ -476,5 +477,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
         }// subUseAntibot
 
 
-    }
+    }// RdDownloadsPage
 }

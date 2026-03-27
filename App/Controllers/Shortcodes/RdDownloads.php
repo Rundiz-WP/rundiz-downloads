@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Controllers\Shortcodes;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Shortcodes\\RdDownloads')) {
+    /**
+     * RdDownloads class.
+     */
     class RdDownloads implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -16,7 +20,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Shortcodes\\RdDownloads'
         /**
          * Convert shortcode.
          *
-         * @param array $atts
+         * @param array $atts Short code attributes.
          */
         public function convertShortcode($atts)
         {
@@ -27,7 +31,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Shortcodes\\RdDownloads'
             if (false === $rendered) {
                 $ShortcodeRdDownloads = new \RundizDownloads\App\Libraries\ShortcodeRdDownloads();
                 $rendered = $ShortcodeRdDownloads->renderHtml($atts);
-                $cacheLifetime = apply_filters('rddownloads_cachelifetime_shortcode', (6 * 60 * 60));// hours * minutes * seconds = total seconds.
+                $cacheLifetime = apply_filters('rundiz_downloads_cachelifetime_shortcode', (6 * 60 * 60));// hours * minutes * seconds = total seconds.
                 $SimpleCache->getInstance()->save($cacheKey, $rendered, $cacheLifetime);
                 unset($cacheLifetime, $ShortcodeRdDownloads);
             }
@@ -46,5 +50,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Shortcodes\\RdDownloads'
         }// registerHooks
 
 
-    }
+    }// RdDownloads
 }

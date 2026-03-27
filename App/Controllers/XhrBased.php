@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Controllers;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\XhrBased')) {
+    /**
+     * XhrBased class.
+     */
     abstract class XhrBased
     {
 
@@ -37,7 +41,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\XhrBased')) {
                 // if user has no required permission OR did not granted access to the app.
                 // response failed message immediately.
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('You do not have permission to access this page.');
+                $output['form_result_msg'] = __('You do not have permission to access this page.', 'rundiz-downloads');
                 wp_send_json($output, 403);
             }
 
@@ -46,7 +50,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\XhrBased')) {
                 !isset($_SERVER['REQUEST_METHOD']) ||
                 (
                     isset($_SERVER['REQUEST_METHOD']) &&
-                    !in_array(strtolower($_SERVER['REQUEST_METHOD']), array_map('strtolower', $allowedMethods))
+                    !in_array(strtolower($_SERVER['REQUEST_METHOD']), array_map('strtolower', $allowedMethods))// phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
                 )
             ) {
                 // if no method or method is not in allowed list.
@@ -79,5 +83,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\XhrBased')) {
         }// commonAccessCheck
 
 
-    }
+    }// XhrBased
 }

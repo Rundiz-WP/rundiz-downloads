@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Libraries;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Libraries\\FileSystem')) {
+    /**
+     * File system class.
+     */
     class FileSystem
     {
 
@@ -97,7 +101,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\FileSystem')) {
                 }
 
                 if ($dir !== $limited_dir) {
-                    rmdir($dir);
+                    rmdir($dir);// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_rmdir
                 }
             }
         }// rrmDir
@@ -119,14 +123,14 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\FileSystem')) {
                 throw new \InvalidArgumentException(
                     sprintf(
                         /* translators: %s Argument name. */
-                        esc_html__('The %s must be string.', 'rundiz-downloads')
-                        , '$path'
+                        esc_html__('The %s must be string.', 'rundiz-downloads'), 
+                        '$path'
                     )
                 );
             }
 
             if (!is_scalar($content)) {
-                $content = trim(print_r($content, true));
+                $content = trim(print_r($content, true));// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
             }
 
             if (!is_bool($append)) {
@@ -146,8 +150,8 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\FileSystem')) {
                 } else {
                     $flag = 0;
                 }
-                file_put_contents($path, $content, $flag);
-                chmod($path, $chmod);
+                file_put_contents($path, $content, $flag);// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
+                chmod($path, $chmod);// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_chmod
 
                 unset($flag);
                 return true;
@@ -155,5 +159,5 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\FileSystem')) {
         }// writeFile
 
 
-    }
+    }// FileSystem
 }

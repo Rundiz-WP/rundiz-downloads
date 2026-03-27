@@ -1,3 +1,15 @@
+<?php
+/**
+ * Hook classic editor views file.
+ * 
+ * @package rundiz-downloads
+ */
+
+
+if (!defined('ABSPATH')) {
+    exit();
+}
+?>
 <table class="form-table">
     <tr>
         <th><?php esc_html_e('Search', 'rundiz-downloads'); ?></th>

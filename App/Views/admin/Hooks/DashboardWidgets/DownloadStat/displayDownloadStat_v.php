@@ -1,3 +1,15 @@
+<?php
+/**
+ * Hook display download stat views file.
+ * 
+ * @package rundiz-downloads
+ */
+
+
+if (!defined('ABSPATH')) {
+    exit();
+}
+?>
 <div class="rundiz-downloads_dashboard-widget">
     <canvas id="rundiz-downloads_dashboard-widget_all-downloads-daily-stat"></canvas>
 

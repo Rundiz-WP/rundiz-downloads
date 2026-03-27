@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Controllers\Admin\Plugins;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Deactivation')) {
+    /**
+     * Deactivation class.
+     */
     class Deactivation implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -34,5 +38,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Deactiva
         }// registerHooks
 
 
-    }
+    }// Deactivation
 }

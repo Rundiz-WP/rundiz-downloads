@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Controllers\Admin\Downloads;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Management')) {
+    /**
+     * Management class.
+     */
     class Management
     {
 
@@ -26,7 +30,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Manage
         {
             add_screen_option('per_page', 
                 [
-                    'label' => __('Number of items per page:'),
+                    'label' => __('Number of items per page:', 'rundiz-downloads'),
                     'default' => 20,
                     'option' => 'rddownloads_items_perpage',// require alpha-numeric, underscore (_). no dash (-) allowed.
                 ]
@@ -133,7 +137,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Manage
         {
             // check permission.
             if (!current_user_can('edit_posts')) {
-                wp_die(esc_html__('You do not have permission to access this page.'), '', ['response' => 403]);
+                wp_die(esc_html__('You do not have permission to access this page.', 'rundiz-downloads'), '', ['response' => 403]);
             }
 
             // preset output value to views.
@@ -142,23 +146,23 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Manage
             // initialize list table model.
             $RdDownloadsListTable = new \RundizDownloads\App\Models\RdDownloadsListTable();
             $options = [];
-            if (isset($_REQUEST['filter_user_id']) && trim($_REQUEST['filter_user_id']) !== '') {
-                $options['user_id'] = intval(wp_unslash($_REQUEST['filter_user_id']));
+            if (isset($_REQUEST['filter_user_id']) && trim(wp_unslash($_REQUEST['filter_user_id'])) !== '') {// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                $options['user_id'] = intval(wp_unslash($_REQUEST['filter_user_id']));// phpcs:ignore WordPress.Security.NonceVerification.Recommended
             }
-            if (isset($_REQUEST['filter_download_type']) && trim($_REQUEST['filter_download_type']) !== '') {
-                $options['download_type'] = sanitize_text_field(wp_unslash($_REQUEST['filter_download_type']));
+            if (isset($_REQUEST['filter_download_type']) && trim(wp_unslash($_REQUEST['filter_download_type'])) !== '') {// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                $options['download_type'] = sanitize_text_field(wp_unslash($_REQUEST['filter_download_type']));// phpcs:ignore WordPress.Security.NonceVerification.Recommended
             }
-            if (isset($_REQUEST['s']) && trim($_REQUEST['s']) !== '') {
+            if (isset($_REQUEST['s']) && trim(wp_unslash($_REQUEST['s'])) !== '') {// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 // the s is forced by WordPress.
-                $options['search'] = sanitize_text_field(wp_unslash($_REQUEST['s']));
+                $options['search'] = sanitize_text_field(wp_unslash($_REQUEST['s']));// phpcs:ignore WordPress.Security.NonceVerification.Recommended
             }
-            if (isset($_REQUEST['orderby'])) {
+            if (isset($_REQUEST['orderby'])) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 // the orderby is forced by WordPress.
-                $options['sort'] = sanitize_text_field(wp_unslash($_REQUEST['orderby']));
+                $options['sort'] = sanitize_text_field(wp_unslash($_REQUEST['orderby']));// phpcs:ignore WordPress.Security.NonceVerification.Recommended
             }
-            if (isset($_REQUEST['order'])) {
+            if (isset($_REQUEST['order'])) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 // the order is forced by WordPress.
-                $options['order'] = sanitize_text_field(wp_unslash($_REQUEST['order']));
+                $options['order'] = sanitize_text_field(wp_unslash($_REQUEST['order']));// phpcs:ignore WordPress.Security.NonceVerification.Recommended
             }
             $RdDownloadsListTable->prepare_items($options);
             unset($options);
@@ -179,10 +183,10 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Manage
         {
             $unwanted_querystring = ['_wpnonce', '_wp_http_referer', 'action', 'action2'];
 
-            $current_query_names = array_map('strtolower', array_keys($_GET));
+            $current_query_names = array_map('strtolower', array_keys($_GET));// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
             foreach ($current_query_names as $name) {
-                if (in_array($name, $unwanted_querystring)) {
+                if (in_array(strtolower($name), $unwanted_querystring, true)) {
                     unset($current_query_names);
                     wp_safe_redirect(remove_query_arg($unwanted_querystring));
                     exit();
@@ -234,5 +238,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Manage
         }// registerStyles
 
 
-    }
+    }// Management
 }

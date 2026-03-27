@@ -3,11 +3,13 @@
  * Rundiz Download Logs list table.
  *
  * @package rundiz-downloads
+ * 
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
 namespace RundizDownloads\App\Models;
+
 
 if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
     /**
@@ -28,6 +30,9 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
 
         /**
          * {@inheritDoc}
+         * 
+         * @param object $item Row item object.
+         * @param string $column_name Column name.
          */
         protected function column_default($item, $column_name)
         {
@@ -76,7 +81,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
         /**
          * Column dl_status.
          *
-         * @param object $item
+         * @param object $item Row item object.
          * @return string
          */
         protected function column_dl_status($item)
@@ -197,12 +202,12 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
             $views = [];
             $options = [];
 
-            $filter_user_id = (isset($_REQUEST['filter_user_id']) && trim($_REQUEST['filter_user_id']) !== '' ? sanitize_text_field(wp_unslash($_REQUEST['filter_user_id'])) : null);
+            $filter_user_id = (isset($_REQUEST['filter_user_id']) && trim(wp_unslash($_REQUEST['filter_user_id'])) !== '' ? sanitize_text_field(wp_unslash($_REQUEST['filter_user_id'])) : null);// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             if (!current_user_can('edit_others_posts')) {
                 $filter_user_id = get_current_user_id();
             }
-            $filter_download_id = (isset($_REQUEST['filter_download_id']) && trim($_REQUEST['filter_download_id']) !== '' ? sanitize_text_field(wp_unslash($_REQUEST['filter_download_id'])) : null);
-            $search = (isset($_REQUEST['s']) && !empty(trim($_REQUEST['s'])) ? sanitize_text_field(wp_unslash($_REQUEST['s'])) : null);
+            $filter_download_id = (isset($_REQUEST['filter_download_id']) && trim(wp_unslash($_REQUEST['filter_download_id'])) !== '' ? sanitize_text_field(wp_unslash($_REQUEST['filter_download_id'])) : null);// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            $search = (isset($_REQUEST['s']) && !empty(trim(wp_unslash($_REQUEST['s']))) ? sanitize_text_field(wp_unslash($_REQUEST['s'])) : null);// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
 
             // get result using `RdDownloadLogs` class.
             $RdDownloadLogs = new RdDownloadLogs();
@@ -216,7 +221,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
 
             // all items
             $class = (is_null($filter_download_id) && is_null($filter_user_id) ? ' class="current"' : '');
-            $views['all'] = '<a' . $class . ' href="' . esc_url(remove_query_arg(['filter_download_id', 'filter_user_id'])) . '">' . __('All', 'rundiz-downloads') . ' <span class="count">(' . $wpdb->get_var($sql) . ')</span></a>';
+            $views['all'] = '<a' . $class . ' href="' . esc_url(remove_query_arg(['filter_download_id', 'filter_user_id'])) . '">' . __('All', 'rundiz-downloads') . ' <span class="count">(' . $wpdb->get_var($sql) . ')</span></a>';// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
             unset($class);
 
             // filtered user
@@ -225,7 +230,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
                 $options['user_id'] = $filter_user_id;
                 $sqlFiltered = $RdDownloadLogs->get($options);
                 /* translators: %s: Link to edit user. */
-                $views['filtered_user'] = '<strong>' . sprintf(__('Filtered user: %s', 'rundiz-downloads'), '<a href="' . esc_url(get_edit_user_link($filter_user_id)) . '" target="editUser">' . $User->display_name . ' <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>') . '</strong>';
+                $views['filtered_user'] = '<strong>' . sprintf(__('Filtered user: %s', 'rundiz-downloads'), '<a href="' . esc_url(get_edit_user_link($filter_user_id)) . '" target="editUser">' . $User->display_name . ' <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>') . '</strong>';// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 unset($class, $options['user_id'], $sqlFiltered, $User);
 
                 $views['reset_filtered_user'] = '<a href="' . esc_url(remove_query_arg('filter_user_id')) . '">' . __('Reset filtered user', 'rundiz-downloads') . '</a>';
@@ -236,7 +241,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
                 $options['download_id'] = $filter_download_id;
                 $sqlFiltered = $RdDownloadLogs->get($options);
                 /* translators: %s: Link to edit download. */
-                $views['filtered_download'] = '<strong>' . sprintf(__('Filtered download: %s', 'rundiz-downloads'), '<a href="' . esc_url(admin_url('admin.php?page=' . \RundizDownloads\App\Controllers\Admin\Downloads\Menu::SUB_MENU_SLUG_EDIT . '&download_id=' . $filter_download_id)) . '" target="editDownloads"> <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>') . '</strong>';
+                $views['filtered_download'] = '<strong>' . sprintf(__('Filtered download: %s', 'rundiz-downloads'), '<a href="' . esc_url(admin_url('admin.php?page=' . \RundizDownloads\App\Controllers\Admin\Downloads\Menu::SUB_MENU_SLUG_EDIT . '&download_id=' . $filter_download_id)) . '" target="editDownloads"> <span class="count">(' . $wpdb->get_var($sqlFiltered) . ')</span></a>') . '</strong>';// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 unset($class, $options['user_id'], $sqlFiltered, $User);
 
                 $views['reset_filtered_download'] = '<a href="' . esc_url(remove_query_arg('filter_user_id')) . '">' . __('Reset filtered download', 'rundiz-downloads') . '</a>';
@@ -249,11 +254,15 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
 
         /**
          * {@inheritDoc}
+         * 
+         * @param object $item Row item object.
+         * @param string $column_name Column name.
+         * @param string $primary Primary column name.
          */
         protected function handle_row_actions($item, $column_name, $primary)
         {
             if ($column_name !== $primary) {
-                return ;
+                return;
             }
 
             $actions = [];
@@ -277,7 +286,7 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
 
 
         /**
-         * prepare data and items
+         * Prepare data and items
          *
          * @global \wpdb $wpdb
          * @param array $options available options: user_id, download_id, search, sort (column name), order (ascending descending)
@@ -337,6 +346,8 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
 
         /**
          * {@inheritDoc}
+         * 
+         * @param object $item Row item object.
          */
         public function single_row($item)
         {
@@ -346,5 +357,5 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
         }// single_row
 
 
-    }
+    }// RdDownloadLogsListTable
 }

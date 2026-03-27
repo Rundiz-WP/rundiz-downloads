@@ -8,17 +8,25 @@
 
 namespace RundizDownloads\App\Libraries;
 
+
+if (!defined('ABSPATH')) {
+    exit();
+}
+
+
 /**
  * Rundiz Settings class for render pre-setup values. This will render tabs, form fields and content in each tabs.
  */
 if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
+    /**
+     * Rundiz Settings class.
+     */
     class RundizSettings
     {
 
 
         /**
-         * Settings config file.
-         * @var string 
+         * @var string Settings config file.
          */
         public $settings_config_file;
 
@@ -26,7 +34,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
         /**
          * Get settings config file and its data.
          * 
-         * @return array return settings config data.
+         * @return array|false Return settings config data. Return `false` if failed.
          */
         private function getConfigFile()
         {
@@ -44,7 +52,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
         /**
          * Get all setting fields id from setting config file.
          * 
-         * @return array return array of setting id and default value.
+         * @return array Return associative array where key is field `id` and value is its default value. It can be returned empty array.
          */
         public function getSettingsFieldsId()
         {
@@ -85,7 +93,6 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
                                     if (array_key_exists('id', $fields)) {
                                         $output[$fields['id']] = $default;
                                     }
-
                                 }
                                 unset($default);
                             }// endif is_array($fields)
@@ -102,10 +109,10 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
 
 
         /**
-         * Get settings page. this is not include form and nonce. you have to write it yourself.
+         * Get settings page. This is not include form and nonce. You have to write it yourself.
          * 
-         * @param array $options_values options values.
-         * @return string return settings tabbed page. not include form and nonce.
+         * @param array $options_values Options values.
+         * @return string Return settings tabbed page. Not include form tag and nonce.
          */
         public function getSettingsPage(array $options_values = [])
         {
@@ -124,45 +131,45 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
                     $tab_style = $settings_config['tab_style'];
                 }
             }
-            $output .= '<div class="rd-settings-tabs tabs-'.$tab_style.'">'."\n";
+            $output .= '<div class="rd-settings-tabs tabs-' . $tab_style . '">' . "\n";
             unset($tab_style);
 
             // render tabs -------------------------
-            $output .= "\t".'<ul class="tab-pane">'."\n";
+            $output .= "\t" . '<ul class="tab-pane">' . "\n";
             if (is_array($settings_config) && array_key_exists('setting_tabs', $settings_config)) {
                 foreach ($settings_config['setting_tabs'] as $tab_key => $tabs) {
-                    $output .= "\t\t".'<li>';
-                    $output .= '<a href="#tabs-'.$tab_key.'">';
+                    $output .= "\t\t" . '<li>';
+                    $output .= '<a href="#tabs-' . $tab_key . '">';
                     if (is_array($tabs) && array_key_exists('icon', $tabs)) {
-                        $output .= '<i class="tab-icon '.$tabs['icon'].'"></i> ';
+                        $output .= '<i class="tab-icon ' . $tabs['icon'] . '"></i> ';
                     }
-                    $output .= '<span class="tab-text">'.(is_array($tabs) && array_key_exists('title', $tabs) ? $tabs['title'] : '').'</span>';
+                    $output .= '<span class="tab-text">' . (is_array($tabs) && array_key_exists('title', $tabs) ? $tabs['title'] : '') . '</span>';
                     $output .= '</a>';
-                    $output .= '</li>'."\n";
+                    $output .= '</li>' . "\n";
                 }
                 unset($tab_key, $tabs);
             }
             // .tab-pane
-            $output .= "\t".'</ul>'."\n";
+            $output .= "\t" . '</ul>' . "\n";
 
             // render tab content ----------------
-            $output .= "\t".'<div class="tab-content">'."\n";
+            $output .= "\t" . '<div class="tab-content">' . "\n";
             if (is_array($settings_config) && array_key_exists('setting_tabs', $settings_config)) {
                 foreach ($settings_config['setting_tabs'] as $tab_key => $tabs) {
-                    $output .= "\t\t".'<div id="tabs-'.$tab_key.'">'."\n";
+                    $output .= "\t\t" . '<div id="tabs-' . $tab_key . '">' . "\n";
                     if (is_array($tabs) && array_key_exists('fields', $tabs) && is_array($tabs['fields'])) {
                         $output .= $this->renderFields($tabs['fields'], stripslashes_deep($options_values));
                     }
                     // #tabs-xx
-                    $output .= "\t\t".'</div>'."\n";
+                    $output .= "\t\t" . '</div>' . "\n";
                 }
                 unset($tab_key, $tabs);
             }
             // .tab-content
-            $output .= "\t".'</div>'."\n";
+            $output .= "\t" . '</div>' . "\n";
             
             // .rd-settings-tabs
-            $output .= '</div><!--.rd-settings-tabs-->'."\n";
+            $output .= '</div><!--.rd-settings-tabs-->' . "\n";
 
             unset($settings_config);
             return $output;
@@ -172,28 +179,35 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
         /**
          * Get form submitted data from all available fields id.
          * 
-         * @return array return array data that is ready to save or populate form with getSettingsPage() method.
+         * @return array Return associative array data that is ready to save or populate form with `getSettingsPage()` method.
          */
         public function getSubmittedData()
         {
-            $fields_id = $this->getSettingsFieldsId();
+            $fields = $this->getSettingsFieldsId();
             $output = [];
 
-            if (is_array($fields_id)) {
-                foreach ($fields_id as $key => $item) {
+            if (is_array($fields)) {
+                foreach ($fields as $name => $field) {
                     // get key without square bracket []
-                    $key_no_sqb = preg_replace('/\[.*?\]/', '', $key);
+                    $nameNoSb = preg_replace('/\[.*?\]/', '', $name);
 
-                    if (isset($_REQUEST) && is_array($_REQUEST) && isset($_REQUEST[$key_no_sqb])) {
-                        // receive form field below muse accept HTML.
-                        $output[$key] = wp_unslash($_REQUEST[$key_no_sqb]);
+                    // phpcs:ignore WordPress.Security.NonceVerification
+                    if (isset($_REQUEST) && is_array($_REQUEST) && isset($_REQUEST[$nameNoSb])) {
+                        if (isset($field->sanitize_callback) && is_callable($field->sanitize_callback)) {
+                            // phpcs:ignore WordPress.Security.NonceVerification, WordPress.Security.ValidatedSanitizedInput
+                            $value = call_user_func($field->sanitize_callback, wp_unslash($_REQUEST[$nameNoSb]));
+                        } else {
+                            $value = wp_unslash($_REQUEST[$nameNoSb]);// phpcs:ignore
+                        }
+                        $output[$name] = $value;
+                        unset($value);
                     } else {
-                        $output[$key] = '';
+                        $output[$name] = '';
                     }
                 }// endforeach;
             }
 
-            unset($fields_id, $item, $key, $key_no_sqb);
+            unset($field, $fields, $name, $nameNoSb);
 
             return $output;
         }// getSubmittedData
@@ -202,100 +216,99 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
         /**
          * Render tab content input fields.
          * 
-         * @param array $tab_fields tab fields in settings config.
-         * @param array $options_values options values.
-         * @return string return rendered tab content input fields.
+         * @param array $tab_fields Tab fields in settings config.
+         * @param array $options_values Options values.
+         * @return string Return rendered tab content input fields.
          */
         private function renderFields(array $tab_fields, array $options_values = [])
         {
-            $output = "\t\t\t".'<table class="form-table">'."\n";
-            $output .= "\t\t\t\t".'<tbody>'."\n";
+            $output = "\t\t\t" . '<table class="form-table">' . "\n";
+            $output .= "\t\t\t\t" . '<tbody>' . "\n";
 
             foreach ($tab_fields as $field_key => $fields) {
                 if (is_array($fields) && array_key_exists('type', $fields)) {
-                    $output .= "\t\t\t\t\t".'<tr>'."\n";
+                    $output .= "\t\t\t\t\t" . '<tr>' . "\n";
                     switch ($fields['type']) {
                         case 'code_editor':
-                            $output .= "\t\t\t\t\t\t".'<th scope="row">'."\n";
-                            $output .= "\t\t\t\t\t\t\t".'<label>';
+                            $output .= "\t\t\t\t\t\t" . '<th scope="row">' . "\n";
+                            $output .= "\t\t\t\t\t\t\t" . '<label>';
                             $output .= (array_key_exists('title', $fields) ? $fields['title'] : '');
-                            $output .= '</label>'."\n";
-                            $output .= "\t\t\t\t\t\t".'</th>'."\n";
-                            $output .= "\t\t\t\t\t\t".'<td>'."\n";
-                            $output .= "\t\t\t\t\t\t\t".$this->renderFormCodeEditor($field_key, $fields, $options_values);
+                            $output .= '</label>' . "\n";
+                            $output .= "\t\t\t\t\t\t" . '</th>' . "\n";
+                            $output .= "\t\t\t\t\t\t" . '<td>' . "\n";
+                            $output .= "\t\t\t\t\t\t\t" . $this->renderFormCodeEditor($field_key, $fields, $options_values);
                             if (array_key_exists('description', $fields)) {
-                                $output .= "\t\t\t\t\t\t\t".'<p class="description">'.$fields['description'].'</p>'."\n";
+                                $output .= "\t\t\t\t\t\t\t" . '<p class="description">' . $fields['description'] . '</p>' . "\n";
                             }
-                            $output .= "\t\t\t\t\t\t".'</td>'."\n";
+                            $output .= "\t\t\t\t\t\t" . '</td>' . "\n";
                             break;
                         case 'code_editor_full':
-                            $output .= "\t\t\t\t\t\t".'<td colspan="2" style="padding-left: 0;">'."\n";
-                            $output .= "\t\t\t\t\t\t\t".'<div><strong>'.(array_key_exists('title', $fields) ? $fields['title'] : '').'</strong></div>'."\n";
-                            $output .= "\t\t\t\t\t\t\t".$this->renderFormCodeEditor($field_key, $fields, $options_values);
+                            $output .= "\t\t\t\t\t\t" . '<td colspan="2" style="padding-left: 0;">' . "\n";
+                            $output .= "\t\t\t\t\t\t\t" . '<div><strong>' . (array_key_exists('title', $fields) ? $fields['title'] : '') . '</strong></div>' . "\n";
+                            $output .= "\t\t\t\t\t\t\t" . $this->renderFormCodeEditor($field_key, $fields, $options_values);
                             if (array_key_exists('description', $fields)) {
-                                $output .= "\t\t\t\t\t\t\t".'<p class="description">'.$fields['description'].'</p>'."\n";
+                                $output .= "\t\t\t\t\t\t\t" . '<p class="description">' . $fields['description'] . '</p>' . "\n";
                             }
-                            $output .= "\t\t\t\t\t\t".'</td>'."\n";
+                            $output .= "\t\t\t\t\t\t" . '</td>' . "\n";
                             break;
 
                         case 'editor':
-                            $output .= "\t\t\t\t\t\t".'<th scope="row">'."\n";
-                            $output .= "\t\t\t\t\t\t\t".'<label>';
+                            $output .= "\t\t\t\t\t\t" . '<th scope="row">' . "\n";
+                            $output .= "\t\t\t\t\t\t\t" . '<label>';
                             $output .= (array_key_exists('title', $fields) ? $fields['title'] : '');
-                            $output .= '</label>'."\n";
-                            $output .= "\t\t\t\t\t\t".'</th>'."\n";
-                            $output .= "\t\t\t\t\t\t".'<td>'."\n";
-                            $output .= "\t\t\t\t\t\t\t".$this->renderFormEditor($field_key, $fields, $options_values);
+                            $output .= '</label>' . "\n";
+                            $output .= "\t\t\t\t\t\t" . '</th>' . "\n";
+                            $output .= "\t\t\t\t\t\t" . '<td>' . "\n";
+                            $output .= "\t\t\t\t\t\t\t" . $this->renderFormEditor($field_key, $fields, $options_values);
                             if (array_key_exists('description', $fields)) {
-                                $output .= "\t\t\t\t\t\t\t".'<p class="description">'.$fields['description'].'</p>'."\n";
+                                $output .= "\t\t\t\t\t\t\t" . '<p class="description">' . $fields['description'] . '</p>' . "\n";
                             }
-                            $output .= "\t\t\t\t\t\t".'</td>'."\n";
+                            $output .= "\t\t\t\t\t\t" . '</td>' . "\n";
                             break;
                         case 'editor_full':
-                            $output .= "\t\t\t\t\t\t".'<td colspan="2" style="padding-left: 0;">'."\n";
-                            $output .= "\t\t\t\t\t\t\t".'<div><strong>'.(array_key_exists('title', $fields) ? $fields['title'] : '').'</strong></div>'."\n";
-                            $output .= "\t\t\t\t\t\t\t".$this->renderFormEditor($field_key, $fields, $options_values);
+                            $output .= "\t\t\t\t\t\t" . '<td colspan="2" style="padding-left: 0;">' . "\n";
+                            $output .= "\t\t\t\t\t\t\t" . '<div><strong>' . (array_key_exists('title', $fields) ? $fields['title'] : '') . '</strong></div>' . "\n";
+                            $output .= "\t\t\t\t\t\t\t" . $this->renderFormEditor($field_key, $fields, $options_values);
                             if (array_key_exists('description', $fields)) {
-                                $output .= "\t\t\t\t\t\t\t".'<p class="description">'.$fields['description'].'</p>'."\n";
+                                $output .= "\t\t\t\t\t\t\t" . '<p class="description">' . $fields['description'] . '</p>' . "\n";
                             }
-                            $output .= "\t\t\t\t\t\t".'</td>'."\n";
+                            $output .= "\t\t\t\t\t\t" . '</td>' . "\n";
                             break;
 
                         case 'html':
-                            $output .= "\t\t\t\t\t\t".'<th scope="row">'."\n";
-                            $output .= "\t\t\t\t\t\t\t".'<label>';
+                            $output .= "\t\t\t\t\t\t" . '<th scope="row">' . "\n";
+                            $output .= "\t\t\t\t\t\t\t" . '<label>';
                             $output .= (array_key_exists('title', $fields) ? $fields['title'] : '');
-                            $output .= '</label>'."\n";
-                            $output .= "\t\t\t\t\t\t".'</th>'."\n";
-                            $output .= "\t\t\t\t\t\t".'<td>'."\n";
-                            $output .= "\t\t\t\t\t\t\t".(array_key_exists('content', $fields) ? $fields['content'] : '')."\n";
-                            $output .= "\t\t\t\t\t\t".'</td>'."\n";
+                            $output .= '</label>' . "\n";
+                            $output .= "\t\t\t\t\t\t" . '</th>' . "\n";
+                            $output .= "\t\t\t\t\t\t" . '<td>' . "\n";
+                            $output .= "\t\t\t\t\t\t\t" . (array_key_exists('content', $fields) ? $fields['content'] : '') . "\n";
+                            $output .= "\t\t\t\t\t\t" . '</td>' . "\n";
                             break;
                         case 'html_full':
-                            $output .= "\t\t\t\t\t\t".'<td colspan="2" style="padding-left: 0;">'."\n";
-                            $output .= "\t\t\t\t\t\t\t".(array_key_exists('content', $fields) ? $fields['content'] : '')."\n";
-                            $output .= "\t\t\t\t\t\t".'</td>'."\n";
+                            $output .= "\t\t\t\t\t\t" . '<td colspan="2" style="padding-left: 0;">' . "\n";
+                            $output .= "\t\t\t\t\t\t\t" . (array_key_exists('content', $fields) ? $fields['content'] : '') . "\n";
+                            $output .= "\t\t\t\t\t\t" . '</td>' . "\n";
                             break;
 
                         case 'media':
-                            $output .= "\t\t\t\t\t\t".'<th scope="row">'."\n";
-                            $output .= "\t\t\t\t\t\t\t".'<label>';
+                            $output .= "\t\t\t\t\t\t" . '<th scope="row">' . "\n";
+                            $output .= "\t\t\t\t\t\t\t" . '<label>';
                             $output .= (array_key_exists('title', $fields) ? $fields['title'] : '');
-                            $output .= '</label>'."\n";
-                            $output .= "\t\t\t\t\t\t".'</th>'."\n";
-                            $output .= "\t\t\t\t\t\t".'<td>'."\n";
-                            $output .= "\t\t\t\t\t\t\t".$this->renderFormMedia($field_key, $fields, $options_values);
+                            $output .= '</label>' . "\n";
+                            $output .= "\t\t\t\t\t\t" . '</th>' . "\n";
+                            $output .= "\t\t\t\t\t\t" . '<td>' . "\n";
+                            $output .= "\t\t\t\t\t\t\t" . $this->renderFormMedia($field_key, $fields, $options_values);
                             if (array_key_exists('description', $fields)) {
-                                $output .= "\t\t\t\t\t\t\t".'<p class="description">'.$fields['description'].'</p>'."\n";
+                                $output .= "\t\t\t\t\t\t\t" . '<p class="description">' . $fields['description'] . '</p>' . "\n";
                             }
-                            $output .= "\t\t\t\t\t\t".'</td>'."\n";
+                            $output .= "\t\t\t\t\t\t" . '</td>' . "\n";
                             break;
-
                         case 'checkbox':
                         case 'radio':
-
+                            // input check box like
                         case 'select':
-
+                            // select box
                         case 'color':
                         case 'date':
                         case 'email':
@@ -305,27 +318,27 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
                         case 'textarea':
                         case 'text':
                         case 'url':
-                            $output .= "\t\t\t\t\t\t".'<th scope="row">'."\n";
-                            $output .= "\t\t\t\t\t\t\t".'<label for="'.(array_key_exists('id', $fields) ? $fields['id'] : $field_key).'">';
+                            $output .= "\t\t\t\t\t\t" . '<th scope="row">' . "\n";
+                            $output .= "\t\t\t\t\t\t\t" . '<label for="' . (array_key_exists('id', $fields) ? $fields['id'] : $field_key) . '">';
                             $output .= (array_key_exists('title', $fields) ? $fields['title'] : '');
-                            $output .= '</label>'."\n";
-                            $output .= "\t\t\t\t\t\t".'</th>'."\n";
-                            $output .= "\t\t\t\t\t\t".'<td>'."\n";
-                            $output .= "\t\t\t\t\t\t\t".$this->renderFormInput($field_key, $fields, $options_values);
+                            $output .= '</label>' . "\n";
+                            $output .= "\t\t\t\t\t\t" . '</th>' . "\n";
+                            $output .= "\t\t\t\t\t\t" . '<td>' . "\n";
+                            $output .= "\t\t\t\t\t\t\t" . $this->renderFormInput($field_key, $fields, $options_values);
                             if (array_key_exists('description', $fields)) {
-                                $output .= "\t\t\t\t\t\t\t".'<p class="description">'.$fields['description'].'</p>'."\n";
+                                $output .= "\t\t\t\t\t\t\t" . '<p class="description">' . $fields['description'] . '</p>' . "\n";
                             }
-                            $output .= "\t\t\t\t\t\t".'</td>'."\n";
+                            $output .= "\t\t\t\t\t\t" . '</td>' . "\n";
                             break;
                         default:
                     }
-                    $output .= "\t\t\t\t\t".'</tr>'."\n";
+                    $output .= "\t\t\t\t\t" . '</tr>' . "\n";
                 }
             }
             unset($field_key, $fields);
 
-            $output .= "\t\t\t\t".'</tbody>'."\n";
-            $output .= "\t\t\t".'</table>'."\n";
+            $output .= "\t\t\t\t" . '</tbody>' . "\n";
+            $output .= "\t\t\t" . '</table>' . "\n";
 
             return $output;
         }// renderFields
@@ -334,10 +347,10 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
         /**
          * Render form code editor.
          * 
-         * @param integer $field_key key fields array.
-         * @param array $fields fields array.
-         * @param array $options_values options values.
-         * @return string return rendered input.
+         * @param int $field_key Key fields array.
+         * @param array $fields Fields array.
+         * @param array $options_values Options values.
+         * @return string Return rendered input.
          */
         private function renderFormCodeEditor($field_key, array $fields, array $options_values = [])
         {
@@ -348,15 +361,15 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
                 $field_value = (array_key_exists('default', $fields) ? $fields['default'] : '');
             }
 
-            $output = '<textarea name="'.$field_name.'" id="textarea-editor-'.$field_name.'">'.esc_textarea($field_value).'</textarea>'."\n";
-            $output .= '<div id="editor-'.$field_name.'"';
+            $output = '<textarea name="' . esc_attr($field_name) . '" id="textarea-editor-' . esc_attr($field_name) . '">' . esc_textarea($field_value) . '</textarea>' . "\n";
+            $output .= '<div id="editor-' . esc_attr($field_name) . '"';
             $output .= ' class="ace-editor ace-editor-display-element"';
-            $output .= ' data-target_textarea="#textarea-editor-'.$field_name.'"';
+            $output .= ' data-target_textarea="#textarea-editor-' . esc_attr($field_name) . '"';
             if (array_key_exists('mode', $fields)) {
-                $output .= ' data-editor_mode="'.$fields['mode'].'"';
+                $output .= ' data-editor_mode="' . esc_attr($fields['mode']) . '"';
             }
             $output .= '>';
-            $output .= '</div>'."\n";
+            $output .= '</div>' . "\n";
 
             unset($field_name, $field_value);
             return $output;
@@ -366,10 +379,10 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
         /**
          * Render form editor.
          * 
-         * @param integer $field_key key fields array.
-         * @param array $fields fields array.
-         * @param array $options_values options values.
-         * @return string return rendered input.
+         * @param int $field_key Key fields array.
+         * @param array $fields Fields array.
+         * @param array $options_values Options values.
+         * @return string Return rendered input.
          */
         private function renderFormEditor($field_key, array $fields, array $options_values = [])
         {
@@ -398,10 +411,10 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
         /**
          * Render form input.
          * 
-         * @param integer $field_key key fields array.
-         * @param array $fields fields array.
-         * @param array $options_values options values.
-         * @return string return rendered input.
+         * @param int $field_key Key fields array.
+         * @param array $fields Fields array.
+         * @param array $options_values Options values.
+         * @return string Return rendered input.
          */
         private function renderFormInput($field_key, array $fields, array $options_values = [])
         {
@@ -429,22 +442,22 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
                 }
 
                 $output = '<input';
-                $output .= ' id="'.$field_name.'"';
+                $output .= ' id="' . esc_attr($field_name) . '"';
                 if (!isset($fields['input_attributes']['class'])) {
                     $output .= ' class="regular-text"';
                 }
-                $output .= ' type="'.$field_type.'"';
-                $output .= ' value="'.esc_attr($field_value).'"';
-                $output .= ' name="'.$field_name.'"';
+                $output .= ' type="' . esc_attr($field_type) . '"';
+                $output .= ' value="' . esc_attr($field_value) . '"';
+                $output .= ' name="' . esc_attr($field_name) . '"';
                 if (array_key_exists('input_attributes', $fields) && is_array($fields['input_attributes'])) {
                     foreach ($fields['input_attributes'] as $attribute_name => $attribute_value) {
-                        if (!in_array($attribute_name, ['id', 'name', 'type', 'value'])) {
-                            $output .= ' '.$attribute_name.'="'.$attribute_value.'"';
+                        if (!in_array($attribute_name, ['id', 'name', 'type', 'value'], true)) {
+                            $output .= ' ' . esc_attr($attribute_name) . '="' . esc_attr($attribute_value) . '"';
                         }
                     }
                     unset($attribute_name, $field_type, $attribute_value);
                 }
-                $output .= '>'."\n";
+                $output .= '>' . "\n";
             }
 
             unset($field_name, $field_value);
@@ -455,10 +468,10 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
         /**
          * Render form input type checkbox.
          * 
-         * @param integer $field_key key fields array.
-         * @param array $fields fields array.
-         * @param array $options_values options values.
-         * @return string return rendered input.
+         * @param int $field_key Key fields array.
+         * @param array $fields Fields array.
+         * @param array $options_values Options values.
+         * @return string Return rendered input.
          */
         private function renderFormInputCheckbox($field_key, array $fields, array $options_values = [])
         {
@@ -468,18 +481,18 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
             }
 
             if (array_key_exists('options', $fields) && is_array($fields['options'])) {
-                $output = '<fieldset>'."\n";
-                $output .= '<legend class="screen-reader-text">'.(array_key_exists('title', $fields) ? $fields['title'] : '').'</legend>'."\n";
+                $output = '<fieldset>' . "\n";
+                $output .= '<legend class="screen-reader-text">' . (array_key_exists('title', $fields) ? $fields['title'] : '') . '</legend>' . "\n";
                 $i = 1;
                 foreach ($fields['options'] as $checkbox_key => $checkboxes) {
-                    if (is_array($checkboxes)) {
-                        $checkbox_id = (array_key_exists('id', $checkboxes) ? $checkboxes['id'] : '');
+                    $checkbox_id = (array_key_exists('id', $checkboxes) ? $checkboxes['id'] : '');
 
+                    if (is_array($checkboxes)) {
                         $output .= '<label>';
                         $output .= '<input type="checkbox"';
-                        $output .= ' name="'.$checkbox_id.'"';
+                        $output .= ' name="' . esc_attr($checkbox_id) . '"';
                         if (array_key_exists('value', $checkboxes)) {
-                            $output .= ' value="'.$checkboxes['value'].'"';
+                            $output .= ' value="' . esc_attr($checkboxes['value']) . '"';
                             if (strpos($checkbox_id, '[') === false) {
                                 // this is not check box array.
                                 if (!is_array($options_values) || (is_array($options_values) && !array_key_exists($checkbox_id, $options_values))) {
@@ -490,7 +503,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
                                     $field_value = $options_values[$checkbox_id];
                                 }
                                 
-                                if (isset($field_value) && $checkboxes['value'] === $field_value) {
+                                if (isset($field_value) && strval($checkboxes['value']) === strval($field_value)) {
                                     $output .= ' checked="checked"';
                                 }
                             } else {
@@ -502,6 +515,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
 
                                 $field_value = (isset($field_value_array) ? $field_value_array : []);
 
+                                // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
                                 if (isset($field_value) && is_array($field_value) && in_array($checkboxes['value'], $field_value)) {
                                     $output .= ' checked="checked"';
                                 }
@@ -509,23 +523,23 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
                         }
                         if (array_key_exists('input_attributes', $checkboxes) && is_array($checkboxes['input_attributes'])) {
                             foreach ($checkboxes['input_attributes'] as $attribute_name => $attribute_value) {
-                                if (!in_array($attribute_name, ['id', 'name', 'type', 'value', 'checked'])) {
-                                    $output .= ' '.$attribute_name.'="'.$attribute_value.'"';
+                                if (!in_array($attribute_name, ['id', 'name', 'type', 'value', 'checked'], true)) {
+                                    $output .= ' ' . esc_attr($attribute_name) . '="' . esc_attr($attribute_value) . '"';
                                 }
                             }
                             unset($attribute_name, $attribute_value);
                         }
                         $output .= '>';
                         if (array_key_exists('title', $checkboxes)) {
-                            $output .= ' '.$checkboxes['title'];
+                            $output .= ' ' . $checkboxes['title'];
                         }
-                        $output .= '</label>'."\n";
+                        $output .= '</label>' . "\n";
                         if (array_key_exists('description', $checkboxes)) {
                             $output .= '<p class="description">' . $checkboxes['description'] . '</p>';
                         }
 
                         if (!array_key_exists('description', $checkboxes) && $i < count($fields['options'])) {
-                            $output .= '<br>'."\n";
+                            $output .= '<br>' . "\n";
                         }
                         ++$i;
                     }
@@ -533,23 +547,25 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
                     unset($checkbox_id, $field_value);
                 }// endforeach;
                 unset($checkbox_key, $checkboxes, $i);
-                $output .= '</fieldset>'."\n";
+                $output .= '</fieldset>' . "\n";
             }
 
             unset($field_value_array);
             if (isset($output)) {
                 return $output;
             }
+
+            return '';
         }// renderFormInputCheckbox
 
 
         /**
          * Render form input radio.
          * 
-         * @param integer $field_key key fields array.
-         * @param array $fields fields array.
-         * @param array $options_values options values.
-         * @return string return rendered input.
+         * @param int $field_key Key fields array.
+         * @param array $fields Fields array.
+         * @param array $options_values Options values.
+         * @return string Return rendered input.
          */
         private function renderFormInputRadio($field_key, array $fields, array $options_values = [])
         {
@@ -562,61 +578,63 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
             }
 
             if (array_key_exists('options', $fields) && is_array($fields['options'])) {
-                $output = '<fieldset>'."\n";
-                $output .= '<legend class="screen-reader-text">'.(array_key_exists('title', $fields) ? $fields['title'] : '').'</legend>'."\n";
+                $output = '<fieldset>' . "\n";
+                $output .= '<legend class="screen-reader-text">' . (array_key_exists('title', $fields) ? $fields['title'] : '') . '</legend>' . "\n";
                 $i = 1;
                 foreach ($fields['options'] as $radio_key => $radio_buttons) {
                     if (is_array($radio_buttons)) {
                         $output .= '<label>';
                         $output .= '<input type="radio"';
-                        $output .= ' name="'.$field_name.'"';
+                        $output .= ' name="' . esc_attr($field_name) . '"';
                         if (array_key_exists('value', $radio_buttons)) {
-                            $output .= ' value="'.$radio_buttons['value'].'"';
-                            if ($field_value === $radio_buttons['value']) {
+                            $output .= ' value="' . esc_attr($radio_buttons['value']) . '"';
+                            if (strval($field_value) === strval($radio_buttons['value'])) {
                                 $output .= ' checked="checked"';
                             }
                         }
                         if (array_key_exists('input_attributes', $radio_buttons) && is_array($radio_buttons['input_attributes'])) {
                             foreach ($radio_buttons['input_attributes'] as $attribute_name => $attribute_value) {
-                                if (!in_array($attribute_name, ['id', 'name', 'type', 'value', 'checked'])) {
-                                    $output .= ' '.$attribute_name.'="'.$attribute_value.'"';
+                                if (!in_array($attribute_name, ['id', 'name', 'type', 'value', 'checked'], true)) {
+                                    $output .= ' ' . esc_attr($attribute_name) . '="' . esc_attr($attribute_value) . '"';
                                 }
                             }
                             unset($attribute_name, $attribute_value);
                         }
                         $output .= '>';
                         if (array_key_exists('title', $radio_buttons)) {
-                            $output .= ' '.$radio_buttons['title'];
+                            $output .= ' ' . $radio_buttons['title'];
                         }
-                        $output .= '</label>'."\n";
+                        $output .= '</label>' . "\n";
                         if (array_key_exists('description', $radio_buttons)) {
                             $output .= '<p class="description">' . $radio_buttons['description'] . '</p>';
                         }
 
                         if (!array_key_exists('description', $radio_buttons) && $i < count($fields['options'])) {
-                            $output .= '<br>'."\n";
+                            $output .= '<br>' . "\n";
                         }
                         ++$i;
                     }
                 }// endforeach;
                 unset($i, $radio_buttons, $radio_key);
-                $output .= '</fieldset>'."\n";
+                $output .= '</fieldset>' . "\n";
             }
 
             unset($field_name, $field_value);
             if (isset($output)) {
                 return $output;
             }
+
+            return '';
         }// renderFormInputRadio
 
 
         /**
          * Render form media upload.
          * 
-         * @param integer $field_key key fields array.
-         * @param array $fields fields array.
-         * @param array $options_values options values.
-         * @return string return rendered input.
+         * @param int $field_key Key fields array.
+         * @param array $fields Fields array.
+         * @param array $options_values Options values.
+         * @return string Return rendered input.
          */
         private function renderFormMedia($field_key, array $fields, array $options_values = [])
         {
@@ -632,32 +650,32 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
 
             $preview_mode = 'preview_all';
             if (array_key_exists('mode', $fields)) {
-                if (in_array($fields['mode'], ['preview_all', 'preview_url', 'preview_img', 'no_preview_img', 'no_preview_url'])) {
+                if (in_array($fields['mode'], ['preview_all', 'preview_url', 'preview_img', 'no_preview_img', 'no_preview_url'], true)) {
                     $preview_mode = $fields['mode'];
                 }
             }
 
             $output = '';
             if ('preview_all' === $preview_mode || 'preview_url' === $preview_mode || 'no_preview_img' === $preview_mode) {
-                $output = '<input type="text" id="preview-media-url-'.$field_name.'" class="large-text" value="'.(is_array($field_values) && array_key_exists('url', $field_values) ? esc_url($field_values['url']) : '').'" readonly>'."\n";
+                $output = '<input type="text" id="preview-media-url-' . esc_attr($field_name) . '" class="large-text" value="' . (is_array($field_values) && array_key_exists('url', $field_values) ? esc_url($field_values['url']) : '') . '" readonly>' . "\n";
             }
-            $output .= '<input type="hidden" id="media-id-'.$field_name.'" name="'.$field_name.'[id]" value="'.(is_array($field_values) && array_key_exists('id', $field_values) ? $field_values['id'] : '').'">'."\n";
-            $output .= '<input type="hidden" id="media-height-'.$field_name.'" name="'.$field_name.'[height]" value="'.(is_array($field_values) && array_key_exists('height', $field_values) ? $field_values['height'] : '').'">'."\n";
-            $output .= '<input type="hidden" id="media-width-'.$field_name.'" name="'.$field_name.'[width]" value="'.(is_array($field_values) && array_key_exists('width', $field_values) ? $field_values['width'] : '').'">'."\n";
-            $output .= '<input type="hidden" id="media-url-'.$field_name.'" name="'.$field_name.'[url]" value="'.(is_array($field_values) && array_key_exists('url', $field_values) ? $field_values['url'] : '').'">'."\n";
-            $output .= '<input type="hidden" id="media-large-'.$field_name.'" name="'.$field_name.'[large]" value="'.(is_array($field_values) && array_key_exists('large', $field_values) ? $field_values['large'] : '').'">'."\n";
-            $output .= '<input type="hidden" id="media-medium-'.$field_name.'" name="'.$field_name.'[medium]" value="'.(is_array($field_values) && array_key_exists('medium', $field_values) ? $field_values['medium'] : '').'">'."\n";
-            $output .= '<input type="hidden" id="media-thumbnail-'.$field_name.'" name="'.$field_name.'[thumbnail]" value="'.(is_array($field_values) && array_key_exists('thumbnail', $field_values) ? $field_values['thumbnail'] : '').'">'."\n";
-            $output .= '<br>'."\n";
+            $output .= '<input type="hidden" id="media-id-' . esc_attr($field_name) . '" name="' . esc_attr($field_name) . '[id]" value="' . (is_array($field_values) && array_key_exists('id', $field_values) ? esc_attr($field_values['id']) : '') . '">' . "\n";
+            $output .= '<input type="hidden" id="media-height-' . esc_attr($field_name) . '" name="' . esc_attr($field_name) . '[height]" value="' . (is_array($field_values) && array_key_exists('height', $field_values) ? esc_attr($field_values['height']) : '') . '">' . "\n";
+            $output .= '<input type="hidden" id="media-width-' . esc_attr($field_name) . '" name="' . esc_attr($field_name) . '[width]" value="' . (is_array($field_values) && array_key_exists('width', $field_values) ? esc_attr($field_values['width']) : '') . '">' . "\n";
+            $output .= '<input type="hidden" id="media-url-' . esc_attr($field_name) . '" name="' . esc_attr($field_name) . '[url]" value="' . (is_array($field_values) && array_key_exists('url', $field_values) ? esc_url($field_values['url']) : '') . '">' . "\n";
+            $output .= '<input type="hidden" id="media-large-' . esc_attr($field_name) . '" name="' . esc_attr($field_name) . '[large]" value="' . (is_array($field_values) && array_key_exists('large', $field_values) ? esc_attr($field_values['large']) : '') . '">' . "\n";
+            $output .= '<input type="hidden" id="media-medium-' . esc_attr($field_name) . '" name="' . esc_attr($field_name) . '[medium]" value="' . (is_array($field_values) && array_key_exists('medium', $field_values) ? esc_attr($field_values['medium']) : '') . '">' . "\n";
+            $output .= '<input type="hidden" id="media-thumbnail-' . esc_attr($field_name) . '" name="' . esc_attr($field_name) . '[thumbnail]" value="' . (is_array($field_values) && array_key_exists('thumbnail', $field_values) ? esc_attr($field_values['thumbnail']) : '') . '">' . "\n";
+            $output .= '<br>' . "\n";
             if ('preview_all' === $preview_mode || 'preview_img' === $preview_mode || 'no_preview_url' === $preview_mode) {
-                $output .= '<div class="image-preview image-preview-'.$field_name.'">';
+                $output .= '<div class="image-preview image-preview-' . esc_attr($field_name) . '">';
                 if (is_array($field_values) && array_key_exists('thumbnail', $field_values) && '' !== $field_values['thumbnail']) {
-                    $output .= '<img src="'.$field_values['thumbnail'].'" alt="">';
+                    $output .= '<img src="' . esc_attr($field_values['thumbnail']) . '" alt="">';
                 }
-                $output .= '</div>'."\n";
+                $output .= '</div>' . "\n";
             }
-            $output .= '<input type="button" class="button-secondary upload-media-button" value="'.__('Upload', 'rundiz-downloads').'" data-input_target="'.$field_name.'">'."\n";
-            $output .= '<input type="button" class="button-secondary remove-media-button" value="'.__('Remove', 'rundiz-downloads').'" data-input_target="'.$field_name.'">'."\n";
+            $output .= '<input type="button" class="button-secondary upload-media-button" value="' . __('Upload', 'rundiz-downloads') . '" data-input_target="' . esc_attr($field_name) . '">' . "\n";
+            $output .= '<input type="button" class="button-secondary remove-media-button" value="' . __('Remove', 'rundiz-downloads') . '" data-input_target="' . esc_attr($field_name) . '">' . "\n";
 
             unset($field_name, $field_values, $preview_mode);
             return $output;
@@ -667,10 +685,10 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
         /**
          * Render form select box.
          * 
-         * @param integer $field_key key fields array.
-         * @param array $fields fields array.
-         * @param array $options_values options values.
-         * @return string return rendered input.
+         * @param int $field_key Key fields array.
+         * @param array $fields Fields array.
+         * @param array $options_values Options values.
+         * @return string Return rendered input.
          */
         private function renderFormSelectbox($field_key, array $fields, array $options_values = [])
         {
@@ -684,48 +702,48 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
             }
 
             $output = '<select';
-            $output .= ' id="'.$field_name.'"';
-            $output .= ' name="'.$field_name.'"';
+            $output .= ' id="' . esc_attr($field_name) . '"';
+            $output .= ' name="' . esc_attr($field_name) . '"';
             if (array_key_exists('input_attributes', $fields) && is_array($fields['input_attributes'])) {
                 foreach ($fields['input_attributes'] as $attribute_name => $attribute_value) {
-                    if (!in_array($attribute_name, ['id', 'name'])) {
-                        $output .= ' '.$attribute_name.'="'.$attribute_value.'"';
+                    if (!in_array($attribute_name, ['id', 'name'], true)) {
+                        $output .= ' ' . esc_attr($attribute_name) . '="' . esc_attr($attribute_value) . '"';
                     }
                 }
                 unset($attribute_name, $field_type, $attribute_value);
             }
-            $output .= '>'."\n";
+            $output .= '>' . "\n";
             if (array_key_exists('options', $fields)) {
                 foreach ($fields['options'] as $option_key => $option_item1) {
                     if (is_array($option_item1)) {
-                        $output .= '<optgroup label="'.$option_key.'">'."\n";
+                        $output .= '<optgroup label="' . esc_attr($option_key) . '">' . "\n";
                         foreach ($option_item1 as $option_item2 => $option_item3) {
-                            $output .= '<option value="'.$option_item2.'"';
-                            if (!is_array($field_value) && $field_value === $option_item2) {
+                            $output .= '<option value="' . esc_attr($option_item2) . '"';
+                            if (!is_array($field_value) && strval($field_value) === strval($option_item2)) {
                                 $output .= ' selected="selected"';
-                            } elseif (is_array($field_value) && in_array($option_item2, $field_value)) {
+                            } elseif (is_array($field_value) && in_array($option_item2, $field_value)) {// phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
                                 $output .= ' selected="selected"';
                             }
                             $output .= '>';
                             $output .= esc_html($option_item3);
-                            $output .= '</option>'."\n";
+                            $output .= '</option>' . "\n";
                         }
-                        $output .= '</optgroup>'."\n";
+                        $output .= '</optgroup>' . "\n";
                     } else {
-                        $output .= '<option value="'.$option_key.'"';
-                        if (!is_array($field_value) && $field_value === $option_key) {
+                        $output .= '<option value="' . esc_attr($option_key) . '"';
+                        if (!is_array($field_value) && strval($field_value) === strval($option_key)) {
                             $output .= ' selected="selected"';
-                        } elseif (is_array($field_value) && in_array($option_key, $field_value)) {
+                        } elseif (is_array($field_value) && in_array($option_key, $field_value)) {// phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
                             $output .= ' selected="selected"';
                         }
                         $output .= '>';
                         $output .= esc_html($option_item1);
-                        $output .= '</option>'."\n";
+                        $output .= '</option>' . "\n";
                     }
                 }// endforeach;
                 unset($option_item1, $option_item2, $option_item3, $option_key);
             }
-            $output .= '</select>'."\n";
+            $output .= '</select>' . "\n";
 
             unset($field_name, $field_value);
             return $output;
@@ -735,10 +753,10 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
         /**
          * Render form textarea.
          * 
-         * @param integer $field_key key fields array.
-         * @param array $fields fields array.
-         * @param array $options_values options values.
-         * @return string return rendered input.
+         * @param int $field_key Key fields array.
+         * @param array $fields Fields array.
+         * @param array $options_values Options values.
+         * @return string Return rendered input.
          */
         private function renderFormTextarea($field_key, array $fields, array $options_values = [])
         {
@@ -752,27 +770,27 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\RundizSettings')) {
             }
 
             $output = '<textarea';
-            $output .= ' id="'.$field_name.'"';
+            $output .= ' id="' . esc_attr($field_name) . '"';
             if (!isset($fields['input_attributes']['class'])) {
                 $output .= ' class="large-text"';
             }
-            $output .= ' name="'.$field_name.'"';
+            $output .= ' name="' . esc_attr($field_name) . '"';
             if (array_key_exists('input_attributes', $fields)) {
                 foreach ($fields['input_attributes'] as $attribute_name => $attribute_value) {
-                    if (!in_array($attribute_name, ['id', 'name', 'type', 'value'])) {
-                        $output .= ' '.$attribute_name.'="'.$attribute_value.'"';
+                    if (!in_array($attribute_name, ['id', 'name', 'type', 'value'], true)) {
+                        $output .= ' ' . esc_attr($attribute_name) . '="' . esc_attr($attribute_value) . '"';
                     }
                 }
                 unset($attribute_name, $field_type, $attribute_value);
             }
             $output .= '>';
             $output .= esc_textarea($field_value);
-            $output .= '</textarea>'."\n";
+            $output .= '</textarea>' . "\n";
 
             unset($field_name, $field_value);
             return $output;
         }// renderFormTextarea
 
 
-    }
+    }// RundizSettings
 }

@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Libraries;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Libraries\\Url')) {
+    /**
+     * URL class.
+     */
     class Url
     {
 
@@ -137,5 +141,5 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Url')) {
         }// getRemoteFileInfo
 
 
-    }
+    }// Url
 }

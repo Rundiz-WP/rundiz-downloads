@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Controllers\Admin;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins')) {
+    /**
+     * Plugins class.
+     */
     class Plugins implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -33,7 +37,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins')) {
             
             if ($plugin === $plugin_file) {
                 $link = [];
-                $link['settings'] = '<a href="'.  esc_url(get_admin_url(null, 'admin.php?page=' . Settings::MENU_SLUG)).'">'.__('Settings').'</a>';
+                $link['settings'] = '<a href="' . esc_url(get_admin_url(null, 'admin.php?page=' . Settings::MENU_SLUG)) . '">' . __('Settings', 'rundiz-downloads') . '</a>';
                 $actions = array_merge($link, $actions);
                 unset($link);
             }
@@ -90,5 +94,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins')) {
         }// rowMeta
 
 
-    }
+    }// Plugins
 }

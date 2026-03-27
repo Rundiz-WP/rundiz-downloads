@@ -25,4 +25,3 @@ get_header();
 <!-- You can copy this template file from this plugin folder's templates/RdDownloadsPage and put it in your theme to design it yours. For more information please read the readme file in certain folder. -->
 <?php
 get_footer();
-?>

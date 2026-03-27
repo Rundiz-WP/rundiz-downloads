@@ -3,6 +3,7 @@
  * Uninstall or delete the plugin.
  *
  * @package rundiz-downloads
+ * 
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
@@ -114,7 +115,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstal
         public function uninstallDeleteSite($site_id, $drop = false)
         {
             global $wp_version;
-            if (is_a($site_id,'\WP_Site')) {
+            if (is_a($site_id, '\WP_Site')) {
                 $site_id_value = $site_id->blog_id;
                 $site_id = -1;
                 $site_id = $site_id_value;
@@ -150,7 +151,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstal
             global $wpdb;
 
             $sql = 'DELETE FROM `' . $wpdb->usermeta . '` WHERE `meta_key` LIKE \'rddownloads_%\'';
-            $wpdb->query($sql);
+            $wpdb->query($sql);// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
             unset($sql);
         }// uninstallDeleteUserOptions
 
@@ -188,7 +189,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstal
                         }
 
                         $sql = 'DROP TABLE IF EXISTS ' . $prefix . $item['tablename'];
-                        $wpdb->query($sql);
+                        $wpdb->query($sql);// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                         unset($prefix, $sql);
                     }
                 }// endforeach;

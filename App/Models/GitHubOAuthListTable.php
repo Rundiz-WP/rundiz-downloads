@@ -8,6 +8,7 @@
 
 namespace RundizDownloads\App\Models;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Models\\GitHubOAuthListTable')) {
     /**
      * List data into table.
@@ -25,12 +26,12 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\GitHubOAuthListTable')) {
         /**
          * Display webhook table column (td).
          *
-         * @param object $item
-         * @param string $classes
-         * @param string $data
-         * @param string $primary
+         * @param object $item Row item object.
+         * @param string $classes HTML classes
+         * @param string $data Row data.
+         * @param string $primary Primary column name.
          */
-        public function _column_webhook($item, $classes, $data, $primary)
+        public function _column_webhook($item, $classes, $data, $primary)// phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
         {
             $output = '<td';
             $output .= ' class="' . $classes . ' rddownloads_githubrepo_webhook"';
@@ -46,6 +47,9 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\GitHubOAuthListTable')) {
 
         /**
          * {@inheritDoc}
+         * 
+         * @param object $item Row item object.
+         * @param string $column_name Column name.
          */
         protected function column_default($item, $column_name)
         {
@@ -235,13 +239,12 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\GitHubOAuthListTable')) {
                     }
 
                     unset($response);
-                }
-                while (false === $end);
+                } while (false === $end);
 
                 unset($end, $endCursor, $i);
 
                 if (isset($responseHeader['status-int']) && $responseHeader['status-int'] >= 200 && $responseHeader['status-int'] < 300) {
-                    $cacheLifetime = apply_filters('rddownloads_cachelifetime_githuboauth_repositories', (3 * 60 * 60));// hours * minutes * seconds = total seconds.
+                    $cacheLifetime = apply_filters('rundiz_downloads_cachelifetime_githuboauth_repositories', (3 * 60 * 60));// hours * minutes * seconds = total seconds.
                     $SimpleCache->getInstance()->save($cacheKey, ['header' => $responseHeader, 'body' => $responseBody], $cacheLifetime);
                     unset($cacheLifetime);
                 }
@@ -273,6 +276,8 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\GitHubOAuthListTable')) {
 
         /**
          * {@inheritDoc}
+         * 
+         * @param object $item Row item object.
          */
         public function single_row($item)
         {
@@ -281,14 +286,13 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\GitHubOAuthListTable')) {
             $output .= ' data-url="' . esc_attr($item->node->url) . '"';
             $output .= ' data-isarchived="' . (false === $item->node->isArchived ? 'false' : 'true') . '"';
             $output .= '>' . PHP_EOL;
-            echo $output;
+            echo wp_kses_post($output);
 
             $this->single_row_columns($item);
 
-            $output = '</tr>' . PHP_EOL;
-            echo $output;
+            echo '</tr>' . PHP_EOL;
         }// single_row
 
 
-    }
+    }// GitHubOAuthListTable
 }

@@ -49,7 +49,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Dow
         /**
          * Setup additional query variable.
          * 
-         * @param array $vars
+         * @param array $vars Query variables.
          * @return array
          */
         public function queryVars($vars)

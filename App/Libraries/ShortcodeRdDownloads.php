@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Libraries;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Libraries\\ShortcodeRdDownloads')) {
+    /**
+     * Shortcode rd downloads class.
+     */
     class ShortcodeRdDownloads
     {
 
@@ -228,5 +232,5 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\ShortcodeRdDownloads')) {
         }// renderHtml
 
 
-    }
+    }// ShortcodeRdDownloads
 }

@@ -3,6 +3,7 @@
  * XHR download stat for dashboard widget.
  *
  * @package rundiz-downloads
+ * 
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
@@ -11,6 +12,9 @@ namespace RundizDownloads\App\Controllers\Admin\Xhr;
 
 
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadStat')) {
+    /**
+     * XhrDownloadStat class.
+     */
     class XhrDownloadStat extends \RundizDownloads\App\Controllers\XhrBased implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -72,17 +76,17 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadS
                 $data[] = 'user_dl_antbotfailed';
                 $data[] = min($output['part_date_gmt']);
                 $data[] = max($output['part_date_gmt']);
-                $prepared = $wpdb->prepare($sql, $data);
-                $results = $wpdb->get_results($prepared);
+                $prepared = $wpdb->prepare($sql, $data);// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                $results = $wpdb->get_results($prepared);// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
                 if (defined('WP_DEBUG') && WP_DEBUG === true) {
                     $output['debug_sql'] = $sql;
-                    $output['debug_last_error'] = var_export($wpdb->last_error, true);
-                    $output['debug_last_query'] = var_export($wpdb->last_query, true);
+                    $output['debug_last_error'] = var_export($wpdb->last_error, true);// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
+                    $output['debug_last_query'] = var_export($wpdb->last_query, true);// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
                 }
                 unset($data, $prepared, $sql);
 
-                $cacheLifetime = apply_filters('rddownloads_cachelifetime_dashboardwidget_alldownloadsdailystat', (3 * 60 * 60));// hours * minutes * seconds = total seconds.
+                $cacheLifetime = apply_filters('rundiz_downloads_cachelifetime_dashboardwidget_alldownloadsdailystat', (3 * 60 * 60));// hours * minutes * seconds = total seconds.
                 $SimpleCache->getInstance()->save($cacheKey, $results, $cacheLifetime);
                 unset($cacheLifetime);
             } else {
@@ -102,7 +106,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadS
             if (is_array($results) || is_object($results)) {
                 foreach ($results as $row) {
                     $dateOnly = mysql2date('Y-m-d', $row->dl_date_gmt);
-                    $dateKey = array_search($dateOnly, $output['part_date_gmt']);
+                    $dateKey = array_search($dateOnly, $output['part_date_gmt']);// phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
 
                     if (false !== $dateKey) {
                         if (isset($row->dl_total_success) && isset($output['part_total_success'][$dateKey])) {
@@ -159,7 +163,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadS
             $output = [];
             $scope = filter_input(INPUT_GET, 'scope', FILTER_SANITIZE_NUMBER_INT);
             $allowedScopes = ['0', '1', '7', '30'];
-            if (!in_array(strval($scope), $allowedScopes)) {
+            if (!in_array(strval($scope), $allowedScopes, true)) {
                 $scope = '0';
             }
 
@@ -193,21 +197,21 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadS
                 $sql .= ' LIMIT 0, 5';
 
                 if (isset($data) && is_array($data) && !empty($data)) {
-                    $prepared = $wpdb->prepare($sql, $data);
-                    $results = $wpdb->get_results($prepared);
+                    $prepared = $wpdb->prepare($sql, $data);// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                    $results = $wpdb->get_results($prepared);// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                     unset($data, $prepared);
                 } else {
-                    $results = $wpdb->get_results($sql);
+                    $results = $wpdb->get_results($sql);// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 }
 
                 if (defined('WP_DEBUG') && WP_DEBUG === true) {
                     $output['debug_sql'] = $sql;
-                    $output['debug_last_error'] = var_export($wpdb->last_error, true);
-                    $output['debug_last_query'] = var_export($wpdb->last_query, true);
+                    $output['debug_last_error'] = var_export($wpdb->last_error, true);// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
+                    $output['debug_last_query'] = var_export($wpdb->last_query, true);// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
                 }
                 unset($sql);
 
-                $cacheLifetime = apply_filters('rddownloads_cachelifetime_dashboardwidget_topdownloads', (3 * 60 * 60));// hours * minutes * seconds = total seconds.
+                $cacheLifetime = apply_filters('rundiz_downloads_cachelifetime_dashboardwidget_topdownloads', (3 * 60 * 60));// hours * minutes * seconds = total seconds.
                 $SimpleCache->getInstance()->save($cacheKey, $results, $cacheLifetime);
                 unset($cacheLifetime);
             } else {
@@ -227,5 +231,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Xhr\\XhrDownloadS
         }// topDownloads
 
 
-    }
+    }// XhrDownloadStat
 }

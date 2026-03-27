@@ -7,7 +7,11 @@
 
 namespace RundizDownloads\App\Libraries;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Libraries\\ElementPlaceholders')) {
+    /**
+     * Element placeholders class.
+     */
     class ElementPlaceholders
     {
 
@@ -68,5 +72,5 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\ElementPlaceholders')) {
         }// textPlaceholders
 
 
-    }
+    }// ElementPlaceholders
 }

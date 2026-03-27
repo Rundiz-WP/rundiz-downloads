@@ -8,6 +8,7 @@
 
 namespace RundizDownloads\App\Controllers\Admin\Downloads;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\GithubOAuth')) {
     /**
      * Use GitHub OAuth to connect with this site.
@@ -194,7 +195,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Github
         {
             // check permission.
             if (!current_user_can('upload_files')) {
-                wp_die(esc_html__('You do not have permission to access this page.'), '', ['response' => 403]);
+                wp_die(esc_html__('You do not have permission to access this page.', 'rundiz-downloads'), '', ['response' => 403]);
             }
 
             $this->thisPageUrl = admin_url('admin.php?page=' . self::MENU_SLUG);
@@ -284,7 +285,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Github
         {
             // check permission.
             if (!current_user_can('upload_files')) {
-                wp_die(esc_html__('You do not have permission to access this page.'), '', ['response' => 403]);
+                wp_die(esc_html__('You do not have permission to access this page.', 'rundiz-downloads'), '', ['response' => 403]);
             }
 
             $subpage = filter_input(INPUT_GET, 'subpage');
@@ -428,5 +429,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Github
         }// subPageDisconnect
 
 
-    }
+    }// GithubOAuth
 }

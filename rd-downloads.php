@@ -6,6 +6,8 @@
  * 
  * @package rundiz-downloads
  * @todo[rundiz] delete this file after v1.2+
+ * 
+ * phpcs:disable
  */
 
 
@@ -24,7 +26,7 @@ $rundiz_downloads_old_path = plugin_basename(__DIR__ . '/' . $rundiz_downloads_o
 $rundiz_downloads_active_plugins = array_diff($rundiz_downloads_active_plugins, [$rundiz_downloads_old_path]);
 
 $rundiz_downloads_new_path = plugin_basename(__DIR__ . '/' . $rundiz_downloads_new_file);
-if (! in_array($rundiz_downloads_new_path, $rundiz_downloads_active_plugins)) {
+if (!in_array($rundiz_downloads_new_path, $rundiz_downloads_active_plugins)) {
     $rundiz_downloads_active_plugins[] = $rundiz_downloads_new_path;
     // Load the real plugin immediately so there's no gap.
     include_once __DIR__ . '/' . $rundiz_downloads_new_file;

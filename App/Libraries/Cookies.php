@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Libraries;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Libraries\\Cookies')) {
+    /**
+     * Cookies class.
+     */
     class Cookies
     {
 
@@ -16,7 +20,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Cookies')) {
         /**
          * Delete a cookie
          *
-         * @param string $name
+         * @param string $name Cookie name.
          * @return bool
          */
         public static function deleteCookie($name)
@@ -42,7 +46,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Cookies')) {
         public static function setCookie($name, $value = '', $expire = false, $path = false, $domain = false, $secure = '', $httponly = true)
         {
             if (false === $expire) {
-                $expire = apply_filters('rddownloads_cookie_expires', (time() + (14 * DAY_IN_SECONDS)));
+                $expire = apply_filters('rundiz_downloads_cookie_expires', (time() + (14 * DAY_IN_SECONDS)));
             }
             if (false === $path) {
                 $path = COOKIEPATH;
@@ -60,5 +64,5 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Cookies')) {
         }// setCookie
 
 
-    }
+    }// Cookies
 }

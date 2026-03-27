@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Controllers\Front\Hooks;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\WpLogout')) {
+    /**
+     * WpLogout class.
+     */
     class WpLogout implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -33,5 +37,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\WpLogout')
         }// registerHooks
 
 
-    }
+    }// WpLogout
 }

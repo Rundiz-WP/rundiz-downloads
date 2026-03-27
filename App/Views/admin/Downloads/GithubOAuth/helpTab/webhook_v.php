@@ -1,3 +1,15 @@
+<?php
+/**
+ * GitHub OAuth help tab web hook.
+ * 
+ * @package rundiz-downloads
+ */
+
+
+if (!defined('ABSPATH')) {
+    exit();
+}
+?>
 <p>
     <?php
     printf(

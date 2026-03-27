@@ -9,6 +9,8 @@
  * This page only visible if user agent has been blocked.
  * 
  * @package rundiz-downloads
+ * 
+ * phpcs:disable Generic.WhiteSpace.ScopeIndent.Incorrect
  */
 
 
@@ -20,7 +22,7 @@ get_header();
 
     <?php if (isset($form_result) && isset($form_result_msg)) { ?>
     <div class="alert alert-<?php echo ('success' === $form_result ? 'success' : 'danger'); ?>" role="alert">
-        <?php echo $form_result_msg; ?>
+        <?php echo wp_kses_post($form_result_msg); ?>
     </div>
     <?php } ?>
 
@@ -32,30 +34,30 @@ get_header();
             <div class="mb-2 row">
                 <label for="download_name" class="col-sm-3 col-form-label"><?php esc_html_e('Downloads name', 'rundiz-downloads'); ?></label>
                 <div class="col-sm-9">
-                    <input id="download_name" class="form-control-plaintext" type="text" readonly value="<?php esc_html_e($downloadRow->download_name); ?>">
+                    <input id="download_name" class="form-control-plaintext" type="text" readonly value="<?php echo esc_html($downloadRow->download_name); ?>">
                 </div>
             </div>
             <div class="mb-2 row">
                 <label for="download_size" class="col-sm-3 col-form-label"><?php esc_html_e('File size', 'rundiz-downloads'); ?></label>
                 <div class="col-sm-9">
-                    <input id="download_size" class="form-control-plaintext" type="text" readonly value="<?php esc_attr_e(str_replace('.00', '', size_format($downloadRow->download_size, 2))); ?>">
+                    <input id="download_size" class="form-control-plaintext" type="text" readonly value="<?php echo esc_attr(str_replace('.00', '', size_format($downloadRow->download_size, 2))); ?>">
                 </div>
             </div>
             <div class="mb-2 row">
                 <label for="download_file_name" class="col-sm-3 col-form-label"><?php esc_html_e('File name', 'rundiz-downloads'); ?></label>
                 <div class="col-sm-9">
-                    <input id="download_file_name" class="form-control-plaintext" type="text" readonly value="<?php esc_attr_e($downloadRow->download_file_name); ?>">
+                    <input id="download_file_name" class="form-control-plaintext" type="text" readonly value="<?php echo esc_attr($downloadRow->download_file_name); ?>">
                 </div>
             </div>
             <?php
             } else {
-                trigger_error('$downloadRow is not defined.');
+                trigger_error('$downloadRow is not defined.');// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
             }
             ?> 
         </fieldset>
         <div class="rundiz-downloads-d-none d-none" aria-hidden="true">
-            <label for="<?php esc_attr_e($honeypotName); ?>"><?php esc_html_e('Please skip this field.', 'rundiz-downloads'); ?></label>
-            <input id="<?php esc_attr_e($honeypotName); ?>" type="text" name="<?php esc_attr_e($honeypotName); ?>">
+            <label for="<?php echo esc_attr($honeypotName); ?>"><?php esc_html_e('Please skip this field.', 'rundiz-downloads'); ?></label>
+            <input id="<?php echo esc_attr($honeypotName); ?>" type="text" name="<?php echo esc_attr($honeypotName); ?>">
         </div>
         <div class="mb-3 form-check" aria-hidden="false">
             <input id="iamhuman" class="form-check-input" type="checkbox" name="iamhuman" value="1">

@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable
 /**
  * RundizSettings configuration file.
  * Name this file freedomly, but include it correctly in \App\config\config.php

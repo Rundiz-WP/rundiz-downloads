@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Update\Manual;
 
+
 if (!interface_exists('\\RundizDownloads\\App\\Update\\Manual\\ManualUpdateInterface')) {
+    /**
+     * Manual update interface.
+     */
     interface ManualUpdateInterface
     {
 
@@ -19,5 +23,5 @@ if (!interface_exists('\\RundizDownloads\\App\\Update\\Manual\\ManualUpdateInter
         public function run();
 
 
-    }
+    }// ManualUpdateInterface
 }

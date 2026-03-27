@@ -8,7 +8,11 @@
 
 namespace RundizDownloads\App\Controllers\Admin\Settings\Xhr;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings\\Xhr\\XhrCache')) {
+    /**
+     * XhrCache class.
+     */
     class XhrCache extends \RundizDownloads\App\Controllers\XhrBased implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
@@ -39,5 +43,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings\\Xhr\\Xh
         }// registerHooks
 
 
-    }
+    }// XhrCache
 }

@@ -49,11 +49,13 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
             }
             if (version_compare($phpversion, $phpversion_required, '<')) {
                 wp_die(
-                    sprintf(
-                        /* translators: %1$s: Current PHP version, %2$s: Required PHP version. */
-                        __('You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or contact plugin author for this help.<br><br>Minimum requirement:<br>PHP %2$s', 'rundiz-downloads'), 
-                        $phpversion, 
-                        $phpversion_required
+                    wp_kses_post(
+                        sprintf(
+                            /* translators: %1$s: Current PHP version, %2$s: Required PHP version. */
+                            __('You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or contact plugin author for this help.<br><br>Minimum requirement:<br>PHP %2$s', 'rundiz-downloads'), 
+                            $phpversion, 
+                            $phpversion_required
+                        )
                     ), 
                     esc_html__('Minimum requirement of PHP version does not meet.', 'rundiz-downloads')
                 );
@@ -64,8 +66,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
                     sprintf(
                         /* translators: %1$s: Current WordPress version, %2$s: Required WordPress version. */
                         esc_html__('Your WordPress version does not meet the requirement. (%1$s < %2$s).', 'rundiz-downloads'), 
-                        get_bloginfo('version'), 
-                        $wordpress_required_version
+                        esc_html(get_bloginfo('version')), 
+                        esc_html($wordpress_required_version)
                     )
                 );
                 exit;

@@ -1,12 +1,26 @@
+<?php
+/**
+ * Edit download views file.
+ * 
+ * @package rundiz-downloads
+ * 
+ * phpcs:disable Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace
+ */
+
+
+if (!defined('ABSPATH')) {
+    exit();
+}
+?>
 <div class="wrap">
-    <h1><?php if (isset($page_heading1)) {esc_html_e($page_heading1);} ?></h1>
+    <h1><?php if (isset($page_heading1)) {echo esc_html($page_heading1);} ?></h1>
 
     <?php if (isset($form_result_class) && isset($form_result_msg)) { ?> 
-    <div class="<?php esc_attr_e($form_result_class); ?> notice is-dismissible">
+    <div class="<?php echo esc_attr($form_result_class); ?> notice is-dismissible">
         <p>
-            <strong><?php echo $form_result_msg; ?></strong>
+            <strong><?php echo wp_kses_post($form_result_msg); ?></strong>
         </p>
-        <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e('Dismiss this notice.'); ?></span></button>
+        <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e('Dismiss this notice.', 'rundiz-downloads'); ?></span></button>
     </div>
     <?php } ?> 
     <div class="rundiz-downloads-form-result-placeholder"></div>
@@ -29,7 +43,7 @@
                         <input id="download_size" type="hidden" name="download_size" value="<?php if (isset($download_size)) {echo esc_attr($download_size);} ?>">
                         <div id="download-size-and-preview" class="download-size-and-preview"><?php 
                         if (isset($download_size)) {
-                            echo size_format(esc_html($download_size));
+                            echo esc_html(size_format($download_size));
                         }
                         if (isset($download_url)) {
                             echo ' ';
@@ -48,7 +62,7 @@
                         </div><!--.rundiz-downloads-local-buttons-->
                         <p class="description"><?php 
                         /* translators: %s: Max upload size. */
-                        printf(esc_html__('Maximum upload file size: %s.', 'rundiz-downloads'), size_format(wp_max_upload_size())); 
+                        printf(esc_html__('Maximum upload file size: %s.', 'rundiz-downloads'), esc_html(size_format(wp_max_upload_size()))); 
                         ?></p>
                     </td>
                 </tr>
@@ -113,13 +127,13 @@
                             <?php esc_html_e('Default', 'rundiz-downloads'); ?> 
                             <span class="description">(<?php
                             if (isset($rundiz_downloads_options['rdd_force_download']) && strval($rundiz_downloads_options['rdd_force_download']) === '1') {
-                                $pluginSettingsUse = __('Force download', 'rundiz-downloads');
+                                $rundiz_downloads_pluginSettingsUse = __('Force download', 'rundiz-downloads');
                             } else {
-                                $pluginSettingsUse = __('redirect to file', 'rundiz-downloads');
+                                $rundiz_downloads_pluginSettingsUse = __('redirect to file', 'rundiz-downloads');
                             }
                             /* translators: %s: Force download option value for main plugin setting. */
-                            printf(esc_html__('The plugin setting is using %s.', 'rundiz-downloads'), esc_html($pluginSettingsUse));
-                            unset($pluginSettingsUse);
+                            printf(esc_html__('The plugin setting is using %s.', 'rundiz-downloads'), esc_html($rundiz_downloads_pluginSettingsUse));
+                            unset($rundiz_downloads_pluginSettingsUse);
                             ?>)</span>
                         </label>
                         <p class="description">
@@ -133,10 +147,10 @@
                     <td>
                         <p><i class="fas fa-user"></i> <?php esc_html_e('Created by', 'rundiz-downloads'); ?>: <span class="create-by"><?php 
                         if (isset($user_id)) {
-                            echo '<a href="' . get_edit_user_link($user_id) . '" target="editUser">';
+                            echo '<a href="' . esc_url(get_edit_user_link($user_id)) . '" target="editUser">';
                         } 
                         if (isset($display_name)) {
-                            esc_html_e($display_name);
+                            echo esc_html($display_name);
                         } 
                         if (isset($user_id)) {
                             echo '</a>';
@@ -144,12 +158,12 @@
                         ?></span></p>
                         <p><i class="fas fa-calendar-alt"></i> <?php esc_html_e('Created on', 'rundiz-downloads'); ?>: <span class="create-on"><?php 
                         if (isset($download_create_gmt)) {
-                            echo RundizDownloads\App\Libraries\DateTime::displayDateTime($download_create_gmt);
+                            echo esc_html(RundizDownloads\App\Libraries\DateTime::displayDateTime($download_create_gmt));
                         } 
                         ?></span></p>
                         <p><i class="fas fa-calendar-alt"></i> <?php esc_html_e('Last update', 'rundiz-downloads'); ?>: <span class="last-update"><?php 
                         if (isset($download_update_gmt)) {
-                            echo RundizDownloads\App\Libraries\DateTime::displayDateTime($download_update_gmt);
+                            echo esc_html(RundizDownloads\App\Libraries\DateTime::displayDateTime($download_update_gmt));
                         } 
                         ?></span></p>
                     </td>

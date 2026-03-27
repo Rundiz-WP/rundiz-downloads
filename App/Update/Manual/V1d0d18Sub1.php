@@ -4,6 +4,8 @@
  * 
  * @package rundiz-downloads
  * @license http://opensource.org/licenses/MIT MIT
+ * 
+ * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
  */
 
 
@@ -18,6 +20,9 @@ if (!class_exists('\\RundizDownloads\\App\\Update\\Manual\\V1d0d18Sub1')) {
     {
 
 
+        /**
+         * @var string Manual update version.
+         */
         public $manual_update_version = '0.3';
 
 
@@ -40,13 +45,13 @@ if (!class_exists('\\RundizDownloads\\App\\Update\\Manual\\V1d0d18Sub1')) {
                 $new_table = $prefix . $new_base;
 
                 // Check if old table exists and new table does NOT exist yet
-                $old_exists = $wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $old_table));
-                $new_exists = $wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $new_table));
+                $old_exists = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $old_table));
+                $new_exists = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $new_table));
 
                 if ($old_exists && !$new_exists) {
-                    $wpdb->query("RENAME TABLE `{$old_table}` TO `{$new_table}`");
+                    $wpdb->query("RENAME TABLE `{$old_table}` TO `{$new_table}`");// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
-                    error_log("Rundiz Downloads: Renamed table {$old_table} → {$new_table}");
+                    error_log("Rundiz Downloads: Renamed table {$old_table} → {$new_table}");// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
                 }
 
                 // If both exist → already migrated (or manual intervention happened)
@@ -54,7 +59,7 @@ if (!class_exists('\\RundizDownloads\\App\\Update\\Manual\\V1d0d18Sub1')) {
             }// endforeach;
             unset($new_base, $old_base);
 
-            error_log('Rundiz Downloads: Table migration completed for site ' . get_current_blog_id());
+            error_log('Rundiz Downloads: Table migration completed for site ' . get_current_blog_id());// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
         }// renameTables
 
 

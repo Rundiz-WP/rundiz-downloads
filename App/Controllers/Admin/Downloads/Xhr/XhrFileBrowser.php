@@ -3,7 +3,8 @@
  * File browser (also working with delete and upload).
  *
  * @package rundiz-downloads
- * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+ * 
+ * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
  */
 
 
@@ -23,6 +24,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
 
         /**
          * Banned file names. write it in lower case only.
+         * 
          * @var array List of banned file name that will not be display.
          */
         protected $bannedFileNames = ['.htaccess'];
@@ -80,7 +82,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                         $folders[$FileInfo->getFilename()]['previousTarget'] = $target . '/' . $FileInfo->getFilename();
                         $folders[$FileInfo->getFilename()]['relatedPath'] = ltrim($target . '/' . $FileInfo->getFilename(), '/');
                     } else {
-                        if (!in_array(strtolower($FileInfo->getFilename()), $this->bannedFileNames)) {
+                        if (!in_array(strtolower($FileInfo->getFilename()), $this->bannedFileNames)) {// phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
                             $files[$FileInfo->getFilename()]['id'] = md5($FileInfo->getPathname());
                             $files[$FileInfo->getFilename()]['basename'] = $FileInfo->getBasename();// base name.
                             $files[$FileInfo->getFilename()]['filename'] = $FileInfo->getFilename();// name only.
@@ -165,7 +167,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
          * Change upload folder.
          *
          * @access protected Do not access this method directly, it is called from `add_action()`.
-         * @param array $dir
+         * @param array $dir wp-content/uploads Directory data.
          * @return array
          */
         public function changeUploadDir($dir)
@@ -222,7 +224,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             if (!current_user_can('upload_files')) {
                 $responseStatus = 403;
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('You do not have permission to access this page.');
+                $output['form_result_msg'] = __('You do not have permission to access this page.', 'rundiz-downloads');
                 $disallowDelete = true;
             }
 
@@ -367,9 +369,9 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
          *
          * @link https://github.com/Rundiz/upload/blob/version2/Rundiz/Upload/Upload.php Reference.
          * @access protected  Do not access this method directly, it is called from `add_action()`.
-         * @param string $name
-         * @param string $ext
-         * @param string $dir
+         * @param string $name File name.
+         * @param string $ext File extension.
+         * @param string $dir Directory
          * @param callable|null $unique_filename_callback Callback function that generates the unique file name.
          * @return string
          */
@@ -401,7 +403,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                 ++$round;
 
                 if ($round > 10000) {
-                    $name .= uniqid().'-'.str_replace('.', '', microtime(true));
+                    $name .= uniqid() . '-' . str_replace('.', '', microtime(true));
                     break;
                 }
             }
@@ -410,7 +412,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             if (empty($name)) {
                 // if the name get replaced and empty (I hope not but make sure).
                 // set new random name.
-                $name = uniqid().'-'.str_replace('.', '', microtime(true));
+                $name = uniqid() . '-' . str_replace('.', '', microtime(true));
             }
 
             return $name . $ext;
@@ -429,7 +431,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
 
             if (!current_user_can('upload_files')) {
                 $output['form_result_class'] = 'notice-error';
-                $output['form_result_msg'] = __('You do not have permission to access this page.');
+                $output['form_result_msg'] = __('You do not have permission to access this page.', 'rundiz-downloads');
                 wp_send_json($output, 403);
             }
 
@@ -437,9 +439,9 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
             if ('0' === $download_id || !is_numeric($download_id)) {
                 $download_id = '';
             }
-            $upload_file = (isset($_FILES['upload_file']) ? $_FILES['upload_file'] : null);
+            $upload_file = (isset($_FILES['upload_file']) ? $_FILES['upload_file'] : null);// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
-            $overrides['action'] = (isset($_POST['action']) ? sanitize_text_field(wp_unslash($_POST['action'])) : null);
+            $overrides['action'] = (isset($_POST['action']) ? sanitize_text_field(wp_unslash($_POST['action'])) : null);// phpcs:ignore WordPress.Security.NonceVerification.Missing
             add_filter('upload_dir', [$this, 'changeUploadDir']);
             add_filter('wp_unique_filename', [$this, 'safeWebFileName'], 10, 4);
             $uploadResult = wp_handle_upload($upload_file, $overrides);

@@ -10,7 +10,11 @@
 
 namespace RundizDownloads\App\Controllers\Front\Hooks\Query\GithubAutoUpdatePage;
 
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\GithubAutoUpdatePage\\GithubAutoUpdatePage')) {
+    /**
+     * GithubAutoUpdatePage class.
+     */
     class GithubAutoUpdatePage extends \RundizDownloads\App\Controllers\Front\ControllerBased
     {
 
@@ -407,5 +411,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Git
         }// subGithubPushUpdateData
 
 
-    }
+    }// GithubAutoUpdatePage
 }

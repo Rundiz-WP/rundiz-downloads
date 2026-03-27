@@ -1,3 +1,15 @@
+<?php
+/**
+ * Management page help tab short codes.
+ * 
+ * @package rundiz-downloads
+ */
+
+
+if (!defined('ABSPATH')) {
+    exit();
+}
+?>
 <p>
     <?php
     printf(
@@ -13,20 +25,19 @@
 <h4><?php esc_html_e('Additional attribute for shortcode', 'rundiz-downloads'); ?></h4>
 <ul>
     <?php
-    $ShortcodeRdDownloads = new \RundizDownloads\App\Libraries\ShortcodeRdDownloads();
-    $attributes = $ShortcodeRdDownloads->availableAttributes();
-    $availableShortcodeAttributes = '';
-    foreach ($attributes as $attribute => $item) {
-        if (strtolower($attribute) !== 'id') {
-            echo '<li><code>' . esc_html($attribute) . '</code>';
-            if (isset($item['helpmsg'])) {
-                echo ' =&gt; ' . esc_html($item['helpmsg']);
+    $rundiz_downloads_ShortcodeRdDownloads = new \RundizDownloads\App\Libraries\ShortcodeRdDownloads();
+    $rundiz_downloads_attributes = $rundiz_downloads_ShortcodeRdDownloads->availableAttributes();
+    foreach ($rundiz_downloads_attributes as $rundiz_downloads_attribute => $rundiz_downloads_item) {
+        if (strtolower($rundiz_downloads_attribute) !== 'id') {
+            echo '<li><code>' . esc_html($rundiz_downloads_attribute) . '</code>';
+            if (isset($rundiz_downloads_item['helpmsg'])) {
+                echo ' =&gt; ' . esc_html($rundiz_downloads_item['helpmsg']);
             }
             echo '</li>' . PHP_EOL;
         }
     }
-    unset($attribute, $attributes, $item);
-    unset($ShortcodeRdDownloads);
+    unset($rundiz_downloads_attribute, $rundiz_downloads_attributes, $rundiz_downloads_item);
+    unset($rundiz_downloads_ShortcodeRdDownloads);
     ?>
 </ul>
 <p>

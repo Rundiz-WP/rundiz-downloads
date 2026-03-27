@@ -8,13 +8,17 @@
 
 namespace RundizDownloads\App\Controllers\Admin\Hooks\EditorHelptab;
 
-if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\EditorHelptab\\rdDownloadsShortcode')) {
-    class rdDownloadsShortcode implements \RundizDownloads\App\Controllers\ControllerInterface
+
+if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\EditorHelptab\\RdDownloadsShortcode')) {
+    /**
+     * `rddownloads` short code class.
+     */
+    class RdDownloadsShortcode implements \RundizDownloads\App\Controllers\ControllerInterface
     {
 
 
         /**
-         * Display download shortcode help tab.
+         * Display download short code help tab.
          */
         public function rdDownloadsShortcodeHelpTab()
         {
@@ -23,7 +27,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\EditorHelp
 
             if (
                 $screen instanceof \WP_Screen && 
-                in_array(strtolower($screen->id), ['edit-page', 'page', 'edit-post', 'post'])
+                in_array(strtolower($screen->id), ['edit-page', 'page', 'edit-post', 'post'], true)
             ) {
                 // if in post, add post, edit post, page, add page, edit page.
                 ob_start();
@@ -52,5 +56,5 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\EditorHelp
         }// registerHooks
 
 
-    }
+    }// rdDownloadsShortcode
 }
