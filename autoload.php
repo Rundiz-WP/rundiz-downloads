@@ -1,5 +1,17 @@
 <?php
 /**
+ * Autoload.
+ * 
+ * @package rundiz-downloads
+ */
+
+
+if (!defined('ABSPATH')) {
+    exit();
+}
+
+
+/**
  * An example of a project-specific implementation.
  * 
  * After registering this autoload function with SPL, the following line
