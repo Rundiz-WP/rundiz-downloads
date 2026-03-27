@@ -59,6 +59,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
          */
         public function registerHooks()
         {
+            add_action('init', [$this, 'registerCommonScripts']);
             add_action('admin_enqueue_scripts', [$this, 'registerStyles']);
             add_action('admin_enqueue_scripts', [$this, 'registerScripts']);
             add_action('admin_enqueue_scripts', [$this, 'modifyTinymceDependencies']);
@@ -66,6 +67,25 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
             add_filter('mce_buttons', [$this, 'registerButtons']);
             add_filter('mce_external_plugins', [$this, 'registerTinyMceJavascript']);
         }// registerHooks
+
+
+        /**
+         * Register common scripts.
+         */
+        public function registerCommonScripts()
+        {
+            wp_register_script(
+                'rundiz-downloads-tinymce-ajax', 
+                plugins_url('/assets/js/admin/Hooks/ClassicEditor/tinymce-ajax.js', RUNDIZDOWNLOADS_FILE), 
+                [
+                    'jquery', 
+                    'rundiz-downloads-common-functions-js', 
+                    'wp-util',
+                ], 
+                RUNDIZDOWNLOADS_VERSION, 
+                true
+            );
+        }// registerCommonScripts
 
 
         /**
@@ -83,7 +103,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
                 $dialogContent = ob_get_contents();
                 ob_end_clean();
 
-                wp_enqueue_script('rundiz-downloads-tinymce-ajax', plugins_url('/assets/js/admin/Hooks/ClassicEditor/tinymce-ajax.js', RUNDIZDOWNLOADS_FILE), ['jquery', 'rundiz-downloads-common-functions-js', 'wp-util'], RUNDIZDOWNLOADS_VERSION, true);
+                wp_enqueue_script('rundiz-downloads-tinymce-ajax');
                 wp_localize_script(
                     'rundiz-downloads-tinymce-ajax',
                     'RdDownloads',
