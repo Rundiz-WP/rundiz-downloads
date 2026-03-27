@@ -244,7 +244,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
             // on update/upgrade plugin completed. set transient and let `detectPluginUpdate()` work.
             add_action('upgrader_process_complete', [$this, 'updateProcessComplete'], 10, 2);
             // on plugins loaded, display link or maybe redirect to manual update page.
-            add_action('plugins_loaded', [$this, 'detectPluginUpdate']);
+            add_action('init', [$this, 'detectPluginUpdate']);
         }// registerHooks
 
 
