@@ -55,11 +55,13 @@ if (!function_exists('rundiz_downloads_migrate_old_prefix')) {
             )
         ) {
             // if there is an option from previous version that use wrong name.
-            // in older versions this plugin was use option name prefix with `rundizoauth_` which is not match with plugin slug.
+            // in older versions this plugin was use option name prefix with `rd_downloads_` which is not match with plugin slug.
             // move them to new option name that match plugin slug.
             update_option('rundiz_downloads_options', $pre1_1_0_options, false);
             // delete previous old option name.
             delete_option($old_version_option_name);// this option name will not be renamed.
+            // set transient to mark that there is manual update progress awaiting.
+            set_transient('rundiz_downloads_transient__updated', 1);
         }
         unset($old_version_option_name, $pre1_1_0_options);
     }// rundiz_downloads_migrate_old_prefix
@@ -109,6 +111,9 @@ if (!function_exists('rundiz_downloads_migrate_upload_folder')) {
         if ($already_migrated) {
             return; // already done on this site
         }
+
+        // set transient to mark that there is manual update progress awaiting.
+        set_transient('rundiz_downloads_transient__updated', 1);
 
         global $wpdb;
         $is_multisite = is_multisite();
