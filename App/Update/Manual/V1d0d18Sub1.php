@@ -1,6 +1,6 @@
 <?php
 /**
- * Version 1.0.18 update sub progress 1.
+ * Version 1.1.0 (it is the same as  v1.0.18 but bumps up) update sub progress 1.
  * 
  * @package rundiz-downloads
  * @license http://opensource.org/licenses/MIT MIT
@@ -14,7 +14,7 @@ namespace RundizDownloads\App\Update\Manual;
 
 if (!class_exists('\\RundizDownloads\\App\\Update\\Manual\\V1d0d18Sub1')) {
     /**
-     * Version 1.0.18 update sub progress 1.
+     * Version 1.1.0 update sub progress 1.
      */
     class V1d0d18Sub1 implements \RundizDownloads\App\Update\Manual\ManualUpdateInterface
     {

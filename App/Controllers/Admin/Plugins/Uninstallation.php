@@ -96,7 +96,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstal
         private static function uninstallDeleteOption()
         {
             delete_option(static::getMainOptionName());
-            delete_option('rundiz_downloads_renamed_upload_folder_v1_0_18');
+            delete_option('rundiz_downloads_renamed_upload_folder_v1_1_0');// @todo[rundiz] delete this line after v1.2+
 
             wp_clear_scheduled_hook('rundiz_downloads_cron_purgelogs');
         }// uninstallDeleteOption
