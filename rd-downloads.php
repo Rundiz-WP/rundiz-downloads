@@ -43,25 +43,25 @@ if (!function_exists('rundiz_downloads_migrate_old_prefix')) {
     function rundiz_downloads_migrate_old_prefix() 
     {
         $old_version_option_name = 'rd_downloads_options';// this option name will not be renamed.
-        $pre1_0_18_options = get_option($old_version_option_name);// this option name will not be renamed.
+        $pre1_1_0_options = get_option($old_version_option_name);// this option name will not be renamed.
         if (
             (
-                is_string($pre1_0_18_options) && 
-                '' !== $pre1_0_18_options
+                is_string($pre1_1_0_options) && 
+                '' !== $pre1_1_0_options
             ) ||
             (
-                is_array($pre1_0_18_options) &&
-                !empty($pre1_0_18_options)
+                is_array($pre1_1_0_options) &&
+                !empty($pre1_1_0_options)
             )
         ) {
             // if there is an option from previous version that use wrong name.
             // in older versions this plugin was use option name prefix with `rundizoauth_` which is not match with plugin slug.
             // move them to new option name that match plugin slug.
-            update_option('rundiz_downloads_options', $pre1_0_18_options, false);
+            update_option('rundiz_downloads_options', $pre1_1_0_options, false);
             // delete previous old option name.
             delete_option($old_version_option_name);// this option name will not be renamed.
         }
-        unset($old_version_option_name, $pre1_0_18_options);
+        unset($old_version_option_name, $pre1_1_0_options);
     }// rundiz_downloads_migrate_old_prefix
 }// endif;
 add_action('plugins_loaded', 'rundiz_downloads_migrate_old_prefix');
@@ -104,7 +104,7 @@ if (!function_exists('rundiz_downloads_migrate_upload_folder')) {
         $new_folder = 'rundiz-downloads';
 
         // Safety flag (per-site)
-        $already_migrated = get_option('rundiz_downloads_renamed_upload_folder_v1_0_18', false);
+        $already_migrated = get_option('rundiz_downloads_renamed_upload_folder_v1_1_0', false);
 
         if ($already_migrated) {
             return; // already done on this site
@@ -164,7 +164,7 @@ if (!function_exists('rundiz_downloads_migrate_upload_folder')) {
         unset($blog_ids, $original_blog_id);
 
         // Mark this site as migrated (per-site flag)
-        update_option('rundiz_downloads_renamed_upload_folder_v1_0_18', true);
+        update_option('rundiz_downloads_renamed_upload_folder_v1_1_0', true);
     }// rundiz_downloads_migrate_upload_folder
 }// endif;
 add_action('plugins_loaded', 'rundiz_downloads_migrate_upload_folder');

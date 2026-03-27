@@ -2,7 +2,7 @@
 Contributors: okvee
 Tags: downloads, download, download manager, file hosting, GitHub
 Tested up to: 7.0
-Stable tag: 1.0.18dev-20260325
+Stable tag: 1.1.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 4.7.0
@@ -68,8 +68,8 @@ Yes, the plugin's tables will be dropped on uninstall.
 12. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
-= 1.0.18 =
-2026-xx-xx
+= 1.1.0 =
+2026-03-27
 
 * Rename namespace, constants, text domain to match plugin slug.  
     The name `rd-downloads` was used from the beginning of this plugin but wordpress.org plugin system renamed it to `rundiz-downloads` on submit.  
