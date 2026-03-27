@@ -219,7 +219,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
                     if (defined('WP_DEBUG') && WP_DEBUG === true) {
                         $output['debug_accessToken_and_secretKey_empty'] = true;
                         $output['debug_accessToken'] = $accessToken;
-                        $output['debug_secretKey'] = $secretKey;
+                        //$output['debug_secretKey'] = $secretKey;
                     }
                 }// endif; empty token or secret key.
                 unset($accessToken, $secretKey);
