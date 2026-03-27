@@ -64,6 +64,10 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                         if (!empty($lastError)) {
                             if (is_array($lastError) && array_key_exists('message', $lastError) && is_scalar($lastError['message'])) {
                                 $errorMessage = $lastError['message'];
+                                if (isset($lastError['file']) && isset($lastError['line'])) {
+                                    $errorMessage .= ' on ' . $lastError['file'] . ':' . $lastError['line'];
+                                }
+
                                 if (defined('WP_DEBUG') && WP_DEBUG === true) {
                                     $debugTraces = debug_backtrace();// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace
                                     $errorMessage .= '<br>' . PHP_EOL;
