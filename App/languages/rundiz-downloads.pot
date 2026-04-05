@@ -2,14 +2,14 @@
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rundiz Downloads 1.1.0\n"
+"Project-Id-Version: Rundiz Downloads 1.1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rundiz-downloads\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-27T12:06:15+07:00\n"
+"POT-Creation-Date: 2026-04-05T14:57:36+07:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: rundiz-downloads\n"
@@ -358,7 +358,7 @@ msgstr ""
 #: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:252
 #: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:374
 #: App/Controllers/Admin/Plugins/Upgrader.php:35
-#: App/Controllers/Admin/Plugins/Upgrader.php:222
+#: App/Controllers/Admin/Plugins/Upgrader.php:226
 #: App/Controllers/Admin/Settings.php:94
 #: App/Controllers/XhrBased.php:44
 msgid "You do not have permission to access this page."
@@ -401,7 +401,7 @@ msgid "This can not be un-done."
 msgstr ""
 
 #: App/Controllers/Admin/Downloads/Editing.php:190
-#: App/Controllers/Admin/Plugins/Upgrader.php:262
+#: App/Controllers/Admin/Plugins/Upgrader.php:266
 msgid "Dismiss"
 msgstr ""
 
@@ -668,32 +668,32 @@ msgstr ""
 msgid "Your download was saved successfully."
 msgstr ""
 
-#: App/Controllers/Admin/Hooks/ClassicEditor/DownloadButton.php:93
+#: App/Controllers/Admin/Hooks/ClassicEditor/DownloadButton.php:118
 msgid "Add a download"
 msgstr ""
 
-#: App/Controllers/Admin/Hooks/ClassicEditor/DownloadButton.php:94
+#: App/Controllers/Admin/Hooks/ClassicEditor/DownloadButton.php:119
 #: App/Models/RdDownloadsListTable.php:196
 #: App/Models/RdDownloadsListTable.php:321
 #: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:35
 msgid "Any remote file"
 msgstr ""
 
-#: App/Controllers/Admin/Hooks/ClassicEditor/DownloadButton.php:95
+#: App/Controllers/Admin/Hooks/ClassicEditor/DownloadButton.php:120
 #: App/Models/RdDownloadsListTable.php:194
 #: App/Models/RdDownloadsListTable.php:314
 #: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:23
 msgid "GitHub file"
 msgstr ""
 
-#: App/Controllers/Admin/Hooks/ClassicEditor/DownloadButton.php:96
+#: App/Controllers/Admin/Hooks/ClassicEditor/DownloadButton.php:121
 #: App/Models/RdDownloadsListTable.php:192
 #: App/Models/RdDownloadsListTable.php:307
 #: App/Views/admin/Downloads/Editing/helpTab/tab1_v.php:14
 msgid "Local file"
 msgstr ""
 
-#: App/Controllers/Admin/Hooks/ClassicEditor/DownloadButton.php:97
+#: App/Controllers/Admin/Hooks/ClassicEditor/DownloadButton.php:122
 #: App/Models/RdDownloadsListTable.php:198
 msgid "Unknown"
 msgstr ""
@@ -765,37 +765,37 @@ msgstr ""
 msgid "Please reload this page and try again."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:95
+#: App/Controllers/Admin/Plugins/Upgrader.php:99
 msgid "An error has been occur, cannot continue manual update. Please contact plugin author."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:112
+#: App/Controllers/Admin/Plugins/Upgrader.php:116
 msgid "Success, please click next to continue update."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:115
+#: App/Controllers/Admin/Plugins/Upgrader.php:119
 msgid "All manual update completed successfully. This page will be no longer available until there is next manual update."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:134
+#: App/Controllers/Admin/Plugins/Upgrader.php:138
 msgid "Unable to run update, there is no update classes to run."
 msgstr ""
 
 #. translators: %1$s: Open link tag, %2$s: Close link tag.
-#: App/Controllers/Admin/Plugins/Upgrader.php:168
+#: App/Controllers/Admin/Plugins/Upgrader.php:172
 #, php-format
 msgid "The Rundiz Downloads is just upgraded and need to be manually update. Please continue to the %1$splugin update page%2$s."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:209
+#: App/Controllers/Admin/Plugins/Upgrader.php:213
 msgid "Rundiz Downloads update"
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:261
+#: App/Controllers/Admin/Plugins/Upgrader.php:265
 msgid "Completed"
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:263
+#: App/Controllers/Admin/Plugins/Upgrader.php:267
 #: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:58
 msgid "Next"
 msgstr ""
