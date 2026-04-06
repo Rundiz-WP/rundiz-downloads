@@ -2,14 +2,14 @@
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rundiz Downloads 1.1.1\n"
+"Project-Id-Version: Rundiz Downloads 1.1.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rundiz-downloads\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-04-05T14:57:36+07:00\n"
+"POT-Creation-Date: 2026-04-06T11:09:27+07:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: rundiz-downloads\n"
@@ -43,7 +43,8 @@ msgstr ""
 msgid "https://rundiz.com"
 msgstr ""
 
-#: App/AppTrait.php:144
+#: App/AppTrait.php:152
+#: App/Controllers/Admin/Settings.php:128
 msgid "Settings configuration file was not set."
 msgstr ""
 
@@ -357,9 +358,9 @@ msgstr ""
 #: App/Controllers/Admin/Downloads/Xhr/XhrLogsBulkActions.php:61
 #: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:252
 #: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:374
-#: App/Controllers/Admin/Plugins/Upgrader.php:35
-#: App/Controllers/Admin/Plugins/Upgrader.php:226
-#: App/Controllers/Admin/Settings.php:94
+#: App/Controllers/Admin/Plugins/Upgrader.php:47
+#: App/Controllers/Admin/Plugins/Upgrader.php:264
+#: App/Controllers/Admin/Settings.php:102
 #: App/Controllers/XhrBased.php:44
 msgid "You do not have permission to access this page."
 msgstr ""
@@ -401,7 +402,7 @@ msgid "This can not be un-done."
 msgstr ""
 
 #: App/Controllers/Admin/Downloads/Editing.php:190
-#: App/Controllers/Admin/Plugins/Upgrader.php:266
+#: App/Controllers/Admin/Plugins/Upgrader.php:311
 msgid "Dismiss"
 msgstr ""
 
@@ -726,97 +727,105 @@ msgstr ""
 msgid "Rundiz Downloads shortcodes"
 msgstr ""
 
-#: App/Controllers/Admin/Plugins.php:40
-#: App/Controllers/Admin/Settings.php:74
+#: App/Controllers/Admin/Plugins.php:46
+#: App/Controllers/Admin/Settings.php:82
 msgid "Settings"
 msgstr ""
 
-#. translators: %s: Current DB version.
-#: App/Controllers/Admin/Plugins.php:83
+#. translators: %s The DB version of this plugin.
+#: App/Controllers/Admin/Plugins.php:94
 #, php-format
 msgid "DB version %s"
 msgstr ""
 
-#: App/Controllers/Admin/Plugins.php:87
+#: App/Controllers/Admin/Plugins.php:98
 msgid "Donate"
 msgstr ""
 
-#. translators: %1$s: Current PHP version, %2$s: Required PHP version.
-#: App/Controllers/Admin/Plugins/Activation.php:55
+#. translators: %1$s current PHP version.
+#: App/Controllers/Admin/Plugins/Activation.php:62
 #, php-format
-msgid "You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or contact plugin author for this help.<br><br>Minimum requirement:<br>PHP %2$s"
+msgid "You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or contact plugin author for this help."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Activation.php:60
+#. translators: %1$s minimum PHP version required.
+#: App/Controllers/Admin/Plugins/Activation.php:70
+#, php-format
+msgid "Minimum PHP requirement: %1$s."
+msgstr ""
+
+#: App/Controllers/Admin/Plugins/Activation.php:74
 msgid "Minimum requirement of PHP version does not meet."
 msgstr ""
 
-#. translators: %1$s: Current WordPress version, %2$s: Required WordPress version.
-#: App/Controllers/Admin/Plugins/Activation.php:68
+#. translators: %1$s Current WordPress version, %2$s Required WordPress version.
+#: App/Controllers/Admin/Plugins/Activation.php:83
 #, php-format
 msgid "Your WordPress version does not meet the requirement. (%1$s < %2$s)."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Activation.php:78
-msgid "Unable to network activate, please activate from each site that have to use it only."
+#: App/Controllers/Admin/Plugins/Activation.php:88
+msgid "Minimum requirement of WordPress version does not meet."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:43
+#: App/Controllers/Admin/Plugins/Activation.php:95
+msgid "Unable to network activate, please activate per site only."
+msgstr ""
+
+#: App/Controllers/Admin/Plugins/Upgrader.php:60
 msgid "Please reload this page and try again."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:99
+#: App/Controllers/Admin/Plugins/Upgrader.php:119
 msgid "An error has been occur, cannot continue manual update. Please contact plugin author."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:116
+#: App/Controllers/Admin/Plugins/Upgrader.php:136
 msgid "Success, please click next to continue update."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:119
+#: App/Controllers/Admin/Plugins/Upgrader.php:139
 msgid "All manual update completed successfully. This page will be no longer available until there is next manual update."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:138
+#: App/Controllers/Admin/Plugins/Upgrader.php:158
 msgid "Unable to run update, there is no update classes to run."
 msgstr ""
 
-#. translators: %1$s: Open link tag, %2$s: Close link tag.
-#: App/Controllers/Admin/Plugins/Upgrader.php:172
+#. translators: %1$s Open link, %2$s Close link.
+#: App/Controllers/Admin/Plugins/Upgrader.php:206
 #, php-format
 msgid "The Rundiz Downloads is just upgraded and need to be manually update. Please continue to the %1$splugin update page%2$s."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:213
+#: App/Controllers/Admin/Plugins/Upgrader.php:249
 msgid "Rundiz Downloads update"
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:265
+#: App/Controllers/Admin/Plugins/Upgrader.php:310
 msgid "Completed"
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:267
+#: App/Controllers/Admin/Plugins/Upgrader.php:312
 #: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:58
 msgid "Next"
 msgstr ""
 
-#: App/Controllers/Admin/Settings.php:74
-#: App/Views/admin/settings_v.php:16
+#: App/Controllers/Admin/Settings.php:82
 msgid "Downloads Settings"
 msgstr ""
 
-#. translators: %1$s: Open link tag, %2$s: Close link tag.
-#: App/Controllers/Admin/Settings.php:102
+#. translators: %1$s Open link, %2$s Close link.
+#: App/Controllers/Admin/Settings.php:110
 #, php-format
 msgid "The manual update is required, please %1$supdate first%2$s."
 msgstr ""
 
-#: App/Controllers/Admin/Settings.php:108
+#: App/Controllers/Admin/Settings.php:117
 msgid "The manual update is required, please tell administrator to update first."
 msgstr ""
 
-#: App/Controllers/Admin/Settings.php:171
-#: App/Controllers/Admin/Settings.php:174
+#: App/Controllers/Admin/Settings.php:185
 msgid "Settings saved."
 msgstr ""
 
@@ -899,26 +908,6 @@ msgstr ""
 #: App/Libraries/ElementPlaceholders.php:70
 #: App/Views/admin/Downloads/Editing/pageEdit_v.php:70
 msgid "Version"
-msgstr ""
-
-#. translators: %s: Template path.
-#: App/Libraries/Loader.php:209
-#, php-format
-msgid "The template file was not found. (%s)"
-msgstr ""
-
-#. translators: %s: Path to template file to show in error.
-#: App/Libraries/Loader.php:259
-#, php-format
-msgid "The views file was not found (%s)."
-msgstr ""
-
-#: App/Libraries/RundizSettings.php:677
-msgid "Upload"
-msgstr ""
-
-#: App/Libraries/RundizSettings.php:678
-msgid "Remove"
 msgstr ""
 
 #: App/Libraries/ShortcodeRdDownloads.php:33
@@ -1233,8 +1222,7 @@ msgstr ""
 #: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:26
 #: App/Views/admin/Downloads/Logs/pageIndex_v.php:28
 #: App/Views/admin/Downloads/Management/pageIndex_v.php:32
-#: App/Views/admin/Plugins/Upgrader_v.php:21
-#: App/Views/admin/settings_v.php:23
+#: App/Views/admin/Plugins/Upgrader_v.php:22
 msgid "Dismiss this notice."
 msgstr ""
 
@@ -1555,24 +1543,28 @@ msgstr ""
 msgid "All time"
 msgstr ""
 
-#: App/Views/admin/Plugins/Upgrader_v.php:14
+#: App/Views/admin/Plugins/Upgrader_v.php:15
 msgid "Manual update"
 msgstr ""
 
-#. translators: %d: Number of total manual update actions.
-#: App/Views/admin/Plugins/Upgrader_v.php:30
+#. translators: %d Number of total actions.
+#: App/Views/admin/Plugins/Upgrader_v.php:31
 #, php-format
 msgid "There are total %d actions for this manual update, please continue step by step."
 msgstr ""
 
-#. translators: %1$s: Number with span wrapped of already action, %2$d: Number of total manual update actions.
-#: App/Views/admin/Plugins/Upgrader_v.php:34
+#. translators: %1$s The number of already run action, %2$d The number of total actions.
+#: App/Views/admin/Plugins/Upgrader_v.php:36
 #, php-format
 msgid "You are running %1$s of %2$d."
 msgstr ""
 
-#: App/Views/admin/Plugins/Upgrader_v.php:36
+#: App/Views/admin/Plugins/Upgrader_v.php:40
 msgid "Start"
+msgstr ""
+
+#: App/Views/admin/settings_v.php:15
+msgid "Rundiz Downloads Settings"
 msgstr ""
 
 #: templates/RdDownloadsPage/subCheckBannedUA_v.php:27
