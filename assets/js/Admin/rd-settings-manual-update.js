@@ -1,119 +1,192 @@
 /**
  * Manual update js.
+ * 
+ * @rundiz-downloads
  */
 
 
 /**
  * Ajax manual update step by step.
- *
+ * 
  * @returns {undefined}
  */
 function rundiz_downloads_manualUpdateAjax()
 {
-    var $ = jQuery.noConflict();
+    const formresultPlaceholder = document.querySelector('.form-result-placeholder');
+    const actionButtons = document.querySelector('.manual-update-action-button');
+    const actionPlaceholders = document.querySelector('.manual-update-action-placeholder');
 
-    $('.form-result-placeholder').html('');
-    $('.manual-update-action-button').attr('disabled', 'disabled');
-    $('.manual-update-action-placeholder').html('<i class="fas fa-spinner fa-pulse"></i>');
-
-    if (RdSettingsManualUpdate.completed === 'true') {
-        $('.manual-update-action-button').removeAttr('disabled');
-        $('.manual-update-action-placeholder').html('');
-        return ;
+    // clear any placeholders and disable button.
+    if (formresultPlaceholder) {
+        formresultPlaceholder.innerHTML = '';
     }
 
-    if (RdSettingsManualUpdate.alreadyRunUpdateKey === '') {
-        var runUpdateKey = 0;
+    if (actionButtons) {
+        actionButtons.disabled = true;
+    }
+
+    if (actionPlaceholders) {
+        actionPlaceholders.innerHTML = '<i class="fas fa-spinner fa-pulse"></i>';
+    }
+    // end clear any placeholders and disable button.
+
+    if (RundizDownloadsRdSettingsManualUpdate.completed === 'true') {
+        // if manual update process is all completed.
+        if (actionButtons) {
+            actionButtons.disabled = true;
+        }
+
+        if (actionPlaceholders) {
+            actionPlaceholders.innerHTML = '';
+        }
+
+        return;
+    }// endif; manual update process is all completed.
+
+    let runUpdateKey;
+    if (RundizDownloadsRdSettingsManualUpdate.alreadyRunUpdateKey === '') {
+        runUpdateKey = 0;
     } else {
-        var runUpdateKey = (parseInt(RdSettingsManualUpdate.alreadyRunUpdateKey) + 1);
+        runUpdateKey = (parseInt(RundizDownloadsRdSettingsManualUpdate.alreadyRunUpdateKey) + 1);
     }
-    $.ajax({
-        'url': ajaxurl,
+
+    // prepare to make AJAX call. ========================================================
+    const formData = new URLSearchParams();
+    formData.append('security', RundizDownloadsRdSettingsManualUpdate.nonce);
+    formData.append('action', 'rundiz_downloads_manualUpdate');
+    formData.append('updateKey', runUpdateKey);
+
+    fetch(ajaxurl, {
         'method': 'POST',
-        'data': 'security=' + encodeURIComponent(RdSettingsManualUpdate.nonce) + '&action=rundiz_downloads_manualUpdate&updateKey=' + encodeURIComponent(runUpdateKey),
-        'dataType': 'json'
+        'headers': {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        },
+        'body': formData.toString(),
     })
-    .done(function(data, textStatus, jqXHR) {
-        var response = data;
+    .then(async (rawResponse) => {
+        const contentType = rawResponse.headers.get('Content-Type');
+        let response = null;
+        if (contentType.toLowerCase().includes('application/json')) {
+            response = await rawResponse.json();
+        } else if (contentType.toLowerCase().includes('text/html')) {
+            response = await rawResponse.text();
+        }
+
+        // check and handle HTTP response error. -------------------
+        RundizDownloadsAdminCommon.static_ajaxHandleResponseError(response, rawResponse);
+        // end check and handle HTTP response error. ---------------
+
+        if (!rawResponse.ok) {
+            return Promise.reject(response);
+        }
+
+        return response;
+    })
+    .then((response) => {
         if (typeof(response) === 'undefined') {
             response = {};
         }
 
         if (typeof(response) === 'object') {
             if (typeof(response.alreadyRunKey) !== 'undefined') {
-                RdSettingsManualUpdate.alreadyRunUpdateKey = parseInt(response.alreadyRunKey);
+                RundizDownloadsRdSettingsManualUpdate.alreadyRunUpdateKey = parseInt(response.alreadyRunKey);
             }
-            RdSettingsManualUpdate.alreadyRunUpdateTotal++;
-            $('.already-run-total-action').text(RdSettingsManualUpdate.alreadyRunUpdateTotal);
+
+            RundizDownloadsRdSettingsManualUpdate.alreadyRunUpdateTotal++;
+
+            const totalActionElements = document.querySelector('.already-run-total-action');
+            if (totalActionElements) {
+                totalActionElements.textContent = RundizDownloadsRdSettingsManualUpdate.alreadyRunUpdateTotal;
+            }
+
             if (typeof(response.nextRunKey) !== 'undefined') {
                 if (response.nextRunKey !== 'end') {
                     // if not completed, let admin do manual update until completed successfully.
-                    $('.manual-update-action-button').text(RdSettingsManualUpdate.nextTxt);
+                    if (actionButtons) {
+                        actionButtons.textContent = RundizDownloadsRdSettingsManualUpdate.txtNext;
+                    }
                 } else {
                     // if completed.
-                    $('.manual-update-action-button').text(RdSettingsManualUpdate.completedTxt);
-                    RdSettingsManualUpdate.completed = 'true';
+                    if (actionButtons) {
+                        actionButtons.textContent = RundizDownloadsRdSettingsManualUpdate.txtCompleted;
+                    }
+                    RundizDownloadsRdSettingsManualUpdate.completed = 'true';
+                }
+
+                if (actionPlaceholders) {
+                    actionPlaceholders.innerHTML = '<i class="fas fa-check"></i>';
+                }
+            }// endif; there is `nextRunKey`.
+
+            if (response.formResultClass && response.formResultMsg) {
+                const noticeHTML = rundiz_downloads_GetNoticeElement(response.formResultClass, response.formResultMsg);
+                if (formresultPlaceholder) {
+                    formresultPlaceholder.innerHTML = noticeHTML;
                 }
             }
-            $('.manual-update-action-placeholder').html('<i class="fas fa-check"></i>');
         } else {
-            $('.manual-update-action-placeholder').html('');
+            if (actionPlaceholders) {
+                actionPlaceholders.innerHTML = '';
+            }
         }
     })
-    .fail(function(jqXHR, textStatus, errorThrown) {
-        $('.manual-update-action-placeholder').html('');
+    .catch((err) => {
+        if (actionPlaceholders) {
+            actionPlaceholders.innerHTML = '';
+        }
+        console.error(err.message);
+
+        const errorHTML = rundiz_downloads_GetNoticeElement('notice-error', err.message);
+        if (formresultPlaceholder) {
+            formresultPlaceholder.innerHTML = errorHTML;
+        }
     })
-    .always(function(data, textStatus, jqXHR) {
-        if (typeof(data) !== 'undefined' && typeof(data.responseJSON) !== 'undefined') {
-            var response = data.responseJSON;
-        } else if (typeof(data) !== 'undefined' && typeof(data.responseText) !== 'undefined') {
-            var response = data.responseText;
-        } else {
-            var response = data;
+    .finally(() => {
+        if (actionButtons) {
+            actionButtons.disabled = false;
+            actionButtons.removeAttribute('disabled');
         }
-        if (typeof(response) === 'undefined' || response === null) {
-            response = {};
-        }
-
-        if (typeof(response) !== 'undefined' && typeof(response.formResultClass) !== 'undefined' && typeof(response.formResultMsg) !== 'undefined') {
-            var noticehtml = rundiz_downloads_GetNoticeElement(response.formResultClass, response.formResultMsg);
-            $('.form-result-placeholder').html(noticehtml);
-        }
-
-        $('.manual-update-action-button').removeAttr('disabled');
     });
+    // end prepare to make AJAX call. ====================================================
 }// rundiz_downloads_manualUpdateAjax
 
 
 /**
  * Get notice html element from class and message specified.
- *
+ * 
  * @param {string} notice_class
  * @param {string} notice_message
  * @returns {String}
  */
 function rundiz_downloads_GetNoticeElement(notice_class, notice_message) {
-    var output = '<div class="'+notice_class+' notice is-dismissible">';
+    let output = `<div class="${notice_class} notice is-dismissible">`;
 
-    if (typeof(notice_message) === 'string') {
-        output += '<p><strong>'+notice_message+'</strong></p>';
-    } else if (typeof(notice_message) === 'object') {
-        jQuery.each(notice_message, function(index, eachMessage) {
-            output += '<p><strong>'+eachMessage+'</strong></p>';
+    if (typeof notice_message === 'string') {
+        output += `<p><strong>${notice_message}</strong></p>`;
+    } else if (notice_message && typeof notice_message === 'object') {
+        Object.values(notice_message).forEach((eachMessage) => {
+            output += `<p><strong>${eachMessage}</strong></p>`;
         });
     }
 
-    output += '<button type="button" class="notice-dismiss"><span class="screen-reader-text">'+RdSettingsManualUpdate.dismissNoticeTxt+'</span></button>'
-        +'</div>';
+    output += '<button type="button" class="notice-dismiss"><span class="screen-reader-text">'
+        + RundizDownloadsRdSettingsManualUpdate.txtDismissNotice
+        + '</span></button>'
+        + '</div>';
 
     return output;
 }// rundiz_downloads_GetNoticeElement
 
 
 // on dom ready --------------------------------------------------------------------------------------------------------
-(function($) {
-    $('.manual-update-action-button').on('click', function(e) {
-        e.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('click', (event) => {
+        const button = event.target.closest('.manual-update-action-button');
+        if (!button) {
+            return;
+        }
+
+        event.preventDefault();
         rundiz_downloads_manualUpdateAjax();
     });
-})(jQuery);
+});

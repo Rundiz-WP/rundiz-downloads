@@ -1,5 +1,5 @@
 /**
- * Rundiz Plugin Template - Common JS use in admin area.
+ * Rundiz Downloads - Common JS use in admin area.
  * 
  * @package rundiz-downloads
  * @since 1.1.2

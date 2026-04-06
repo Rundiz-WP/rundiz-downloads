@@ -2,19 +2,24 @@
 /**
  * RundizSettings configuration file.
  * Name this file freedomly, but include it correctly in \App\config\config.php
- * 
+ *
  * Restricted field id: rdsfw_plugin_db_version, rdsfw_manual_update_version.
- * 
- * @package rundiz-downloads
+ *
+ * @package rundiz-downloads-package
  */
 
 
-/*return [
+if (!defined('ABSPATH')) {
+    exit();
+}
+
+/*
+return [
     // tab_style is vertical or horizontal
     'tab_style' => 'vertical',
     'setting_tabs' => [
         [
-            'icon' => 'fas fa-pencil-alt',
+            'icon' => 'fa-solid fa-pencil',
             'title' => __('Basic fields', 'rundiz-downloads'),
             'fields' => [
                 [
@@ -23,12 +28,14 @@
                     'id' => 'input_text',
                     'title' => __('Input type text', 'rundiz-downloads'),
                     'type' => 'text',
+                    'sanitize_callback' => 'sanitize_text_field',
                 ],
                 [
                     'default' => '',
                     'id' => 'input_password',
                     'title' => __('Input type password', 'rundiz-downloads'),
                     'type' => 'password',
+                    'sanitize_callback' => 'sanitize_text_field',
                 ],
                 [
                     'default' => '#79c1fd',
@@ -38,18 +45,21 @@
                     ],
                     'title' => __('Input type color', 'rundiz-downloads'),
                     'type' => 'color',
+                    'sanitize_callback' => 'sanitize_hex_color',
                 ],
                 [
-                    'default' => date('Y-m-d'),
+                    'default' => get_date_from_gmt(gmdate('Y-m-d'), 'Y-m-d'),
                     'id' => 'input_date',
                     'title' => __('Input type date', 'rundiz-downloads'),
                     'type' => 'date',
+                    'sanitize_callback' => 'sanitize_text_field',
                 ],
                 [
                     'default' => '',
                     'id' => 'input_email',
                     'title' => __('Input type email', 'rundiz-downloads'),
                     'type' => 'email',
+                    'sanitize_callback' => 'sanitize_email',
                 ],
                 [
                     'default' => '',
@@ -61,6 +71,7 @@
                     ],
                     'title' => __('Input type number', 'rundiz-downloads'),
                     'type' => 'number',
+                    'sanitize_callback' => 'sanitize_text_field',
                 ],
                 [
                     'default' => '0',
@@ -71,12 +82,14 @@
                     ],
                     'title' => __('Input type range', 'rundiz-downloads'),
                     'type' => 'range',
+                    'sanitize_callback' => 'sanitize_text_field',
                 ],
                 [
                     'default' => '',
                     'id' => 'input_url',
                     'title' => __('Input type URL', 'rundiz-downloads'),
                     'type' => 'url',
+                    'sanitize_callback' => 'sanitize_url',
                 ],
                 [
                     'default' => '',
@@ -86,11 +99,12 @@
                     ],
                     'title' => __('Textarea', 'rundiz-downloads'),
                     'type' => 'textarea',
+                    'sanitize_callback' => 'sanitize_textarea_field',
                 ],
             ],
         ],// end basic fields
         [
-            'icon' => 'far fa-check-square',
+            'icon' => 'fa-regular fa-square-check',
             'title' => __('Check boxes and radio buttons', 'rundiz-downloads'),
             'fields' => [
                 [
@@ -105,7 +119,10 @@
                             'default' => '',
                             'description' => __('This check box have extra attributes', 'rundiz-downloads'),
                             'id' => 'checkbox2',
-                            'input_attributes' => ['data-test' => 'true', 'data-attribute2' => 'special-value'],
+                            'input_attributes' => [
+                                'data-test' => 'true', 
+                                'data-attribute2' => 'special-value',
+                            ],
                             'title' => __('Check box 2', 'rundiz-downloads'),
                             'value' => '1',
                         ],
@@ -142,7 +159,10 @@
                         [
                             'title' => __('Radio option 1', 'rundiz-downloads'),
                             'value' => '1',
-                            'input_attributes' => ['data-extra-attribute' => 'yes', 'data-input-type' => 'radio'],
+                            'input_attributes' => [
+                                'data-extra-attribute' => 'yes', 
+                                'data-input-type' => 'radio',
+                            ],
                             'description' => __('This radio have extra attributes', 'rundiz-downloads'),
                         ],
                         [
@@ -160,7 +180,7 @@
             ],
         ],// end check boxes and radio buttons
         [
-            'icon' => 'fas fa-list-alt',
+            'icon' => 'fa-solid fa-rectangle-list',
             'title' => __('Select boxes', 'rundiz-downloads'),
             'fields' => [
                 [
@@ -239,7 +259,7 @@
             ],
         ],// end select boxes
         [
-            'icon' => 'fas fa-edit',
+            'icon' => 'fa-solid fa-pen-to-square',
             'title' => __('Editors', 'rundiz-downloads'),
             'fields' => [
                 [
@@ -252,6 +272,7 @@
                     'id' => 'field_editor',
                     'title' => __('Editor', 'rundiz-downloads'),
                     'type' => 'editor',
+                    'sanitize_callback' => 'wp_kses_post',
                 ],
                 [
                     'default' => 'Rundiz Settings',
@@ -264,6 +285,7 @@
                     'id' => 'field_editor_tiny_no_media',
                     'title' => __('Editor mini without media button', 'rundiz-downloads'),
                     'type' => 'editor',
+                    'sanitize_callback' => 'wp_kses_post',
                 ],
                 [
                     'default' => 'Rundiz Settings',
@@ -275,15 +297,16 @@
                     'id' => 'field_editor_tiny_media',
                     'title' => __('Editor mini with media button', 'rundiz-downloads'),
                     'type' => 'editor_full',
+                    'sanitize_callback' => 'wp_kses_post',
                 ],
             ],
         ],// end editor fields
         [
-            'icon' => 'fas fa-code',
+            'icon' => 'fa-solid fa-code',
             'title' => __('Code editors', 'rundiz-downloads'),
             'fields' => [
                 [
-                    'default' => '<!DOCTYPE html>'."\n".'<html>'."\n\t".'<head>'."\n\t\t".'<meta charset="utf-8">'."\n\t\t".'<title>HTML Title</title>'."\n\t".'</head>'."\n\t".'<body>'."\n\t\t".'<p>HTML Text in body.</p>'."\n\t".'</body>'."\n".'</html>',
+                    'default' => '<!DOCTYPE html>' . "\n" . '<html>' . "\n\t" . '<head>' . "\n\t\t" . '<meta charset="utf-8">' . "\n\t\t" . '<title>HTML Title</title>' . "\n\t" . '</head>' . "\n\t" . '<body>' . "\n\t\t" . '<p>HTML Text in body.</p>' . "\n\t" . '</body>' . "\n" . '</html>',
                     'description' => __('Use Ace editor to edit source code', 'rundiz-downloads'),
                     'id' => 'code_editor_html',
                     // mode refer from https://github.com/ajaxorg/ace/blob/master/lib/ace/ext/modelist.js#L53
@@ -292,7 +315,7 @@
                     'type' => 'code_editor',
                 ],
                 [
-                    'default' => 'function returnSomeWord(string) {'."\n\t".'return "This is some word in return: "+string;'."\n".'}',
+                    'default' => 'function returnSomeWord(string) {' . "\n\t" . 'return "This is some word in return: "+string;' . "\n" . '}',
                     'id' => 'code_editor_js',
                     // mode refer from https://github.com/ajaxorg/ace/blob/master/lib/ace/ext/modelist.js#L53
                     'mode' => 'javascript',
@@ -300,7 +323,7 @@
                     'type' => 'code_editor',
                 ],
                 [
-                    'default' => '.my-css-class {'."\n\t".'background: #fff;'."\n\t".'color: #333;'."\n".'}',
+                    'default' => '.my-css-class {' . "\n\t" . 'background: #fff;' . "\n\t" . 'color: #333;' . "\n" . '}',
                     'id' => 'code_editor_css',
                     // mode refer from https://github.com/ajaxorg/ace/blob/master/lib/ace/ext/modelist.js#L53
                     'mode' => 'css',
@@ -310,7 +333,7 @@
             ],
         ],// end code editors
         [
-            'icon' => 'far fa-image',
+            'icon' => 'fa-regular fa-image',
             'title' => __('Media fields', 'rundiz-downloads'),
             'fields' => [
                 [
@@ -339,21 +362,39 @@
             ],
         ],// end media fields
         [
-            'icon' => 'fas fa-tv',
+            'icon' => 'fa-solid fa-tv',
             'title' => __('Presentation fields', 'rundiz-downloads'),
             'fields' => [
                 [
-                    'content' => __('Presentation field in normal <strong>2 columns</strong> for medium display or larger.', 'rundiz-downloads'),
+                    'content' => __('Presentation field in normal <strong>2 columns</strong> for medium display or larger.', 'rundiz-downloads') .
+                        '<ul>' . PHP_EOL .
+                        '<li>' . __('Unordered list item', 'rundiz-downloads') . '</li>' . PHP_EOL .
+                        '<li>' . __('Unordered list item', 'rundiz-downloads') . '</li>' . PHP_EOL .
+                        '</ul>' . PHP_EOL .
+                        '<ol>' . PHP_EOL .
+                        '<li>' . __('Ordered list item', 'rundiz-downloads') . '</li>' . PHP_EOL .
+                        '<li>' . __('Ordered list item', 'rundiz-downloads') . '</li>' . PHP_EOL .
+                        '</ol>',
                     'title' => __('Presentation in 2 columns', 'rundiz-downloads'),
                     'type' => 'html',
                 ],
                 [
-                    'content' => __('Presentation field in <strong>full column</strong> display. You can use any html element in <code>html</code> and <code>html_full</code> field type', 'rundiz-downloads'),
+                    'content' => __('Presentation field in <strong>full column</strong> display. You can use any html element in <code>html</code> and <code>html_full</code> field type', 'rundiz-downloads') .
+                        '<ul>' . PHP_EOL .
+                        '<li>' . __('Unordered list item', 'rundiz-downloads') . '</li>' . PHP_EOL .
+                        '<li>' . __('Unordered list item', 'rundiz-downloads') . '</li>' . PHP_EOL .
+                        '</ul>' .
+                        '<ol>' . PHP_EOL .
+                        '<li>' . __('Ordered list item', 'rundiz-downloads') . '</li>' . PHP_EOL .
+                        '<li>' . __('Ordered list item', 'rundiz-downloads') . '</li>' . PHP_EOL .
+                        '</ol>' . PHP_EOL .
+                        '<p>' . __('Paragraph.', 'rundiz-downloads') . '</p>' . PHP_EOL .
+                        '<p>' . __('Paragraph.', 'rundiz-downloads') . '</p>' . PHP_EOL .
+                        '<pre>' . esc_html('<?php' . PHP_EOL . '// code block (pre) element.' . PHP_EOL . '$var = \'Hello world.\';') . '</pre>' . PHP_EOL,
                     'type' => 'html_full',
                 ],
             ],
         ],// end presentation fields
     ],
 ];
-
 */

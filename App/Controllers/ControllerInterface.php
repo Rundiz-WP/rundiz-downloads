@@ -19,10 +19,10 @@ if (!interface_exists('\\RundizDownloads\\App\\Controllers\\ControllerInterface'
 
 
         /**
-         * Register hooks (actions/filters) that will be hook into WordPress core.
+         * Register actions, filters that will be hook into WordPress core.
          */
         public function registerHooks();
 
 
-    }
+    }// ControllerInterface
 }

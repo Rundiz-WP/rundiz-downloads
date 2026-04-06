@@ -1,7 +1,7 @@
 <?php
 /**
  * Upgrade or update the plugin action.
- * 
+ *
  * @package rundiz-downloads
  */
 
@@ -9,9 +9,14 @@
 namespace RundizDownloads\App\Controllers\Admin\Plugins;
 
 
+if (!defined('ABSPATH')) {
+    exit();
+}
+
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader')) {
     /**
-     * Upgrader class.
+     * Plugin upgrader class.
      */
     class Upgrader implements \RundizDownloads\App\Controllers\ControllerInterface
     {
@@ -27,20 +32,35 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
 
 
         /**
+         * @var string The current admin page.
+         */
+        private $hookSuffix = '';
+
+
+        /**
          * Ajax manual update.
          */
         public function ajaxManualUpdate()
         {
             if (!current_user_can('update_plugins')) {
-                wp_die(esc_html__('You do not have permission to access this page.', 'rundiz-downloads'), '', ['response' => 403]);
+                wp_die(
+                    esc_html__('You do not have permission to access this page.', 'rundiz-downloads'), 
+                    '', 
+                    ['response' => 403]
+                );
             }
 
             $output = [];
 
             if (isset($_SERVER['REQUEST_METHOD']) && strtolower(wp_unslash($_SERVER['REQUEST_METHOD'])) === 'post' && isset($_POST) && !empty($_POST)) {// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                // if method POST and there is POST data.
                 if (check_ajax_referer('rundiz_downloads_nonce', 'security', false) === false) {
                     status_header(403);
-                    wp_die(esc_html__('Please reload this page and try again.', 'rundiz-downloads'), '', ['response' => 403]);
+                    wp_die(
+                        esc_html__('Please reload this page and try again.', 'rundiz-downloads'), 
+                        '', 
+                        ['response' => 403]
+                    );
                 }
 
                 $updateKey = filter_input(INPUT_POST, 'updateKey', FILTER_SANITIZE_NUMBER_INT);
@@ -96,7 +116,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                                     unset($debugTraces);
                                 }
                             } else {
-                                $errorMessage = esc_html__('An error has been occur, cannot continue manual update. Please contact plugin author.', 'rundiz-downloads');
+                                $errorMessage = __('An error has been occur, cannot continue manual update. Please contact plugin author.', 'rundiz-downloads');
                             }
                         }
                         unset($lastError);
@@ -146,6 +166,20 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
 
 
         /**
+         * Allow code/WordPress to call hook `admin_enqueue_scripts` 
+         * then `wp_register_script()`, `wp_localize_script()`, `wp_enqueue_script()` functions will be working fine later.
+         * 
+         * @link https://wordpress.stackexchange.com/a/76420/41315 Original source code.
+         * @since 1.1.2
+         */
+        public function callEnqueueHook()
+        {
+            add_action('admin_enqueue_scripts', [$this, 'registerStyles']);
+            add_action('admin_enqueue_scripts', [$this, 'registerScripts']);
+        }// callEnqueueHook
+
+
+        /**
          * Detect this plugin updated and display link or maybe redirect to manual update page.
          * 
          * This method will be run as new version of code.<br>
@@ -168,19 +202,21 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                         $manualUpdateNotice = '<div class="notice notice-warning is-dismissible">
                             <p>' . 
                                 sprintf(
-                                    /* translators: %1$s: Open link tag, %2$s: Close link tag. */
-                                    __('The Rundiz Downloads is just upgraded and need to be manually update. Please continue to the %1$splugin update page%2$s.', 'rundiz-downloads'), 
+                                    // translators: %1$s Open link, %2$s Close link.
+                                    esc_html__('The Rundiz Downloads is just upgraded and need to be manually update. Please continue to the %1$splugin update page%2$s.', 'rundiz-downloads'), 
                                     '<a href="' . esc_attr(network_admin_url('index.php?page=' . self::MENU_SLUG)) . '">', // this link will be auto convert to admin_url if not in multisite installed.
                                     '</a>'
-                                ) . 
+                                ) .
                             '</p>
                         </div>';
 
                         add_action('admin_notices', function () use ($manualUpdateNotice) {
-                            echo $manualUpdateNotice . "\n";// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                            // the line below will be echo out custom HTML. So, it cannot be and must not escape or the result will be broken.
+                            echo $manualUpdateNotice . "\n";// phpcs:ignore WordPress.Security.EscapeOutput
                         });
                         add_action('network_admin_notices', function () use ($manualUpdateNotice) {
-                            echo $manualUpdateNotice . "\n";// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                            // the line below will be echo out custom HTML. So, it cannot be and must not escape or the result will be broken.
+                            echo $manualUpdateNotice . "\n";// phpcs:ignore WordPress.Security.EscapeOutput
                         });
 
                         unset($manualUpdateNotice);
@@ -211,8 +247,10 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
         public function displayManualUpdateMenu()
         {
             $hook_suffix = add_dashboard_page(__('Rundiz Downloads update', 'rundiz-downloads'), __('Rundiz Downloads update', 'rundiz-downloads'), 'update_plugins', self::MENU_SLUG, [$this, 'displayManualUpdatePage']);
-            add_action('admin_print_styles-' . $hook_suffix, [$this, 'registerStyles']);
-            add_action('admin_print_scripts-' . $hook_suffix, [$this, 'registerScripts']);
+            if (is_string($hook_suffix)) {
+                $this->hookSuffix = $hook_suffix;
+                add_action('load-' . $hook_suffix, [$this, 'callEnqueueHook']);
+            }
             unset($hook_suffix);
         }// displayManualUpdateMenu
 
@@ -241,33 +279,47 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
          */
         public function registerHooks()
         {
-            // on update/upgrade plugin completed. set transient and let `detectPluginUpdate()` work.
+            // On update/upgrade plugin completed, set transient and let `detectPluginUpdate()` work.
             add_action('upgrader_process_complete', [$this, 'updateProcessComplete'], 10, 2);
-            // on plugins loaded, display link or maybe redirect to manual update page.
+            // On WordPress has finished loading but before any headers are sent, display link or maybe redirect to manual update page.
             add_action('init', [$this, 'detectPluginUpdate']);
         }// registerHooks
 
 
         /**
          * Enqueue CSS & JS.
-         * 
+         *
          * This method was called from displayManualUpdateMenu which is active only when plugin is just updated.
+         * 
+         * @param string $hook_suffix The current admin page.
          */
-        public function registerScripts()
+        public function registerScripts($hook_suffix = '')
         {
+            if ($hook_suffix !== $this->hookSuffix) {
+                return;
+            }
+
             wp_localize_script(
                 'rundiz-downloads-settings-manual-update-js',
-                'RdSettingsManualUpdate',
+                'RundizDownloadsRdSettingsManualUpdate',
                 [
                     'alreadyRunUpdateKey' => '',
                     'alreadyRunUpdateTotal' => 0,
                     'completed' => 'false',
-                    'completedTxt' => __('Completed', 'rundiz-downloads'),
-                    'dismissNoticeTxt' => __('Dismiss', 'rundiz-downloads'),
-                    'nextTxt' => __('Next', 'rundiz-downloads'),
                     'nonce' => wp_create_nonce('rundiz_downloads_nonce'),
+                    'txtCompleted' => __('Completed', 'rundiz-downloads'),
+                    'txtDismissNotice' => __('Dismiss', 'rundiz-downloads'),
+                    'txtNext' => __('Next', 'rundiz-downloads'),
                 ]
             );
+
+            wp_enqueue_style('rundiz-downloads-font-awesome5');
+
+            $Loader = new \RundizDownloads\App\Libraries\Loader();
+            $manualUpdateClasses = $Loader->getManualUpdateClasses();
+            unset($Loader);
+            wp_add_inline_script('rundiz-downloads-settings-manual-update-js', 'var manualUpdateClasses = ' . (!empty($manualUpdateClasses) ? wp_json_encode($manualUpdateClasses) : '') . ';');
+            unset($manualUpdateClasses);
 
             wp_enqueue_script('rundiz-downloads-settings-manual-update-js');
         }// registerScripts
@@ -275,26 +327,32 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
 
         /**
          * Enqueue only CSS.
+         * 
+         * @param string $hook_suffix The current admin page.
          */
-        public function registerStyles()
+        public function registerStyles($hook_suffix = '')
         {
+            if ($hook_suffix !== $this->hookSuffix) {
+                return;
+            }
+
             wp_enqueue_style('rundiz-downloads-font-awesome5');
         }// registerStyles
 
 
         /**
          * After update plugin completed.
-         * 
+         *
          * This method will be called while running the current version of this plugin, not the new one that just updated.
          * For example: You are running 1.0 and just updated to 2.0. The 2.0 version will not working here yet but 1.0 is working.
          * So, any code here will not work as the new version. Please be aware!
-         * 
+         *
          * This method will add the transient to be able to detect updated and run the manual update in `detectPluginUpdate()` method.
-         * 
+         *
          * @link https://developer.wordpress.org/reference/hooks/upgrader_process_complete/ Reference.
-         * @link https://codex.wordpress.org/Plugin_API/Action_Reference/upgrader_process_complete Reference.
-         * @param \WP_Upgrader $upgrader Upgrader object.
-         * @param array $hook_extra Hook extra.
+         * @link https://developer.wordpress.org/reference/classes/wp_upgrader/ Reference.
+         * @param \WP_Upgrader $upgrader The `\WP_Upgrader` class.
+         * @param array $hook_extra Array of bulk item update data.
          */
         public function updateProcessComplete(\WP_Upgrader $upgrader, array $hook_extra)
         {

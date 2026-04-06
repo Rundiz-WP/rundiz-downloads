@@ -9,12 +9,17 @@
 namespace RundizDownloads\App\Controllers\Admin\Plugins;
 
 
+if (!defined('ABSPATH')) {
+    exit();
+}
+
+
 use RundizDownloads\App\Libraries\FileSystem;
 
 
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activation')) {
     /**
-     * Activation class.
+     * Plugin activation and new site activation hooks class.
      */
     class Activation implements \RundizDownloads\App\Controllers\ControllerInterface
     {
@@ -25,15 +30,16 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
 
         /**
          * Activate the plugin by admin on WP plugin page.
-         * 
+         *
          * @link https://developer.wordpress.org/reference/functions/register_activation_hook/ The function `register_activation_hook()` reference.
          * @link https://developer.wordpress.org/reference/hooks/activate_plugin/ The reference about what will be pass to callback of function `register_activation_hook()`.
          * @global \wpdb $wpdb WordPress DB class.
          * @param bool $network_wide Whether to enable the plugin for all sites in the network or just the current site. Multisite only. Default false.
+         * @throws \Exception Throw the exception if failed to detect current version of PHP.
          */
         public function activate($network_wide)
         {
-            // do something that will happens on activate plugin.
+            // Do something that will happens on activate plugin.
             $wordpress_required_version = '4.6.0';
             $phpversion_required = '5.5';
             if (function_exists('phpversion')) {
@@ -43,39 +49,50 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
                 if (defined('PHP_VERSION')) {
                     $phpversion = PHP_VERSION;
                 } else {
-                    // can't detect php version
-                    $phpversion = '4';
+                    // if there is no defined constant `PHP_VERSION`.
+                    // @link https://www.php.net/ChangeLog-4.php Reference.
+                    throw new \Exception('You are using ancient version of PHP. The constant `PHP_VERSION` is available since PHP 4.0.');
                 }
             }
             if (version_compare($phpversion, $phpversion_required, '<')) {
                 wp_die(
-                    wp_kses_post(
+                    esc_html(
                         sprintf(
-                            /* translators: %1$s: Current PHP version, %2$s: Required PHP version. */
-                            __('You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or contact plugin author for this help.<br><br>Minimum requirement:<br>PHP %2$s', 'rundiz-downloads'), 
-                            $phpversion, 
+                            /* translators: %1$s current PHP version. */
+                            __('You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or contact plugin author for this help.', 'rundiz-downloads'),
+                            $phpversion
+                        )
+                    )
+                    . '<br><br>'
+                    . esc_html(
+                        sprintf(
+                            /* translators: %1$s minimum PHP version required. */
+                            __('Minimum PHP requirement: %1$s.', 'rundiz-downloads'),
                             $phpversion_required
                         )
                     ), 
                     esc_html__('Minimum requirement of PHP version does not meet.', 'rundiz-downloads')
                 );
-                exit;
-            }
+                exit(1);
+            }// endif;
             if (version_compare(get_bloginfo('version'), $wordpress_required_version, '<')) {
                 wp_die(
-                    sprintf(
-                        /* translators: %1$s: Current WordPress version, %2$s: Required WordPress version. */
-                        esc_html__('Your WordPress version does not meet the requirement. (%1$s < %2$s).', 'rundiz-downloads'), 
-                        esc_html(get_bloginfo('version')), 
-                        esc_html($wordpress_required_version)
-                    )
+                    esc_html(
+                        sprintf(
+                            // translators: %1$s Current WordPress version, %2$s Required WordPress version.
+                            __('Your WordPress version does not meet the requirement. (%1$s < %2$s).', 'rundiz-downloads'), 
+                            get_bloginfo('version'),
+                            $wordpress_required_version
+                        )
+                    ),
+                    esc_html__('Minimum requirement of WordPress version does not meet.', 'rundiz-downloads')
                 );
-                exit;
-            }
+                exit(1);
+            }// endif;
             unset($phpversion, $phpversion_required, $wordpress_required_version);
 
             if (is_multisite() && $network_wide) {
-                wp_die(esc_html__('Unable to network activate, please activate from each site that have to use it only.', 'rundiz-downloads'));
+                wp_die(esc_html__('Unable to network activate, please activate per site only.', 'rundiz-downloads'));
                 exit(1);
             }
 
@@ -122,7 +139,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
                 // save the new db version.
                 $current_options['rdsfw_plugin_db_version'] = $this->db_version;
                 $this->saveOptions($current_options);
-            }
+            }// endif;
 
             unset($current_options);
         }// activateAddUpdateOption
@@ -130,7 +147,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
 
         /**
          * If there is at least one or more table from `RundizDownloads\App\Models\PluginDbStructure->get()` method then create or alter using WordPress's `dbDelta()`.
-         * 
+         *
          * @global \wpdb $wpdb WordPress DB class.
          */
         private function activateCreateAlterTables()

@@ -9,9 +9,14 @@
 namespace RundizDownloads\App\Controllers\Admin;
 
 
+if (!defined('ABSPATH')) {
+    exit();
+}
+
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins')) {
     /**
-     * Plugins class.
+     * Plugin class that will work on admin list plugins page.
      */
     class Plugins implements \RundizDownloads\App\Controllers\ControllerInterface
     {
@@ -23,9 +28,10 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins')) {
         /**
          * Add links to plugin actions area. For example: xxxbefore | Activate | Edit | Delete | xxxafter
          * 
-         * @param array $actions current plugin actions. (including deactivate, edit).
-         * @param string $plugin_file the plugin file for checking.
-         * @return array return modified links
+         * @staticvar string $plugin The plugin file name.
+         * @param array $actions Current plugin actions. (including deactivate, edit).
+         * @param string $plugin_file The plugin file for checking.
+         * @return array Return modified links
          */
         public function actionLinks($actions, $plugin_file)
         {
@@ -61,10 +67,10 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins')) {
         /**
          * Add links to row meta that is in Plugins page under plugin description. For example: xxxbefore | By xxx | Visit plugin site | xxxafter
          * 
-         * @staticvar string $plugin the plugin file name.
-         * @param array $links current meta links
-         * @param string $file the plugin file name for checking.
-         * @return array return modified links.
+         * @staticvar string $plugin The plugin file name.
+         * @param array $links Current meta links
+         * @param string $file The plugin file name for checking.
+         * @return array Return modified links.
          */
         public function rowMeta($links, $file)
         {
@@ -78,13 +84,18 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins')) {
                 $after_link = [];
 
                 $configValues = $this->getOptions();
-                if (is_array($configValues) && array_key_exists('rdsfw_plugin_db_version', $configValues) && is_scalar($configValues['rdsfw_plugin_db_version']) && !empty($configValues['rdsfw_plugin_db_version'])) {
-                    /* translators: %s: Current DB version. */
+                if (
+                    is_array($configValues) && 
+                    array_key_exists('rdsfw_plugin_db_version', $configValues) && 
+                    is_scalar($configValues['rdsfw_plugin_db_version']) && 
+                    !empty($configValues['rdsfw_plugin_db_version'])
+                ) {
+                    /* translators: %s The DB version of this plugin. */
                     $after_link[] = sprintf(__('DB version %s', 'rundiz-downloads'), $configValues['rdsfw_plugin_db_version']);
                 }
                 unset($configValues);
 
-                $after_link[] = '<a href="https://rundiz.com/en/donate" target="donate">' . __('Donate', 'rundiz-downloads') . '</a>';
+                $after_link[] = '<a href="https://rundiz.com/en/donate" target="donate">' . esc_html__('Donate', 'rundiz-downloads') . '</a>';
 
                 $links = array_merge($links, $after_link);
                 unset($after_link);

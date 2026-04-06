@@ -1,6 +1,6 @@
 <?php
 /**
- * Autoload.
+ * Auto loader file.
  * 
  * @package rundiz-downloads
  */
@@ -25,13 +25,13 @@ if (!defined('ABSPATH')) {
  * @return void
  * @link http://www.php-fig.org/psr/psr-4/examples/ copy from here.
  */
-spl_autoload_register(function($class) {
+spl_autoload_register(function ($class) {// phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.classFound
 
     // project-specific namespace prefix
     $prefix = 'RundizDownloads\\';
 
     // base directory for the namespace prefix
-    $base_dir = __DIR__.'/';
+    $base_dir = __DIR__ . '/';
 
     // does the class use the namespace prefix?
     $len = strlen($prefix);

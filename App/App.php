@@ -1,6 +1,6 @@
 <?php
 /**
- * Main app class. extend this class if you want to use any method of this class.
+ * Main app class. Extend this class if you want to use any method of this class.
  *
  * @package rundiz-downloads
  */
@@ -11,16 +11,10 @@ namespace RundizDownloads\App;
 
 if (!class_exists('\\RundizDownloads\\App\\App')) {
     /**
-     * Main app class.
+     * Plugin application main entry class.
      */
     class App
     {
-
-
-        /**
-         * @var \RundizDownloads\App\Libraries\Loader
-         */
-        public $Loader;
 
 
         /**
@@ -34,8 +28,9 @@ if (!class_exists('\\RundizDownloads\\App\\App')) {
             unset($StylesAndScripts);
 
             // Initialize the loader class.
-            $this->Loader = new \RundizDownloads\App\Libraries\Loader();
-            $this->Loader->autoRegisterControllers();
+            $Loader = new \RundizDownloads\App\Libraries\Loader();
+            $Loader->autoRegisterControllers();
+            unset($Loader);
         }// run
 
 

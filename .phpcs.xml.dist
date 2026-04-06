@@ -9,7 +9,6 @@
     <exclude-pattern>/\.dev-notes/</exclude-pattern>
     <exclude-pattern>/assets/</exclude-pattern>
     <exclude-pattern>/vendor/</exclude-pattern>
-    <exclude-pattern>autoload\.php</exclude-pattern>
 
     <!-- How to scan -->
     <!-- Usage instructions: https://github.com/PHPCSStandards/PHP_CodeSniffer/wiki/Usage -->

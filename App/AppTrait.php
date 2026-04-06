@@ -11,7 +11,7 @@ namespace RundizDownloads\App;
 
 if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
     /**
-     * App trait.
+     * Main application trait.
      */
     trait AppTrait
     {
@@ -20,8 +20,10 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
         /**
          * Main option name.
          * 
-         * @var string set main option name of this plugin. the name should be english, number, underscore, or anycharacters that can be set to variable. for example: 'rundiz_downloads_options' will be set to $rundiz_downloads_options
-         * @uses call this trait method $this->getOptions(); before access $rundiz_downloads_options in global variable.
+         * @var string Set main option name of this plugin. the name should be english, number, underscore, 
+         *              or any characters that can be set to variable. 
+         *              For example: `'rundiz_downloads_options'` will be set to `$rundiz_downloads_options`
+         * @uses Call the trait method `getOptions();` before access `$rundiz_downloads_options` in global variable.
          */
         public $main_option_name = 'rundiz_downloads_options';
 
@@ -29,10 +31,11 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
         /**
          * All available options.
          * 
-         * These options will be accessible via main option name variable. for example: options name 'the_name' can call from $rundiz_downloads_options['the_name'];.
+         * These options will be accessible via main option name variable. 
+         * For example: options name `'the_name'` can call from `$rundiz_downloads_options['the_name'];`.
          * If you want to access this property, please call to `setupAllOptions()` method first.
          * 
-         * @var array set all options available for this plugin. it must be 2D array (key => default value, key2 => default value, ...)
+         * @var array Set all options available for this plugin. it must be 2D array (`key => default value, key2 => default value, ...`)
          */
         public $all_options = [];
 
@@ -40,12 +43,12 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
         /**
          * The database version.
          * 
-         * If you have no tables to create on activate this plugin or don't use db for this plugin at all then set this to NULL.
-         * If you have tables to create on activate this plugin then set the db version number (string) here and then write create table schema at \RundizDownloads\App\Models\PluginDbStructure->get() method.
+         * If you have no tables to create on activate this plugin or don't use db for this plugin at all then set this to `NULL`.
+         * If you have tables to create on activate this plugin then set the db version number (string) here and then write create table schema at the class & method `\RundizDownloads\App\Models\PluginDbStructure->get()`.
          * Do not access this property directly if not necessary, use `getDbVersion()` method instead.
          * 
-         * @var string Version number of DB structure.
-         * @todo [rundiz][routine] Set the DB version here if structure changed. Read the description above and only set this if there is any tables to create on activate this plugin.
+         * @var string|null Version number of DB structure.
+         * @todo [rundiz][routine] Read the description above and only set this if there is any tables to create on activate this plugin.
          */
         protected $db_version = '0.3';
 
@@ -53,12 +56,12 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
         /**
          * Get the DB version of this plugin.
          * 
-         * @return string|null Return null if the `db_version` property is not set or not using db for this plugin, return the db version number if set.
+         * @return string|null Return `null` if the `db_version` property is not set or not using db for this plugin, return the db version number if set.
          */
         public function getDbVersion()
         {
             if (property_exists($this, 'db_version') && !is_null($this->db_version) && is_scalar($this->db_version)) {
-                return $this->db_version;
+                return strval($this->db_version);
             } else {
                 return null;
             }
@@ -68,7 +71,7 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
         /**
          * Get all options of this plugin.
          * 
-         * @return array return array value of all options.
+         * @return array Return associative array value of all options where the key is option name.
          */
         public function getOptions()
         {
@@ -92,8 +95,8 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
         /**
          * Save the settings from settings page, using Rundiz settings.
          * 
-         * @param array $data array of submitted data in key => value
-         * @return boolean return true if saved successfully. return false if not updated.
+         * @param array $data The associative array of submitted data in key => value
+         * @return bool Return `true` if saved successfully. return `false` if not updated.
          */
         public function saveOptions(array $data)
         {
@@ -132,6 +135,8 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
          * 
          * This will be set all config settings into `all_options` property.
          * You have to call this method if you want to call to `all_options` property.
+         * 
+         * This method will not load saved settings data from DB. The value in settings fields are all default value.
          */
         public function setupAllOptions()
         {
@@ -139,10 +144,14 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
             $loader = new \RundizDownloads\App\Libraries\Loader();
             $config_values = $loader->loadConfig();
             if (is_array($config_values) && array_key_exists('rundiz_settings_config_file', $config_values)) {
+                // if there is config value about config file.
                 $settings_config_file = $config_values['rundiz_settings_config_file'];
             } else {
-                wp_die(esc_html__('Settings configuration file was not set.', 'rundiz-downloads'));
-                exit;
+                // if there is no config value about config file.
+                wp_die(
+                    esc_html__('Settings configuration file was not set.', 'rundiz-downloads')
+                );
+                exit(1);
             }
             unset($config_values, $loader);
 

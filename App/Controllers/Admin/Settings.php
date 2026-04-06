@@ -2,6 +2,8 @@
 /**
  * Add settings sub menu and page into the Settings menu.
  *
+ * Last update: 2026-03-27
+ *
  * @package rundiz-downloads
  */
 
@@ -9,12 +11,17 @@
 namespace RundizDownloads\App\Controllers\Admin;
 
 
+if (!defined('ABSPATH')) {
+    exit();
+}
+
+
 use RundizDownloads\App\Libraries\FileSystem;
 
 
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
     /**
-     * Settings class.
+     * Admin settings page.
      */
     class Settings implements \RundizDownloads\App\Controllers\ControllerInterface
     {
@@ -30,9 +37,9 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
 
 
         /**
-         * @var string|false WordPress page's hook suffix that have got from function `add_[sub]menu_page()`.
+         * @var string The current admin page.
          */
-        protected $hook_suffix = false;
+        private $hookSuffix = '';
 
 
         /**
@@ -40,6 +47,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
          * then `wp_register_script()`, `wp_localize_script()`, `wp_enqueue_script()` functions will be working fine later.
          * 
          * @link https://wordpress.stackexchange.com/a/76420/41315 Original source code.
+         * @since 2025-10-14
          */
         public function callEnqueueHook()
         {
@@ -72,13 +80,13 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
         public function pluginSettingsMenu()
         {
             $hook_suffix = add_submenu_page(Downloads\Menu::MENU_SLUG, __('Downloads Settings', 'rundiz-downloads'), __('Settings', 'rundiz-downloads'), 'manage_options', self::MENU_SLUG, [$this, 'pluginSettingsPage']);
-            $this->hook_suffix = $hook_suffix;
             if (is_string($hook_suffix)) {
+                $this->hookSuffix = $hook_suffix;
                 add_action('load-' . $hook_suffix, [$this, 'callEnqueueHook']);
             }
             unset($hook_suffix);
 
-            //add_options_page(__('Plugin Template read settings value', 'rundiz-downloads'), __('Plugin Template read settings', 'rundiz-downloads'), 'manage_options', 'rundiz-downloads-read-settings', [$this, 'pluginReadSettingsPage']);
+            //add_options_page(__('Rundiz Downloads read settings value', 'rundiz-downloads'), __('Rundiz Downloads read settings', 'rundiz-downloads'), 'manage_options', 'rundiz-downloads-read-settings', [$this, 'pluginReadSettingsPage']);
         }// pluginSettingsMenu
 
 
@@ -98,14 +106,16 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
                 if (current_user_can('update_plugins')) {
                     wp_die(
                         sprintf(
-                            /* translators: %1$s: Open link tag, %2$s: Close link tag. */
+                            // translators: %1$s Open link, %2$s Close link.
                             esc_html__('The manual update is required, please %1$supdate first%2$s.', 'rundiz-downloads'), 
-                            '<a href="' . esc_attr(network_admin_url('index.php?page=' . Plugins\Upgrader::MENU_SLUG)) . '">', 
+                            '<a href="' . esc_url(network_admin_url('index.php?page=' . Plugins\Upgrader::MENU_SLUG)) . '">', 
                             '</a>'
                         )
                     );
                 } else {
-                    wp_die(esc_html__('The manual update is required, please tell administrator to update first.', 'rundiz-downloads'));
+                    wp_die(
+                        esc_html__('The manual update is required, please tell administrator to update first.', 'rundiz-downloads')
+                    );
                 }
             }
 
@@ -115,9 +125,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
             if (is_array($config_values) && array_key_exists('rundiz_settings_config_file', $config_values)) {
                 $settings_config_file = $config_values['rundiz_settings_config_file'];
             } else {
-                echo 'Settings configuration file was not set.';
-                die('Settings configuration file was not set.');
-                exit(1);// phpcs:ignore Squiz.PHP.NonExecutableCode.Unreachable
+                wp_die(esc_html__('Settings configuration file was not set.', 'rundiz-downloads'));
+                exit(1);
             }
             unset($config_values);
 
@@ -129,9 +138,15 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
 
             // if form submitted
             if (isset($_POST) && !empty($_POST)) {
-                if (!wp_verify_nonce((isset($_POST['_wpnonce']) ? sanitize_text_field(wp_unslash($_POST['_wpnonce'])) : ''))) {
+                $wpnonce = '';
+                if (isset($_POST['_wpnonce'])) {
+                    $wpnonce = sanitize_text_field(wp_unslash($_POST['_wpnonce']));
+                }
+
+                if (!wp_verify_nonce($wpnonce)) {
                     wp_nonce_ays('-1');
                 }
+                unset($wpnonce);
 
                 // populate form field values.
                 $options_values = $RundizSettings->getSubmittedData();
@@ -164,15 +179,10 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
                 unset($FileSystem, $wp_upload_dir);
 
                 // then save data.
-                $result = $this->saveOptions($options_values);
+                $output['save_result'] = $this->saveOptions($options_values);
 
-                if (true === $result) {
-                    $output['form_result_class'] = 'notice-success';
-                    $output['form_result_msg'] = __('Settings saved.', 'rundiz-downloads');
-                } else {
-                    $output['form_result_class'] = 'notice-success';
-                    $output['form_result_msg'] = __('Settings saved.', 'rundiz-downloads');
-                }
+                $output['form_result_class'] = 'notice-success';
+                $output['form_result_msg'] = __('Settings saved.', 'rundiz-downloads');
 
                 // clear all cache on save.
                 $Cache = new \RundizDownloads\App\Libraries\Cache();
@@ -193,9 +203,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
          */
         public function registerHooks()
         {
-            if (is_admin()) {
-                add_action('admin_menu', [$this, 'pluginSettingsMenu']);
-            }
+            add_action('admin_menu', [$this, 'pluginSettingsMenu']);
         }// registerHooks
 
 
@@ -204,11 +212,34 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
          * 
          * @param string $hook_suffix The current admin page.
          */
-        public function registerScripts($hook_suffix)
+        public function registerScripts($hook_suffix = '')
         {
-            if (!is_string($hook_suffix) || $this->hook_suffix !== $hook_suffix) {
+            if ($hook_suffix !== $this->hookSuffix) {
                 return;
             }
+
+            $Loader = new \RundizDownloads\App\Libraries\Loader();
+            $config_values = $Loader->loadConfig();
+            if (is_array($config_values) && array_key_exists('rundiz_settings_config_file', $config_values)) {
+                $settings_config_file = $config_values['rundiz_settings_config_file'];
+                $RundizSettings = new \RundizDownloads\App\Libraries\RundizSettings();
+                $RundizSettings->settings_config_file = $settings_config_file;
+                $hasEditorField = $RundizSettings->hasEditor();
+                $hasMediaField = $RundizSettings->hasMedia();
+                unset($RundizSettings, $settings_config_file);
+            }
+            unset($config_values, $Loader);
+
+            if (isset($hasEditorField) && true === $hasEditorField) {
+                wp_enqueue_editor();
+                wp_enqueue_media();
+            }
+            unset($hasEditorField);
+            if (isset($hasMediaField) && true === $hasMediaField) {
+                wp_enqueue_script('jquery');
+                wp_enqueue_media();
+            }
+            unset($hasMediaField);
 
             wp_enqueue_style('rundiz-downloads-font-awesome5');
 

@@ -11,9 +11,14 @@
 namespace RundizDownloads\App\Controllers\Admin\Plugins;
 
 
+if (!defined('ABSPATH')) {
+    exit();
+}
+
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstallation')) {
     /**
-     * Uninstallation class.
+     * Plugin uninstallation and site deletion (hard delete) hooks class.
      */
     class Uninstallation implements \RundizDownloads\App\Controllers\ControllerInterface
     {
@@ -24,7 +29,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstal
 
         /**
          * Get `main_option_name` property from trait which is non-static from any static method.
-         *
+         * 
          * @return string Return main option name of this plugin. See `main_option_name` property for more info.
          */
         private static function getMainOptionName()
@@ -55,7 +60,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstal
 
         /**
          * Uninstall or delete the plugin.
-         *
+         * 
          * @global \wpdb $wpdb
          */
         public static function uninstall()
@@ -67,7 +72,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstal
             // delete options.
             if (is_multisite()) {
                 // this is multi site, delete options in all sites.
-                $blog_ids = $wpdb->get_col('SELECT blog_id FROM ' . $wpdb->blogs);
+                $blog_ids = get_sites(['fields' => 'ids', 'number' => 0]);
                 $original_blog_id = get_current_blog_id();
                 if ($blog_ids) {
                     foreach ($blog_ids as $blog_id) {
@@ -104,11 +109,11 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstal
 
         /**
          * Drop tables on deleted site.
-         *
+         * 
          *  This method was called from hook, it must be public and do not call this directly.
-         *
-         * @link https://developer.wordpress.org/reference/hooks/deleted_blog/ Reference of hook `deleted_blog` which is deprecated in WP 5.1.
-         * @link https://developer.wordpress.org/reference/hooks/wp_delete_site/ Reference of hook `wp_delete_site` for replacement.
+         * 
+         * @link https://developer.wordpress.org/reference/hooks/deleted_blog/ Previous hook reference that has been deprecated.
+         * @link https://developer.wordpress.org/reference/hooks/wp_delete_site/ Current hook.
          * @param int|\WP_Site $site_id The site ID or deleted site object on WP 5.1+.
          * @param bool $drop True if site’s tables should be dropped. Default false.
          */

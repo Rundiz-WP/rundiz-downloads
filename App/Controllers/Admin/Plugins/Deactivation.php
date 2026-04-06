@@ -9,9 +9,14 @@
 namespace RundizDownloads\App\Controllers\Admin\Plugins;
 
 
+if (!defined('ABSPATH')) {
+    exit();
+}
+
+
 if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Deactivation')) {
     /**
-     * Deactivation class.
+     * Plugin deactivation hook class.
      */
     class Deactivation implements \RundizDownloads\App\Controllers\ControllerInterface
     {
@@ -22,7 +27,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Deactiva
          */
         public function deactivate()
         {
-            // do something that will be happens on deactivate plugin.
+            // Do something that will be happens on deactivate plugin.
             // remove all added rewrite rules.
             flush_rewrite_rules();
         }// deactivate

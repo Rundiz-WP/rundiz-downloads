@@ -9,9 +9,14 @@
 namespace RundizDownloads\App\Models;
 
 
+if (!defined('ABSPATH')) {
+    exit();
+}
+
+
 if (!class_exists('\\RundizDownloads\\App\\Models\\PluginDbStructure')) {
     /**
-     * Plugin DB structure class.
+     * The plugin's database structure class.
      */
     class PluginDbStructure
     {
@@ -20,11 +25,11 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\PluginDbStructure')) {
         /**
          * Get the database structure for use on activate this plugin.
          * 
-         * The db schema will be use by WordPress Db Delta.
-         * If you do not want to create any tables for this plugin then set this method to return empty array.
+         * The db schema will be use by WordPress Db Delta.  
+         * If you do not want to create any tables for this plugin then set this method to return empty array.  
          * Please read more about db version at \RundizDownloads\App\AppTrait->db_version property.
          * 
-         * Limitation:
+         * Limitation:  
          * - DO NOT use back tick (`) anywhere because it will be thrown the error.
          * - DO NOT add "IF NOT EXISTS" into "CREATE TABLE" because it will not get an update on structure changed.
          * 

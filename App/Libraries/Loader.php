@@ -1,7 +1,7 @@
 <?php
 /**
  * Loader class. This class will load anything for example: views, template, configuration file.
- * 
+ *
  * @package rundiz-downloads
  */
 
@@ -9,9 +9,14 @@
 namespace RundizDownloads\App\Libraries;
 
 
+if (!defined('ABSPATH')) {
+    exit();
+}
+
+
 if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
     /**
-     * Loader class.
+     * Loader class for load template, view file, config file, etc.
      */
     class Loader
     {
@@ -45,11 +50,11 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
                             !$TestClass->isTrait() && 
                             $TestClass->implementsInterface('\\RundizDownloads\\App\\Controllers\\ControllerInterface')
                         ) {
-                            if ($TestClass->hasMethod('registerHooks')) {
-                                $ControllerClass = new $this_file_classname();
+                            $ControllerClass = new $this_file_classname();
+                            if (method_exists($ControllerClass, 'registerHooks')) {
                                 $ControllerClass->registerHooks();
-                                unset($ControllerClass);
                             }
+                            unset($ControllerClass);
                         }
                         unset($TestClass);
                     }
@@ -64,9 +69,9 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
 
         /**
          * Get file list that may contain class in specific path.
-         * 
+         *
          * @param string $path The full path without trailing slash.
-         * @return array Return array of file list.
+         * @return array Return indexed array of file list.
          */
         protected function getClassFileList($path)
         {
@@ -86,7 +91,9 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
 
 
         /**
-         * @return array Return array list of manual update classes that is need to be run.
+         * Get manual update PHP classes.
+         * 
+         * @return array Return indexed array of manual update PHP classes.
          */
         public function getManualUpdateClasses()
         {
@@ -100,16 +107,16 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
 
         /**
          * Check that is this version of app have manual update code?
-         * 
-         * @return boolean Return true if there is manual update, false for otherwise.
+         *
+         * @return bool Return `true` if there is manual update, `false` for otherwise.
          */
         public function haveManualUpdate()
         {
             $config_values = $this->getOptions();
             if (is_array($config_values) && array_key_exists('rdsfw_manual_update_version', $config_values)) {
-                $manual_update_to = $config_values['rdsfw_manual_update_version'];
+                $current_manual_update_version = $config_values['rdsfw_manual_update_version'];
             } else {
-                $manual_update_to = '';
+                $current_manual_update_version = '';
             }
             unset($config_values);
 
@@ -121,23 +128,32 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
                     $this_file_classname = '\RundizDownloads' . str_replace([$this_plugin_dir, '.php', '/'], ['', '', '\\'], $file);
                     if (class_exists($this_file_classname)) {
                         $TestClass = new \ReflectionClass($this_file_classname);
-                        if (!$TestClass->isAbstract() && !$TestClass->isTrait()) {
+                        if (
+                            !$TestClass->isAbstract() && 
+                            !$TestClass->isTrait() && 
+                            !$TestClass->isInterface() &&
+                            $TestClass->implementsInterface('\\RundizDownloads\\App\\Update\\Manual\\ManualUpdateInterface') &&
+                            $TestClass->hasProperty('manual_update_version') &&
+                            $TestClass->hasMethod('run')
+                        ) {
+                            // If contain all requirements.
                             $UpdateClass = new $this_file_classname();
-                            if (method_exists($UpdateClass, 'run') && property_exists($UpdateClass, 'manual_update_version')) {
-                                if ('' === $manual_update_to || version_compare($manual_update_to, $UpdateClass->manual_update_version, '<')) {
-                                    $this->manualUpdateClasses[] = $this_file_classname;
-                                }
+                            if (
+                                '' === $current_manual_update_version || 
+                                version_compare($current_manual_update_version, $UpdateClass->manual_update_version, '<')
+                            ) {
+                                $this->manualUpdateClasses[] = $this_file_classname;
                             }
                             unset($UpdateClass);
-                        }
+                        }// endif; contain all required property, method, interface.
                         unset($TestClass);
-                    }
+                    }// endif; `class_exists()`.
                     unset($this_file_classname);
                 }// endforeach;
                 unset($file);
             }
 
-            unset($file_list, $manual_update_to, $this_plugin_dir);
+            unset($current_manual_update_version, $file_list, $this_plugin_dir);
 
             if (empty($this->manualUpdateClasses)) {
                 return false;
@@ -149,10 +165,10 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
 
         /**
          * Load config file and return its values.
-         * 
-         * @param string $config_file_name Config file name without extension.
-         * @param bool $require_once Set to `true` to use `require_once`.
-         * @return mixed return config file content if success. return false if failed.
+         *
+         * @param string $config_file_name The configuration file name only without extension.
+         * @param bool $require_once Mark as `true` to use `require_once`, otherwise use `require`.
+         * @return mixed Return config file content if success. Return `false` if failed.
          */
         public function loadConfig($config_file_name = 'config', $require_once = false)
         {
@@ -176,70 +192,73 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
 
         /**
          * Load the template by looking at the theme first, if not found then load it from the plugin itself.
-         * 
+         *
          * Example: If the <code>$view_name</code> is <code>mydir/mypage</code>.<br>
          * It will look up in <code>wp-content/themes/%your theme%/rundiz-downloads/templates/mydir/mypage.php</code> first.<br>
          * If not found then it will look up in <code>wp-content/plugins/rundiz-downloads/templates/mydir/mypage.php</code>.<br>
          * If it is still not found then the error will be thrown.
-         * 
+         *
          * @link https://codex.wordpress.org/Function_Reference/locate_template Reference.
          * @link https://codex.wordpress.org/Function_Reference/load_template Reference.
          * @global \WP_Query $wp_query
          * @param string $view_name The template file name.
          * @param array $data The data to send to template file. The array key will becomes variable in template file.
-         * @throws \Exception Throws exception if file is not found.
+         * @throws \Exception Throws the error if template file is really not found from anywhere listed above.
          */
         public function loadTemplate($view_name, array $data = [])
         {
             global $wp_query;
 
-            $template_path = locate_template(dirname(plugin_basename(RUNDIZDOWNLOADS_FILE)) . '/templates/' . $view_name . '.php');
-            if ($template_path) {
+            $pluginFolderName = dirname(plugin_basename(RUNDIZDOWNLOADS_FILE));
+            $templatePath = locate_template($pluginFolderName . '/templates/' . $view_name . '.php');
+
+            if ('' !== $templatePath) {
                 // if template found in the theme location.
             } else {
                 // if template was not found in theme location.
-                $template_path = plugin_dir_path(RUNDIZDOWNLOADS_FILE) . 'templates/' . $view_name . '.php';
-                if (!is_file($template_path)) {
+                $templatePath = plugin_dir_path(RUNDIZDOWNLOADS_FILE) . 'templates/' . $view_name . '.php';
+                if (!is_file($templatePath)) {
                     // if not found the template file in plugin itself.
-                    // throw the error to notice the developers.
-                    // phpcs:ignore Squiz.PHP.NonExecutableCode.Unreachable
+                    // remove the variable.
+                    unset($pluginFolderName);
+                    // Throw the error to notice the developers. Without translation.
                     throw new \Exception(
-                        sprintf(
-                            /* translators: %s: Template path. */
-                            esc_html__('The template file was not found. (%s)', 'rundiz-downloads'), 
-                            esc_html($template_path)
+                        esc_html(
+                            sprintf('The template file was not found. (%s)', $templatePath)
                         )
                     );
                 }
             }
 
-            if (isset($template_path)) {
+            if (isset($templatePath)) {
                 if (!empty($data)) {
-                    $wp_query->query_vars = $data;
+                    $wp_query->query_vars = array_merge($wp_query->query_vars, $data);
                     $data = [];
                 }
-                load_template($template_path);
+                load_template($templatePath);
             }
 
-            unset($template_path);
+            unset($pluginFolderName, $templatePath);
         }// loadTemplate
 
 
         /**
          * Load views.
-         * 
-         * @param string $view_name view file name refer from app/Views folder.
-         * @param array $data for send data variable to view.
-         * @param boo $require_once use include or include_once? if true, use include_once.
-         * @return boo return true if success loading, or return false if failed to load.
+         *
+         * @param string $view_name View file name, refer from app/Views folder.
+         * @param array $data For send data variable to view.
+         * @param bool $require_once Set to `true` to use `include_once`, `false` to use `include`. Default is `false`.
+         * @return bool Return `true` if success loading.
+         * @throws \Exception Throws the error if views file was not found.
          */
         public function loadView($view_name, array $data = [], $require_once = false)
         {
             $view_dir = dirname(__DIR__) . '/Views/';
-            $templateFile = $view_dir . (is_string($view_name) ? $view_name : '') . '.php';
+            $templateFile = $view_dir . $view_name . '.php';
             unset($view_dir);
 
-            if (file_exists($templateFile) && is_file($templateFile)) {
+            if ('' !== $view_name && file_exists($templateFile) && is_file($templateFile)) {
+                // if views file was found.
                 if (is_array($data)) {
                     extract($data, EXTR_PREFIX_SAME, 'dupvar_');// phpcs:ignore WordPress.PHP.DontExtract.extract_extract
                 }
@@ -252,19 +271,18 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
 
                 unset($templateFile);
                 return true;
-            } elseif (!file_exists($templateFile)) {
-                trigger_error(// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
-                    sprintf(
-                        /* translators: %s: Path to template file to show in error. */
-                        esc_html__('The views file was not found (%s).', 'rundiz-downloads'), 
-                        esc_html(str_replace(['\\', '/'], '/', $templateFile))
-                    ),
-                    E_USER_WARNING
+            } else {
+                // if views file was not found.
+                // Throw the exception to notice the developers. Without translation.
+                throw new \Exception(
+                    esc_html(
+                        sprintf(
+                            'The views file was not found (%s).', 
+                            str_replace(['\\', '/'], '/', $templateFile)
+                        )
+                    )
                 );
             }
-
-            unset($templateFile);
-            return false;
         }// loadView
 
 
