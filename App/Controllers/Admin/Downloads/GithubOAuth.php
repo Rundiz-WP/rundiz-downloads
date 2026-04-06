@@ -375,7 +375,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Github
                 return;
             }
 
-            wp_enqueue_script('rundiz-downloads-github-connect-page-index-js', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/admin/Downloads/GithubOAuth/pageIndex.js', ['jquery', 'rundiz-downloads-common-functions-js'], RUNDIZDOWNLOADS_VERSION, true);
+            wp_enqueue_script('rundiz-downloads-github-connect-page-index-js', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/Admin/Downloads/GithubOAuth/pageIndex.js', ['jquery', 'rundiz-downloads-common-functions-js'], RUNDIZDOWNLOADS_VERSION, true);
             wp_localize_script(
                 'rundiz-downloads-github-connect-page-index-js',
                 'RdDownloads',
@@ -404,7 +404,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Github
             }
 
             wp_enqueue_style('rundiz-downloads-font-awesome5');
-            wp_enqueue_style('rundiz-downloads-github-connect-page-index-css', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/admin/Downloads/GithubOAuth/pageIndex.css', [], RUNDIZDOWNLOADS_VERSION);
+            wp_enqueue_style('rundiz-downloads-github-connect-page-index-css', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/Admin/Downloads/GithubOAuth/pageIndex.css', [], RUNDIZDOWNLOADS_VERSION);
         }// registerStyles
 
 

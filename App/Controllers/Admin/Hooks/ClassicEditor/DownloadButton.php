@@ -81,7 +81,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
         {
             wp_register_script(
                 'rundiz-downloads-tinymce-ajax', 
-                plugins_url('/assets/js/admin/Hooks/ClassicEditor/tinymce-ajax.js', RUNDIZDOWNLOADS_FILE), 
+                plugins_url('/assets/js/Admin/Hooks/ClassicEditor/tinymce-ajax.js', RUNDIZDOWNLOADS_FILE), 
                 [
                     'jquery', 
                     'rundiz-downloads-common-functions-js', 
@@ -141,8 +141,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
                     unset($StylesScripts);
                 }
                 wp_enqueue_style('rundiz-downloads-font-awesome5');
-                wp_enqueue_style('rundiz-downloads-tinymce-font-awesome5', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/admin/Hooks/ClassicEditor/tinymce-font-awesome5.css', [], RUNDIZDOWNLOADS_VERSION);
-                wp_enqueue_style('rundiz-downloads-tinymce-custom-dialog', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/admin/Hooks/ClassicEditor/tinymce-custom-dialog.css', [], RUNDIZDOWNLOADS_VERSION);
+                wp_enqueue_style('rundiz-downloads-tinymce-font-awesome5', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/Admin/Hooks/ClassicEditor/tinymce-font-awesome5.css', [], RUNDIZDOWNLOADS_VERSION);
+                wp_enqueue_style('rundiz-downloads-tinymce-custom-dialog', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/Admin/Hooks/ClassicEditor/tinymce-custom-dialog.css', [], RUNDIZDOWNLOADS_VERSION);
             }
         }// registerStyles
 
@@ -157,7 +157,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Hooks\\ClassicEdi
         {
             global $pagenow;
             if (('post.php' === $pagenow || 'post-new.php' === $pagenow) && is_admin()) {
-                $plugin_array['rundiz_downloads_button'] = plugins_url('/assets/js/admin/Hooks/ClassicEditor/tinymce-dialog.js', RUNDIZDOWNLOADS_FILE);
+                $plugin_array['rundiz_downloads_button'] = plugins_url('/assets/js/Admin/Hooks/ClassicEditor/tinymce-dialog.js', RUNDIZDOWNLOADS_FILE);
             }
             return $plugin_array;
         }// registerTinyMceJavascript

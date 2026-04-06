@@ -209,7 +209,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Manage
                 return;
             }
 
-            wp_enqueue_script('rundiz-downloads-manage-form-js', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/admin/Downloads/Management/pageIndex.js', ['rundiz-downloads-common-functions-js'], RUNDIZDOWNLOADS_VERSION, true);
+            wp_enqueue_script('rundiz-downloads-manage-form-js', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/Admin/Downloads/Management/pageIndex.js', ['rundiz-downloads-common-functions-js'], RUNDIZDOWNLOADS_VERSION, true);
             wp_localize_script(
                 'rundiz-downloads-manage-form-js',
                 'RdDownloads',
@@ -234,7 +234,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Manage
 
             wp_enqueue_style('rundiz-downloads-font-awesome5');
 
-            wp_enqueue_style('rundiz-downloads-manage-form-css', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/admin/Downloads/Management/pageIndex.css', [], RUNDIZDOWNLOADS_VERSION);
+            wp_enqueue_style('rundiz-downloads-manage-form-css', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/css/Admin/Downloads/Management/pageIndex.css', [], RUNDIZDOWNLOADS_VERSION);
         }// registerStyles
 
 

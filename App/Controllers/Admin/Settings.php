@@ -216,7 +216,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
             wp_enqueue_script('rundiz-downloads-settings-tabs-js');
 
             // custom ajax for settings page.
-            wp_enqueue_script('rundiz-downloads-settings-ajax-js', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/admin/settings/settings-ajax.js', [], RUNDIZDOWNLOADS_VERSION, true);
+            wp_enqueue_script('rundiz-downloads-settings-ajax-js', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/js/Admin/settings/settings-ajax.js', [], RUNDIZDOWNLOADS_VERSION, true);
             wp_localize_script(
                 'rundiz-downloads-settings-ajax-js',
                 'RdDownloadsSettings',
