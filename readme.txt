@@ -2,7 +2,7 @@
 Contributors: okvee
 Tags: downloads, download, download manager, file hosting, GitHub
 Tested up to: 7.0
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 4.7.0
@@ -68,13 +68,14 @@ Yes, the plugin's tables will be dropped on uninstall.
 12. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
-= 1.1.2 =
+= 1.1.3 =
 2026-04-06
 
 * Minor bug fix.
 * Rename assets/css/admin -> assets/css/Admin
 * Rename assets/js/admin -> assets/js/Admin
 * Moved some assets files into sub folder.
+* 1.1.3 is bump version number to fix incomplete SVN.
 
 = 1.1.1 =
 2026-03-27
