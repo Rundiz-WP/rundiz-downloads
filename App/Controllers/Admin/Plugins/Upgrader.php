@@ -181,10 +181,10 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
 
         /**
          * Detect this plugin updated and display link or maybe redirect to manual update page.
-         * 
+         *
          * This method will be run as new version of code.<br>
          * To understand more about new version of code, please read more on `updateProcessComplete()` method.
-         * 
+         *
          * @link https://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices Reference.
          */
         public function detectPluginUpdate()
@@ -200,11 +200,11 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                     // display link to manual update page.
                     if (!isset($_REQUEST['page']) || (isset($_REQUEST['page']) && self::MENU_SLUG !== sanitize_text_field(wp_unslash($_REQUEST['page'])))) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
                         $manualUpdateNotice = '<div class="notice notice-warning is-dismissible">
-                            <p>' . 
+                            <p>' .
                                 sprintf(
                                     // translators: %1$s Open link, %2$s Close link.
-                                    esc_html__('The Rundiz Downloads is just upgraded and need to be manually update. Please continue to the %1$splugin update page%2$s.', 'rundiz-downloads'), 
-                                    '<a href="' . esc_attr(network_admin_url('index.php?page=' . self::MENU_SLUG)) . '">', // this link will be auto convert to admin_url if not in multisite installed.
+                                    esc_html__('The Rundiz Downloads is just upgraded and need to be manually update. Please continue to the %1$splugin update page%2$s.', 'rundiz-downloads'),
+                                    '<a href="' . esc_url(network_admin_url('index.php?page=' . self::MENU_SLUG)) . '">', // this link will be auto convert to admin_url if not in multisite installed.
                                     '</a>'
                                 ) .
                             '</p>

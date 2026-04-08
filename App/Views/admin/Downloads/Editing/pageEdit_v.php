@@ -47,7 +47,7 @@ if (!defined('ABSPATH')) {
                         }
                         if (isset($download_url)) {
                             echo ' ';
-                            echo '<a href="' . esc_attr($download_url) . '" target="preview-file" title="' . esc_attr__('Preview', 'rundiz-downloads') . '"><i class="fas fa-eye fa-fw rundiz-downloads-icon-preview"></i> <span class="sr-only">' . esc_html__('Preview', 'rundiz-downloads') . '</span></a>';
+                            echo '<a href="' . esc_url($download_url) . '" target="preview-file" title="' . esc_attr__('Preview', 'rundiz-downloads') . '"><i class="fas fa-eye fa-fw rundiz-downloads-icon-preview"></i> <span class="sr-only">' . esc_html__('Preview', 'rundiz-downloads') . '</span></a>';
                         }
                         ?></div>
                         <p class="description"><?php esc_html_e('Please open the help tab to see help message.', 'rundiz-downloads'); ?></p>
