@@ -193,7 +193,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstal
                             }
                         }
 
-                        $sql = 'DROP TABLE IF EXISTS ' . $prefix . $item['tablename'];
+                        $sql = 'DROP TABLE IF EXISTS `' . esc_sql($prefix . $item['tablename']) . '`';
                         $wpdb->query($sql);// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                         unset($prefix, $sql);
                     }
