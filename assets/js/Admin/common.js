@@ -2,7 +2,8 @@
  * Rundiz Downloads - Common JS use in admin area.
  * 
  * @package rundiz-downloads
- * @since 1.1.2
+ * @since 2026-02-11
+ * @since 1.1.2 The version number is since this plugin version, the date value is from Rundiz Plugin Template.
  */
 
 
@@ -12,7 +13,7 @@ class RundizDownloadsAdminCommon {
     /**
      * Handle response error. If response is error (for example, not 2xx) it will throw the error message to let `catch()` work.
      * 
-     * @since 1.1.2
+     * @since 2026-02-11
      * @param {object} response The response object that have got from `rawResponse.json()`, or `rawResponse.text()` depend on content type.
      * @param {object} rawResponse Raw response from server.
      * @param {object} options The options:<br>
@@ -64,7 +65,7 @@ class RundizDownloadsAdminCommon {
     /**
      * Create alert HTML.
      * 
-     * @since 1.1.2
+     * @since 2026-02-11
      * @param {string} message Notice message can be just text or HTML.
      * @param {string} status Alert status. Accepted: 'error', 'info', 'success', 'warning'.
      * @param {Boolean} isDismissible Is alert dismissible?
@@ -129,7 +130,7 @@ class RundizDownloadsAdminCommon {
      * Handle response error. If response is error (for example, not 2xx) it will throw the error message to let `catch()` work.
      * 
      * @see ajaxHandleResponseError()
-     * @since 1.1.2
+     * @since 2026-02-11
      */
     static static_ajaxHandleResponseError(response, rawResponse, options = {}) {
         const thisClass = new this();
@@ -141,7 +142,7 @@ class RundizDownloadsAdminCommon {
      * Create alert HTML.
      * 
      * @see createAlertHTML()
-     * @since 1.1.2
+     * @since 2026-02-11
      */
     static static_createAlertHTML(message, status = 'error', isDismissible = false, dismissText = 'x') {
         const thisClass = new this();

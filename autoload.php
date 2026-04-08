@@ -20,7 +20,6 @@ if (!defined('ABSPATH')) {
  * 
  *      new \Foo\Bar\Baz\Qux;
  *      
- * @package rundiz-downloads
  * @param string $class The fully-qualified class name.
  * @return void
  * @link http://www.php-fig.org/psr/psr-4/examples/ copy from here.

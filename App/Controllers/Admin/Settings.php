@@ -3,7 +3,7 @@
  * Add settings sub menu and page into the Settings menu.
  *
  * Last update: 2026-03-27
- *
+ * 
  * @package rundiz-downloads
  */
 
