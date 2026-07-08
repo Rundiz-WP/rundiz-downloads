@@ -368,7 +368,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Git
                     unset($secretKeyArray);
 
                     // get latest data from GitHub.
-                    $latestData = $this->Github->apiGetLatestRepositoryData($this->payloadObject->repository->url, [], $user_id);
+                    $latestData = $this->Github->apiGetLatestRepositoryData($this->payloadObject->repository->html_url, [], $user_id);
                     unset($user_id);
 
                     if (is_array($latestData) && isset($latestData[0]) && is_array($latestData[0])) {
