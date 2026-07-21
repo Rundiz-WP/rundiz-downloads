@@ -94,8 +94,8 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\StylesAndScripts')) {
          */
         public function registerStylesAndScripts()
         {
-            // font awesome. choose css fonts instead of svg, see more at https://fontawesome.com/how-to-use/on-the-web/other-topics/performance
-            // to name font awesome handle as `plugin-name-prefix-font-awesome5` is to prevent conflict with other plugins that maybe use older version but same handle that cause some newer icons in this plugin disappears.
+            // Font Awesome.  
+            // Use CSS over SVG for better performance. ( https://fontawesome.com/how-to-use/on-the-web/other-topics/performance ).
             wp_register_style('rundiz-downloads-font-awesome5', plugin_dir_url(RUNDIZDOWNLOADS_FILE) . 'assets/vendor/fontawesome/css/all.min.css', [], '5.6.1');
         }// registerStylesAndScripts
 

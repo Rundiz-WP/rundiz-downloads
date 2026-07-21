@@ -9,12 +9,20 @@
 namespace RundizDownloads\App;
 
 
+if (!defined('ABSPATH')) {
+    exit();
+}
+
+
 if (!class_exists('\\RundizDownloads\\App\\App')) {
     /**
      * Plugin application main entry class.
      */
     class App
     {
+
+
+        use AppTrait;
 
 
         /**
@@ -28,9 +36,8 @@ if (!class_exists('\\RundizDownloads\\App\\App')) {
             unset($StylesAndScripts);
 
             // Initialize the loader class.
-            $Loader = new \RundizDownloads\App\Libraries\Loader();
-            $Loader->autoRegisterControllers();
-            unset($Loader);
+            $this->Loader = new \RundizDownloads\App\Libraries\Loader();
+            $this->Loader->autoRegisterControllers();
         }// run
 
 

@@ -158,7 +158,7 @@ $rundiz_downloads_githubOAuthHelp .= '</p>' . PHP_EOL;
 $rundiz_downloads_githubOAuthHelp .= '<ol>' . PHP_EOL;
 $rundiz_downloads_githubOAuthHelp .= '<li>' . __('Complete all the steps above and GitHub OAuth link will be appears.', 'rundiz-downloads') . '</li>' . PHP_EOL;
 /* translators: %1$s: Open link, %2$s: Close link. */
-$rundiz_downloads_githubOAuthHelp .= '<li>' . sprintf(__('Click on %1$sGitHub OAuth%2$s menu and follow instruction.', 'rundiz-downloads'), '<a href="' . admin_url('admin.php?page=' . \RundizDownloads\App\Controllers\Admin\Downloads\GithubOAuth::MENU_SLUG) . '">', '</a>') . '</li>' . PHP_EOL;
+$rundiz_downloads_githubOAuthHelp .= '<li>' . sprintf(__('Click on %1$sGitHub OAuth%2$s menu and follow instruction.', 'rundiz-downloads'), '<a href="' . admin_url('admin.php?page=' . rawurlencode(\RundizDownloads\App\Controllers\Admin\Downloads\GithubOAuth::MENU_SLUG)) . '">', '</a>') . '</li>' . PHP_EOL;
 $rundiz_downloads_githubOAuthHelp .= '</ol>' . PHP_EOL;
 // end GitHub help ------------------------------------------------------------------------------------------
 

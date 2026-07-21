@@ -81,6 +81,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Github
 
         /**
          * GitHubOAuth class constructor.
+         * 
+         * This class (including this constructor method) will be called from `Controllers\Admin\Downloads\Menu->rdDownloadsMenu()`.
          */
         public function __construct()
         {

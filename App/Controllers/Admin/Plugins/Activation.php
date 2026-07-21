@@ -29,6 +29,21 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
 
 
         /**
+         * All available options.
+         * 
+         * These options will be accessible via main option name variable.  
+         * For example: options name `'the_name'` can call from `$plugin_template_optname['the_name'];`.  
+         * (`$plugin_template_optname` will be set via the property's value in `AppTrait->main_option_name`.)  
+         * If you want to access this property, please call to `setupAllOptions()` method first.
+         * 
+         * @since 2015-09-05 First was set in the `AppTrait`.
+         * @since 2026-07-20 Moved from `AppTrait`.
+         * @var array Set all options available for this plugin. it must be 2D array (`key => default value, key2 => default value, ...`)
+         */
+        private $all_options = [];
+
+
+        /**
          * Activate the plugin by admin on WP plugin page.
          *
          * @link https://developer.wordpress.org/reference/functions/register_activation_hook/ The function `register_activation_hook()` reference.
@@ -127,14 +142,18 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
 
             if (false === $current_options) {
                 // if this is newly activate. it is never activated before, add the options.
-                $this->setupAllOptions();
-                $this->saveOptions($this->all_options);
+                $this->saveOptions($this->getAllOptions());
             } elseif (
                 is_array($current_options) &&
-                array_key_exists('rdsfw_plugin_db_version', $current_options) &&
-                version_compare($current_options['rdsfw_plugin_db_version'], $this->db_version, '<')
+                (
+                    !isset($current_options['rdsfw_plugin_db_version']) ||
+                    (
+                        array_key_exists('rdsfw_plugin_db_version', $current_options) &&
+                        version_compare($current_options['rdsfw_plugin_db_version'], $this->db_version, '<')
+                    )
+                )
             ) {
-                // if there is db updated. it is just updated because `activateCreateAlterTables()` that is using `dbDelta()` were called before this method.
+                // if there is db updated. it is just updated because `activateCreateAlterTables()` that is using `dbDelta()` was called before this method.
                 // the table structure should already get updated by this.
                 // save the new db version.
                 $current_options['rdsfw_plugin_db_version'] = $this->db_version;
@@ -179,7 +198,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
 
                         if (function_exists('maybe_convert_table_to_utf8mb4')) {
                             //maybe_convert_table_to_utf8mb4($prefix . $item['tablename']);
-                            $this->tempFixMaybeConvertTableToUtf8mb4($prefix . $item['tablename']);
+                            $this->hotFixMaybeConvertTableToUTF8Mb4($prefix . $item['tablename']);
                         }
                         unset($prefix);
                     }
@@ -192,39 +211,42 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
 
 
         /**
-         * {@inheritDoc}
+         * Get value of `all_options` property. The value of this property is from settings config file, not from DB.
+         * 
+         * Also setup if it was not set before.
+         * 
+         * This method visibility is `protected` to let tests class extend and use it.
+         * 
+         * @since 2026-07-20
+         * @return array Return array value of `all_options` property.
          */
-        public function registerHooks()
+        protected function getAllOptions()
         {
-            // register activate hook
-            register_activation_hook(RUNDIZDOWNLOADS_FILE, [$this, 'activate']);
-        }// registerHooks
+            if (!is_array($this->all_options) || empty($this->all_options)) {
+                $this->setupAllOptions();
+            }
+
+            return $this->all_options;
+        }// getAllOptions
 
 
         /**
-         * Temporary fix of function `maybe_convert_table_to_utf8mb4()`.
+         * Hot fix for function `maybe_convert_table_to_utf8mb4()`.
          * 
-         * phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-         * phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching
-         * 
-         * @see maybe_convert_table_to_utf8mb4()
-         * @link https://core.trac.wordpress.org/ticket/60002 Bug tracker
+         * @link https://core.trac.wordpress.org/ticket/60002 Bug tracker about this problem.
          * @since 1.0.16
+         * @since 1.1.6 Renamed from `tempFixMaybeConvertTableToUtf8mb4()`.
          * @global \wpdb $wpdb
-         * @param string $table The DB table to fix.
-         * @return bool Return `true` on success, `false` for otherwise.
+         * @param string $table The table to convert.
+         * @return bool True if the table was converted, false if it wasn't.
          */
-        private function tempFixMaybeConvertTableToUtf8mb4($table)
+        private function hotFixMaybeConvertTableToUTF8Mb4($table)
         {
-            if (!is_string($table)) {
-                return false;
-            }
-
             global $wpdb;
 
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-            $results = $wpdb->get_results("SHOW FULL COLUMNS FROM `$table`");
-            if (!$results) {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $results = $wpdb->get_results( "SHOW FULL COLUMNS FROM `$table`" );
+            if ( ! $results ) {
                 return false;
             }
 
@@ -239,17 +261,19 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
                 }
             }
 
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-            $table_details = $wpdb->get_row("SHOW TABLE STATUS LIKE '$table'");
-            if (!$table_details) {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $table_details = $wpdb->get_row( "SHOW TABLE STATUS LIKE '$table'" );
+            if ( ! $table_details ) {
                 return false;
             }
 
-            list( $table_charset ) = explode('_', $table_details->Collation);
-            $table_charset = strtolower($table_charset);
-            if ('utf8mb4' === $table_charset) {
+            list( $table_charset ) = explode( '_', $table_details->Collation );
+            $table_charset         = strtolower( $table_charset );
+            if ( 'utf8mb4' === $table_charset ) {
                 return true;
             }
+
+            // the code above has been copied from original function.
 
             // custom code that upgrade to best collate. ---------------------------------
             $table_charset = 'utf8mb4';
@@ -260,9 +284,65 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
             unset($charset_collate);
             // end custom code that upgrade to best collate. ---------------------------------
 
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.DirectDatabaseQuery.DirectQuery
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             return $wpdb->query("ALTER TABLE $table CONVERT TO CHARACTER SET $table_charset COLLATE $collate");
-        }// tempFixMaybeConvertTableToUtf8mb4
+        }// hotFixMaybeConvertTableToUTF8Mb4
+
+
+        /**
+         * {@inheritDoc}
+         */
+        public function registerHooks()
+        {
+            // register activate hook
+            register_activation_hook(RUNDIZDOWNLOADS_FILE, [$this, 'activate']);
+        }// registerHooks
+
+
+        /**
+         * Setup all options from settings config file.
+         * 
+         * This will be set all config settings into `all_options` property.  
+         * You have to call this method if you want to call to `all_options` property.
+         * 
+         * This method will not load saved settings data from DB. The value in settings fields are all default value.
+         * 
+         * This method was called from `getAllOptions()`.
+         * 
+         * @since 2015-09-05 First was set in the `AppTrait`.
+         * @since 2026-07-20 Moved from `AppTrait`.
+         */
+        private function setupAllOptions()
+        {
+            // load config values to get settings config file.
+            $config_values = $this->getLoader()->loadConfig();
+            if (is_array($config_values) && array_key_exists('rundiz_settings_config_file', $config_values)) {
+                // if there is config value about config file.
+                $settings_config_file = $config_values['rundiz_settings_config_file'];
+            } else {
+                // if there is no config value about config file.
+                wp_die(
+                    esc_html__('Settings configuration file was not set.', 'plugin-template')
+                );
+                exit(1);
+            }
+            unset($config_values);
+
+            $RundizSettings = new \PluginTemplate\App\Libraries\RundizSettings();
+            $RundizSettings->settings_config_file = $settings_config_file;
+            $this->all_options = $RundizSettings->getSettingsFieldsId();
+            unset($RundizSettings, $settings_config_file);
+
+            // add db version into config value.
+            if (is_array($this->all_options)) {
+                if (!array_key_exists('rdsfw_plugin_db_version', $this->all_options) && !is_null($this->getDbVersion())) {
+                    $this->all_options = array_merge($this->all_options, ['rdsfw_plugin_db_version' => $this->db_version]);
+                }
+                if (!array_key_exists('rdsfw_manual_update_version', $this->all_options)) {
+                    $this->all_options = array_merge($this->all_options, ['rdsfw_manual_update_version' => '']);
+                }
+            }
+        }// setupAllOptions
 
 
     }// Activation

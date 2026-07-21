@@ -2,11 +2,11 @@
 Contributors: okvee
 Tags: downloads, download, download manager, file hosting, GitHub
 Tested up to: 7.0
+Requires at least: 4.7.0
+Requires PHP: 5.5
 Stable tag: 1.1.5
 License: MIT
 License URI: https://opensource.org/licenses/MIT
-Requires at least: 4.7.0
-Requires PHP: 5.5
 
 Download manager for WordPress that support GitHub auto update.
 

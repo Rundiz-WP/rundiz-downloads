@@ -27,11 +27,12 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\PluginDbStructure')) {
          * 
          * The db schema will be use by WordPress Db Delta.  
          * If you do not want to create any tables for this plugin then set this method to return empty array.  
-         * Please read more about db version at \RundizDownloads\App\AppTrait->db_version property.
+         * Please read more about db version at `\RundizDownloads\App\AppTrait->db_version` property.
          * 
          * Limitation:  
          * - DO NOT use back tick (`) anywhere because it will be thrown the error.
          * - DO NOT add "IF NOT EXISTS" into "CREATE TABLE" because it will not get an update on structure changed.
+         * - DO NOT use semicolon sign (;) anywhere because it will be thrown the error.
          * 
          * Example:
          * <pre>

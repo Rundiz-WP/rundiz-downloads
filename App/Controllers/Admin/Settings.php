@@ -2,7 +2,7 @@
 /**
  * Add settings sub menu and page into the Settings menu.
  *
- * Last update: 2026-03-27
+ * Original source last update: 2026-04-11
  * 
  * @package rundiz-downloads
  */
@@ -31,7 +31,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
 
 
         /**
-         * @var string This menu slug. This constant must be public.
+         * @var string Settings menu slug. This constant must be public.
          */
         const MENU_SLUG = 'rundiz-downloads_settings';
 
@@ -68,9 +68,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
             $output = [];
             $output['rundiz_downloads_options'] = $rundiz_downloads_options;
 
-            $Loader = new \RundizDownloads\App\Libraries\Loader();
-            $Loader->loadView('admin/readsettings_v', $output);
-            unset($Loader, $output);
+            $this->getLoader()->loadView('admin/readsettings_v', $output);
+            unset($output);
         }// pluginReadSettingsPage
 
 
@@ -120,8 +119,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
             }
 
             // load config values to get settings config file.
-            $Loader = new \RundizDownloads\App\Libraries\Loader();
-            $config_values = $Loader->loadConfig();
+            $config_values = $this->getLoader()->loadConfig();
             if (is_array($config_values) && array_key_exists('rundiz_settings_config_file', $config_values)) {
                 $settings_config_file = $config_values['rundiz_settings_config_file'];
             } else {
@@ -193,8 +191,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
             $output['settings_page'] = $RundizSettings->getSettingsPage($options_values);
             unset($RundizSettings, $options_values);
 
-            $Loader->loadView('admin/settings_v', $output);
-            unset($Loader, $output);
+            $this->getLoader()->loadView('admin/settings_v', $output);
+            unset($output);
         }// pluginSettingsPage
 
 
@@ -218,8 +216,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
                 return;
             }
 
-            $Loader = new \RundizDownloads\App\Libraries\Loader();
-            $config_values = $Loader->loadConfig();
+            $config_values = $this->getLoader()->loadConfig();
             if (is_array($config_values) && array_key_exists('rundiz_settings_config_file', $config_values)) {
                 $settings_config_file = $config_values['rundiz_settings_config_file'];
                 $RundizSettings = new \RundizDownloads\App\Libraries\RundizSettings();
@@ -228,15 +225,20 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
                 $hasMediaField = $RundizSettings->hasMedia();
                 unset($RundizSettings, $settings_config_file);
             }
-            unset($config_values, $Loader);
+            unset($config_values);
 
             if (isset($hasEditorField) && true === $hasEditorField) {
+                // if there is editor field (TinyMCE).
+                // the function call `wp_enqueue_editor()` is required to make tabs 'visual/code' works.
+                // the media assets will be enqueue automatically.
                 wp_enqueue_editor();
-                wp_enqueue_media();
             }
             unset($hasEditorField);
             if (isset($hasMediaField) && true === $hasMediaField) {
-                wp_enqueue_script('jquery');
+                // if there is media field. 
+                // the function call `wp_enqueue_media()` is required 
+                // in case there is no function call to `wp_enqueue_editor()` 
+                // to make sure that JS `wp.media()` will work.
                 wp_enqueue_media();
             }
             unset($hasMediaField);

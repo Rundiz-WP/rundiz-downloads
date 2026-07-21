@@ -42,6 +42,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Front\\Hooks\\Query\\Git
 
         /**
          * GitHub auto update class constructor.
+         * 
+         * This class (including this constructor method) will be called from `Controllers\Front\Hooks\Query\GithubAutoUpdatePage->githubAutoUpdatePage()`.
          */
         public function __construct()
         {

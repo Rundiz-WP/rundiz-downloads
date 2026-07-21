@@ -24,15 +24,6 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
 
 
         /**
-         * GitHub XHR class constructor.
-         */
-        public function __construct()
-        {
-            $this->Github = new \RundizDownloads\App\Libraries\Github();
-        }// __construct
-
-
-        /**
          * Check that if there is webhook for this site on GitHub repository or not.
          *
          * If there is get its hook_id and the result.
@@ -121,11 +112,25 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Downloads\\Xhr\\X
 
 
         /**
+         * Initialize GitHub.
+         * 
+         * Move from `__construct()` to here to prevent translation function error calls too early.
+         * 
+         * @since 1.1.6
+         */
+        public function initializeGithub()
+        {
+            $this->Github = new \RundizDownloads\App\Libraries\Github();
+        }// initializeGithub
+
+
+        /**
          * {@inheritDoc}
          */
         public function registerHooks()
         {
             if (is_admin()) {
+                add_action('init', [$this, 'initializeGithub']);
                 add_action('wp_ajax_RdDownloadsGetGithubFileData', [$this, 'getGithubFileData']);
                 add_action('wp_ajax_RdDownloadsNewGitHubSecret', [$this, 'updateGitHubSecret']);
                 add_action('wp_ajax_RdDownloadsSyncGitHubSecretToAll', [$this, 'syncGitHubSecretToAllDownloads']);

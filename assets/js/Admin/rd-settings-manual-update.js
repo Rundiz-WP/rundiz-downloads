@@ -53,7 +53,7 @@ function rundiz_downloads_manualUpdateAjax()
     // prepare to make AJAX call. ========================================================
     const formData = new URLSearchParams();
     formData.append('security', RundizDownloadsRdSettingsManualUpdate.nonce);
-    formData.append('action', 'rundiz_downloads_manualUpdate');
+    formData.append('action', RundizDownloadsRdSettingsManualUpdate.ajaxAction);
     formData.append('updateKey', runUpdateKey);
 
     fetch(ajaxurl, {

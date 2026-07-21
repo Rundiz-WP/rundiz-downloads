@@ -18,6 +18,12 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
 
 
         /**
+         * @var \RundizDownloads\App\Libraries\Loader The loader class if it has been initiated. Make sure that this property must be set before use.
+         */
+        protected $Loader = null;
+
+
+        /**
          * Main option name.
          * 
          * @var string Set main option name of this plugin. the name should be english, number, underscore, 
@@ -26,18 +32,6 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
          * @uses Call the trait method `getOptions();` before access `$rundiz_downloads_options` in global variable.
          */
         public $main_option_name = 'rundiz_downloads_options';
-
-
-        /**
-         * All available options.
-         * 
-         * These options will be accessible via main option name variable. 
-         * For example: options name `'the_name'` can call from `$rundiz_downloads_options['the_name'];`.
-         * If you want to access this property, please call to `setupAllOptions()` method first.
-         * 
-         * @var array Set all options available for this plugin. it must be 2D array (`key => default value, key2 => default value, ...`)
-         */
-        public $all_options = [];
 
 
         /**
@@ -69,11 +63,33 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
 
 
         /**
-         * Get all options of this plugin.
+         * Get `Loader` object from `Loader` property.
          * 
+         * This method is in main AppTrait.
+         *
+         * @return \RundizDownloads\App\Libraries\Loader Return the `Loader` object.
+         */
+        protected function getLoader()
+        {
+            if (!$this->Loader instanceof \RundizDownloads\App\Libraries\Loader) {
+                $this->Loader = new \RundizDownloads\App\Libraries\Loader();
+            }
+            return $this->Loader;
+        }// getLoader
+
+
+        /**
+         * Get all options of this plugin from DB.
+         * 
+         * This method is in main AppTrait.
+         * 
+         * @param array $options The method options:  
+         *      `process_display_cb` (bool) Set to `true` to process the option `display_callback`. Set to `false` to skip it. Default is `true`.  
+         *          This is in some cases, the class may call this method from inside `__construct()` unavoidable. 
+         *          It may cause translation function trigger error calling it too early. Set to `false` will not process it, but it can be done manually later.  
          * @return array Return associative array value of all options where the key is option name.
          */
-        public function getOptions()
+        public function getOptions(array $options = [])
         {
             $option_name = $this->main_option_name;
             global ${$option_name};// phpcs:ignore PHPCompatibility.Variables.ForbiddenGlobalVariableVariable.NonBareVariableFound
@@ -82,18 +98,46 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
             $get_option = get_option($option_name);
             if (false !== $get_option) {
                 // if option has value.
-                ${$option_name} = maybe_unserialize($get_option);// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-                unset($get_option);
-                return (array) ${$option_name};
+                // `get_option()` already unserializes internally - no need to re-run `maybe_unserialize()`.
+                if (is_string($get_option)) {
+                    // if older version of this plugin may still use manual serialize/unserialize.
+                    // @todo[rundiz] delete this `if` block on version 2.0+
+                    $get_option = maybe_unserialize($get_option);
+                    if (!is_array($get_option)) {
+                        $get_option = [];
+                    }
+                }
+
+                if (!isset($options['process_display_cb']) || true === $options['process_display_cb']) {
+                    // if there is option `process_display_cb` was set to `true` or default (unset).
+                    // process data before use with `display_callback` option. -----------------------------
+                    $config_values = $this->getLoader()->loadConfig();
+                    $settings_config_file = '';
+                    if (is_array($config_values) && array_key_exists('rundiz_settings_config_file', $config_values)) {
+                        // if there is config value about config file.
+                        $settings_config_file = $config_values['rundiz_settings_config_file'];
+                    }
+                    unset($config_values);
+
+                    $RundizSettings = new \RundizDownloads\App\Libraries\RundizSettings();
+                    $RundizSettings->settings_config_file = $settings_config_file;
+                    $get_option = $RundizSettings->processDisplayCallback($get_option);
+                    unset($RundizSettings, $settings_config_file);
+                    // end process data before use with `display_callback` option. -------------------------
+                }// endif; $options['process_display_cb']
+
+                ${$option_name} = (array) $get_option;// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
             }
 
             unset($get_option);
-            return [];
+            return ${$option_name};// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
         }// getOptions
 
 
         /**
          * Save the settings from settings page, using Rundiz settings.
+         * 
+         * This method is in main AppTrait.
          * 
          * @param array $data The associative array of submitted data in key => value
          * @return bool Return `true` if saved successfully. return `false` if not updated.
@@ -101,6 +145,21 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
         public function saveOptions(array $data)
         {
             $data = stripslashes_deep($data);
+
+            // process data before save with `save_callback` option. -----------------------------
+            $config_values = $this->getLoader()->loadConfig();
+            $settings_config_file = '';
+            if (is_array($config_values) && array_key_exists('rundiz_settings_config_file', $config_values)) {
+                // if there is config value about config file.
+                $settings_config_file = $config_values['rundiz_settings_config_file'];
+            }
+            unset($config_values);
+
+            $RundizSettings = new \RundizDownloads\App\Libraries\RundizSettings();
+            $RundizSettings->settings_config_file = $settings_config_file;
+            $data = $RundizSettings->processSaveCallback($data);
+            unset($RundizSettings, $settings_config_file);
+            // end process data before save with `save_callback` option. -------------------------
 
             // add db version into config value.
             if (!array_key_exists('rdsfw_plugin_db_version', $data) && !is_null($this->getDbVersion())) {
@@ -126,50 +185,21 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
                 $data = array_merge($data, ['rdsfw_manual_update_version' => $manual_update_version]);
             }
 
-            return update_option($this->main_option_name, $data);
+            return update_option($this->main_option_name, $data, false);
         }// saveOptions
 
 
         /**
-         * Setup all options from settings config file.
+         * Set `Loader` object to `Loader` property.
          * 
-         * This will be set all config settings into `all_options` property.
-         * You have to call this method if you want to call to `all_options` property.
-         * 
-         * This method will not load saved settings data from DB. The value in settings fields are all default value.
+         * This method is in main AppTrait.
+         *
+         * @param \RundizDownloads\App\Libraries\Loader $Loader The `Loader` object.
          */
-        public function setupAllOptions()
+        public function setLoader(\RundizDownloads\App\Libraries\Loader $Loader)
         {
-            // load config values to get settings config file.
-            $loader = new \RundizDownloads\App\Libraries\Loader();
-            $config_values = $loader->loadConfig();
-            if (is_array($config_values) && array_key_exists('rundiz_settings_config_file', $config_values)) {
-                // if there is config value about config file.
-                $settings_config_file = $config_values['rundiz_settings_config_file'];
-            } else {
-                // if there is no config value about config file.
-                wp_die(
-                    esc_html__('Settings configuration file was not set.', 'rundiz-downloads')
-                );
-                exit(1);
-            }
-            unset($config_values, $loader);
-
-            $RundizSettings = new \RundizDownloads\App\Libraries\RundizSettings();
-            $RundizSettings->settings_config_file = $settings_config_file;
-            $this->all_options = $RundizSettings->getSettingsFieldsId();
-            unset($RundizSettings, $settings_config_file);
-
-            // add db version into config value.
-            if (is_array($this->all_options)) {
-                if (!array_key_exists('rdsfw_plugin_db_version', $this->all_options) && !is_null($this->getDbVersion())) {
-                    $this->all_options = array_merge($this->all_options, ['rdsfw_plugin_db_version' => $this->db_version]);
-                }
-                if (!array_key_exists('rdsfw_manual_update_version', $this->all_options)) {
-                    $this->all_options = array_merge($this->all_options, ['rdsfw_manual_update_version' => '']);
-                }
-            }
-        }// setupAllOptions
+            $this->Loader = $Loader;
+        }// setLoader
 
 
     }// AppTrait

@@ -1,5 +1,14 @@
-/.backup
+/.backup/
 /.dist/
 /.requires-at-least_check-data-php*
-/node_modules
+
 /*.zip
+/node_modules/
+
+# Eclipse ignore files.
+/.settings/
+/.buildpath
+/.project
+
+# Visual Studio Code file.
+/.vscode/

@@ -26,7 +26,19 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
 
 
         /**
-         * @var string The upgrader menu slug. This constant must be public.
+         * @var string Upgrader AJAX action name. This constant can be private.
+         */
+        const AJAX_ACTION = 'rundiz_downloads_manualUpdate';
+
+
+        /**
+         * @var string Upgrader AJAX nonce name. This constant can be private.
+         */
+        const AJAX_NONCE = 'rundiz_downloads_nonce';
+
+
+        /**
+         * @var string Upgrader menu slug. This constant must be public.
          */
         const MENU_SLUG = 'rundiz-downloads-manual-update';
 
@@ -52,9 +64,10 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
 
             $output = [];
 
-            if (isset($_SERVER['REQUEST_METHOD']) && strtolower(wp_unslash($_SERVER['REQUEST_METHOD'])) === 'post' && isset($_POST) && !empty($_POST)) {// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            // phpcs:ignore WordPress.Security
+            if (isset($_SERVER['REQUEST_METHOD']) && strtolower(wp_unslash($_SERVER['REQUEST_METHOD'])) === 'post' && isset($_POST) && !empty($_POST)) {
                 // if method POST and there is POST data.
-                if (check_ajax_referer('rundiz_downloads_nonce', 'security', false) === false) {
+                if (check_ajax_referer(static::AJAX_NONCE, 'security', false) === false) {
                     status_header(403);
                     wp_die(
                         esc_html__('Please reload this page and try again.', 'rundiz-downloads'), 
@@ -65,10 +78,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
 
                 $updateKey = filter_input(INPUT_POST, 'updateKey', FILTER_SANITIZE_NUMBER_INT);
 
-                $Loader = new \RundizDownloads\App\Libraries\Loader();
-                $manualUpdateClasses = $Loader->getManualUpdateClasses();
+                $manualUpdateClasses = $this->getLoader()->getManualUpdateClasses();
                 $maxManualUpdateVersion = 0;
-                unset($Loader);
 
                 if (is_array($manualUpdateClasses) && array_key_exists($updateKey, $manualUpdateClasses) && class_exists($manualUpdateClasses[$updateKey])) {
                     $UpdateClass = new $manualUpdateClasses[$updateKey]();
@@ -189,16 +200,21 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
          */
         public function detectPluginUpdate()
         {
+            if (!is_admin()) {
+                // if not admin pages.
+                // no need to work here.
+                return;
+            }
+
             if (get_transient('rundiz_downloads_transient__updated') && current_user_can('update_plugins')) {
                 // if there is updated transient
-                $Loader = new \RundizDownloads\App\Libraries\Loader();
-
-                if ($Loader->haveManualUpdate() === true) {
+                if ($this->getLoader()->haveManualUpdate() === true) {
                     // if found that there are manual update in this new version of code.
                     // display link or redirect to manual update page. (display link is preferred to prevent bad user experience.)
                     // -------------------------------------------------------------------------------------
                     // display link to manual update page.
-                    if (!isset($_REQUEST['page']) || (isset($_REQUEST['page']) && self::MENU_SLUG !== sanitize_text_field(wp_unslash($_REQUEST['page'])))) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                    // phpcs:ignore WordPress.Security.NonceVerification
+                    if (!isset($_REQUEST['page']) || (isset($_REQUEST['page']) && static::MENU_SLUG !== sanitize_text_field(wp_unslash($_REQUEST['page'])))) {
                         $manualUpdateNotice = '<div class="notice notice-warning is-dismissible">
                             <p>' .
                                 sprintf(
@@ -228,15 +244,13 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                         add_action('admin_menu', [$this, 'displayManualUpdateMenu']);
                     }
 
-                    add_action('wp_ajax_rundiz_downloads_manualUpdate', [$this, 'ajaxManualUpdate']);
+                    add_action('wp_ajax_' . static::AJAX_ACTION, [$this, 'ajaxManualUpdate']);
                     // end display link to manual update page.
                     // -------------------------------------------------------------------------------------
                 } else {
                     // if don't have any manual update.
                     delete_transient('rundiz_downloads_transient__updated');
                 }// endif;
-
-                unset($Loader);
             }// endif;
         }// detectPluginUpdate
 
@@ -265,12 +279,10 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
             }
 
             $output = [];
+            $output['manualUpdateClasses'] = $this->getLoader()->getManualUpdateClasses();
 
-            $Loader = new \RundizDownloads\App\Libraries\Loader();
-            $output['manualUpdateClasses'] = $Loader->getManualUpdateClasses();
-
-            $Loader->loadView('admin/Plugins/Upgrader_v', $output);
-            unset($Loader, $output);
+            $this->getLoader()->loadView('admin/Plugins/Upgrader_v', $output);
+            unset($output);
         }// displayManualUpdatePage
 
 
@@ -303,10 +315,11 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
                 'rundiz-downloads-settings-manual-update-js',
                 'RundizDownloadsRdSettingsManualUpdate',
                 [
+                    'ajaxAction' => static::AJAX_ACTION,
                     'alreadyRunUpdateKey' => '',
                     'alreadyRunUpdateTotal' => 0,
                     'completed' => 'false',
-                    'nonce' => wp_create_nonce('rundiz_downloads_nonce'),
+                    'nonce' => wp_create_nonce(static::AJAX_NONCE),
                     'txtCompleted' => __('Completed', 'rundiz-downloads'),
                     'txtDismissNotice' => __('Dismiss', 'rundiz-downloads'),
                     'txtNext' => __('Next', 'rundiz-downloads'),
@@ -314,10 +327,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Upgrader
             );
 
             wp_enqueue_style('rundiz-downloads-font-awesome5');
-
-            $Loader = new \RundizDownloads\App\Libraries\Loader();
-            $manualUpdateClasses = $Loader->getManualUpdateClasses();
-            unset($Loader);
+            $manualUpdateClasses = $this->getLoader()->getManualUpdateClasses();
             wp_add_inline_script('rundiz-downloads-settings-manual-update-js', 'var manualUpdateClasses = ' . (!empty($manualUpdateClasses) ? wp_json_encode($manualUpdateClasses) : '') . ';');
             unset($manualUpdateClasses);
 

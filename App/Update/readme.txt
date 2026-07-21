@@ -17,6 +17,7 @@ Update class structure guideline:
 The class name must follow PSR auto load.
 The update class MUST have `manual_update_version` property for check later that what manual update version had already run.
 The `manual_update_version` in each update class can be the same for one update.
+The update class may have `__construct()` method but must has nothing working from there. This constructor method will be loaded while checking for having update class or not and use `manual_update_version` property to compare.
 The update class MUST have `run()` method to run the update code.
 Example:
 ```
@@ -35,10 +36,9 @@ class V1Sub1 implements \RundizDownloads\App\Update\Manual\ManualUpdateInterface
      */
     public function run()
     {
-        // code your manual update for action 1 (sub1).
+        // Code your manual update for action 1 (sub1).
     }// run
 
 
 }
-?>
 ```
