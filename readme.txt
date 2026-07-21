@@ -4,7 +4,7 @@ Tags: downloads, download, download manager, file hosting, GitHub
 Tested up to: 7.0
 Requires at least: 4.7.0
 Requires PHP: 5.5
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -68,6 +68,11 @@ Yes, the plugin's tables will be dropped on uninstall.
 12. Add a download dialog after clicked on the button in classic editor.
 
 == Changelog ==
+= 1.1.6 =
+2026-07-21
+
+* Minor update
+
 = 1.1.5 =
 2026-07-09
 
