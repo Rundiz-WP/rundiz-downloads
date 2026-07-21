@@ -32,8 +32,8 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
          * All available options.
          * 
          * These options will be accessible via main option name variable.  
-         * For example: options name `'the_name'` can call from `$plugin_template_optname['the_name'];`.  
-         * (`$plugin_template_optname` will be set via the property's value in `AppTrait->main_option_name`.)  
+         * For example: options name `'the_name'` can call from `$rundiz_downloads_options['the_name'];`.  
+         * (`$rundiz_downloads_options` will be set via the property's value in `AppTrait->main_option_name`.)  
          * If you want to access this property, please call to `setupAllOptions()` method first.
          * 
          * @since 2015-09-05 First was set in the `AppTrait`.
@@ -322,7 +322,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
             } else {
                 // if there is no config value about config file.
                 wp_die(
-                    esc_html__('Settings configuration file was not set.', 'plugin-template')
+                    esc_html__('Settings configuration file was not set.', 'rundiz-downloads')
                 );
                 exit(1);
             }
