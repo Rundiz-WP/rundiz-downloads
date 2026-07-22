@@ -1,7 +1,7 @@
 <?php
 /**
  * Uninstall or delete the plugin.
- *
+ * 
  * @package rundiz-downloads
  * 
  * phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
@@ -163,9 +163,9 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Uninstal
 
         /**
          * Drop tables that was created with this plugin.
-         *
+         * 
          * Only tables that was created in `RundizDownloads\App\Models\PluginDbStructure->get()` method will be drop here.
-         *
+         * 
          * @global \wpdb $wpdb
          * @param bool $mainsite Set to `true` to drop table of this plugin that created for main site. Otherwise it will be drop table with `prefix_sitenumber_` for switched to sub site only (in case multi-site enabled).
          */

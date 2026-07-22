@@ -10,6 +10,7 @@ if (!defined('ABSPATH')) {
     exit();
 }
 
+
 ?>
 <div class="wrap">
     <h1><?php esc_html_e('Manual update', 'rundiz-downloads'); ?></h1>

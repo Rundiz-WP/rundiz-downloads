@@ -10,6 +10,7 @@ if (!defined('ABSPATH')) {
     exit();
 }
 
+
 ?>
 <div class="wrap rd-settings-page">
     <h1><?php esc_html_e('Rundiz Downloads Settings', 'rundiz-downloads'); ?></h1>

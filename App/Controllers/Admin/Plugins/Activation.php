@@ -45,7 +45,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
 
         /**
          * Activate the plugin by admin on WP plugin page.
-         *
+         * 
          * @link https://developer.wordpress.org/reference/functions/register_activation_hook/ The function `register_activation_hook()` reference.
          * @link https://developer.wordpress.org/reference/hooks/activate_plugin/ The reference about what will be pass to callback of function `register_activation_hook()`.
          * @global \wpdb $wpdb WordPress DB class.
@@ -166,7 +166,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Activati
 
         /**
          * If there is at least one or more table from `RundizDownloads\App\Models\PluginDbStructure->get()` method then create or alter using WordPress's `dbDelta()`.
-         *
+         * 
          * @global \wpdb $wpdb WordPress DB class.
          */
         private function activateCreateAlterTables()

@@ -36,18 +36,18 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins')) {
         public function actionLinks($actions, $plugin_file)
         {
             static $plugin;
-            
+
             if (!isset($plugin)) {
                 $plugin = plugin_basename(RUNDIZDOWNLOADS_FILE);
             }
-            
+
             if ($plugin === $plugin_file) {
                 $link = [];
                 $link['settings'] = '<a href="' . esc_url(get_admin_url(null, 'admin.php?page=' . rawurlencode(Settings::MENU_SLUG))) . '">' . __('Settings', 'rundiz-downloads') . '</a>';
                 $actions = array_merge($link, $actions);
                 unset($link);
             }
-            
+
             return $actions;
         }// actionLinks
 
@@ -75,11 +75,11 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins')) {
         public function rowMeta($links, $file)
         {
             static $plugin;
-            
+
             if (!isset($plugin)) {
                 $plugin = plugin_basename(RUNDIZDOWNLOADS_FILE);
             }
-            
+
             if ($plugin === $file) {
                 $after_link = [];
 
@@ -96,11 +96,10 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins')) {
                 unset($configValues);
 
                 $after_link[] = '<a href="https://rundiz.com/en/donate" target="donate">' . esc_html__('Donate', 'rundiz-downloads') . '</a>';
-
                 $links = array_merge($links, $after_link);
                 unset($after_link);
             }
-            
+
             return $links;
         }// rowMeta
 

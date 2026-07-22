@@ -1,7 +1,7 @@
 <?php
 /**
  * Loader class. This class will load anything for example: views, template, configuration file.
- *
+ * 
  * @package rundiz-downloads
  */
 
@@ -70,7 +70,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
 
         /**
          * Get file list that may contain class in specific path.
-         *
+         * 
          * @param string $path The full path without trailing slash.
          * @return array Return indexed array of file list.
          */
@@ -108,7 +108,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
 
         /**
          * Check that is this version of app have manual update code?
-         *
+         * 
          * @return bool Return `true` if there is manual update, `false` for otherwise.
          */
         public function haveManualUpdate()
@@ -205,12 +205,12 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
 
         /**
          * Load the template by looking at the theme first, if not found then load it from the plugin itself.
-         *
+         * 
          * Example: If the <code>$view_name</code> is <code>mydir/mypage</code>.<br>
          * It will look up in <code>wp-content/themes/%your theme%/rundiz-downloads/templates/mydir/mypage.php</code> first.<br>
          * If not found then it will look up in <code>wp-content/plugins/rundiz-downloads/templates/mydir/mypage.php</code>.<br>
          * If it is still not found then the error will be thrown.
-         *
+         * 
          * @link https://codex.wordpress.org/Function_Reference/locate_template Reference.
          * @link https://codex.wordpress.org/Function_Reference/load_template Reference.
          * @global \WP_Query $wp_query
@@ -257,7 +257,7 @@ if (!class_exists('\\RundizDownloads\\App\\Libraries\\Loader')) {
 
         /**
          * Load views.
-         *
+         * 
          * @param string $view_name View file name, refer from app/Views folder.
          * @param array $data For send data variable to view.
          * @param bool $require_once Set to `true` to use `include_once`, `false` to use `include`. Default is `false`.
