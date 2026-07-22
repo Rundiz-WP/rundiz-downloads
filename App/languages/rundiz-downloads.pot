@@ -2,14 +2,14 @@
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rundiz Downloads 1.1.3\n"
+"Project-Id-Version: Rundiz Downloads 1.1.6\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rundiz-downloads\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-04-08T23:22:35+07:00\n"
+"POT-Creation-Date: 2026-07-23T06:41:45+07:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: rundiz-downloads\n"
@@ -18,7 +18,7 @@ msgstr ""
 #: rundiz-downloads.php
 #: App/Controllers/Admin/Downloads/Menu.php:86
 #: App/Controllers/Front/Hooks/Query/DownloadPage/RdDownloadsPage.php:142
-#: App/Controllers/Front/Hooks/Query/GithubAutoUpdatePage/GithubAutoUpdatePage.php:62
+#: App/Controllers/Front/Hooks/Query/GithubAutoUpdatePage/GithubAutoUpdatePage.php:64
 #: App/Views/admin/Hooks/DashboardWidgets/DownloadStat/displayDownloadStat_v.php:27
 msgid "Rundiz Downloads"
 msgstr ""
@@ -41,11 +41,6 @@ msgstr ""
 #. Author URI of the plugin
 #: rundiz-downloads.php
 msgid "https://rundiz.com"
-msgstr ""
-
-#: App/AppTrait.php:152
-#: App/Controllers/Admin/Settings.php:128
-msgid "Settings configuration file was not set."
 msgstr ""
 
 #. translators: %s: Example shortcode.
@@ -119,7 +114,7 @@ msgid "Client Secret"
 msgstr ""
 
 #: App/config/settings.php:131
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:156
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:158
 #: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:19
 #: App/Views/admin/Downloads/GithubOAuth/subPageDisconnect_v.php:14
 msgid "GitHub OAuth"
@@ -346,8 +341,8 @@ msgstr ""
 
 #: App/Controllers/Admin/Downloads/Editing.php:99
 #: App/Controllers/Admin/Downloads/Editing.php:125
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:198
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:288
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:200
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:290
 #: App/Controllers/Admin/Downloads/Logs.php:147
 #: App/Controllers/Admin/Downloads/Management.php:140
 #: App/Controllers/Admin/Downloads/Xhr/XhrBulkActions.php:32
@@ -358,9 +353,9 @@ msgstr ""
 #: App/Controllers/Admin/Downloads/Xhr/XhrLogsBulkActions.php:61
 #: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:252
 #: App/Controllers/Admin/Downloads/Xhr/XhrSave.php:374
-#: App/Controllers/Admin/Plugins/Upgrader.php:47
-#: App/Controllers/Admin/Plugins/Upgrader.php:264
-#: App/Controllers/Admin/Settings.php:102
+#: App/Controllers/Admin/Plugins/Upgrader.php:59
+#: App/Controllers/Admin/Plugins/Upgrader.php:278
+#: App/Controllers/Admin/Settings.php:101
 #: App/Controllers/XhrBased.php:44
 msgid "You do not have permission to access this page."
 msgstr ""
@@ -385,7 +380,7 @@ msgid "You do not have permission to edit other's downloads data."
 msgstr ""
 
 #: App/Controllers/Admin/Downloads/Editing.php:189
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:385
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:387
 #: App/Controllers/Admin/Downloads/Logs.php:235
 #: App/Controllers/Admin/Downloads/Management.php:218
 msgid "Are you sure?"
@@ -402,56 +397,56 @@ msgid "This can not be un-done."
 msgstr ""
 
 #: App/Controllers/Admin/Downloads/Editing.php:190
-#: App/Controllers/Admin/Plugins/Upgrader.php:311
+#: App/Controllers/Admin/Plugins/Upgrader.php:324
 msgid "Dismiss"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:105
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:107
 #: App/Controllers/Admin/Downloads/Logs.php:64
 #: App/Controllers/Admin/Downloads/Management.php:71
 msgid "Permissions"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:117
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:119
 msgid "GitHub Webhook"
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:313
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:323
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:315
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:325
 #, php-format
 msgid "Please %1$sgo back%2$s and try again."
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: The link URL, %3$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:321
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:323
 #, php-format
 msgid "%1$s%2$s%3$s."
 msgstr ""
 
 #. translators: %1$s: Open link, %2$s: Close link.
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:349
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:351
 #, php-format
 msgid "Please %1$sdisconnect from GitHub OAuth%2$s and try again."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:385
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:387
 msgid "You have to sync the secret key with your GitHub repositories again to make the auto update works."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:386
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:388
 msgid "Exists"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:387
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:389
 msgid "Not exists"
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:388
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:390
 msgid "Re-generating the secret key, please wait."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/GithubOAuth.php:389
+#: App/Controllers/Admin/Downloads/GithubOAuth.php:391
 msgid "Synchronizing, please wait."
 msgstr ""
 
@@ -632,22 +627,22 @@ msgid "Unable to process your request, please reload the page and try again."
 msgstr ""
 
 #. translators: %s: Example GitHub repository URL.
-#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:104
+#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:95
 #, php-format
 msgid "Invalid GitHub repository URL. The correct format should be %s."
 msgstr ""
 
 #. translators: %1$d: Total synced, %2$d: Total new webhooks, %3$d: Total existing webhooks (use update), %4$d: Total download items.
-#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:238
+#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:243
 #, php-format
 msgid "Synced successfully. Total %1$d synced (%2$d new, %3$d exists) from total %4$d download items."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:280
+#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:285
 msgid "Unable to update secret key, please reload the page and try again."
 msgstr ""
 
-#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:288
+#: App/Controllers/Admin/Downloads/Xhr/XhrGithub.php:293
 msgid "The secret key was updated successfully."
 msgstr ""
 
@@ -728,7 +723,7 @@ msgid "Rundiz Downloads shortcodes"
 msgstr ""
 
 #: App/Controllers/Admin/Plugins.php:46
-#: App/Controllers/Admin/Settings.php:82
+#: App/Controllers/Admin/Settings.php:81
 msgid "Settings"
 msgstr ""
 
@@ -743,89 +738,94 @@ msgid "Donate"
 msgstr ""
 
 #. translators: %1$s current PHP version.
-#: App/Controllers/Admin/Plugins/Activation.php:62
+#: App/Controllers/Admin/Plugins/Activation.php:77
 #, php-format
 msgid "You are using PHP %1$s which does not meet minimum requirement. Please consider upgrade PHP version or contact plugin author for this help."
 msgstr ""
 
 #. translators: %1$s minimum PHP version required.
-#: App/Controllers/Admin/Plugins/Activation.php:70
+#: App/Controllers/Admin/Plugins/Activation.php:85
 #, php-format
 msgid "Minimum PHP requirement: %1$s."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Activation.php:74
+#: App/Controllers/Admin/Plugins/Activation.php:89
 msgid "Minimum requirement of PHP version does not meet."
 msgstr ""
 
 #. translators: %1$s Current WordPress version, %2$s Required WordPress version.
-#: App/Controllers/Admin/Plugins/Activation.php:83
+#: App/Controllers/Admin/Plugins/Activation.php:98
 #, php-format
 msgid "Your WordPress version does not meet the requirement. (%1$s < %2$s)."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Activation.php:88
+#: App/Controllers/Admin/Plugins/Activation.php:103
 msgid "Minimum requirement of WordPress version does not meet."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Activation.php:95
+#: App/Controllers/Admin/Plugins/Activation.php:110
 msgid "Unable to network activate, please activate per site only."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:60
+#: App/Controllers/Admin/Plugins/Activation.php:325
+#: App/Controllers/Admin/Settings.php:126
+msgid "Settings configuration file was not set."
+msgstr ""
+
+#: App/Controllers/Admin/Plugins/Upgrader.php:73
 msgid "Please reload this page and try again."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:119
+#: App/Controllers/Admin/Plugins/Upgrader.php:130
 msgid "An error has been occur, cannot continue manual update. Please contact plugin author."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:136
+#: App/Controllers/Admin/Plugins/Upgrader.php:147
 msgid "Success, please click next to continue update."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:139
+#: App/Controllers/Admin/Plugins/Upgrader.php:150
 msgid "All manual update completed successfully. This page will be no longer available until there is next manual update."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:158
+#: App/Controllers/Admin/Plugins/Upgrader.php:169
 msgid "Unable to run update, there is no update classes to run."
 msgstr ""
 
 #. translators: %1$s Open link, %2$s Close link.
-#: App/Controllers/Admin/Plugins/Upgrader.php:206
+#: App/Controllers/Admin/Plugins/Upgrader.php:222
 #, php-format
 msgid "The Rundiz Downloads is just upgraded and need to be manually update. Please continue to the %1$splugin update page%2$s."
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:249
+#: App/Controllers/Admin/Plugins/Upgrader.php:263
 msgid "Rundiz Downloads update"
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:310
+#: App/Controllers/Admin/Plugins/Upgrader.php:323
 msgid "Completed"
 msgstr ""
 
-#: App/Controllers/Admin/Plugins/Upgrader.php:312
+#: App/Controllers/Admin/Plugins/Upgrader.php:325
 #: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:58
 msgid "Next"
 msgstr ""
 
-#: App/Controllers/Admin/Settings.php:82
+#: App/Controllers/Admin/Settings.php:81
 msgid "Downloads Settings"
 msgstr ""
 
 #. translators: %1$s Open link, %2$s Close link.
-#: App/Controllers/Admin/Settings.php:110
+#: App/Controllers/Admin/Settings.php:109
 #, php-format
 msgid "The manual update is required, please %1$supdate first%2$s."
 msgstr ""
 
-#: App/Controllers/Admin/Settings.php:117
+#: App/Controllers/Admin/Settings.php:116
 msgid "The manual update is required, please tell administrator to update first."
 msgstr ""
 
-#: App/Controllers/Admin/Settings.php:185
+#: App/Controllers/Admin/Settings.php:183
 msgid "Settings saved."
 msgstr ""
 
@@ -1222,7 +1222,7 @@ msgstr ""
 #: App/Views/admin/Downloads/GithubOAuth/pageIndex_v.php:26
 #: App/Views/admin/Downloads/Logs/pageIndex_v.php:28
 #: App/Views/admin/Downloads/Management/pageIndex_v.php:32
-#: App/Views/admin/Plugins/Upgrader_v.php:22
+#: App/Views/admin/Plugins/Upgrader_v.php:23
 msgid "Dismiss this notice."
 msgstr ""
 
@@ -1543,27 +1543,27 @@ msgstr ""
 msgid "All time"
 msgstr ""
 
-#: App/Views/admin/Plugins/Upgrader_v.php:15
+#: App/Views/admin/Plugins/Upgrader_v.php:16
 msgid "Manual update"
 msgstr ""
 
 #. translators: %d Number of total actions.
-#: App/Views/admin/Plugins/Upgrader_v.php:31
+#: App/Views/admin/Plugins/Upgrader_v.php:32
 #, php-format
 msgid "There are total %d actions for this manual update, please continue step by step."
 msgstr ""
 
 #. translators: %1$s The number of already run action, %2$d The number of total actions.
-#: App/Views/admin/Plugins/Upgrader_v.php:36
+#: App/Views/admin/Plugins/Upgrader_v.php:37
 #, php-format
 msgid "You are running %1$s of %2$d."
 msgstr ""
 
-#: App/Views/admin/Plugins/Upgrader_v.php:40
+#: App/Views/admin/Plugins/Upgrader_v.php:41
 msgid "Start"
 msgstr ""
 
-#: App/Views/admin/settings_v.php:15
+#: App/Views/admin/settings_v.php:16
 msgid "Rundiz Downloads Settings"
 msgstr ""
 
