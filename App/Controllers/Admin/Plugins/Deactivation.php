@@ -28,8 +28,6 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Plugins\\Deactiva
         public function deactivate()
         {
             // Do something that will be happens on deactivate plugin.
-            // remove all added rewrite rules.
-            flush_rewrite_rules();
         }// deactivate
 
 

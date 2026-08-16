@@ -42,7 +42,7 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
          * Do not access this property directly if not necessary, use `getDbVersion()` method instead.
          * 
          * @var string|null Version number of DB structure.
-         * @todo [rundiz][routine] Read the description above and only set this if there is any tables to create on activate this plugin.
+         * @todo [rundiz] Read the description above and only set this if there is any tables to create on activate this plugin.
          */
         protected $db_version = '0.3';
 
@@ -85,10 +85,12 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
          * 
          * This method is in main AppTrait.
          * 
+         * @since 2026-07-28 Add option `merge_defaults`.
          * @param array $options The method options:  
          *      `process_display_cb` (bool) Set to `true` to process the option `display_callback`. Set to `false` to skip it. Default is `true`.  
          *          This is in some cases, the class may call this method from inside `__construct()` unavoidable. 
          *          It may cause translation function trigger error calling it too early. Set to `false` will not process it, but it can be done manually later.  
+         *      `merge_defaults` (bool) Set to `true` to merge options with default only if default setting id/key is not exists on the DB.
          * @return array Return associative array value of all options where the key is option name.
          */
         public function getOptions(array $options = [])
@@ -109,6 +111,20 @@ if (!trait_exists('\\RundizDownloads\\App\\AppTrait')) {
                         $get_option = [];
                     }
                 }
+
+                if (isset($options['merge_defaults']) && true === $options['merge_defaults']) {
+                    // if there is option `merge_defaults` was set to `true`.
+                    // merge data on DB with default only if default setting key is not exists.
+                    $RundizSettings = new Libraries\RundizSettings();
+                    $defaults = $RundizSettings->getDefaults($this->getLoader());
+                    foreach ($defaults as $field_id => $default_value) {
+                        if (!array_key_exists($field_id, $get_option)) {
+                            $get_option[$field_id] = $default_value;
+                        }
+                    }// endforeach;
+                    unset($default_value, $field_id);
+                    unset($RundizSettings);
+                }// endif; $options['merge_defaults']
 
                 if (!isset($options['process_display_cb']) || true === $options['process_display_cb']) {
                     // if there is option `process_display_cb` was set to `true` or default (unset).

@@ -1,7 +1,7 @@
 <?php
 /**
  * Add settings sub menu and page into the Settings menu.
- *
+ * 
  * Original source last update: 2026-04-11
  * 
  * @package rundiz-downloads
@@ -57,7 +57,7 @@ if (!class_exists('\\RundizDownloads\\App\\Controllers\\Admin\\Settings')) {
 
         /**
          * An example of how to access settings variable and its values.
-         *
+         * 
          * @global array $rundiz_downloads_options
          */
         public function pluginReadSettingsPage()
