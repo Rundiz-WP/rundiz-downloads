@@ -1,10 +1,10 @@
 === Rundiz Downloads ===
 Contributors: okvee
 Tags: downloads, download, download manager, file hosting, GitHub
-Tested up to: 7.0
+Tested up to: 7.1
 Requires at least: 4.7.0
 Requires PHP: 5.5
-Stable tag: 1.1.7dev-20260723
+Stable tag: 1.1.7
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -27,8 +27,7 @@ You can change your setting to accept how often of auto update. Every releases a
  * Insert download button on classic editor or TinyMCE.
  * Download logs/statistic.
  * Admin dashboard statistic widget.
- * Block bots from downloading by captcha, user agent.
- * Captcha with the audio.
+ * Block bots from downloading by anti bot feature, user agent.
  * Redirect to file or force download. (The force download will be working with local file only.)
  * Support shortcode.
  * Customisable download element for shortcode.
@@ -69,9 +68,11 @@ Yes, the plugin's tables will be dropped on uninstall.
 
 == Changelog ==
 = 1.1.7 =
-xxxx-xx-xx
+2026-08-16
 
 * Minor improve the performance.
+* Fix translation bugs.
+* Remove no longer used downloads log status.
 
 = 1.1.6 =
 2026-07-21
