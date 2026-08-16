@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rundiz Downloads\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rundiz-downloads\n"
-"POT-Creation-Date: 2026-07-23T06:41:45+07:00\n"
-"PO-Revision-Date: 2026-07-23 06:42+0700\n"
+"POT-Creation-Date: 2026-08-16T19:07:23+07:00\n"
+"PO-Revision-Date: 2026-08-16 19:07+0700\n"
 "Last-Translator: Vee W.\n"
 "Language-Team: \n"
 "Language: th_TH\n"
@@ -701,17 +701,17 @@ msgstr "ล้มเหลวในการตรวจสอบป้องก
 msgid "Rundiz Downloads shortcodes"
 msgstr "ช็อตโค้ดต่างๆ"
 
-#: App/Controllers/Admin/Plugins.php:46 App/Controllers/Admin/Settings.php:81
+#: App/Controllers/Admin/Plugins.php:49 App/Controllers/Admin/Settings.php:81
 msgid "Settings"
 msgstr "ตั้งค่า"
 
 #. translators: %s The DB version of this plugin.
-#: App/Controllers/Admin/Plugins.php:94
+#: App/Controllers/Admin/Plugins.php:100
 #, php-format
 msgid "DB version %s"
 msgstr "รุ่นฐานข้อมูล %s"
 
-#: App/Controllers/Admin/Plugins.php:98
+#: App/Controllers/Admin/Plugins.php:104
 msgid "Donate"
 msgstr "บริจาค"
 
@@ -748,6 +748,7 @@ msgid "Unable to network activate, please activate per site only."
 msgstr "ไม่สามารถเปิดใช้งานแบบเน็ตเวิร์คได้, โปรดเปิดใช้งานจากแต่ละเว็บไซต์เท่านั้น."
 
 #: App/Controllers/Admin/Plugins/Activation.php:325 App/Controllers/Admin/Settings.php:126
+#: App/Libraries/RundizSettings.php:61
 msgid "Settings configuration file was not set."
 msgstr "ไม่ได้กำหนดไฟล์ตั้งค่า."
 
@@ -841,7 +842,7 @@ msgstr "%s ต้องเป็นสตริง."
 msgid "Download"
 msgstr "ดาวน์โหลด"
 
-#: App/Libraries/ElementPlaceholders.php:62 App/Models/RdDownloadLogsListTable.php:161
+#: App/Libraries/ElementPlaceholders.php:62 App/Models/RdDownloadLogsListTable.php:158
 #: App/Models/RdDownloadsListTable.php:238 App/Views/admin/Downloads/Editing/pageEdit_v.php:33
 #: App/Views/admin/Hooks/ClassicEditor/downloadTinyMCEBrowser_v.php:32
 #: templates/RdDownloadsPage/subUseAntibot_v.php:40
@@ -880,6 +881,14 @@ msgstr "ดาวน์โหลดทั้งหมด"
 #: App/Libraries/ElementPlaceholders.php:70 App/Views/admin/Downloads/Editing/pageEdit_v.php:70
 msgid "Version"
 msgstr "รุ่น"
+
+#: App/Libraries/RundizSettings.php:987
+msgid "Upload"
+msgstr "อัปโหลด"
+
+#: App/Libraries/RundizSettings.php:988
+msgid "Remove"
+msgstr "นำออก"
 
 #: App/Libraries/ShortcodeRdDownloads.php:33
 msgid "Required attribute for display link to download."
@@ -989,70 +998,66 @@ msgid "User download banned"
 msgstr "ผู้ใช้ถูกแบน"
 
 #: App/Models/RdDownloadLogsListTable.php:120
-msgid "User enter wrong captcha code"
-msgstr "ผู้ใช้กรอกแคปต์ชาผิด"
-
-#: App/Models/RdDownloadLogsListTable.php:123
 msgid "User has failed to verify antibot"
 msgstr "ผู้ใช้ล้มเหลวในการตรวจสอบป้องกันบอต"
 
-#: App/Models/RdDownloadLogsListTable.php:149
+#: App/Models/RdDownloadLogsListTable.php:146
 msgid "Clear"
 msgstr "ล้างค่า"
 
-#: App/Models/RdDownloadLogsListTable.php:162
+#: App/Models/RdDownloadLogsListTable.php:159
 msgid "User"
 msgstr "ผู้ใช้"
 
-#: App/Models/RdDownloadLogsListTable.php:163
+#: App/Models/RdDownloadLogsListTable.php:160
 msgid "Status"
 msgstr "สถานะ"
 
-#: App/Models/RdDownloadLogsListTable.php:164
+#: App/Models/RdDownloadLogsListTable.php:161
 msgid "IP Address"
 msgstr "หมายเลขไอพี"
 
-#: App/Models/RdDownloadLogsListTable.php:165
+#: App/Models/RdDownloadLogsListTable.php:162
 msgid "User agent"
 msgstr "User agent"
 
-#: App/Models/RdDownloadLogsListTable.php:166
+#: App/Models/RdDownloadLogsListTable.php:163
 msgid "Referrer"
 msgstr "อ้างอิง"
 
-#: App/Models/RdDownloadLogsListTable.php:167 App/Models/RdDownloadsListTable.php:246
+#: App/Models/RdDownloadLogsListTable.php:164 App/Models/RdDownloadsListTable.php:246
 msgid "Date"
 msgstr "วันที่"
 
-#: App/Models/RdDownloadLogsListTable.php:224 App/Models/RdDownloadsListTable.php:300
+#: App/Models/RdDownloadLogsListTable.php:221 App/Models/RdDownloadsListTable.php:300
 msgid "All"
 msgstr "ทั้งหมด"
 
 #. translators: %s: Link to edit user.
-#: App/Models/RdDownloadLogsListTable.php:233 App/Models/RdDownloadsListTable.php:330
+#: App/Models/RdDownloadLogsListTable.php:230 App/Models/RdDownloadsListTable.php:330
 #, php-format
 msgid "Filtered user: %s"
 msgstr "กรองผู้ใช้: %s"
 
-#: App/Models/RdDownloadLogsListTable.php:236 App/Models/RdDownloadsListTable.php:333
+#: App/Models/RdDownloadLogsListTable.php:233 App/Models/RdDownloadsListTable.php:333
 msgid "Reset filtered user"
 msgstr "ล้างค่ากรองผู้ใช้"
 
 #. translators: %s: Link to edit download.
-#: App/Models/RdDownloadLogsListTable.php:244
+#: App/Models/RdDownloadLogsListTable.php:241
 #, php-format
 msgid "Filtered download: %s"
 msgstr "กรองดาวน์โหลด: %s"
 
-#: App/Models/RdDownloadLogsListTable.php:247
+#: App/Models/RdDownloadLogsListTable.php:244
 msgid "Reset filtered download"
 msgstr "ล้างค่ากรองดาวน์โหลด"
 
-#: App/Models/RdDownloadLogsListTable.php:274
+#: App/Models/RdDownloadLogsListTable.php:271
 msgid "Filter download"
 msgstr "กรองดาวน์โหลด"
 
-#: App/Models/RdDownloadLogsListTable.php:281 App/Models/RdDownloadsListTable.php:381
+#: App/Models/RdDownloadLogsListTable.php:278 App/Models/RdDownloadsListTable.php:381
 msgid "Filter user"
 msgstr "กรองผู้ใช้"
 
@@ -1592,17 +1597,3 @@ msgstr "ฉันเป็นมนุษย์."
 #: templates/RdDownloadsPage/subUseAntibot_v.php:71
 msgid "Continue to download"
 msgstr "ดำเนินการต่อ"
-
-#, php-format
-#~ msgid "The template file was not found. (%s)"
-#~ msgstr "ไม่พบไฟล์เทมเพลท. (%s)"
-
-#, php-format
-#~ msgid "The views file was not found (%s)."
-#~ msgstr "ไม่พบไฟล์ views  (%s)."
-
-#~ msgid "Upload"
-#~ msgstr "อัปโหลด"
-
-#~ msgid "Remove"
-#~ msgstr "เอาออก"
