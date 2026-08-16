@@ -116,9 +116,6 @@ if (!class_exists('\\RundizDownloads\\App\\Models\\RdDownloadLogsListTable')) {
                 case 'user_dl_banned':
                     $output .= __('User download banned', 'rundiz-downloads');
                     break;
-                case 'user_dl_wr_captcha':// from previous version, keep it here.
-                    $output .= __('User enter wrong captcha code', 'rundiz-downloads');
-                    break;
                 case 'user_dl_antbotfailed':
                     $output .= __('User has failed to verify antibot', 'rundiz-downloads');
                     break;
